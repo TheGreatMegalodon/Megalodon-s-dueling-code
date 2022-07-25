@@ -290,7 +290,7 @@ var map =
 
 this.options = {
   // Game Options
-  map_name: "Meg's Messy place",
+  map_name: "Meg's Dueling",
   max_level: 6,
   max_players: 20,
   starting_ship: 605,
