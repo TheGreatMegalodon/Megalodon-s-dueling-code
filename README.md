@@ -1,5 +1,5 @@
 # Megalodon's dueling code
-***Here is my very first dueling mod, I hope you enjoy!
+Here is my very first dueling mod, I hope you enjoy!
 
 
 **Mod Version : v0.2**
