@@ -5,6 +5,7 @@
 // What has been fixed from v0.2 :
 // - Spectator mode is enabeled when teleporting to the arena.
 // - Fixed some issues with the Spawn area.
+// - Added the "hello" icon
 // - Menu :
 // - Buttons color updated, should look better
 //   -> Stats:
