@@ -1,15 +1,15 @@
-// Mod Version : v0.2
+// Mod Version : v0.3
 // Mod creator : Megalodon
 // Coding support : Lotus/Notus, Bhpsngum
 
-// What has been fixed from v0.1 :
-// - Better "idle/ unidle" functions
-//   -> Console commands reworked (inculdes the idle/ unidle commands)
-//      -> The info command doesn't show the ship angle anymore
-//   -> They now put you into spectator mod et removes you every buttons on your screen
-// - Improved radar backgrounds
-// - Improved regen fuctions
-// - Buttons style reworked
+// What has been fixed from v0.2 :
+// - Spectator mode is enabeled when teleporting to the arena.
+// - Fixed some issues with the Spawn area.
+// - Menu :
+// - Buttons color updated, should look better
+//   -> Stats:
+//      -> Stats reworked, less issues are expected.
+//      -> When your ship in unmaxed a warning sign shows up on the button.
 
 // Type " help " for more information about the mod and his commands.
 
@@ -30,9 +30,10 @@ var admin_ship_codes = [192,194];
 var switch_ship_delay = 0.25;
 var spectator_switch_delay = 2;
 var dueling_arena_delay = 5;
-var safe_zone_delay = 5;
+var spawn_zone_delay = 5;
 var TP_points_delay = 2;
 var Regenerate_delay = 5;
+var Stats_delay = 1;
 
 var Ship = {};
 // Admin
@@ -82,20 +83,21 @@ var vocabulary = [
   { text: "Yes", icon:"\u004c", key:"Y" },
 
   { text: "No", icon:"\u004d", key:"N" },
+  { text: "Hello", icon:"\u0045", key:"H" },
   { text: "Sorry", icon:"\u00a1", key:"S" },
   { text: "Thanks", icon:"\u0041", key:"X" },
-  { text: "Attack", icon:"\u0049", key:"A" },
 
+  { text: "Attack", icon:"\u0049", key:"A" },
   { text: "Follow Me", icon:"\u0050", key:"F" },
   { text: "Good Game", icon:"\u00a3", key:"G" },
   { text: "Spectate", icon:"\u0059", key:"L" },
-  { text: "Regen", icon:"\u0078", key:"K" },
 
+  { text: "Regen", icon:"\u0078", key:"K" },
   { text: "Hmm", icon:"\u004b", key:"Q" },
   { text: "No Prb", icon:"\u0047", key:"P" },
   { text: "Discord", icon:"\u007b", key:"D" },
-  { text: "Idiot", icon:"\u0079", key:"I" },
 
+  { text: "Idiot", icon:"\u0079", key:"I" },
   { text: "Arena", icon:"\u00be", key:"B" },
 ];
 
@@ -327,13 +329,6 @@ this.options = {
   lives: 5,
 };
 
-var range = function(start, end) {
-  var diff = end - start;
-  var sign = Math.sign(diff);
-  diff = Math.abs(diff) + sign;
-  return Array.from({length: diff}, (v, i) => sign * i + start);
-};
-
 var ship_instructor = function(ship, message, character = "Lucina", delay = 0, hide_after = 0) {
   if (!ship || !message || !message.length) {
     return;
@@ -356,8 +351,6 @@ var ship_instructor = function(ship, message, character = "Lucina", delay = 0, h
 
 this.tick = function(game) {
 for (let ship of game.ships) {
-  var vx = (Math.random() - 0.5) * game.options.map_size * 0.01;
-  var vy = (Math.random() - 0.5) * game.options.map_size * 0.01;
   let max_crystals = 20 * Math.trunc(ship.type / 100)*Math.trunc(ship.type / 100);
   if (ship.custom.crystals_last_updated != ship.last_updated && ship.crystals >= max_crystals) {
     ship.set({crystals: max_crystals - 1});
@@ -414,9 +407,10 @@ if (game.step % 15 === 0) {
 switch_ship_delay *= 60;
 spectator_switch_delay *= 60;
 dueling_arena_delay *= 60;
-safe_zone_delay *= 60;
+spawn_zone_delay *= 60;
 TP_points_delay *= 60;
 Regenerate_delay *= 60;
+Stats_delay *= 60;
 
 var next_ship_button = function(ship) {
   if (ship.custom.spectator) {
@@ -519,11 +513,16 @@ var regen = function(ship){
 };
 
 var dueling_arena = function(ship) {
-  var x = range(1025,985);
-  var y = range(1025,985);
+  var x = [...new Array(51)].map((j, i) => 575 + i);
+  var y = [...new Array(51)].map((j, i) => 575 + i)
   if (!ship.custom.dueling || game.step >= ship.custom.dueling) {
     ship.custom.dueling = game.step + dueling_arena_delay;
-    ship.set({x: x[~~(Math.random()*x.length)], y: y[~~(Math.random()*y.length)]});
+    if (ship.type != 191) {
+      ship.set({x: x[~~(Math.random()*x.length)], y: y[~~(Math.random()*y.length)]});
+      spectator_ship(ship);
+    } else {
+      ship.set({x: x[~~(Math.random()*x.length)], y: y[~~(Math.random()*y.length)]});
+    }
   }
 };
 
@@ -531,12 +530,12 @@ var spawn_zone = function(ship) {
   var x = (Math.random() - 0.5) * game.options.map_size * 0.4;
   var y = (Math.random() - 0.5) * game.options.map_size * 0.4;
   if (!ship.custom.spawn || game.step >= ship.custom.spawn) {
-    ship.custom.spawn = game.step + safe_zone_delay;
+    ship.custom.spawn = game.step + spawn_zone_delay;
     ship.set({x: x, y: y});
   }
 };
 
-var ship_spawned = function(ship) {
+var what_if_ship_spawned = function(ship) {
   var x = (Math.random() - 0.5) * game.options.map_size * 0.4;
   var y = (Math.random() - 0.5) * game.options.map_size * 0.4;
   ship.set({x: x, y: y, collider: true, crystals: 720, stats: 88888888});
@@ -552,16 +551,26 @@ var Stats_button = function(ship) {
   var level = Math.trunc(ship.type / 100);
   var max = 11111111 * level;
   if (!ship.custom.stats || game.step >= ship.custom.stats) {
-    ship.custom.stats = game.step + 20;
+    ship.custom.stats = game.step + Stats_delay;
     if (level < 7)
     {
       if (stats == max)
       {
         ship.custom.keep_maxed = false;
         ship.set({stats:0});
+        ship.setUIComponent({
+          id: "Stats",
+          visible: false
+        });
+        ship.setUIComponent(Stats2);
       } else {
         ship.custom.keep_maxed = true;
-        ship.set({stats:max});
+        ship.set({stats:max, shield: 999, generator: 999});
+        ship.setUIComponent(Stats);
+        ship.setUIComponent({
+          id: "Stats2",
+          visible: false
+        });
       }
     }
   }
@@ -599,16 +608,26 @@ var Exit_screen = function(ship) {
     id: "Box_Exit_screen",
     visible: false
   });
+  ship.setUIComponent({
+    id: "Stats2",
+    visible: false
+  });
 };
 
 var TP_points_button = function(ship) {
+  var level = Math.trunc(ship.type / 100);
+  var max_stats = 11111111 * level;
   if (!ship.custom.TP_points || game.step >= ship.custom.TP_points) {
     ship.custom.TP_points = game.step + TP_points_delay;
+    if (ship.stats > 0) {
+      ship.setUIComponent(Stats);
+    } else {
+      ship.setUIComponent(Stats2);
+    }
     ship.setUIComponent(TPArena);
     ship.setUIComponent(TPSpawn);
     ship.setUIComponent(next_ship);
     ship.setUIComponent(previous_ship);
-    ship.setUIComponent(Stats);
     ship.setUIComponent(Box_Exit_screen);
     ship.setUIComponent(Square);
     ship.setUIComponent({
@@ -678,7 +697,7 @@ var Square = {
   clickable: false,
   visible: true,
   components: [
-    { type:"box",position:[0,0,100,100],fill:"rgba(255,255,255, 0.40)",stroke:"#FFFFFF",width:12},
+    { type:"box",position:[0,0,100,100],fill:"rgba(255,255,255, 0.20)",stroke:"#FFFFFF",width:12},
     { type:"box",position:[0,0,100,15],stroke:"#FFFFFF",width:6},
     { type:"round",position:[34,24,32,55],stroke:"#FFFFFF",width:5},
     { type: "text",position:[30,-2,40,20],value:"Actions Menu",color:"#FFFFFF"},
@@ -692,7 +711,7 @@ var TPArena = {
   visible: true,
   shortcut: "6",
   components: [
-    { type:"box",position:[0,0,100,100],fill:"rgba(255, 0, 0, 0.40)",stroke:"#ffffff",width:9},
+    { type:"box",position:[0,0,100,100],fill:"rgba(255, 0, 0, 0.50)",stroke:"rgb(255, 0, 0)",width:9},
     { type: "text",position:[0,17,100,62],value:"Arena [5]",color:"#ffffff"},
   ]
 };
@@ -704,7 +723,7 @@ var TPSpawn = {
   visible: true,
   shortcut: "5",
   components: [
-    { type:"box",position:[0,0,100,100],fill:"rgba(0, 255, 0, 0.40)",stroke:"#ffffff",width:9},
+    { type:"box",position:[0,0,100,100],fill:"rgba(0, 255, 0, 0.50)",stroke:"rgb(0, 255, 0)",width:9},
     { type: "text",position:[0,17,100,62],value:"Spawn [6]",color:"#ffffff"},
   ]
 };
@@ -716,7 +735,7 @@ var next_ship = {
   visible: true,
   shortcut: "3",
   components: [
-    { type:"box",position:[0,0,100,100],fill:"rgba(0, 148, 255, 0.40)",stroke:"#ffffff",width:9},
+    { type:"box",position:[0,0,100,100],fill:"rgba(0, 148, 255, 0.50)",stroke:"rgb(0, 148, 255)",width:9},
     { type: "text",position:[0,17,100,62],value:"Next [3]",color:"#ffffff"},
   ]
 };
@@ -728,7 +747,7 @@ var previous_ship = {
   visible: true,
   shortcut: "4",
   components: [
-    { type:"box",position:[0,0,100,100],fill:"rgba(0, 148, 255, 0.40)",stroke:"#ffffff",width:9},
+    { type:"box",position:[0,0,100,100],fill:"rgba(0, 148, 255, 0.50)",stroke:"rgb(0, 148, 255)",width:9},
     { type: "text",position:[0,17,100,62],value:"Previous [4]",color:"#ffffff"},
   ]
 };
@@ -740,8 +759,20 @@ var Stats = {
   visible: true,
   shortcut: "7",
   components: [
-    { type:"box",position:[0,0,100,100],fill:"rgba(255, 232, 0, 0.40)",stroke:"#ffffff",width:9},
+    { type:"box",position:[0,0,100,100],fill:"rgba(255, 232, 0, 0.50)",stroke:"rgb(255, 232, 0)",width:9},
     { type: "text",position:[0,17,100,62],value:"Stats [7]",color:"#ffffff"},
+  ]
+};
+
+var Stats2 = {
+  id: "Stats2",
+  position: [32,53,10,5.5],
+  clickable: true,
+  visible: true,
+  shortcut: "7",
+  components: [
+    { type:"box",position:[0,0,100,100],fill:"rgba(255, 232, 0, 0.50)",stroke:"rgb(255, 232, 0)",width:9},
+    { type: "text",position:[0,17,100,62],value:"⚠️Stats [7]",color:"#ffffff"},
   ]
 };
 
@@ -752,7 +783,7 @@ var Box_Exit_screen = {
   visible: true,
   shortcut: "0",
   components: [
-    { type:"box",position:[0,0,100,100],fill:"rgba(255,255,255, 0.30)",stroke:"#ffffff",width:9},
+    { type:"box",position:[0,0,100,100],fill:"rgba(255,255,255, 0.40)",stroke:"#ffffff",width:9},
     { type: "text",position:[0,17,100,62],value:"Exit [0]",color:"#ffffff"},
   ]
 };
@@ -776,16 +807,18 @@ this.event = function(event){
       }  else if (component == "TPArena"){
         dueling_arena(ship);
       }  else if (component == "TPSpawn"){
-        safe_zone(ship);
+        spawn_zone(ship);
       }  else if (component == "next_ship"){
         next_ship_button(ship);
       }  else if (component == "previous_ship"){
         previous_ship_button(ship);
       }  else if (component == "Stats"){
         Stats_button(ship);
+      }  else if (component == "Stats2"){
+        Stats_button(ship);
       }  break;
     case "ship_spawned":
-      ship_spawned(ship);
+      what_if_ship_spawned(ship);
     break;
    }
 };
