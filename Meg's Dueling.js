@@ -514,8 +514,8 @@ var regen = function(ship){
 };
 
 var dueling_arena = function(ship) {
-  var x = [...new Array(51)].map((j, i) => 575 + i);
-  var y = [...new Array(51)].map((j, i) => 575 + i)
+  var x = [...new Array(51)].map((j, i) => 975 + i);
+  var y = [...new Array(51)].map((j, i) => 975 + i);
   if (!ship.custom.dueling || game.step >= ship.custom.dueling) {
     ship.custom.dueling = game.step + dueling_arena_delay;
     if (ship.type != 191) {
