@@ -93,11 +93,12 @@ var vocabulary = [
   { text: "Good Game", icon:"\u00a3", key:"G" },
   { text: "Spectate", icon:"\u0059", key:"L" },
 
-  { text: "Regen", icon:"\u0078", key:"K" },
+  { text: "Gems", icon:"\u0044", key:"M" },
+  { text: "Stats", icon:"\u0078", key:"K" },
   { text: "Hmm", icon:"\u004b", key:"Q" },
   { text: "No Prb", icon:"\u0047", key:"P" },
+  
   { text: "Discord", icon:"\u007b", key:"D" },
-
   { text: "Idiot", icon:"\u0079", key:"I" },
   { text: "Arena", icon:"\u00be", key:"B" },
 ];
@@ -490,25 +491,17 @@ var admin_ship = function(ship) {
 
 var regen = function(ship){
   var level = Math.trunc(ship.type / 100);
-  var cargo;
+  var cargo = 1280;
   if (!ship.custom.Regenerate || game.step >= ship.custom.Regenerate) {
     ship.custom.Regenerate = game.step + Regenerate_delay;
     switch (level) {
-      case 1:
-        cargo = 20;
-        break; case 2:
-        cargo = 80;
-        break; case 3:
-        cargo = 180;
-        break; case 4:
-        cargo = 320;
-        break; case 5:
-        cargo = 500;
-        break; case 6:
-        cargo = 720;
-        break; case 7:
-        cargo = 980;
-        break; 
+      case 1: crystals = 20; break; 
+      case 2: crystals = 80; break; 
+      case 3: crystals = 180; break; 
+      case 4: crystals = 320; break; 
+      case 5: crystals = 500; break; 
+      case 6: crystals = 720; break; 
+      case 7: crystals = 980; break;
     } ship.set({crystals: cargo - 1, shield: 999});
   }
 };
@@ -1051,21 +1044,13 @@ set = function(who,what,crystals,stats=88888888){
   var cargo = 1280;
   if (crystals === undefined) {
     switch (level) {
-      case 1:
-        crystals = 20;
-      break; case 2:
-        crystals = 80;
-      break; case 3:
-        crystals = 180;
-      break; case 4:
-        crystals = 320;
-      break; case 5:
-        crystals = 500;
-      break; case 6:
-        crystals = 720;
-      break; case 7:
-        crystals = 980;
-      break;
+      case 1: crystals = 20; break; 
+      case 2: crystals = 80; break; 
+      case 3: crystals = 180; break; 
+      case 4: crystals = 320; break; 
+      case 5: crystals = 500; break; 
+      case 6: crystals = 720; break; 
+      case 7: crystals = 980; break;
     }
   }
   game.ships[who].set({type:what,crystals:crystals,stats:stats});
