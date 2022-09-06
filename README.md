@@ -2,7 +2,7 @@
 **Here is my very first dueling mod, I hope you enjoy!**
 
 
-**Mod Version : v0.3**
+**Mod Version : v0.3/0.3s**
 
 **Mod creator :** *Megalodon*
 
