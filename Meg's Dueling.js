@@ -1,19 +1,12 @@
-// Mod Version : v0.3
+// Mod Version : v0.3.1
 // Mod creator : Megalodon
 // Coding support : Lotus/Notus, Bhpsngum
 
-// What has been fixed from v0.2 :
-// - Spectator mode is enabeled when teleporting to the arena.
-// - Fixed some issues with the Spawn area.
-// - Added the "hello" icon
-// - Menu :
-// - Buttons color updated, should look better
-//   -> Stats:
-//      -> Stats reworked, less issues are expected.
-//      -> When your ship in unmaxed a warning sign shows up on the button.
+// What has been added from v0.3 :
+// - Better Images in the back ground
+// - Fixed some minor delails
 
 // Type " help " for more information about the mod and his commands.
-
 
 // safe zone
 const safeZone = {
@@ -535,7 +528,7 @@ var what_if_ship_spawned = function(ship) {
   ship.set({x: x, y: y, collider: true, crystals: 720, stats: 88888888});
   game.modding.terminal.echo("\n | List of players and their IDs:\n");
   for (let i=0; i<game.ships.length; i++){ 
-    game.modding.terminal.echo(" | id: "+i+", Name: "+game.ships[i].name+", Type: "+game.ships[i].type+", Alive: "+game.ships[i].alive+"\n | Coordinates: X: "+game.ships[i].x+", Y: "+game.ships[i].y+", R: "+game.ships[i].r); 
+    game.modding.terminal.echo(" | id: "+i+", Name: "+game.ships[i].name+", Type: "+game.ships[i].type+"\n | Coordinates: X: "+game.ships[i].x+", Y: "+game.ships[i].y); 
   }
   game.modding.terminal.echo("\n");
 };
@@ -546,10 +539,8 @@ var Stats_button = function(ship) {
   var max = 11111111 * level;
   if (!ship.custom.stats || game.step >= ship.custom.stats) {
     ship.custom.stats = game.step + Stats_delay;
-    if (level < 7)
-    {
-      if (stats == max)
-      {
+    if (level < 7) {
+      if (stats == max) {
         ship.custom.keep_maxed = false;
         ship.set({stats:0});
         ship.setUIComponent({
@@ -817,45 +808,21 @@ this.event = function(event){
    }
 };
 
-var Rond = {
-  id: "Rond",
-  obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/RondPourDueling2.1.png",
-};
-game.setObject({
-  id: "Rond",
-  type: Rond,
-  position:{x:0,y:0,z:-3.5},
-  scale:{x:105,y:105,z:0},
-  rotation:{x:0,y:0,z:0}
-});
-
-var Spawn = {
-  id: "Spawn",
-  obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/Dueling_Spawn.png",
-};
-game.setObject({
-  id: "Spawn",
-  type: Spawn,
-  position:{x:0,y:4,z:-3},
-  scale:{x:60,y:42.5,z:0},
-  rotation:{x:Math.PI,y:0,z:0}
-});
-
+// Spawn
 var Dueling_Safe_area = {
   id: "Dueling_Safe_area",
   obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/Dueling_Safe_area.png",
+  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/Middle_Safe_Area_2.png",
 };
 game.setObject({
   id: "Dueling_Safe_area",
   type: Dueling_Safe_area,
-  position:{x:0,y:-4,z:-2},
-  scale:{x:30,y:8.5,z:0},
+  position:{x:0,y:0,z:-3.5},
+  scale:{x:117,y:117,z:0},
   rotation:{x:3.12,y:0,z:0}
 });
 
+// 3D Obj
 var lost_sector_aries = {
   id: "lost_sector_aries",
   obj: "https://starblast.io/lost_sector/LostSector_Aries_HardEdges.obj",
@@ -872,11 +839,76 @@ game.setObject({
   type: lost_sector_aries,
   position: {x:-4, y:6, z:-90},
   scale: {x:2, y:2, z:3},
-  rotation: {x:0.4, y:0.2, z:3.14}
+  rotation: {x:0.4, y:0.2, z:Math.PI}
 });
 
 // Dueling arena
+var DuelingArena_Center = {
+  id: "DuelingArena_Center",
+  obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
+  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/megs_dueling_center_arena.png",
+};
+game.setObject({
+  id: "DuelingArena_Centert",
+  type: DuelingArena_Center,
+  position:{x:1000,y:1000,z:-10},
+  scale:{x:80,y:80,z:0},
+  rotation:{x:Math.PI,y:0,z:0}
+});
 
+var DuelingArena_Left = {
+  id: "DuelingArena_Left",
+  obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
+  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/Entrance_Dueling_Arena_Bottom_and_left.png",
+};
+game.setObject({
+  id: "DuelingArena_Left",
+  type: DuelingArena_Left,
+  position:{x:803.5,y:1000,z:-2},
+  scale:{x:50,y:17.5,z:0},
+  rotation:{x:Math.PI,y:0,z:Math.PI/2}
+});
+
+var DuelingArena_Right = {
+  id: "DuelingArena_Right",
+  obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
+  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/Entrance_Dueling_Arena_Top_and_right.png",
+};
+game.setObject({
+  id: "DuelingArena_Right",
+  type: DuelingArena_Right,
+  position:{x:1196,y:1000,z:-2},
+  scale:{x:50,y:17.5,z:0},
+  rotation:{x:Math.PI,y:0,z:Math.PI/2}
+});
+
+var DuelingArena_Bottom = {
+  id: "DuelingArena_Bottom",
+  obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
+  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/Entrance_Dueling_Arena_Bottom_and_left.png",
+};
+game.setObject({
+  id: "DuelingArena_Bottom",
+  type: DuelingArena_Bottom,
+  position:{x:1000,y:803,z:-2},
+  scale:{x:50,y:17.5,z:0},
+  rotation:{x:Math.PI,y:0,z:0}
+});
+
+var DuelingArena_Top = {
+  id: "DuelingArena_Top",
+  obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
+  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/Entrance_Dueling_Arena_Top_and_right.png",
+};
+game.setObject({
+  id: "DuelingArena_Top",
+  type: DuelingArena_Top,
+  position:{x:1000,y:1196,z:-2},
+  scale:{x:50,y:17.5,z:0},
+  rotation:{x:Math.PI,y:0,z:0}
+});
+
+// 3D Obj
 var construction_bleu = {
   id: "construction_bleu",
   obj: "https://raw.githubusercontent.com/StarblastFinalizer/StarblastModding/master/Constructor.obj",
@@ -932,58 +964,6 @@ game.setObject({
   position:{x:940,y:930,z:-30},
   scale:{x:8,y:8,z:8},
   rotation:{x:0.2,y:0.4,z:5}
-});
-
-var DuelingArena_Left = {
-  id: "DuelingArena_Left",
-  obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/DuelingArena_Starblast.png",
-};
-game.setObject({
-  id: "DuelingArena_Left",
-  type: DuelingArena_Left,
-  position:{x:801.5,y:1000,z:-2},
-  scale:{x:40,y:15,z:0},
-  rotation:{x:3.14,y:0,z:-4.725}
-});
-
-var DuelingArena_Right = {
-  id: "DuelingArena_Right",
-  obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/DuelingArena_Starblast.png",
-};
-game.setObject({
-  id: "DuelingArena_Right",
-  type: DuelingArena_Right,
-  position:{x:1198.5,y:1000,z:-2},
-  scale:{x:40,y:15,z:0},
-  rotation:{x:3.14,y:0,z:4.7}
-});
-
-var DuelingArena_Bottom = {
-  id: "DuelingArena_Bottom",
-  obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/DuelingArena_Starblast.png",
-};
-game.setObject({
-  id: "DuelingArena_Bottom",
-  type: DuelingArena_Bottom,
-  position:{x:1000,y:801.5,z:-2},
-  scale:{x:40,y:15,z:0},
-  rotation:{x:3.14,y:0,z:0}
-});
-
-var DuelingArena_Top = {
-  id: "DuelingArena_Top",
-  obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/DuelingArena_Starblast_top.png",
-};
-game.setObject({
-  id: "DuelingArena_Top",
-  type: DuelingArena_Top,
-  position:{x:1000,y:1198.5,z:-2},
-  scale:{x:40,y:15,z:0},
-  rotation:{x:3.14,y:0,z:0}
 });
 
 // Commands
