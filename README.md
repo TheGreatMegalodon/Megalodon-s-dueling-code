@@ -20,3 +20,4 @@
 
 ## Support
 * [My Discord Server](https://discord.gg/KXvCq4N)
+* Discord: Megalodon#0001
