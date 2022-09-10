@@ -12,7 +12,7 @@
 **v0.3.1/0.3s**
 
 ### Mod creator: 
-**Megalodon**
+* **Megalodon**
 
 ### Coding support:
 * **Lotus/Notus**
