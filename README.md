@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <p>
-    <a href="https://bhpsngum.github.io/starblast/starblast-modding/"><img src="https://bhpsngum.github.io/starblast/starblast-modding/banner.png" width="640" alt="starblast-modding" /></a>
+    <a href="https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Photo_MegsDueling.png" width="640" /></a>
   </p>
 </div>
 
@@ -10,10 +10,12 @@
 
 
 ## Mod Versions: 
-**v0.3.1/0.3s**
+### **v0.3.1/0.3s**
+
 
 ## Mod creator: 
-**Megalodon**
+### **Megalodon**
+
 
 ## Coding support:
-**Lotus/Notus, Bhpsngum**
+### **Lotus/Notus, Bhpsngum**
