@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <p>
-    <a href="https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/"><img src="https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Photo_MegsDueling.png" width="800" alt="Megalodon-s-dueling-code" /></a>
+    <a href="https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/"><img src="https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Photo_MegsDueling.png" width="900" alt="Megalodon-s-dueling-code" /></a>
   </p>
 </div>
 
