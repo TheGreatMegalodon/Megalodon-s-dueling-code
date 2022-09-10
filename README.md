@@ -17,3 +17,6 @@
 ### Coding support:
 * **Lotus/Notus**
 * **Bhpsngum**
+
+## Support
+* [My Discord Server](https://discord.gg/KXvCq4N)
