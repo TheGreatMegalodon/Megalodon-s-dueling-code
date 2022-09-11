@@ -183,7 +183,7 @@ You basically don't need to set any value, its automatically giving the right am
 but in case you want to change the crystals amount of a player you can use:
 
 ```js
-crystals(720)
+crystals(560)
 ```
 
 or if you want to change the ship type; stats and crystals at the same time
