@@ -85,14 +85,14 @@ kick(0)
 ```
 
 In the console:
-<div align="right">
+<div align="left">
   <br />
   <p>
     <a href="https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/"><img src="https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/starblast-1662853819440.png" width="500" alt="Megalodon-s-dueling-code" /></a>
   </p>
 </div>
 Once you've press "ENTER" this is what you should see:
-<div align="center">
+<div align="left">
   <br />
   <p>
     <a href="https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/"><img src="https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/image.png" width="500" alt="Megalodon-s-dueling-code" /></a>
