@@ -29,7 +29,7 @@ While runing the mod you can always type:
 ```
 To see all the commands you can use.
 
-### How to kick a player:
+### How to kick a player?
 To kick a player it is very easy. While your mod is running, you first need to write in the console:
 ```js
 > info█
@@ -107,7 +107,9 @@ Which mean, that you have successfully kick someone!
 
 If an error shows up, please restart the mod.
 
-## Commands
+### How to use the set command?
+
+## Commands Usage
 **Here you will find all of the commands that you can use while running the mod.**
 
 ### Moderation Commands
