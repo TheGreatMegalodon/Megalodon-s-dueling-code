@@ -93,7 +93,7 @@ var vocabulary = [
   
   { text: "Discord", icon:"\u007b", key:"D" },
   { text: "Idiot", icon:"\u0079", key:"I" },
-  { text: "Arena", icon:"\u00be", key:"B" },
+  { text: "Arena", icon:"\u00be", key:"B" }, 
 ];
 
 var map =
