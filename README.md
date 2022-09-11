@@ -108,7 +108,7 @@ Which mean, that you have successfully kick someone!
 If an error shows up, please restart the mod.
 
 ## Commands
-You will find here all of the commands in the mod that you can use.
+**Here you will find all of the commands that you can use while running the mod.**
 
 ### Moderation Commands
 
@@ -118,7 +118,7 @@ You will find here all of the commands in the mod that you can use.
 | unidle() | Makes a specific player free, and makes his buttons usable again | unidle("player ID") | unidle(0) |
 | kick() | To kick someone from the game. more details [here](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md#how-to-kick-a-player) | kick("player ID","reason") | kick(1) or kick(1,"can't stand the power of modding") |
 
-###Basic Commands
+### Basic Commands
 
 | **Name** | **What is it for** | **How to use it** | **Usage example** |
 | - | - | - | - |
