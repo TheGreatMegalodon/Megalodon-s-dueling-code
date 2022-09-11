@@ -30,9 +30,9 @@ To see all the commands you can use.
 ### How to kick a player:
 To kick a player it is very easy. While your mod is running, you first need to write in the console:
 ```js
-info
+> info█
 ```
-Once you've done that you will see that the mod, is going to reply you with something like this:
+Once you've press "ENTER" the mod is going to reply you with something similar as this:
 <div align="left">
   <br />
   <p>
@@ -73,7 +73,8 @@ Watch carefuly the names, pick your cible and watch his ID, in my case its 0.
 The command you're gonna be using to kick someone is:
 
 ```js
-kick()
+> kick()
+> █
 ```
 
 Remember the ID, of the player, and write it down between the parenthesis.
@@ -81,7 +82,8 @@ Remember the ID, of the player, and write it down between the parenthesis.
 For my case its gonna look like this:
 
 ```js
-kick(0)
+> kick(0)
+> █
 ```
 
 In the console:
