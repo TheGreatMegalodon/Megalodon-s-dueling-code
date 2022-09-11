@@ -31,10 +31,13 @@ To see all the commands you can use.
 
 ### Kick
 To kick a player it is very easy. While your mod is running, you first need to write in the console:
+
 ```js
 > info█
 ```
+
 Once you've press "ENTER" the mod is going to reply you with something similar as this:
+
 ```js
  | Total amount of aliens: 0
  | Total amount of asteroids: 0
@@ -48,6 +51,7 @@ Once you've press "ENTER" the mod is going to reply you with something similar a
  | Coordinates: X: 105, Y: 356
 > █
 ```
+
 While looking at it, you can see a few informations.
 
 Firstly, you can obviously see this:
@@ -70,7 +74,7 @@ Next we have all of the interesting stuff.
  | Coordinates: X: 105, Y: 356
 ```
 
-These informations shows you the ID*(index)* of a player his name which can be useful to recognize the player you want to kick, the ship he have, if he is dead or not, and his coordinates.
+These informations shows you the ID(index) of a player and his name. Which can be useful to recognize the player you want to kick, you can also see the ship he have, if he is dead or not, and his coordinates.
 
 To kick a player you will only need the first lane:
 
@@ -104,6 +108,15 @@ Once you've press "ENTER" this is what you should see:
 ```
 
 Which mean, that you have successfully kick someone!
+
+you can also add a custom reason, but keep in my that this part is optional.
+but if you still want to set a custom reason you will need to write it like this:
+
+```js
+kick(0,"Not skilled enough to survive")
+```
+
+you can then put anything you want between the quotation marks.
 
 If an error shows up, please restart the mod.
 
