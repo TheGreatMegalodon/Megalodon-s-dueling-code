@@ -135,15 +135,15 @@ Stats are simple as `ship.type`
 first you should know that all ships work in a way that their level is equivalent to the number of upgrades they can have per category. For example lets take the `X-Warrior` is a `Tier 4`, if you have followed what i have said before and understood, you should know that his code/ID is 402 because he is a `Tier 4` and he is the `2nd ship` of his list.
 
 with knowing that, you should also know that there are category. first we have:
-* The shield group
+* **The shield group**
   * Capacity
   * Regeneration
-* The Laser Group
+* **The Laser Group**
   * Capacity
   * Regeneration
   * Damage
   * Laser Speed
-* The Velocity Group
+* **The Velocity Group**
   * Speed
   * Agility
 
