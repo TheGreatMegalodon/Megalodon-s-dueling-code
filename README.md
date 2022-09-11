@@ -109,14 +109,14 @@ If an error shows up, please restart the mod.
 
 ### How to use the "set" command?
 
-#### what is the type?
+### what is the type?
 
 The `ship.type` is a way to recognize a ship without his name.
 
 The easiest way to explain it to you is this:
 
 
-#### how to set the stats?
+### how to set the stats?
 
 **The crystals and stats parameter are optional, their defaul value is:** 
 * crystals: 720
