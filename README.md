@@ -21,7 +21,7 @@
 ## Help
 While runing the mod you can always type:
 ```js
-help
+> help█
 ```
 To see all the commands you can use.
 
