@@ -94,6 +94,11 @@ For my case its gonna look like this:
 ```
 
 In the console:
+
+```
+> █
+```
+
 <div align="left">
   <br />
   <p>
