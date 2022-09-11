@@ -116,7 +116,7 @@ You will find here all of the commands in the mod that you can use.
 | - | - | - | - |
 | idle() | Makes a specific player stuck in one position and disable his buttons | idle("player ID") | idle(0) |
 | unidle() | Makes a specific player free, and makes his buttons usable again | unidle("player ID") | unidle(0) |
-| kick() | To kick someone from the game. | kick("player ID","reason") | kick(1) or kick(1,"can't stand the power of modding") |
+| kick() | To kick someone from the game. more details [here](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md#how-to-kick-a-player) | kick("player ID","reason") | kick(1) or kick(1,"can't stand the power of modding") |
 
 ###Basic Commands
 
