@@ -107,6 +107,8 @@ Which mean, that you have successfully kick someone!
 
 If an error shows up, please restart the mod.
 
+## Commands
+
 ## Support
 * [My Discord Server](https://discord.gg/KXvCq4N)
 * Discord: Megalodon#0001
