@@ -100,7 +100,7 @@ Once you've press "ENTER" this is what you should see:
 </div>
 Which mean, that you have successfully kick someone!
 
-if an error shows up, please restart the mod.
+If an error shows up, please restart the mod.
 
 ## Support
 * [My Discord Server](https://discord.gg/KXvCq4N)
