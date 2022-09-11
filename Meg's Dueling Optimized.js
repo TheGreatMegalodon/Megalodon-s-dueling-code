@@ -94,10 +94,11 @@ var vocabulary = [
   { text: "Spectate", icon:"\u0059", key:"L" },
 
   { text: "Gems", icon:"\u0044", key:"M" },
-  { text: "Stats", icon:"\u0078", key:"B" },
+  { text: "Stats", icon:"\u0078", key:"K" },
+  { text: "Hmm", icon:"\u004b", key:"Q" },
   { text: "No Prb", icon:"\u0047", key:"P" },
+  
   { text: "Discord", icon:"\u007b", key:"D" },
-
   { text: "Idiot", icon:"\u0079", key:"I" },
 ];
 
