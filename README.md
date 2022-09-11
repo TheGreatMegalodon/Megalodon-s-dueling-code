@@ -33,7 +33,7 @@ To kick a player it is very easy. While your mod is running, you first need to w
 info
 ```
 Once you've done that you will see that the mod, is going to reply you with something like this:
-<div align="top">
+<div align="left">
   <br />
   <p>
     <a href="https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/"><img src="https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/starblast-1662853787326.png" width="500" alt="Megalodon-s-dueling-code" /></a>
