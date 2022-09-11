@@ -112,7 +112,7 @@ You will find here all of the commands in the mod that you can use.
 
 ### Moderation Commands
 
-## | **Name** | **What is it for** | **How to use it** | **Usage example** |
+| **Name** | **What is it for** | **How to use it** | **Usage example** |
 | - | - | - | - |
 | idle() | Makes a specific player stuck in one position and disable his buttons | idle("player ID") | idle(0) |
 | unidle() | Makes a specific player free, and makes his buttons usable again | unidle("player ID") | unidle(0) |
