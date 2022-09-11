@@ -19,13 +19,14 @@
 * **Bhpsngum**
 
 ## Help
+
+**⚠️ Small skills in modding are required to use thoses commands.**
+
 While runing the mod you can always type:
 ```
 > help█
 ```
 To see all the commands you can use.
-
-⚠️ Small skills in modding are required to use thoses commands.
 
 ### How to kick a player:
 To kick a player it is very easy. While your mod is running, you first need to write in the console:
