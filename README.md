@@ -97,7 +97,7 @@ Once you've press "ENTER" this is what you should see:
 
 ```
 > kick(0)
- | Player: "+game.ships[who].name+", id: "+who+" Has successfully been kicked
+ | Player: ҒꝚ▸Megalodon, id: 0 Has successfully been kicked
 > █
 ```
 
