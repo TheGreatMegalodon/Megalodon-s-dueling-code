@@ -455,7 +455,7 @@ var spectator_ship = function(ship) {
       if (!ship.custom.last_ship) {
         ship.custom.last_ship = switch_ship_codes[0];
       }
-      ship.set({type: ship.custom.last_ship, collider: true, shield: 999, crystals: 720});
+      ship.set({type: ship.custom.last_ship, collider: true, shield: 999, crystals: 720, stats: 88888888});
     } else {
       ship.custom.spectator = true;
       ship.custom.last_ship = ship.type;
