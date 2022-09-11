@@ -23,7 +23,8 @@ While runing the mod you can always type:
 ```js
 help
 ```
-to see all the commands you can use
+to see all the commands you can use.
+
 ⚠️ small skills in modding are required to use thoses commands.
 
 ### How to kick a player:
