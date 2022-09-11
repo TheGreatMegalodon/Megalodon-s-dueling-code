@@ -812,7 +812,7 @@ this.event = function(event){
 var Dueling_Safe_area = {
   id: "Dueling_Safe_area",
   obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/megs_dueling_center_arena_nocircle.png",
+  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/Middle_Safe_Area_2.png",
 };
 game.setObject({
   id: "Dueling_Safe_area",
