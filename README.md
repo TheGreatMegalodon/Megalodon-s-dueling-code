@@ -109,7 +109,7 @@ Once you've press "ENTER" this is what you should see:
 
 Which mean, that you have successfully kick someone!
 
-you can also add a custom reason, but keep in my that this part is optional.
+You can also add a custom reason, but keep in mind that this part is optional.
 but if you still want to set a custom reason you will need to write it like this:
 
 ```js
@@ -126,7 +126,7 @@ If an error shows up, please restart the mod.
 
 The `ship.type` is a way to recognize a ship without his name.
 
-The easiest way to explain it to you is this:
+The easiest way to explain it is this:
 
 <div align="left">
   <br />
@@ -151,7 +151,7 @@ but in case you want to change the crystals amount of a player you can use:
 crystals(560)
 ```
 
-or if you want to change the ship type; stats and crystals at the same time
+or if you want to change the ship type, stats, and crystals amount at the same time
 
 ```js
 set(0,602,560)
@@ -161,9 +161,9 @@ set(0,602,560)
 
 Stats are simple as `ship.type`
 
-first you should know that all ships work in a way that their level is equivalent to the number of upgrades they can have per category. For example lets take the `X-Warrior` is a `Tier 4`, if you have followed what i have said before and understood, you should know that his code/ID is 402 because he is a `Tier 4` and he is the `2nd ship` of his list.
+first you should know that all ships work in a way that their level is equivalent to the number of upgrades they can have per category. For example lets take the `X-Warrior`. The `X-Warrior` is a `Tier 4`, if you have followed what i have said before and understood, you should know that his `code/id` is `402` because he is a `Tier 4` and he is the `2nd ship` of his list, anyway.
 
-with knowing that, you should also know that there are 8 category:
+With knowing that, you should also know that there are 8 category:
 
 * **The shield group**
   * Capacity
@@ -177,9 +177,17 @@ with knowing that, you should also know that there are 8 category:
   * Speed
   * Agility
 
-Now that you've seen this, lets see the coding part.
+Now that you have taht in mind, lets head to the coding part.
 
-To remove upgardes from a ship, the stats should be like this `00000000`, but to max a ship you will replace the "0" with numbers. It would look like this "24354321" Thoses numbers means that the ship stats are:
+To remove upgardes from a ship, the stats should look like this `00000000` and in the console:
+
+```js
+set(0,601,0,00000000)
+```
+
+But to max a ship you will need to replace the "0" with numbers. 
+lets take an example: `24354321` Thoses numbers means that:
+
 * Capacity ⮞ **2 upgrades**
 * Regeneration ⮞ **4 upgrades**
 * Capacity ⮞ **3 upgrades**
@@ -196,9 +204,9 @@ set(0,601,0,24354321)
 > █
 ```
 
-You don't need to put `66666666` as stats to make your ship, the default value is `88888888` which means you ship get totally maxed.
+You don't need to put `66666666` as stats to max your ship, the default value is `88888888` which means you ship get totally maxed.
 
-It would look like this to use the defauld stats value:
+It would look like this with using the defauld value:
 
 ```js
 set(0,601)
