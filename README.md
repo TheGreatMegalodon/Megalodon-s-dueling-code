@@ -115,6 +115,12 @@ The `ship.type` is a way to recognize a ship without his name.
 
 The easiest way to explain it to you is this:
 
+<div align="center">
+  <br />
+  <p>
+    <a href="https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/"><img src="https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/starblast-1662404446569.png" width="900" alt="Megalodon-s-dueling-code" /></a>
+  </p>
+</div>
 
 ### how to set the stats?
 
