@@ -17,8 +17,8 @@
 //   -> TP Arena
 //   -> TP spawn
 
-//What has been added from v3.0 : 
-//- A new mechanic that make you respawn at the same coordinates where you died.
+//What has been added from v3.0s : 
+//- Credit images in the background
 
 // Type " help " for more information about the mod and his commands.
 
