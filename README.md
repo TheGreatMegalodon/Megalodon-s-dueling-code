@@ -1,7 +1,3 @@
-## Support
-* [My Discord Server](https://discord.gg/KXvCq4N)
-* Discord: Megalodon#0001
-
 <div align="center">
   <br />
   <p>
@@ -239,3 +235,7 @@ set(0,601)
 | `tp()` | To teleport someone at specific coordinates. | tp("**player ID**","**X value**","**Y value**") | `tp(0,200,200)` |
 | `tpall()` | To teleports everyone at specific coordinates. | tpall("**X value**","**Y value**") | `tpall(200,200)` |
 | `say("")` | To make a text appear while playing. | say("**Your message**") Writing `say()` will delete your message. | `say("The game ends soon")` |
+
+## Support
+* [My Discord Server](https://discord.gg/KXvCq4N)
+* Discord: Megalodon#0001
