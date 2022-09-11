@@ -51,8 +51,39 @@ firstly, you can obviously see this:
 ```
 
 This shows you the number of aliens in the game the number of asteroids in the game and the number of players in the game.
-thoses can be useful when you like to make a mess in modding!
+Thoses informations can be useful when you like to make a mess in modding!
 
+Next we have all of the interesting stuff.
+
+```js
+ | id: 0, Name: ҒꝚ▸Megalodon, Type: 613, Alive: true
+ | Coordinates: X: 7, Y: 3
+ | id: 1, Name: ҒꝚ▸Megalodon, Type: 613, Alive: true
+ | Coordinates: X: 0, Y: 1
+```
+
+These informations shows you the ID*(index)* of a player his name which can be useful to recognize the player you want to kick, the ship he have, if he is dead or not, and his coordinates.
+
+to kick a player you will only need the first lane:
+
+```js
+ | id: 0, Name: ҒꝚ▸Megalodon, Type: 613, Alive: true
+```
+
+Watch carefuly the names, pick your cible and watch his ID, in my case its 0.
+the command you're gonna be using to kick someone is:
+
+```js
+kick()
+```
+
+remember the ID, of the player, and write it down between the parenthesis.
+
+For my case its gonna look like this:
+
+```js
+kick(0)
+```
 
 ## Support
 * [My Discord Server](https://discord.gg/KXvCq4N)
