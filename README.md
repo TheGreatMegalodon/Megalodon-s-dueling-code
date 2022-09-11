@@ -122,6 +122,10 @@ The easiest way to explain it to you is this:
   </p>
 </div>
 
+Lets take the Fly, the Fly is a **Tier 1** and the **first ship** of his list, so his **code/id** is **101**.
+
+Next we can take the A-Speedster, A-Speedster is a **Tier 6** and he is the **5th ship** on his list, which means his **code/id** is **605**
+
 ### how to set the stats?
 
 **The crystals and stats parameter are optional, their defaul value is:** 
