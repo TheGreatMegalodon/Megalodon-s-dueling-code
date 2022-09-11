@@ -526,8 +526,8 @@ var MapCenter = {
 game.setObject({
   id: "MapCenter",
   type: MapCenter,
-  position:{x:0,y:0,z:-10},
-  scale:{x:80,y:80,z:0},
+  position:{x:0,y:0,z:-15},
+  scale:{x:100,y:100,z:0},
   rotation:{x:Math.PI,y:0,z:0}
 });
 
