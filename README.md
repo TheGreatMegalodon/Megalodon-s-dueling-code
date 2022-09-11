@@ -112,7 +112,7 @@ You will find here all of the commands in the mod that you can use.
 
 | Name | What is it for | How to use it | Usage example |
 | - | - | - | - |
-| idle(who) | Makes a specific player stuck in one position and disable his buttons | a | a |
+| idle(who) | Makes a specific player stuck in one position and disable his buttons | idle("player ID") | idle(0) |
 | a | a | a | a |
 
 ## Support
