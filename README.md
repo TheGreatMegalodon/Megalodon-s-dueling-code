@@ -23,17 +23,16 @@ While runing the mod you can always type:
 ```js
 help
 ```
-to see all the commands you can use.
+To see all the commands you can use.
 
-⚠️ small skills in modding are required to use thoses commands.
+⚠️ Small skills in modding are required to use thoses commands.
 
 ### How to kick a player:
 To kick a player it is very easy. While your mod is running, you first need to write in the console:
 ```js
 info
 ```
-Once you've done that
-you will see that the mod, is going to reply you with something like this:
+Once you've done that you will see that the mod, is going to reply you with something like this:
 <div align="center">
   <br />
   <p>
@@ -42,7 +41,7 @@ you will see that the mod, is going to reply you with something like this:
 </div>
 While looking at it, you can see a few informations.
 
-firstly, you can obviously see this:
+Firstly, you can obviously see this:
 
 ```js
  | Total amount of aliens: 0
@@ -64,26 +63,35 @@ Next we have all of the interesting stuff.
 
 These informations shows you the ID*(index)* of a player his name which can be useful to recognize the player you want to kick, the ship he have, if he is dead or not, and his coordinates.
 
-to kick a player you will only need the first lane:
+To kick a player you will only need the first lane:
 
 ```js
  | id: 0, Name: ҒꝚ▸Megalodon, Type: 613, Alive: true
 ```
 
 Watch carefuly the names, pick your cible and watch his ID, in my case its 0.
-the command you're gonna be using to kick someone is:
+The command you're gonna be using to kick someone is:
 
 ```js
 kick()
 ```
 
-remember the ID, of the player, and write it down between the parenthesis.
+Remember the ID, of the player, and write it down between the parenthesis.
 
 For my case its gonna look like this:
 
 ```js
 kick(0)
 ```
+
+In the console:
+
+<div align="center">
+  <br />
+  <p>
+    <a href="https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/"><img src="https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/starblast-1662853819440.png" width="500" alt="Megalodon-s-dueling-code" /></a>
+  </p>
+</div>
 
 ## Support
 * [My Discord Server](https://discord.gg/KXvCq4N)
