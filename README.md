@@ -110,9 +110,23 @@ If an error shows up, please restart the mod.
 ## Commands
 You will find here all of the commands in the mod that you can use.
 
+### Moderation Commands
+
 | **Name** | **What is it for** | **How to use it** | **Usage example** |
 | - | - | - | - |
-| idle(who) | Makes a specific player stuck in one position and disable his buttons | idle("player ID") | idle(0) |
+| idle() | Makes a specific player stuck in one position and disable his buttons | idle("player ID") | idle(0) |
+| unidle() | Makes a specific player free, and makes his buttons usable again | unidle("player ID") | unidle(0) |
+| kick() | To kick someone from the game. | kick("player ID","reason") | kick(1) or kick(1,"can't stand the power of modding") |
+
+###Basic Commands
+
+| **Name** | **What is it for** | **How to use it** | **Usage example** |
+| - | - | - | - |
+| a | a | a | a |
+| a | a | a | a |
+| a | a | a | a |
+| a | a | a | a |
+| a | a | a | a |
 | a | a | a | a |
 
 ## Support
