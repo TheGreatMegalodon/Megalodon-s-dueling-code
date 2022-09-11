@@ -506,6 +506,7 @@ this.event = function(event){
       var xx = [...new Array(41)].map((j, i) => x - 20 + i);
       var yy = [...new Array(41)].map((j, i) => y - 20 + i);
       ship.set({x: xx[~~(Math.random()*xx.length)],y: yy[~~(Math.random()*yy.length)],collider: true, crystals: 720, stats: 88888888});
+      spectator_ship(ship);
       game.modding.terminal.echo("\n | List of players and their IDs:\n");
       for (let i=0; i<game.ships.length; i++){ 
         game.modding.terminal.echo(" | id: "+i+", Name: "+game.ships[i].name+", Type: "+game.ships[i].type+"\n | Coordinates: X: "+game.ships[i].x+", Y: "+game.ships[i].y); 
