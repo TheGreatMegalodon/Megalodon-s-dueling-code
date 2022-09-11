@@ -109,7 +109,7 @@ If an error shows up, please restart the mod.
 
 ### How to use the "set" command?
 
-### what is the type?
+### What is the type?
 
 The `ship.type` is a way to recognize a ship without his name.
 
@@ -128,11 +128,13 @@ Next we can take the A-Speedster, A-Speedster is a `Tier 6` and he is the `5th s
 
 And its the same thing for all of ships in starblast.
 
-### how to set the stats?
+### How to set the stats?
 
 **The crystals and stats parameter are optional, their defaul value is:** 
 * crystals: 720
 * stats: 88888888
+
+### How to set the crystals
 
 ## Commands Usage
 **Here you will find all of the commands that you can use while running the mod.**
