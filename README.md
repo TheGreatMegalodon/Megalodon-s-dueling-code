@@ -40,10 +40,10 @@ Once you've press "ENTER" the mod is going to reply you with something similar a
  
  | List of players and their IDs:
   
- | id: 0, Name: ҒꝚ▸Megalodon, Type: 613, Alive: true
+ | id: 0, Name: Megalodon, Type: 613, Alive: true
  | Coordinates: X: 7, Y: 3
- | id: 1, Name: ҒꝚ▸Megalodon, Type: 613, Alive: true
- | Coordinates: X: 0, Y: 1
+ | id: 1, Name: Kylo, Type: 601, Alive: false
+ | Coordinates: X: 105, Y: 356
 > █
 ```
 While looking at it, you can see a few informations.
@@ -62,10 +62,10 @@ Thoses informations can be useful when you like to make a mess in modding!
 Next we have all of the interesting stuff.
 
 ```
- | id: 0, Name: ҒꝚ▸Megalodon, Type: 613, Alive: true
+ | id: 0, Name: Megalodon, Type: 613, Alive: true
  | Coordinates: X: 7, Y: 3
- | id: 1, Name: ҒꝚ▸Megalodon, Type: 613, Alive: true
- | Coordinates: X: 0, Y: 1
+ | id: 1, Name: Kylo, Type: 601, Alive: false
+ | Coordinates: X: 105, Y: 356
 ```
 
 These informations shows you the ID*(index)* of a player his name which can be useful to recognize the player you want to kick, the ship he have, if he is dead or not, and his coordinates.
@@ -73,7 +73,7 @@ These informations shows you the ID*(index)* of a player his name which can be u
 To kick a player you will only need the first lane:
 
 ```
- | id: 0, Name: ҒꝚ▸Megalodon, Type: 613, Alive: true
+ | id: 0, Name: Megalodon, Type: 613, Alive: true
 ```
 
 Watch carefuly the names, pick your cible and watch his ID, in my case its 0.
@@ -97,7 +97,7 @@ Once you've press "ENTER" this is what you should see:
 
 ```
 > kick(0)
- | Player: ҒꝚ▸Megalodon, id: 0 Has successfully been kicked
+ | Player: Megalodon, id: 0 Has successfully been kicked
 > █
 ```
 
