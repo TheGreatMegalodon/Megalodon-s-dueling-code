@@ -544,7 +544,7 @@ game.modding.commands.info = function(){
   game.modding.terminal.echo("\n");
 };
 
-block = function(who){
+idle = function(who){
   game.modding.terminal.echo("the player: "+game.ships[who].name+", id: "+who+" has been blocked\n");
   game.ships[who].set({idle: true});
   Exit_screen(game.ships[who]);
@@ -570,7 +570,7 @@ block = function(who){
   });
 };
 
-unblock = function(who){
+unidle = function(who){
   game.ships[who].setUIComponent(Menu_);
   game.ships[who].setUIComponent(Spectate);
   game.ships[who].setUIComponent(Regen);
@@ -603,12 +603,24 @@ set = function(who,what,crystals,stats=88888888){
   game.modding.terminal.echo(" | Type: "+what+", Crystals: "+crystals+", Stats: "+stats+"\n");
 };
 
+crystals = function(who,crystals){
+  game.ships[who].set({crystals:crystals});
+  game.modding.terminal.echo(" | Player: "+game.ships[who].name+", id: "+who+" Has successfully been given:");
+  game.modding.terminal.echo(" | Crystals: "+crystals+"\n");
+};
+
 // Teleportation commands
 tpto = function(who,towho){
   ship = game.ships[towho];
   game.ships[who].set({x:ship.x,y:ship.y});
   game.modding.terminal.echo(" | Player: "+game.ships[who].name+", id: "+who+" Has successfully been TP to:");
   game.modding.terminal.echo(" | Player: "+game.ships[towho].name+", id: "+towho+", coordinates: X: "+game.ships[towho].x+", Y:"+game.ships[towho].y+"\n");
+};
+
+tp = function(who,xx,yy){
+  game.ships[who].set({x:xx,y:yy});
+  game.modding.terminal.echo(" | Player: "+game.ships[who].name+", id: "+who+" Has successfully been TP to:");
+  game.modding.terminal.echo(" | Coordinates: X: "+xx+", Y:"+yy+"\n");
 };
 
 tpall = function(x,y){
@@ -643,6 +655,7 @@ say = function(text=""){
 };
 
 // Commands Annex
+
 game.modding.commands.help = function(){
   game.modding.terminal.echo("Mod by ⮞ Megalodon");
   game.modding.terminal.echo("Coding support ⮞ Lotus, Bhpsngum\n");
@@ -651,13 +664,15 @@ game.modding.commands.help = function(){
   game.modding.terminal.echo(" | helpmoderation ⮞ "+"Every moderation related commands");
 };
 game.modding.commands.helpmoderation = function(){
-  game.modding.terminal.echo(" | block(who) ⮞ "+"Makes a specific player stuck in one position, and remove the buttons.")
-  game.modding.terminal.echo(" | unblock(who) ⮞ "+"Makes a specific player free.")
+  game.modding.terminal.echo(" | idle(who) ⮞ "+"Makes a specific player stuck in one position.")
+  game.modding.terminal.echo(" | unidle(who) ⮞ "+"Makes a specific player free.")
   game.modding.terminal.echo(" | kick(id,reason) ⮞ "+"To kick someone from the game.\n")
 };
 game.modding.commands.helpgeneral = function(){
   game.modding.terminal.echo(" | set(who,type,crystals,stats) ⮞ "+"Replace: game.ships[0].set({});.");
+  game.modding.terminal.echo(" | crystals(who,crystals) ⮞ "+"To give a certain amout of crystals to someone.");
   game.modding.terminal.echo(" | tpto(who,towho) ⮞ "+"To teleport a player to another player.");
+  game.modding.terminal.echo(" | tp(who,x,y) ⮞ "+"To teleport someone.");
   game.modding.terminal.echo(" | tpall(x,y) ⮞ "+"To teleports everyone.");
   game.modding.terminal.echo(" | say(hello) ⮞ "+"To make an announcement to the players while playing.\n");
 };
