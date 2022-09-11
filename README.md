@@ -1,3 +1,7 @@
+## Support
+* [My Discord Server](https://discord.gg/KXvCq4N)
+* Discord: Megalodon#0001
+
 <div align="center">
   <br />
   <p>
@@ -18,10 +22,6 @@
 ### Coding support:
 * **Lotus/Notus**
 * **Bhpsngum**
-
-## Support
-* [My Discord Server](https://discord.gg/KXvCq4N)
-* Discord: Megalodon#0001
 
 ## Help
 
