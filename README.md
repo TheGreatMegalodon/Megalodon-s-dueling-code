@@ -29,7 +29,7 @@ While runing the mod you can always type:
 ```
 To see all the commands you can use.
 
-### How to kick a player?
+### How to "kick" a player?
 To kick a player it is very easy. While your mod is running, you first need to write in the console:
 ```js
 > info█
@@ -107,7 +107,20 @@ Which mean, that you have successfully kick someone!
 
 If an error shows up, please restart the mod.
 
-### How to use the set command?
+### How to use the "set" command?
+
+#### what is the type?
+
+The `ship.type` is a way to recognize a ship without his name.
+
+The easiest way to explain it to you is this:
+
+
+#### how to set the stats?
+
+**The crystals and stats parameter are optional, their defaul value is:** 
+* crystals: 720
+* stats: 88888888
 
 ## Commands Usage
 **Here you will find all of the commands that you can use while running the mod.**
