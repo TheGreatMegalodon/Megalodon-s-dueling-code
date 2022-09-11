@@ -128,6 +128,22 @@ Next we can take the A-Speedster, A-Speedster is a `Tier 6` and he is the `5th s
 
 And its the same thing for all of ships in starblast.
 
+### Ship Crystals
+
+You basically don't need to set any value, its automatically giving the right amount of gems.
+
+but in case you want to change the crystals amount of a player you can use:
+
+```js
+crystals(560)
+```
+
+or if you want to change the ship type; stats and crystals at the same time
+
+```js
+set(0,602,560)
+```
+
 ### Ship Stats
 
 Stats are simple as `ship.type`
@@ -174,22 +190,6 @@ It would look like this to use the defauld stats value:
 ```js
 set(0,601)
 > █
-```
-
-### Ship Crystals
-
-You basically don't need to set any value, its automatically giving the right amount of gems.
-
-but in case you want to change the crystals amount of a player you can use:
-
-```js
-crystals(560)
-```
-
-or if you want to change the ship type; stats and crystals at the same time
-
-```js
-set(0,602,560)
 ```
 
 ## Commands Usage
