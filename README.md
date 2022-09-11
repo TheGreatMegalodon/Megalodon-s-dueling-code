@@ -50,7 +50,7 @@ While looking at it, you can see a few informations.
 
 Firstly, you can obviously see this:
 
-```js
+```
  | Total amount of aliens: 0
  | Total amount of asteroids: 0
  | Total amount of players: 2
