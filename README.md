@@ -164,6 +164,7 @@ The `set` command will look like this:
 
 ```js
 set(0,601,24354321)
+> █
 ```
 
 You don't need to put `66666666` as stats to make your ship, the default value is `88888888` which means you ship get totally maxed.
@@ -172,6 +173,7 @@ It would look like this to use the defauld stats value:
 
 ```js
 set(0,601)
+> █
 ```
 
 ### How to set the crystals
