@@ -24,18 +24,18 @@
 **⚠️ Small skills in modding are required to use thoses commands.**
 
 While runing the mod you can always type:
-```
+```js
 > help█
 ```
 To see all the commands you can use.
 
 ### How to kick a player:
 To kick a player it is very easy. While your mod is running, you first need to write in the console:
-```
+```js
 > info█
 ```
 Once you've press "ENTER" the mod is going to reply you with something similar as this:
-```
+```js
  | Total amount of aliens: 0
  | Total amount of asteroids: 0
  | Total amount of players: 2
@@ -52,7 +52,7 @@ While looking at it, you can see a few informations.
 
 Firstly, you can obviously see this:
 
-```
+```js
  | Total amount of aliens: 0
  | Total amount of asteroids: 0
  | Total amount of players: 2
@@ -63,7 +63,7 @@ Thoses informations can be useful when you like to make a mess in modding!
 
 Next we have all of the interesting stuff.
 
-```
+```js
  | id: 0, Name: Megalodon, Type: 613, Alive: true
  | Coordinates: X: 7, Y: 3
  | id: 1, Name: Kylo, Type: 601, Alive: false
@@ -74,14 +74,14 @@ These informations shows you the ID*(index)* of a player his name which can be u
 
 To kick a player you will only need the first lane:
 
-```
+```js
  | id: 0, Name: Megalodon, Type: 613, Alive: true
 ```
 
 Watch carefuly the names, pick your cible and watch his ID, in my case its 0.
 The command you're gonna be using to kick someone is:
 
-```
+```js
 > kick()
 > █
 ```
@@ -90,14 +90,14 @@ Remember the ID, of the player, and write it down between the parenthesis.
 
 For my case its gonna look like this:
 
-```
+```js
 > kick(0)
 > █
 ```
 
 Once you've press "ENTER" this is what you should see:
 
-```
+```js
 > kick(0)
  | Player: Megalodon, id: 0 Has successfully been kicked
 > █
