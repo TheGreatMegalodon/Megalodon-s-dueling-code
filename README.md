@@ -29,7 +29,7 @@ While runing the mod you can always type:
 ```
 To see all the commands you can use.
 
-### How to "kick" a player?
+### Kick
 To kick a player it is very easy. While your mod is running, you first need to write in the console:
 ```js
 > info█
@@ -107,9 +107,9 @@ Which mean, that you have successfully kick someone!
 
 If an error shows up, please restart the mod.
 
-### How to use the "set" command?
+### SET Command
 
-### What is the type?
+### Ship Type
 
 The `ship.type` is a way to recognize a ship without his name.
 
@@ -128,7 +128,7 @@ Next we can take the A-Speedster, A-Speedster is a `Tier 6` and he is the `5th s
 
 And its the same thing for all of ships in starblast.
 
-### How to set the stats?
+### Ship Stats
 
 Stats are simple as `ship.type`
 
@@ -163,7 +163,7 @@ To remove upgardes from a ship, the stats should be like this `00000000`, but to
 The `set` command will look like this:
 
 ```js
-set(0,601,24354321)
+set(0,601,0,24354321)
 > █
 ```
 
@@ -176,9 +176,21 @@ set(0,601)
 > █
 ```
 
-### How to set the crystals
+### Ship Crystals
 
 You basically don't need to set any value, its automatically giving the right amount of gems.
+
+but in case you want to change the crystals amount of a player you can use:
+
+```js
+crystals(720)
+```
+
+or if you want to change the ship type; stats and crystals at the same time
+
+```js
+set(0,602,560)
+```
 
 ## Commands Usage
 **Here you will find all of the commands that you can use while running the mod.**
