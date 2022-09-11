@@ -149,7 +149,7 @@ And its the same thing for all of ships in starblast.
 
 | **Name** | **What is it for** | **How to use it** | **Usage example** |
 | - | - | - | - |
-| `set()` | basically replace: game.ships[0].set({});. | set("**player ID**","**What ship**","**How many crystals**","**What stats**") See more about it [here](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md#what-is-the-type) | `set(0,605,500,45232455)` |
+| `set()` | basically replace: game.ships[0].set({});. | set("**player ID**","**What ship**","**How many crystals**","**What stats**") See more about it [here](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md#how-to-use-the-set-command) | `set(0,605,500,45232455)` |
 | `crystals()` | To give a certain amout of crystals to someone. | crystals("**amount of gems**") | `crystals(720)` |
 | `tpto()` | To teleport a player to another player. | tpto("**player ID**","**to player ID**") | `tpto(0,1)` |
 | `tp()` | To teleport someone at specific coordinates. | tp("**player ID**","**X value**","**Y value**") | `tp(0,200,200)` |
