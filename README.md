@@ -174,11 +174,9 @@ It would look like this to use the defauld stats value:
 set(0,601)
 ```
 
-**The crystals and stats parameter are optional, their defaul value is:** 
-* crystals: 720
-* stats: 88888888
-
 ### How to set the crystals
+
+You basically don't need to set any value, its automatically giving the right amount of gems.
 
 ## Commands Usage
 **Here you will find all of the commands that you can use while running the mod.**
