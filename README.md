@@ -136,7 +136,16 @@ first you should know that all ships work in a way that their level is equivalen
 
 with knowing that, you should also know that there are category. first we have:
 * The shield group
- * ccc
+  * Capacity
+  * Regeneration
+* The Laser Group
+  * Capacity
+  * Regeneration
+  * Damage
+  * Laser Speed
+* The Velocity Group
+  * Speed
+  * Agility
 
 **The crystals and stats parameter are optional, their defaul value is:** 
 * crystals: 720
