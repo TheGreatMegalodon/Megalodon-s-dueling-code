@@ -51,7 +51,6 @@ firstly, you can obviously see this:
 ```
 
 This shows you the number of aliens in the game the number of asteroids in the game and the number of players in the game.
-
 thoses can be useful when you like to make a mess in modding!
 
 
