@@ -188,14 +188,14 @@ set(0,601,0,00000000)
 But to max a ship you will need to replace the "0" with numbers. 
 lets take an example: `24354321` Thoses numbers means that:
 
-* Capacity 🢒 **2 upgrades**
-* Regeneration 🢒 **4 upgrades**
-* Capacity 🢒 **3 upgrades**
-* Regeneration 🢒 **5 upgrades**
-* Damage 🢒 **4 upgrades**
-* Laser Speed 🢒 **3 upgrades**
-* Speed 🢒 **2 upgrades**
-* Agility 🢒 **1 upgrade**
+* Capacity 🠚 **2 upgrades**
+* Regeneration 🠚 **4 upgrades**
+* Capacity 🠚 **3 upgrades**
+* Regeneration 🠚 **5 upgrades**
+* Damage 🠚 **4 upgrades**
+* Laser Speed 🠚 **3 upgrades**
+* Speed 🠚 **2 upgrades**
+* Agility 🠚 **1 upgrade**
 
 The `set` command will look like this:
 
