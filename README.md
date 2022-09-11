@@ -130,6 +130,10 @@ And its the same thing for all of ships in starblast.
 
 ### How to set the stats?
 
+Stats are simple as `ship.type`
+
+first you should know that all ships work in a way that their level is equivalent to the number of upgrades they can have per category. For example lets take the `X-Warrior` is a `Tier 4`, if you have followed what i have said before and understood, you should know that his code/ID is 402 because he is a `Tier 4` and he is the `2nd ship` od his list.
+
 **The crystals and stats parameter are optional, their defaul value is:** 
 * crystals: 720
 * stats: 88888888
