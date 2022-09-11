@@ -139,20 +139,20 @@ Next we can take the A-Speedster, A-Speedster is a `Tier 6` and he is the `5th s
 
 | **Name** | **What is it for** | **How to use it** | **Usage example** |
 | - | - | - | - |
-| idle() | Makes a specific player stuck in one position and disable his buttons | idle("**player ID**") | `idle(0)` |
-| unidle() | Makes a specific player free, and makes his buttons usable again | unidle("**player ID**") | `unidle(0)` |
-| kick() | To kick someone from the game. more details [here](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md#how-to-kick-a-player) | kick("**player ID**","**reason**") | `kick(1)` or `kick(1,"can't stand the power of modding")` |
+| `idle()` | Makes a specific player stuck in one position and disable his buttons | idle("**player ID**") | `idle(0)` |
+| `unidle()` | Makes a specific player free, and makes his buttons usable again | unidle("**player ID**") | `unidle(0)` |
+| `kick()` | To kick someone from the game. more details [here](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md#how-to-kick-a-player) | kick("**player ID**","**reason**") | `kick(1)` or `kick(1,"can't stand the power of modding")` |
 
 ### Basic Commands
 
 | **Name** | **What is it for** | **How to use it** | **Usage example** |
 | - | - | - | - |
-| set() | basically replace: game.ships[0].set({});. | set("**player ID**","**What ship**","**How many crystals**","**What stats**") See more about it [here](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md#what-is-the-type) | `set(0,605,500,45232455)` |
-| crystals() | To give a certain amout of crystals to someone. | crystals("**amount of gems**") | `crystals(720)` |
-| tpto() | To teleport a player to another player. | tpto("**player ID**","**to player ID**") | `tpto(0,1)` |
-| tp() | To teleport someone at specific coordinates. | tp("**player ID**","**X value**","**Y value**") | `tp(0,200,200)` |
-| tpall() | To teleports everyone at specific coordinates. | tpall("**X value**","**Y value**") | `tpall(200,200)` |
-| say("") | To make a text appear while playing. | say("**Your message**") | `say("The game ends soon")` |
+| `set()` | basically replace: game.ships[0].set({});. | set("**player ID**","**What ship**","**How many crystals**","**What stats**") See more about it [here](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md#what-is-the-type) | `set(0,605,500,45232455)` |
+| `crystals()` | To give a certain amout of crystals to someone. | crystals("**amount of gems**") | `crystals(720)` |
+| `tpto()` | To teleport a player to another player. | tpto("**player ID**","**to player ID**") | `tpto(0,1)` |
+| `tp()` | To teleport someone at specific coordinates. | tp("**player ID**","**X value**","**Y value**") | `tp(0,200,200)` |
+| `tpall()` | To teleports everyone at specific coordinates. | tpall("**X value**","**Y value**") | `tpall(200,200)` |
+| `say("")` | To make a text appear while playing. | say("**Your message**") | `say("The game ends soon")` |
 
 ## Support
 * [My Discord Server](https://discord.gg/KXvCq4N)
