@@ -134,7 +134,8 @@ Stats are simple as `ship.type`
 
 first you should know that all ships work in a way that their level is equivalent to the number of upgrades they can have per category. For example lets take the `X-Warrior` is a `Tier 4`, if you have followed what i have said before and understood, you should know that his code/ID is 402 because he is a `Tier 4` and he is the `2nd ship` of his list.
 
-with knowing that, you should also know that there are category. first we have:
+with knowing that, you should also know that there are 8 category:
+
 * **The shield group**
   * Capacity
   * Regeneration
@@ -146,6 +147,18 @@ with knowing that, you should also know that there are category. first we have:
 * **The Velocity Group**
   * Speed
   * Agility
+
+Now that you've seen this, lets see the coding part.
+
+To remove upgardes from a ship, the stats should be like this `00000000`, but to max a ship you will replace the "0" with numbers. It would look like this "24354321" Thoses numbers means that the ship stats are:
+* Capacity ⮞ **2 upgrades**
+* Regeneration ⮞ **4 upgrades**
+* Capacity ⮞ **3 upgrades**
+* Regeneration ⮞ **5 upgrades**
+* Damage ⮞ **4 upgrades**
+* Laser Speed ⮞ **3 upgrades**
+* Speed ⮞ **2 upgrades**
+* Agility ⮞ **1 upgrade**
 
 **The crystals and stats parameter are optional, their defaul value is:** 
 * crystals: 720
