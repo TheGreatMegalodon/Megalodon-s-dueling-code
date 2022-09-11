@@ -126,6 +126,8 @@ Lets take the Fly, the Fly is a `Tier 1` and the `first ship` of his list, so hi
 
 Next we can take the A-Speedster, A-Speedster is a `Tier 6` and he is the `5th ship` on his list, which means his `code/id` is `605`
 
+And its the same thing for all of ships in starblast.
+
 ### how to set the stats?
 
 **The crystals and stats parameter are optional, their defaul value is:** 
