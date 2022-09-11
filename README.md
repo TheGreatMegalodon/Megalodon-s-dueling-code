@@ -122,12 +122,12 @@ If an error shows up, please restart the mod.
 
 | **Name** | **What is it for** | **How to use it** | **Usage example** |
 | - | - | - | - |
-| a | a | a | a |
-| a | a | a | a |
-| a | a | a | a |
-| a | a | a | a |
-| a | a | a | a |
-| a | a | a | a |
+| set() | basically replace: game.ships[0].set({});. | set("player ID","What ship","How many crystals","definied amount of stats") **The crystals and stats parameter are optional, their defaul value is: crystals: 20/80/180/320/500/720/980 and stats: 88888888** | set(0,605,500,45232455) |
+| crystals() | a | a | a |
+| tpto() | a | a | a |
+| tp() | a | a | a |
+| tpall() | a | a | a |
+| say() | a | a | a |
 
 ## Support
 * [My Discord Server](https://discord.gg/KXvCq4N)
