@@ -237,5 +237,5 @@ set(0,601)
 | `say("")` | To make a text appear while playing. | say("**Your message**") Writing `say()` will delete your message. | `say("The game ends soon")` |
 
 ## Support
-* [My Discord Server](<a href="https://discord.gg/" target="_blank">KXvCq4N</a>)
+* [My Discord Server](https://discord.gg/KXvCq4N)
 * Discord: Megalodon#0001
