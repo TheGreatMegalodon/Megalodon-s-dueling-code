@@ -110,8 +110,9 @@ If an error shows up, please restart the mod.
 ## Commands
 You will find here all of the commands in the mod that you can use.
 
-| - | - |
-| - | - |
+| Name | How to use it | Usage example |
+| idle(who) | - | - |
+| - | - | - |
 
 ## Support
 * [My Discord Server](https://discord.gg/KXvCq4N)
