@@ -521,7 +521,7 @@ this.event = function(event){
 var MapCenter = {
   id: "MapCenter",
   obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/megs_dueling_center_arena.png",
+  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/megs_dueling_center_arena_nocircle.png",
 };
 game.setObject({
   id: "MapCenter",
