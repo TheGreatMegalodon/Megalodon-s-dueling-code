@@ -93,25 +93,14 @@ For my case its gonna look like this:
 > █
 ```
 
-In the console:
+Once you've press "ENTER" this is what you should see:
 
 ```
+> kick(0)
+ | Player: "+game.ships[who].name+", id: "+who+" Has successfully been kicked
 > █
 ```
 
-<div align="left">
-  <br />
-  <p>
-    <a href="https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/"><img src="https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/starblast-1662853819440.png" width="500" alt="Megalodon-s-dueling-code" /></a>
-  </p>
-</div>
-Once you've press "ENTER" this is what you should see:
-<div align="left">
-  <br />
-  <p>
-    <a href="https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/"><img src="https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/image.png" width="500" alt="Megalodon-s-dueling-code" /></a>
-  </p>
-</div>
 Which mean, that you have successfully kick someone!
 
 If an error shows up, please restart the mod.
