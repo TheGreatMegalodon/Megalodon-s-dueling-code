@@ -843,16 +843,16 @@ game.setObject({
 });
 
 // Dueling arena
-var DuelingArena_Center = {
-  id: "DuelingArena_Center",
+var MapCenter = {
+  id: "MapCenter",
   obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/megs_dueling_center_arena.png",
+  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/megs_dueling_center_arena_nocircle.png",
 };
 game.setObject({
-  id: "DuelingArena_Centert",
-  type: DuelingArena_Center,
+  id: "MapCenter",
+  type: MapCenter,
   position:{x:1000,y:1000,z:-10},
-  scale:{x:80,y:80,z:0},
+  scale:{x:100,y:100,z:0},
   rotation:{x:Math.PI,y:0,z:0}
 });
 
