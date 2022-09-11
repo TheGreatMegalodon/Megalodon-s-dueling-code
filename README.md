@@ -41,7 +41,6 @@ you will see that the mod, is going to reply you with something like this:
   </p>
 </div>
 While looking at it, you can see a few informations.
-
 firstly, you can obviously see this:
 ```js
  | Total amount of aliens: 0
@@ -49,7 +48,6 @@ firstly, you can obviously see this:
  | Total amount of players: 2
 ```
 This shows you the number of aliens in the game the number of asteroids in the game and the number of players in the game.
-
 thoses can be useful when you like to make a mess in modding!
 
 
