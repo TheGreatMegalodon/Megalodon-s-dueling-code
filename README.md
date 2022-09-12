@@ -5,8 +5,7 @@
   </p>
 </div>
 
-## Megalodon's dueling code
-**Here is my very first dueling mod, I hope you enjoy!**
+## Meg's dueling Documentation
 
 ### Mod Versions: 
 * **v0.3.1**
@@ -18,6 +17,19 @@
 ### Coding support:
 * **Lotus/Notus**
 * **Bhpsngum**
+
+## Summary
+
+* [Help](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#help)
+  * [Kick](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#kick)
+* [`SET` command](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#set-command)
+  * [Ship Type](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-type)
+  * [Ship Crystals](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-crystals)
+  * [Ship Stats](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-stats)
+* [Command Usage](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#commands-usage)
+  * [Moderation Commands](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#moderation-commands)
+  * [Basic Commands](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#basic-commands)
+* [Support](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#support)
 
 ## Help
 
