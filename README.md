@@ -20,6 +20,7 @@
 
 ## Summary
 
+* [Running the Mod](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md#how-to-host-a-dueling-game)
 * [Help](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#help)
   * [Kick](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#kick)
 * [`SET` command](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#set-command)
