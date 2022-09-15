@@ -41,11 +41,11 @@ While runing the mod you can always type:
 ```
 To see all the commands you can use.
 
-### How to host
+### How to host a dueling game
 
 Starblast Modding link: [Here](https://starblast.io/modding.html)
 
-First you need to remove any code in the "code section"
+First you need to remove any code in the "code section", like in this image:
 
 <div align="center">
   <br />
