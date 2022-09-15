@@ -41,6 +41,19 @@ While runing the mod you can always type:
 ```
 To see all the commands you can use.
 
+### How to host
+
+Starblast Modding link: [Here](https://starblast.io/modding.html)
+
+First you need to remove any code in the "code section"
+
+<div align="center">
+  <br />
+  <p>
+    <a href="https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/"><img src="https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/image.png" width="700" alt="Megalodon-s-dueling-code" /></a>
+  </p>
+</div>
+
 ### Kick
 To kick a player it is very easy. While your mod is running, you first need to write in the console:
 
