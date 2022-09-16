@@ -141,16 +141,13 @@ var ship_instructor = function(ship, message, character = "Lucina", delay = 0, h
 };
 
 this.tick = function(game) {
-for (let ship of game.ships) {
-  let max_crystals = 20 * Math.trunc(ship.type / 100)*Math.trunc(ship.type / 100);
-  if (ship.custom.crystals_last_updated != ship.last_updated && ship.crystals >= max_crystals) {
-    ship.set({crystals: max_crystals - 1});
-    ship.custom.crystals_last_updated = ship.last_updated;
-  }
-}
-
 if (game.step % 15 === 0) {
   for (let ship of game.ships) {
+    let max_crystals = 20 * Math.trunc(ship.type / 100)*Math.trunc(ship.type / 100);
+    if (ship.custom.crystals_last_updated != ship.last_updated && ship.crystals >= max_crystals) {
+      ship.set({crystals: max_crystals - 1});
+      ship.custom.crystals_last_updated = ship.last_updated;
+    }
     if (ship.custom.init !== true) {
       ship.custom.init = true;
         ship_instructor(ship, "GET SOME TIPS!\nPush [9] to regen your ship", "Zoltar");
