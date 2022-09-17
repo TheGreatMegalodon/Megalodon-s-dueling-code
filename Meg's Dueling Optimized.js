@@ -17,8 +17,8 @@
 //   -> TP Arena
 //   -> TP spawn
 
-//What has been added from v3.0s : 
-//- Credit images in the background
+//What has been added from v0.3.1s : 
+//- A lag emote.
 
 // Type " help " for more information about the mod and his commands.
 
