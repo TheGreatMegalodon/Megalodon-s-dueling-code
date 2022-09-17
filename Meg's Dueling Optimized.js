@@ -1,4 +1,4 @@
-// Mod Version : v0.3.2s
+// Mod Version : v0.3.3s
 // Mod creator : Megalodon
 // Coding support : Lotus/Notus, Bhpsngum
 
@@ -17,12 +17,10 @@
 //   -> TP Arena
 //   -> TP spawn
 
-//What has been added from v0.3.1s : 
-//- A lag emote.
+//What has been added from v0.3.2s : 
+//- Added a button that teleports you to the center.
 
 // Type " help " for more information about the mod and his commands.
-
-// safe zone
 
 // Ship Codes
 var switch_ship_codes = [601,624];
@@ -30,6 +28,7 @@ var spectator_ship_code = 191;
 var admin_ship_codes = [192,194];
 
 // Delays
+var spawn_zone_delay = 4;
 var switch_ship_delay = 0.25;
 var spectator_switch_delay = 2;
 var TP_points_delay = 2;
@@ -115,7 +114,7 @@ this.options = {
   reset_tree: true,
   
   // Others Options
-  soundtrack: "argon.mp3", //civilisation.mp3 | procedurality.mp3 | argon.mp3 | crystals.mp3
+  soundtrack: "red_mist.mp3", //civilisation.mp3 | procedurality.mp3 | argon.mp3 | crystals.mp3 | red_mist.mp3 | warp_drive.mp3
   vocabulary: vocabulary,
   ships: ships,
   custom_map: "",
@@ -178,6 +177,7 @@ if (game.step % 15 === 0) {
 };
 
 // Delays
+spawn_zone_delay *= 60;
 switch_ship_delay *= 60;
 spectator_switch_delay *= 60;
 TP_points_delay *= 60;
@@ -300,9 +300,22 @@ var Stats_button = function(ship) {
   }
 };
 
+var Teleport_Center = function(ship) {
+  var x = (Math.random() - 0.5) * game.options.map_size * 0.6;
+  var y = (Math.random() - 0.5) * game.options.map_size * 0.6;
+  if (!ship.custom.spawn || game.step >= ship.custom.spawn) {
+    ship.custom.spawn = game.step + spawn_zone_delay;
+    ship.set({x: x, y: y});
+  }
+};
+
 // Exit Screen Commands
 var Exit_screen = function(ship) {
   ship.setUIComponent(Menu_);
+  ship.setUIComponent({
+    id: "Tp_Spawn",
+    visible: false
+  });
   ship.setUIComponent({
     id: "Square",
     visible: false
@@ -339,6 +352,7 @@ var TP_points_button = function(ship) {
     } else {
       ship.setUIComponent(Stats2);
     }
+    ship.setUIComponent(Tp_Spawn);
     ship.setUIComponent(next_ship);
     ship.setUIComponent(previous_ship);
     ship.setUIComponent(Box_Exit_screen);
@@ -438,6 +452,18 @@ var previous_ship = {
   ]
 };
 
+var Tp_Spawn = {
+  id: "Tp_Spawn",
+  position: [58,46,10,5.5],
+  clickable: true,
+  visible: true,
+  shortcut: "5",
+  components: [
+    { type:"box",position:[0,0,100,100],fill:"rgba(255, 0, 0, 0.50)",stroke:"rgb(255, 0, 0)",width:9},
+    { type: "text",position:[0,17,100,62],value:"Center [5]",color:"#ffffff"},
+  ]
+};
+
 var Stats = {
   id: "Stats",
   position: [32,46,10,5.5],
@@ -498,11 +524,13 @@ this.event = function(event){
         Stats_button(ship);
       }  else if (component == "Stats2"){
         Stats_button(ship);
+      }  else if (component == "Tp_Spawn"){
+        Teleport_Center(ship);
       }  break;
     case "ship_spawned":
       const { x = 0, y = 0 } = ship.custom;
-      var xx = [...new Array(41)].map((j, i) => x - 20 + i);
-      var yy = [...new Array(41)].map((j, i) => y - 20 + i);
+      var xx = [...new Array(41)].map((j, i) => x - 30 + i);
+      var yy = [...new Array(41)].map((j, i) => y - 30 + i);
       ship.set({x: xx[~~(Math.random()*xx.length)],y: yy[~~(Math.random()*yy.length)],collider: true, crystals: 720, stats: 88888888});
       spectator_ship(ship);
       game.modding.terminal.echo("\n | List of players and their IDs:\n");
