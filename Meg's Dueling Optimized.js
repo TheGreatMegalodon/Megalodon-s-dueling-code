@@ -100,6 +100,7 @@ var vocabulary = [
   
   { text: "Discord", icon:"\u007b", key:"D" },
   { text: "Idiot", icon:"\u0079", key:"I" },
+  { text: "Lag", icon:"\u0069", key:"J" }
 ];
 
 this.options = {
