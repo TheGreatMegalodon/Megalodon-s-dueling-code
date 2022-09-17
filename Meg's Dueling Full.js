@@ -2,9 +2,8 @@
 // Mod creator : Megalodon
 // Coding support : Lotus/Notus, Bhpsngum
 
-// What has been added from v0.3 :
-// - Better Images in the back ground
-// - Fixed some minor delails
+// What has been added from v0.3.1 :
+// - A lag emote.
 
 // Type " help " for more information about the mod and his commands.
 
@@ -94,6 +93,7 @@ var vocabulary = [
   { text: "Discord", icon:"\u007b", key:"D" },
   { text: "Idiot", icon:"\u0079", key:"I" },
   { text: "Arena", icon:"\u00be", key:"B" }, 
+  { text: "Lag", icon:"\u0069", key:"J" }
 ];
 
 var map =
@@ -355,10 +355,7 @@ for (let ship of game.ships) {
     ship.set({invulnerable:100});
     ship.custom.invulnerable_last_updated = ship.last_updated;
   }
-}
-
-if (game.step % 15 === 0) {
-  for (let ship of game.ships) {
+  if (game.step % 15 === 0) {
     if (ship.custom.init !== true) {
       ship.custom.init = true;
         ship_instructor(ship, "GET SOME TIPS!\nPush [9] to regen and max your ship", "Zoltar");
@@ -391,10 +388,10 @@ if (game.step % 15 === 0) {
         ship.set({stats:0});
       }
     }
-    if (!game.custom.admin && game.ships[0]) {
-      game.custom.admin = true;
-      game.ships[0].setUIComponent(Admin);
-    }
+  }
+  if (!game.custom.admin && game.ships[0]) {
+    game.custom.admin = true;
+    game.ships[0].setUIComponent(Admin);
   }
 };
 
