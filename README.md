@@ -23,7 +23,7 @@
 * [Running the Mod](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md#how-to-host-a-dueling-game)
 * [Help](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#help)
   * [Kick](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#kick)
-* [`SET` command](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#set-command)
+* [SET command](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#set-command)
   * [Ship Type](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-type)
   * [Ship Crystals](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-crystals)
   * [Ship Stats](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-stats)
