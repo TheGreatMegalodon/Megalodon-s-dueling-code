@@ -8,8 +8,8 @@
 ## Meg's dueling Documentation
 
 ### Mod Versions: 
-* **v0.3.1**
-* **v0.3.1s**
+* **v0.3.2**
+* **v0.3.2s**
 
 ### Mod creator: 
 * **Megalodon**
