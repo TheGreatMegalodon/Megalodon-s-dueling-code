@@ -249,8 +249,8 @@ set(0,601)
 
 ## How to add your own ships
 
-```cs
-# Incomming
+```diff
+Incomming
 ```
 
 ## Commands Usage
