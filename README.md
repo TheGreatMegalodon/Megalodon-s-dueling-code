@@ -247,6 +247,12 @@ set(0,601)
 > █
 ```
 
+## How to add your own ships
+
+```py
+"Incomming"
+```
+
 ## Commands Usage
 **Here you will find all of the commands that you can use while running the mod.**
 
