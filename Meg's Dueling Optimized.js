@@ -210,7 +210,7 @@ if (game.step % 15 === 0) {
       }
       var level = Math.trunc(ship.type / 100);
       if (level < 7) {
-        var max_stats = 66666666 * level;
+        var max_stats = 11111111 * level;
         if (ship.custom.keep_maxed) {
           if (ship.stats != max_stats) {
             ship.set({stats:max_stats});
