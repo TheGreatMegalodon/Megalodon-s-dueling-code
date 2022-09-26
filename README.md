@@ -18,9 +18,12 @@
 * **Lotus/Notus**
 * **Bhpsngum**
 
-## Summary
+## Support
+* [Support Discord Server](https://discord.gg/KXvCq4N)
+* Discord: Megalodon#0001
 
-* [Running the Mod](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md#how-to-host-a-dueling-game)
+## Summary
+* [Support](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#support)
 * [Help](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#help)
   * [How to host a dueling game](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#how-to-host-a-dueling-game)
     * [Starblast Modding link](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#starblast-modding-link)
@@ -33,7 +36,6 @@
 * [Command Usage](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#commands-usage)
   * [Moderation Commands](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#moderation-commands)
   * [Basic Commands](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#basic-commands)
-* [Support](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#support)
 
 ## Help
 
@@ -62,7 +64,7 @@ First of all you have to remove any code, like in this image:
 
 Next you have to choose between the 2 verion of the mod that are available:
 * [0.3.2](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Full.js) (Full Version)
-* [0.4.0s](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Optimized.js) (Optimized Version)
+* [0.4.1s](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Optimized.js) (Optimized Version)
 
 Then just simply paste the version you choosed in your Modding tab.
 
@@ -280,7 +282,3 @@ set(0,601)
 | `tp()` | To teleport someone at specific coordinates. | tp("**player ID**","**X value**","**Y value**") | `tp(0,200,200)` |
 | `tpall()` | To teleports everyone at specific coordinates. | tpall("**X value**","**Y value**") | `tpall(200,200)` |
 | `say("")` | To make a text appear while playing. | say("**Your message**") Writing `say()` will delete your message. | `say("The game ends soon")` |
-
-## Support
-* [My Discord Server](https://discord.gg/KXvCq4N)
-* Discord: Megalodon#0001
