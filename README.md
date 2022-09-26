@@ -22,6 +22,8 @@
 
 * [Running the Mod](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md#how-to-host-a-dueling-game)
 * [Help](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#help)
+  * [How to host a dueling game](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#how-to-host-a-dueling-game)
+    * [Starblast Modding link](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#starblast-modding-link)
   * [Kick](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#kick)
 * [SET command](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#set-command)
   * [Ship Type](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-type)
