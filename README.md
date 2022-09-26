@@ -45,7 +45,8 @@ To see all the commands you can use.
 
 ### How to host a dueling game
 
-Starblast Modding link: [![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](https://starblast.io/modding.html)
+Starblast Modding link:
+[![forthebadge](https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/b9834e2787f92c5qsqdq06eb5c06206d9ca07.png)](https://starblast.io/modding.html)
 
 First you need to remove any code in the "code section", like in this image:
 
