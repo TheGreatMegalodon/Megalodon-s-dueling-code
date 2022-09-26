@@ -49,7 +49,7 @@ To see all the commands you can use.
 
 [![ModdingSpace](https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/Modding_space_button.png)](https://starblast.io/modding.html)
 
-First you need to remove any code in the "code section", like in this image:
+First of all you have to remove any code, like in this image:
 
 <div align="center"> 
   <br />
