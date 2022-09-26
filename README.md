@@ -50,7 +50,7 @@ Starblast Modding link:
 
 First you need to remove any code in the "code section", like in this image:
 
-<div align="center">
+<div align="center"> 
   <br />
   <p>
     <a href="https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/"><img src="https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/image.png" width="700" alt="Megalodon-s-dueling-code" /></a>
