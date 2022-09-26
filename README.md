@@ -45,7 +45,7 @@ To see all the commands you can use.
 
 ### How to host a dueling game
 
-**Starblast Modding link:**
+#### Starblast Modding link:
 
 [![ModdingSpace](https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/Modding_space_button.png)](https://starblast.io/modding.html)
 
