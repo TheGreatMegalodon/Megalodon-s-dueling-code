@@ -277,7 +277,7 @@ set(0,601)
 | **Command Name** | **What is it for** | **How to use it** | **Usage example** |
 | - | - | - | - |
 | `set()` | basically replace: game.ships[0].set({});. | set("**player ID**","**[What ship](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-type)**","**[How many crystals](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-crystals)**","**[What stats](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-stats)**") See more about it [here](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#set-command) | `set(0,605,500,45232455)` |
-| `crystals()` | To give a certain amout of crystals to someone. | crystals("**amount of gems**") | `crystals(720)` |
+| `crystals()` | To give a certain amout of crystals to someone. | crystals("**[amount of gems](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-crystals)**") | `crystals(720)` |
 | `tpto()` | To teleport a player to another player. | tpto("**player ID**","**to player ID**") | `tpto(0,1)` |
 | `tp()` | To teleport someone at specific coordinates. | tp("**player ID**","**X value**","**Y value**") | `tp(0,200,200)` |
 | `tpall()` | To teleports everyone at specific coordinates. | tpall("**X value**","**Y value**") | `tpall(200,200)` |
