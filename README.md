@@ -9,7 +9,7 @@
 
 ### Mod Versions: 
 * **v0.3.2**
-* **v0.4.0s**  (Most recent one)
+* **v0.4.1s**  *(Most used)*
 
 ### Mod creator: 
 * **Megalodon**
