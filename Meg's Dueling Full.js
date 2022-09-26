@@ -1,9 +1,9 @@
-// Mod Version : v0.3.2
+// Mod Version : v0.3.3
 // Mod creator : Megalodon
 // Coding support : Lotus/Notus, Bhpsngum
 
-// What has been added from v0.3.1 :
-// - A lag emote.
+// What has been added from v0.3.2 :
+// - Less bugs.
 
 // Type " help " for more information about the mod and his commands.
 
@@ -300,7 +300,7 @@ var map =
 
 this.options = {
   // Game Options
-  map_name: "Meg's Dueling",
+  map_name: "Meg's Dueling v0.3.3",
   max_level: 6,
   max_players: 20,
   starting_ship: 613,
@@ -309,11 +309,10 @@ this.options = {
   speed_mod: 1.2,
   weapons_store: false,
   radar_zoom: 3,
-  projectile_speed: 1.2,
   reset_tree: true,
   
   // Asteroids
-  crystal_value: 0,
+  crystal_value: 0.2,
   asteroids_strength: 1.5,
   
   // Others Options
@@ -321,7 +320,6 @@ this.options = {
   vocabulary: vocabulary,
   ships: ships,
   custom_map: map,
-  lives: 5,
 };
 
 var ship_instructor = function(ship, message, character = "Lucina", delay = 0, hide_after = 0) {
@@ -456,7 +454,7 @@ var spectator_ship = function(ship) {
     } else {
       ship.custom.spectator = true;
       ship.custom.last_ship = ship.type;
-      ship.set({type: spectator_ship_code, crystals: 720, stats: 88888886, shield: 999, collider: false});
+      ship.set({type: spectator_ship_code, crystals: 0, stats: 88888888, shield: 999, collider: false});
     }
   }
 };
@@ -520,9 +518,11 @@ var spawn_zone = function(ship) {
 };
 
 var what_if_ship_spawned = function(ship) {
-  var x = (Math.random() - 0.5) * game.options.map_size * 0.4;
-  var y = (Math.random() - 0.5) * game.options.map_size * 0.4;
-  ship.set({x: x, y: y, collider: true, crystals: 720, stats: 88888888});
+  const { x = 0, y = 0 } = ship.custom;
+  var xx = [...new Array(41)].map((j, i) => x - 30 + i);
+  var yy = [...new Array(41)].map((j, i) => y - 30 + i);
+  ship.set({x: xx[~~(Math.random()*xx.length)],y: yy[~~(Math.random()*yy.length)],collider: true, crystals: 720, stats: 88888888});
+  spectator_ship(ship);
   game.modding.terminal.echo("\n | List of players and their IDs:\n");
   for (let i=0; i<game.ships.length; i++){ 
     game.modding.terminal.echo(" | id: "+i+", Name: "+game.ships[i].name+", Type: "+game.ships[i].type+"\n | Coordinates: X: "+game.ships[i].x+", Y: "+game.ships[i].y); 
@@ -801,6 +801,9 @@ this.event = function(event){
       }  break;
     case "ship_spawned":
       what_if_ship_spawned(ship);
+    break;
+    case "ship_destroyed":
+      Object.assign(ship.custom, { x: ship.x, y: ship.y });
     break;
    }
 };
