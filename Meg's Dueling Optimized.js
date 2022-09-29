@@ -8,7 +8,7 @@ mod_version =
 // first of all, the "s" stands for "small", which means.. YES, finally an optimized version of that frinkin mod !!
 
 // What has been optimized from the full version : 
-// - Vocabulary has been upadted.
+// - Vocabulary has been updated.
 // - No more map
 //    -> Safe zone removed
 //    -> Arena removed
@@ -17,7 +17,6 @@ mod_version =
 // - No more UI are displayed on the radar
 // - Buttons removed : 
 //    -> TP Arena
-//    -> TP spawn
 
 // What has been added from v0.4.1s : 
 //  - changed somme not really important thinggies like:
