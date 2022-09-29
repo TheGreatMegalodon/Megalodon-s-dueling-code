@@ -5,7 +5,7 @@
   </p>
 </div>
 
-## Meg's dueling Documentation
+# Meg's dueling Documentation
 
 ### Mod Versions: 
 * **v0.3.3**
@@ -22,7 +22,7 @@
 * [Support Discord Server](https://discord.gg/KXvCq4N)
 * Discord: Megalodon#0001
 
-### Comming soon!!
+## Comming soon!!
 * A better way to end the games:
   * Doing a certain command will start a timer of 5 minutes, and at the end of them the mod will close by itself.
 
