@@ -260,9 +260,6 @@ set(0,601)
 
 ## How to add your own ships
 
-[![Watch the video](https://www.youtube.com/watch?v=O8TUg_ltOWY&t=211s&ab_channel=Megalodon)](https://www.youtube.com/watch?v=O8TUg_ltOWY&t=211s&ab_channel=Megalodon)
-
-
 ```diff
 - Incomming
 ```
