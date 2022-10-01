@@ -260,7 +260,7 @@ set(0,601)
 
 ## How to add your own ships
 
-[![Watch the video](https://raw.github.com/GabLeRoux/WebMole/master/ressources/WebMole_Youtube_Video.png)]([http://youtu.be/vt5fpE0bzSY](https://www.youtube.com/watch?v=O8TUg_ltOWY&t=211s&ab_channel=Megalodon))
+[![Watch the video]([https://raw.github.com/GabLeRoux/WebMole/master/ressources/WebMole_Youtube_Video.png](https://www.youtube.com/watch?v=O8TUg_ltOWY&t=211s&ab_channel=Megalodon))]([http://youtu.be/vt5fpE0bzSY](https://www.youtube.com/watch?v=O8TUg_ltOWY&t=211s&ab_channel=Megalodon))
 
 
 ```diff
