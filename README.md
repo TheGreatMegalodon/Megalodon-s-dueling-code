@@ -270,6 +270,8 @@ set(0,601)
 ## Commands Usage
 **Here you will find all of the commands that you can use while running the mod.**
 
+### How to use the GameOver command
+
 ### Moderation Commands
 
 | **Command Name** | **What is it for** | **How to use it** | **Usage example** |
