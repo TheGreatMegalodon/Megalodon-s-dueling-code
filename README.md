@@ -23,8 +23,10 @@
 * Discord: Megalodon#0001
 
 ## Comming soon!!
-* A better way to end the games:
-  * Doing a certain command will start a timer of 5 minutes, and at the end of them the mod will close by itself.
+
+```diff
+- --
+```
 
 ## Summary
 * [Support](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#support)
@@ -275,6 +277,7 @@ set(0,601)
 | `idle()` | Makes a specific player stuck in one position and disable his buttons. | idle("**player ID**") | `idle(0)` |
 | `unidle()` | Makes a specific player free, and makes his buttons usable again. | unidle("**player ID**") | `unidle(0)` |
 | `kick()` | To kick someone from the game. more details [here](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#kick). | kick("**player ID**","**reason**") | `kick(1)` or `kick(1,"can't stand the power of modding")` |
+|`gameover()`| Give the opportunity to end a dueling game smoothly | gameover(**0 or 1**) | `gameover(1)` |
 
 ### Basic Commands
 
