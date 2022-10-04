@@ -1,10 +1,10 @@
 mod_version =
-" v0.4.2s";
+" v1.0s";
 
 // Mod creator : Megalodon
 // Coding support : Lotus/Notus, Bhpsngum
 
-// Whats v0.4.2s ?
+// Whats the "s" at the end of the mod version ?
 // first of all, the "s" stands for "small", which means.. YES, finally an optimized version of that frinkin mod !!
 
 // What has been optimized from the full version : 
@@ -18,10 +18,11 @@ mod_version =
 // - Buttons removed : 
 //    -> TP Arena
 
-// What has been added from v0.4.1s : 
-//  - changed somme not really important thinggies like:
-//    - Mod length is now 655 lines.
-//    - Tinny changes on the custom commands
+// What has been added from v0.4.2s : 
+//  - New system to end the games, uses a timer of 5 minutes to end the game solftly.
+//  - New button, "Hide_Buttons".
+//     - To prevent pressing the buttons when dueling.
+//  - Fixed little bugs.
 
 // Type " help " for more information about the mod and his commands.
 
@@ -156,7 +157,7 @@ var vocabulary = [
 
 this.options = {
   // Game Options
-  map_name: "Dueling"+mod_version,
+  map_name: "Meg's Dueling",
   max_level: 6,
   max_players: 200,
   starting_ship: 613,
@@ -247,9 +248,23 @@ var Stats2 = {id: "Stats2",position: [32,46,10,5.5],clickable: true,visible: tru
   ]
 };
 
-var Box_Exit_screen = {id: "Box_Exit_screen",position: [58,61,10,5.5],clickable: true,visible: true,shortcut: "0",components: [
+var Box_Exit_screen = {id: "Box_Exit_screen",position: [58,61,10,5.5],clickable: true,visible: true,shortcut: "0",
+components: [
     { type:"box",position:[0,0,100,100],fill:"rgba(255,255,255, 0.40)",stroke:"#ffffff",width:9},
     { type: "text",position:[0,17,100,62],value:"Exit [0]",color:"#ffffff"},
+  ]
+};
+
+//Hide buttons
+var Hide_Buttons = {id: "Hide_Buttons",position: [4.8,27.5,11,7],clickable: true,visible: true,shortcut: "2",
+  components: [
+    { type: "text",position:[0,0,100,100],value:"Hide Buttons [2]",color:"#ffffff"},
+  ]
+};
+
+var Show_Buttons = {id: "Show_Buttons",position: [4.8,27.5,11,7],clickable: true,visible: true,shortcut: "2",
+  components: [
+    { type: "text",position:[0,0,100,100],value:"Show Buttons [2]",color:"#ffffff"},
   ]
 };
 
@@ -263,13 +278,14 @@ if (game.step % 15 === 0) {
     }
     if (ship.custom.init !== true) {
       ship.custom.init = true;
+        endgame_timer = 0;
         ship_instructor(ship, "GET SOME TIPS!\nPush [9] to regen your ship", "Zoltar");
         ship_instructor(ship, "Push [0] to open the menu and use the same key to close it", "Zoltar", 5);
         ship_instructor(ship, "Push [8] to become spectator, [8] or if the menu is open [3]/[4] to exit it", "Zoltar", 10, 6);
         ship.setUIComponent(Menu_);
         ship.setUIComponent(Regen);
         ship.setUIComponent(Spectate);
-        
+        ship.setUIComponent(Hide_Buttons);
       }
       var level = Math.trunc(ship.type / 100);
       if (level < 7) {
@@ -281,6 +297,33 @@ if (game.step % 15 === 0) {
         }
       } else if (ship.stats > 0) {
         ship.set({stats:0});
+      }
+      switch(endgame_timer) {
+        case 0:
+          ship.setUIComponent({id:"endgame_timer_sandm",visible: false});
+          TimeSec = 60;
+          TimeMin = 4;
+        break;
+        case 1:
+          if (!ship.custom.endgame || game.step >= ship.custom.endgame) {
+            ship.custom.endgame = game.step + 60;
+            TimeSec--;
+            if (TimeSec <= 0) {
+              TimeSec = 60;
+              TimeMin--;
+            }
+            ship.setUIComponent({id: "endgame_timer_sandm",position: [85,42,10,10],clickable: false,visible: true,
+              components: [
+                {type: "text", position: [0,0,100,50], color: "rgb(255,255,255)", value:"Time left:"},
+                {type: "text", position: [0,50,100,46], color: "rgb(255,255,255)", value:TimeMin+" : "+TimeSec},
+                ]
+            });
+          }
+          if (TimeMin < 0) {
+            endgame_timer = 0;
+            setTimeout(() => {ship.gameover({"Game is over" : "Thanks for joining","Score :":ship.score,"Your game host:":game.ships[0].name})}, 2000); // jshint ignore:line
+          }
+        break;
       }
     }
     if (!game.custom.admin && game.ships[0]) {
@@ -469,6 +512,27 @@ var TP_points_button = function(ship) {
   }
 };
 
+// Hide_Buttons Commands
+var Hide_Buttons_a = function(ship) {
+  if (!ship.custom.TP_points || game.step >= ship.custom.TP_points) {
+    ship.custom.TP_points = game.step + TP_points_delay;
+    Exit_screen(ship);
+    ship.setUIComponent(Show_Buttons);
+    ship.setUIComponent({id: "Hide_Buttons",visible: false});
+    ship.setUIComponent({id: "Regen",visible: false});
+    ship.setUIComponent({id: "Spectate",visible: false});
+    ship.setUIComponent({id: "Menu_",visible: false});
+  }
+};
+
+var Show_Buttons_a = function(ship) {
+  ship.setUIComponent(Hide_Buttons);
+  ship.setUIComponent({id: "Show_Buttons",visible: false});
+  ship.setUIComponent(Menu_);
+  ship.setUIComponent(Spectate);
+  ship.setUIComponent(Regen);
+};
+
 this.event = function(event){
   var ship = event.ship; 
   switch (event.name){
@@ -476,6 +540,10 @@ this.event = function(event){
       var component = event.id;
       if (component == "Menu_"){
         TP_points_button(ship);
+      }  else if (component == "Hide_Buttons"){
+        Hide_Buttons_a(ship);
+      }  else if (component == "Show_Buttons"){
+        Show_Buttons_a(ship);
       }  if (component == "component"){
       }  else if (component == "Box_Exit_screen"){
         Exit_screen(ship);
@@ -528,6 +596,21 @@ game.setObject({
   rotation:{x:Math.PI,y:0,z:0}
 });
 
+
+
+var ModVersion = {
+  id: "ModVersion",
+  obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
+  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/62aa19f85e03d9033c88f2ad9c334d97.png",
+};
+game.setObject({
+  id: "ModVersion",
+  type: ModVersion,
+  position:{x:20,y:-16,z:-15},
+  scale:{x:20,y:8,z:0},
+  rotation:{x:Math.PI,y:0,z:-0.25}
+});
+
 // Commands
 // Moderation commands
 game.modding.commands.info = function(){
@@ -536,7 +619,7 @@ game.modding.commands.info = function(){
   game.modding.terminal.echo(" | Total amount of players: "+game.ships.length)
   game.modding.terminal.echo("\n | List of players and their IDs:\n");
   for (let i=0; i<game.ships.length; i++){
-    game.modding.terminal.echo(" | id: "+i+", Name: "+game.ships[i].name+", Type: "+game.ships[i].type+", Alive: "+game.ships[i].alive+"\n | Coordinates: X: "+game.ships[i].x+", Y: "+game.ships[i].y); 
+    game.modding.terminal.echo(" | id: "+i+", Name: "+game.ships[i].name+", Type: "+game.ships[i].type+"\n | Coordinates: X: "+game.ships[i].x+", Y: "+game.ships[i].y); 
   }
   game.modding.terminal.echo("\n");
 };
@@ -564,6 +647,30 @@ unidle = function(who){
 kick = function(who,reason="Disturbing duels"){
   game.ships[who].gameover({"You were kicked for : ":reason,"Your name: ":game.ships[who].name,"Score: ":game.ships[who].score});
   game.modding.terminal.echo(" | Player: "+game.ships[who].name+", id: "+who+" Has successfully been kicked\n");
+};
+
+gameover = function(start) {
+  endgame_timer = start;
+  title = function(text,color) {
+    for (let ship of game.ships) {
+      ship.setUIComponent({id: "Title_game",position: [24,15,50,20],clickable: false,visible: true,
+        components: [
+          {type: "text", position: [0,0,100,50], color: color, value:text},
+        ]
+      });
+      setTimeout( () => {ship.setUIComponent({id: "Title_game",visible: false})}, 6000);
+    }
+  };
+  switch(start) {
+    case 1:
+      title("The game is ending in 5 Minutes","rgba(255,55,55,0.8)");
+      game.modding.terminal.echo(" | Game is ending in: 5 Minutes\n");
+    break;
+    case 0:
+      title("The game is extended","rgba(55,255,55,0.8)");
+      game.modding.terminal.echo(" | Game is ending has been canceled\n");
+    break;
+  }
 };
 
 // General commands
@@ -632,7 +739,6 @@ say = function(text=""){
 };
 
 // Commands Annex
-
 game.modding.commands.help = function(){
   game.modding.terminal.echo("Mod by ⮞ Megalodon");
   game.modding.terminal.echo("Coding support ⮞ Lotus, Bhpsngum\n");
@@ -641,9 +747,10 @@ game.modding.commands.help = function(){
   game.modding.terminal.echo(" | helpmoderation ⮞ "+"Every moderation related commands");
 };
 game.modding.commands.helpmoderation = function(){
-  game.modding.terminal.echo(" | idle(who) ⮞ "+"Makes a specific player stuck in one position.")
-  game.modding.terminal.echo(" | unidle(who) ⮞ "+"Makes a specific player free.")
-  game.modding.terminal.echo(" | kick(id,reason) ⮞ "+"To kick someone from the game.\n")
+  game.modding.terminal.echo(" | idle(who) ⮞ "+"Makes a specific player stuck in one position.");
+  game.modding.terminal.echo(" | unidle(who) ⮞ "+"Makes a specific player free.");
+  game.modding.terminal.echo(" | kick(id,reason) ⮞ "+"To kick someone from the game.\n");
+  game.modding.terminal.echo(" | gameover(Yes/No) ⮞ "+"To end a game with a timer\n");
 };
 game.modding.commands.helpgeneral = function(){
   game.modding.terminal.echo(" | set(who,type,crystals,stats) ⮞ "+"Replace: game.ships[0].set({});.");
