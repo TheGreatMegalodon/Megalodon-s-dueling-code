@@ -8,7 +8,7 @@
 # Meg's dueling Documentation
 
 ### Mod Versions: 
-* **v0.3.3**  *(Not supported)*
+* **~v0.3.3~**  *(Not supported)*
 * **v1.0s**  *(Most used)*
 
 ### Mod creator: 
