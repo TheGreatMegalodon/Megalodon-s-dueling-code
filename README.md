@@ -260,10 +260,46 @@ set(0,601)
 ```
 
 ## How to add your own ships
+First of all you must have read and understand the usage of the entire [SET Command](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#set-command) and the you will be able to start this tutorial.
 
-```diff
-- Incomming
+Lets start with the things you will need to find:
+**the variables:**
+```js
+// Ship Codes
+var switch_ship_codes = [606,631];
+var spectator_ship_code = 191;
+var admin_ship_codes = [192,194];
 ```
+
+**the ship codes:**
+```js
+// Dueling ship
+  // Vanilla ships
+var Fly_101 = '{"name":"Fly","level":1,"model":1,"size":1.05,"specs":{"shield":{"capacity":[75,100],"reload":[2,3]}...
+var Odyssey_601 = '{"name":"Odyssey","level":6,"model":1,"size":4,"specs":{"shield":{"capacity":[750,750],"reload":[15,15]}...
+var Shadow_X_3_602 = '{"name":"Shadow X-3","level":6,"model":2,"size":2.5,"specs":{"shield":{"capacity":[400,400],"reload":[12,12]}...
+[...]
+var Persuasion_629 = '{"name":"Persuasion","level":6,"model":29,"size":3.4,"specs":{"shield":{"capacity":[200,350],"reload":[6,8]}...
+var Star_Drive_630 = '{"name":"Star-Drive","level":6,"model":30,"size":1.6,"zoom":0.85,"next":[745,746],"specs":{"shield":{"capacity":[155,250],"reload":[6,9.3]}...
+var Typhoon_631 = '{"name":"Typhoon","level":6,"model":31,"size":1.52,"zoom":0.85,"specs":{"shield":{"capacity":[230,310],"reload":[6,9]}...
+```
+
+**the Ships definition:**
+```js
+var ships = [
+// Dueling ship
+  // Vanilla ships
+  Fly_101,
+  Odyssey_601,
+  Shadow_X_3_602,
+[...]
+  Persuasion_629,
+  Star_Drive_630,
+  Typhoon_631,
+];
+```
+
+Now that you've found them in the Dueling Mod, you will normally start to notice some sort of logic around the [ship codes](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-type) it goes from _601,602_ to 
 
 ## Commands Usage
 **Here you will find all of the commands that you can use while running the mod.**
