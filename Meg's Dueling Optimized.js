@@ -82,7 +82,7 @@ var ships = [
   Bastion_603,
   Aries_604,
   Pulse_Warrior_605,
-  //Toscain_606,
+  Toscain_606,
   Advanced_Fighter_607,
   Payload_608,
   Scorpion_609,
