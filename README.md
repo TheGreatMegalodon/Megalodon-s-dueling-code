@@ -304,7 +304,7 @@ The first step is to also usdestand that 2 ships cannot have the same ID, so 2 s
 
 To change a ship ID you will need to go on the Ship Editor Website, for this click here:
 
-[![ShipEditor](https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/Ship_Editor_button.png)
+[![ShipEditor](https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/Ship_Editor_button.png)](https://starblast.io/shipeditor/)
 
 ## Commands Usage
 **Here you will find all of the commands that you can use while running the mod.**
