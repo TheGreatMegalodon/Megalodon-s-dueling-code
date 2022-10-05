@@ -9,7 +9,7 @@
 
 ### Mod Versions: 
 * **~v0.3.3~**  *(Not supported)*
-* **v1.0s**  *(Most used)*
+* **v1.1s**  *(Most used)*
 
 ### Mod creator: 
 * **Megalodon**
@@ -23,10 +23,8 @@
 * Discord: Megalodon#0001
 
 ## Comming soon!!
-
-```diff
-- None yet
-```
+An AFK system:
+ - If a player stops moving for more than 30 seconds he will turn into spectator mode.
 
 ## Summary
 * [Support](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#support)
@@ -71,7 +69,7 @@ First of all you have to remove any code, like in this image:
 
 Next you have to choose between the 2 verion of the mod that are available:
 * [~0.3.3~](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Full.js) (Not supported)
-* [1.0s](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Optimized.js) (Optimized Version)
+* [1.1s](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Optimized.js) (Optimized Version)
 
 Then just simply paste the version you choosed in your Modding tab.
 
@@ -271,6 +269,19 @@ set(0,601)
 **Here you will find all of the commands that you can use while running the mod.**
 
 ### How to use the GameOver command
+Its by far one of the most easiest command to use. All you need to know is the logic behind the code, i made it so when you type in the console:
+```js
+> gameover(1)
+> █
+```
+A timer of 5 minutes starts, and the ned of thoses 5 minutes the game will kick everyone and close the game.
+
+**But** if you feel like you can run the mod a little more, then just do in the console:
+```js
+> gameover(0)
+> █
+```
+it will then stop and reset the timer, and you will be able to continue your duels like nothing has ever hapened.
 
 ### Moderation Commands
 
