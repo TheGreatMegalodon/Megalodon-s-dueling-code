@@ -299,7 +299,11 @@ var ships = [
 ];
 ```
 
-Now that you've found them in the Dueling Mod, you will normally start to notice some sort of logic around the [ship codes](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-type) it goes from __601,602__ to 
+Now that you've found them in the Dueling Mod, you will normally start to notice some sort of logic around the [ship codes](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-type), they go from __601,602__ to __630,631__.
+The first step is to also usdestand that 2 ships cannot have the same ID, so 2 ship's ID connot be for example 615. if it happens that your mod contains 2 ships with the same ID, you will have a black screen when joining the game.
+
+To change a ship ID you will need to go on the Ship Editor Website, for this click here:
+[![ShipEditor](https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/Modding_space_button.png)](https://starblast.io/modding.html)
 
 ## Commands Usage
 **Here you will find all of the commands that you can use while running the mod.**
