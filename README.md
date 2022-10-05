@@ -263,7 +263,7 @@ set(0,601)
 First of all you must have read and understand the usage of the entire [SET Command](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#set-command) and the you will be able to start this tutorial.
 
 Lets start with the things you will need to find:
-**the variables:**
+#### the variables:
 ```js
 // Ship Codes
 var switch_ship_codes = [606,631];
@@ -271,7 +271,7 @@ var spectator_ship_code = 191;
 var admin_ship_codes = [192,194];
 ```
 
-**the ship codes:**
+#### the ship codes:
 ```js
 // Dueling ship
   // Vanilla ships
@@ -284,7 +284,7 @@ var Star_Drive_630 = '{"name":"Star-Drive","level":6,"model":30,"size":1.6,"zoom
 var Typhoon_631 = '{"name":"Typhoon","level":6,"model":31,"size":1.52,"zoom":0.85,"specs":{"shield":{"capacity":[230,310],"reload":[6,9]}...
 ```
 
-**the Ships definition:**
+#### the Ships definition:
 ```js
 var ships = [
 // Dueling ship
@@ -348,7 +348,7 @@ return model =
   rotation: [60,80]
   acceleration: [90,140]
 ```
-
+ then press the modexport button, coppy the code and paste it and the end for [that list]()
 
 
 
