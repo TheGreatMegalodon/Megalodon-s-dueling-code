@@ -300,7 +300,7 @@ var ships = [
 ```
 
 Now that you've found them in the Dueling Mod, you will normally start to notice some sort of logic around the [ship codes](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-type), they go from __601,602__ to __630,631__.
-The first step is to also usdestand that 2 ships cannot have the same ID, so 2 ship's ID connot be for example 615. if it happens that your mod contains 2 ships with the same ID, you will have a black screen when joining the game.
+The first step is to also understand that 2 ships cannot have the same ID, so 2 ship's ID connot be, for example 615. if it happen that your mod contains 2 ships with the same ID, you will have a beautiful black screen when joining the game.
 
 To change a ship ID you will need to go on the Ship Editor Website, for this click here:
 
@@ -349,8 +349,38 @@ return model =
   acceleration: [90,140]
 ```
  then press the modexport button, coppy the code and paste it and the end for [that list](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md#the-ship-codes)
+ 
+ then add the ship to the [Ship's definition](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#the-ships-definition) part by adding the Name and the ID:
+ ```js
+ var ships = [
+// Dueling ship
+  // Vanilla ships
+  Fly_101,
+  Odyssey_601,
+  Shadow_X_3_602,
+[...]
+  Persuasion_629,
+  Star_Drive_630,
+  Typhoon_631,
+  // My ships:
+  
+  A-speedster_632,
+  
+];
+ ```
+don't forget to add a coma after the ship's ID.
 
-
+and then, head to [the variables](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#the-variables) part, see this lane:
+```js
+var switch_ship_codes = [606,631];
+```
+and replace the last number by the ship's ID you've just added.
+here it would look like this:
+```js
+var switch_ship_codes = [606, 632 ];
+```
+and thats pretty much it!
+Enjoy your new customized Mod!
 
 ## Commands Usage
 **Here you will find all of the commands that you can use while running the mod.**
