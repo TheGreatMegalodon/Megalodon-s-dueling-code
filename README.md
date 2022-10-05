@@ -303,8 +303,52 @@ Now that you've found them in the Dueling Mod, you will normally start to notice
 The first step is to also usdestand that 2 ships cannot have the same ID, so 2 ship's ID connot be for example 615. if it happens that your mod contains 2 ships with the same ID, you will have a black screen when joining the game.
 
 To change a ship ID you will need to go on the Ship Editor Website, for this click here:
-
 [![ShipEditor](https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/Ship_Editor_button.png)](https://starblast.io/shipeditor/)
+Now import your ship using [Code converter](https://bhpsngum.github.io/starblast/sscv/) to conver your Mod Export ship code to the right language. And then paste it into The [Ship Editor](https://starblast.io/shipeditor/) tab, **Make sure there is nothing in it before pasting the nex code!!**
+
+To change a ship's ID you will head to the first part of the code:
+```js
+return model =
+  name: 'A-Speedster'
+  level: 6
+  model: 5
+  size: 1.5
+[...]
+  mass: 175
+  speed: [90,115]
+  rotation: [60,80]
+  acceleration: [90,140]
+```
+ you will then start looking for the ship's `level` and the ship's `mode`.
+ Here I took the speedster, and this is what you will be looking for:
+```js
+return model =
+  name: 'A-Speedster'
+  level: 6  🠘 Here
+  model: 5  🠘 Here
+  size: 1.5
+[...]
+  mass: 175
+  speed: [90,115]
+  rotation: [60,80]
+  acceleration: [90,140]
+```
+Following the starblast's logic, the ship you want to add will be:
+```js
+return model =
+  name: 'A-Speedster'
+  level: *6*  🠘 Here
+  model: *32*  🠘 Here
+  size: 1.5
+[...]
+  mass: 175
+  speed: [90,115]
+  rotation: [60,80]
+  acceleration: [90,140]
+```
+
+
+
 
 ## Commands Usage
 **Here you will find all of the commands that you can use while running the mod.**
