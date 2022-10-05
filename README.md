@@ -303,6 +303,7 @@ Now that you've found them in the Dueling Mod, you will normally start to notice
 The first step is to also usdestand that 2 ships cannot have the same ID, so 2 ship's ID connot be for example 615. if it happens that your mod contains 2 ships with the same ID, you will have a black screen when joining the game.
 
 To change a ship ID you will need to go on the Ship Editor Website, for this click here:
+
 [![ShipEditor](https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/Ship_Editor_button.png)
 
 ## Commands Usage
