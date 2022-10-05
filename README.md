@@ -299,7 +299,7 @@ var ships = [
 ];
 ```
 
-Now that you've found them in the Dueling Mod, you will normally start to notice some sort of logic around the [ship codes](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-type) it goes from _601,602_ to 
+Now that you've found them in the Dueling Mod, you will normally start to notice some sort of logic around the [ship codes](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-type) it goes from __601,602__ to 
 
 ## Commands Usage
 **Here you will find all of the commands that you can use while running the mod.**
