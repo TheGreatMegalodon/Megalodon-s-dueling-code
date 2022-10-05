@@ -1,5 +1,5 @@
 mod_version =
-" v1.0s";
+" v1.1s";
 
 // Mod creator : Megalodon
 // Coding support : Lotus/Notus, Bhpsngum
@@ -18,10 +18,7 @@ mod_version =
 // - Buttons removed : 
 //    -> TP Arena
 
-// What has been added from v0.4.2s : 
-//  - New system to end the games, uses a timer of 5 minutes to end the game solftly.
-//  - New button, "Hide_Buttons".
-//     - To prevent pressing the buttons when dueling.
+// What has been added from v1.0s : 
 //  - Fixed little bugs.
 
 // Type " help " for more information about the mod and his commands.
@@ -85,7 +82,7 @@ var ships = [
   Bastion_603,
   Aries_604,
   Pulse_Warrior_605,
-  Toscain_606,
+  //Toscain_606,
   Advanced_Fighter_607,
   Payload_608,
   Scorpion_609,
@@ -279,6 +276,7 @@ if (game.step % 15 === 0) {
     if (ship.custom.init !== true) {
       ship.custom.init = true;
         endgame_timer = 0;
+        ColorTimer = 0;
         ship_instructor(ship, "GET SOME TIPS!\nPush [9] to regen your ship", "Zoltar");
         ship_instructor(ship, "Push [0] to open the menu and use the same key to close it", "Zoltar", 5);
         ship_instructor(ship, "Push [8] to become spectator, [8] or if the menu is open [3]/[4] to exit it", "Zoltar", 10, 6);
@@ -295,34 +293,36 @@ if (game.step % 15 === 0) {
             ship.set({stats:max_stats});
           }
         }
-      } else if (ship.stats > 0) {
-        ship.set({stats:0});
-      }
+      } else if (ship.stats > 0) {ship.set({stats:0});}
+    }
+    for (i=0;i<game.ships.length;i++) {
       switch(endgame_timer) {
         case 0:
-          ship.setUIComponent({id:"endgame_timer_sandm",visible: false});
+          game.ships[i].setUIComponent({id:"endgame_timer",visible: false});
           TimeSec = 60;
           TimeMin = 4;
+          ColorTimer = 0;
         break;
         case 1:
-          if (!ship.custom.endgame || game.step >= ship.custom.endgame) {
-            ship.custom.endgame = game.step + 60;
+          if (!game.ships[i].custom.endgame || game.step >= game.ships[i].custom.endgame) {
+            game.ships[i].custom.endgame = game.step + 75;
             TimeSec--;
             if (TimeSec <= 0) {
               TimeSec = 60;
               TimeMin--;
             }
-            ship.setUIComponent({id: "endgame_timer_sandm",position: [85,42,10,10],clickable: false,visible: true,
+            if (TimeMin < 1) {ColorTimer = 1;}
+            switch(ColorTimer) {
+              case 0: Color = "rgb(255,255,255)"; break;
+              case 1: Color = "rgb(255,55,55)"; break;
+            }
+            game.ships[i].setUIComponent({id: "endgame_timer",position: [85,42,10,10],clickable: false,visible: true,
               components: [
-                {type: "text", position: [0,0,100,50], color: "rgb(255,255,255)", value:"Time left:"},
-                {type: "text", position: [0,50,100,46], color: "rgb(255,255,255)", value:TimeMin+" : "+TimeSec},
-                ]
+                {type: "text", position: [0,0,100,50], color: Color, value:"Time left:"},
+                {type: "text", position: [0,50,100,46], color: Color, value:TimeMin+" : "+TimeSec}]
             });
           }
-          if (TimeMin < 0) {
-            endgame_timer = 0;
-            setTimeout(() => {ship.gameover({"Game is over" : "Thanks for joining","Score :":ship.score,"Your game host:":game.ships[0].name})}, 2000); // jshint ignore:line
-          }
+          if (TimeMin < 0) {game.ships[i].gameover({"Game is over" : "Thanks for joining","Score:":game.ships[i].score,"Your game host:":game.ships[0].name})}
         break;
       }
     }
@@ -333,10 +333,11 @@ if (game.step % 15 === 0) {
   }
 };
 
+
+
+
 var ship_instructor = function(ship, message, character = "Lucina", delay = 0, hide_after = 0) {
-  if (!ship || !message || !message.length) {
-    return;
-  }
+  if (!ship || !message || !message.length) {return}
   let instructor_func;
   if (hide_after) {
     instructor_func = function() {
@@ -354,40 +355,28 @@ var ship_instructor = function(ship, message, character = "Lucina", delay = 0, h
 };
 
 var next_ship_button = function(ship) {
-  if (ship.custom.spectator) {
-    spectator_ship(ship);
-  } else if (!ship.custom.next_switch || game.step >= ship.custom.next_switch) {
+  if (ship.custom.spectator) {spectator_ship(ship);}
+  else if (!ship.custom.next_switch || game.step >= ship.custom.next_switch) {
     ship.custom.next_switch = game.step + switch_ship_delay;
     var next_type;
     if (ship.type >= switch_ship_codes[0] && ship.type <= switch_ship_codes[1]) {
-      if (ship.type === switch_ship_codes[1]) {
-        next_type = switch_ship_codes[0];
-      } else {
-        next_type = ship.type + 1;
-      }
-    } else {
-      next_type = ship.custom.last_ship || switch_ship_codes[0];
-    }
+      if (ship.type === switch_ship_codes[1]) {next_type = switch_ship_codes[0]
+      } else {next_type = ship.type + 1}
+    } else {next_type = ship.custom.last_ship || switch_ship_codes[0]}
     ship.custom.last_ship = next_type;
     ship.set({type: next_type, collider: true, shield: 999, crystals: 720});
   }
 };
 
 var previous_ship_button = function(ship) {
-  if (ship.custom.spectator) {
-    spectator_ship(ship);
-  } else if (!ship.custom.next_switch || game.step >= ship.custom.next_switch) {
+  if (ship.custom.spectator) {spectator_ship(ship);}
+  else if (!ship.custom.next_switch || game.step >= ship.custom.next_switch) {
     ship.custom.next_switch = game.step + switch_ship_delay;
     var next_type;
     if (ship.type >= switch_ship_codes[0] && ship.type <= switch_ship_codes[1]) {
-      if (ship.type === switch_ship_codes[0]) {
-        next_type = switch_ship_codes[1];
-      } else {
-        next_type = ship.type - 1;
-      }
-    } else {
-      next_type = ship.custom.last_ship || switch_ship_codes[0];
-    }
+      if (ship.type === switch_ship_codes[0]) {next_type = switch_ship_codes[1]
+      } else {next_type = ship.type - 1}
+    } else {next_type = ship.custom.last_ship || switch_ship_codes[0]}
     ship.custom.last_ship = next_type;
     ship.set({type: next_type, collider: true, shield: 999, crystals: 720});
   }
@@ -398,9 +387,7 @@ var spectator_ship = function(ship) {
     ship.custom.spectator_switch = game.step + spectator_switch_delay;
     if (ship.custom.spectator) {
       ship.custom.spectator = false;
-      if (!ship.custom.last_ship) {
-        ship.custom.last_ship = switch_ship_codes[0];
-      }
+      if (!ship.custom.last_ship) { ship.custom.last_ship = switch_ship_codes[0] }
       ship.set({type: ship.custom.last_ship, collider: true, shield: 999, crystals: 720, stats: 88888888});
     } else {
       ship.custom.spectator = true;
@@ -413,14 +400,9 @@ var spectator_ship = function(ship) {
 var admin_ship = function(ship) {
   var next_type;
   if (ship.type >= admin_ship_codes[0] && ship.type <= admin_ship_codes[1]) {
-    if (ship.type === admin_ship_codes[1]) {
-      next_type = switch_ship_codes[0];
-    } else {
-      next_type = ship.type + 1;
-    }
-  } else {
-    next_type = admin_ship_codes[0];
-  }
+    if (ship.type === admin_ship_codes[1]) { next_type = switch_ship_codes[0];
+    } else { next_type = ship.type + 1 }
+  } else { next_type = admin_ship_codes[0] }
   ship.set({type: next_type});
 };
 
@@ -451,19 +433,13 @@ var Stats_button = function(ship) {
       if (stats == max) {
         ship.custom.keep_maxed = false;
         ship.set({stats:0});
-        ship.setUIComponent({
-          id: "Stats",
-          visible: false
-        });
+        ship.setUIComponent({id: "Stats",visible: false});
         ship.setUIComponent(Stats2);
       } else {
         ship.custom.keep_maxed = true;
         ship.set({stats:max, shield: 999, generator: 999});
         ship.setUIComponent(Stats);
-        ship.setUIComponent({
-          id: "Stats2",
-          visible: false
-        });
+        ship.setUIComponent({id: "Stats2",visible: false});
       }
     }
   }
@@ -495,11 +471,8 @@ var TP_points_button = function(ship) {
   var max_stats = 11111111 * level;
   if (!ship.custom.TP_points || game.step >= ship.custom.TP_points) {
     ship.custom.TP_points = game.step + TP_points_delay;
-    if (ship.stats > 0) {
-      ship.setUIComponent(Stats);
-    } else {
-      ship.setUIComponent(Stats2);
-    }
+    if (ship.stats > 0) {ship.setUIComponent(Stats)} 
+    else {ship.setUIComponent(Stats2)}
     ship.setUIComponent(Tp_Spawn);
     ship.setUIComponent(next_ship);
     ship.setUIComponent(previous_ship);
@@ -588,28 +561,18 @@ var MapCenter = {
   obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
   emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/megs_dueling_center_arena_nocircle.png",
 };
-game.setObject({
-  id: "MapCenter",
-  type: MapCenter,
-  position:{x:0,y:0,z:-15},
-  scale:{x:100,y:100,z:0},
-  rotation:{x:Math.PI,y:0,z:0}
-});
-
-
-
 var ModVersion = {
   id: "ModVersion",
   obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/62aa19f85e03d9033c88f2ad9c334d97.png",
+  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/v1.1_Img.png",
 };
-game.setObject({
-  id: "ModVersion",
-  type: ModVersion,
-  position:{x:20,y:-16,z:-15},
-  scale:{x:20,y:8,z:0},
-  rotation:{x:Math.PI,y:0,z:-0.25}
-});
+
+AddObject = function(Name,ID,x,y,sx,sy,r,rz) {
+  game.setObject({id: Name,type: ID,position:{x:x,y:y,z:-15},scale:{x:sx,y:sy,z:0},rotation:{x:r,y:0,z:rz}});
+};
+
+AddObject("MapCenter",MapCenter,0,0,100,100,Math.PI,0);
+AddObject("ModVersion",ModVersion,20,-16,20,8,Math.PI,-0.25);
 
 // Commands
 // Moderation commands
@@ -654,9 +617,7 @@ gameover = function(start) {
   title = function(text,color) {
     for (let ship of game.ships) {
       ship.setUIComponent({id: "Title_game",position: [24,15,50,20],clickable: false,visible: true,
-        components: [
-          {type: "text", position: [0,0,100,50], color: color, value:text},
-        ]
+        components: [{type: "text", position: [0,0,100,50], color: color, value:text},]
       });
       setTimeout( () => {ship.setUIComponent({id: "Title_game",visible: false})}, 6000);
     }
@@ -725,17 +686,13 @@ tpall = function(x,y){
 };
 
 // Announce command
-say = function(text=""){
-  for (i=0;i<game.ships.length;i++)
-  {
-    ship = game.ships[i];
-    ship.setUIComponent({id: "announceText",position: [20,75,50,25],clickable: false,visible: true,
-      components: [
-        {type: "text", position: [0,0,100,20], color: "#FFFFFF", value: text},
-        ]
+say = function(text="") {
+  for (i=0;i<game.ships.length;i++) {
+    game.ships[i].setUIComponent({id: "announceText",position: [20,75,50,25],clickable: false,visible: true,
+      components: [{type: "text", position: [0,0,100,20], color: "#FFFFFF", value: text},]
     });
   }
-  game.modding.terminal.echo(" | Text applyed\n");
+  game.modding.terminal.echo(" | Text: "+text+" applyed\n");
 };
 
 // Commands Annex
