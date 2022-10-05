@@ -114,7 +114,7 @@ var ships = [
 ];
 
 // Ship Codes
-var switch_ship_codes = [606,631];
+var switch_ship_codes = [601,631];
 var spectator_ship_code = 191;
 var admin_ship_codes = [192,194];
 
