@@ -348,7 +348,7 @@ return model =
   rotation: [60,80]
   acceleration: [90,140]
 ```
- then press the modexport button, coppy the code and paste it and the end for [that list]()
+ then press the modexport button, coppy the code and paste it and the end for [that list](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md#the-ship-codes)
 
 
 
