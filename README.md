@@ -18,16 +18,11 @@
 * **Lotus/Notus**
 * **Bhpsngum**
 
-## Support
-* [Support Discord Server](https://discord.gg/KXvCq4N)
-* Discord: Megalodon#0001
-
 ## Comming soon!!
 An AFK system:
  - If a player stops moving for more than 30 seconds he will turn into spectator mode.
 
 ## Summary
-* [Support](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#support)
 * [Help](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#help)
   * [How to host a dueling game](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#how-to-host-a-dueling-game)
     * [Starblast Modding link](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#starblast-modding-link)
@@ -41,6 +36,7 @@ An AFK system:
   * [GameOver command](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#how-to-use-the-gameover-command) 
   * [Moderation Commands](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#moderation-commands)
   * [Basic Commands](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#basic-commands)
+* [Support](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#support)
 
 ## Help
 
@@ -424,3 +420,7 @@ it will then stop and reset the timer, and you will be able to continue your due
 | `tp()` | To teleport someone at specific coordinates. | tp("**player ID**","**X value**","**Y value**") | `tp(0,200,200)` |
 | `tpall()` | To teleports everyone at specific coordinates. | tpall("**X value**","**Y value**") | `tpall(200,200)` |
 | `say("")` | To make a text appear while playing. | say("**Your message**") Writing `say()` will delete your message. | `say("The game ends soon")` |
+
+## Support
+* [Support Discord Server](https://discord.gg/KXvCq4N)
+* Discord: Megalodon#0001
