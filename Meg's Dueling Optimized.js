@@ -333,9 +333,6 @@ if (game.step % 15 === 0) {
   }
 };
 
-
-
-
 var ship_instructor = function(ship, message, character = "Lucina", delay = 0, hide_after = 0) {
   if (!ship || !message || !message.length) {return}
   let instructor_func;
