@@ -337,8 +337,8 @@ Following the starblast's logic, the ship you want to add will be:
 return model =
   name: 'A-Speedster'
   
-  level: *6*  🠘 Here
-  model: *32*  🠘 Here
+  level: 6  🠘 Here
+  model: 32  🠘 Here
   
   size: 1.5
 [...]
@@ -376,7 +376,7 @@ var switch_ship_codes = [606,631];
 and replace the last number by the ship's ID you've just added.
 here it would look like this:
 ```js
-var switch_ship_codes = [606, 632 ];
+var switch_ship_codes = [606,632];
 ```
 and thats pretty much it!
 Enjoy your new customized Mod!
