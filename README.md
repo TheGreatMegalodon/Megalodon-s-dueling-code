@@ -186,13 +186,7 @@ And its the same thing for all of ships in starblast.
 
 You basically don't need to set any value, its automatically giving the right amount of gems.
 
-but in case you want to change the crystals amount of a player you can use:
-
-```js
-crystals(560)
-```
-
-or if you want to change the ship type, stats, and crystals amount at the same time
+if you want to change the ship type, stats, and crystals amount at the same time, you can do:
 
 ```js
 set(0,602,560)
