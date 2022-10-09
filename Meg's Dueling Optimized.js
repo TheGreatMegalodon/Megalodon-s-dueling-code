@@ -332,15 +332,15 @@ if (game.step % 15 === 0) {
         case 0:
           for (i=0;i<game.ships.length;i++) {
             game.ships[i].setUIComponent({id:"endgame_timer",visible: false});
-            TimeSec = 10;
-            TimeMin = 0;
+            TimeSec = 59;
+            TimeMin = 4;
             ColorTimer = 0;
           }
         break;
         case 1:
           TimeSec --;
           if (TimeSec <= 0) {
-            TimeSec = 60;
+            TimeSec =59;
             TimeMin --;
           }
           if (TimeMin < 1) {ColorTimer = 1}
@@ -354,9 +354,7 @@ if (game.step % 15 === 0) {
                 {type: "text", position: [0,0,100,50], color: Color, value:"Time left:"},
                 {type: "text", position: [0,50,100,46], color: Color, value:TimeMin+" : "+TimeSec}]
             });
-            if (TimeMin < 0) {
-              game.ships[i].gameover({"Game is over" : "Thanks for joining","Score:":game.ships[i].score,"Your game host:":game.ships[0].name});
-            }
+            if (TimeMin < 0) {game.ships[i].gameover({"Game is over" : "Thanks for joining","Score:":game.ships[i].score,"Your game host:":game.ships[0].name})}
           }
         break;
       }
