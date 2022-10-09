@@ -19,8 +19,9 @@
 * **Bhpsngum**
 
 ## Comming soon!!
-An AFK system:
- - If a player stops moving for more than 30 seconds he will turn into spectator mode.
+```diff
+- Nothing yet
+```
 
 ## Summary
 * [Help](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#help)
