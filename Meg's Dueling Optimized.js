@@ -1,5 +1,5 @@
 mod_version =
-" v1.1s";
+" v1.2s";
 
 // Mod creator : Megalodon
 // Coding support : Lotus/Notus, Bhpsngum
@@ -18,8 +18,11 @@ mod_version =
 // - Buttons removed : 
 //    -> TP Arena
 
-// What has been added from v1.0s : 
-//  - Fixed little bugs.
+// What has been added from v1.1s : 
+//  - Added an AFK checker.
+//    - If you stop moving for more than 30 seconds you will be set to the spectator ship.
+// What has been removed from v1.1s :
+//  - the crytals command.
 
 // Type " help " for more information about the mod and his commands.
 
@@ -119,12 +122,16 @@ var spectator_ship_code = 191;
 var admin_ship_codes = [192,194];
 
 // Delays
-var spawn_zone_delay = 4*60;
-var switch_ship_delay = 0.25*60;
-var spectator_switch_delay = 2*60;
-var TP_points_delay = 2*60;
-var Regenerate_delay = 5*60;
-var Stats_delay = 1*60;
+var spawn_zone_delay = 4;
+var switch_ship_delay = 0.25;
+var spectator_switch_delay = 2;
+var TP_points_delay = 2;
+var Regenerate_delay = 5;
+var Stats_delay = 1;
+
+// AFK settings
+var AFK_speed = 10e-6;
+var AFK_time = 30;
 
 var vocabulary = [
   { text: "You", icon:"\u004e", key:"O" },
@@ -293,7 +300,7 @@ if (game.step % 15 === 0) {
             ship.set({stats:max_stats});
           }
         }
-      } else if (ship.stats > 0) {ship.set({stats:0});}
+      } else if (ship.stats > 0) {ship.set({stats:0})}
     }
     for (i=0;i<game.ships.length;i++) {
       switch(endgame_timer) {
@@ -306,12 +313,12 @@ if (game.step % 15 === 0) {
         case 1:
           if (!game.ships[i].custom.endgame || game.step >= game.ships[i].custom.endgame) {
             game.ships[i].custom.endgame = game.step + 75;
-            TimeSec--;
+            TimeSec --;
             if (TimeSec <= 0) {
               TimeSec = 60;
-              TimeMin--;
+              TimeMin --;
             }
-            if (TimeMin < 1) {ColorTimer = 1;}
+            if (TimeMin < 1) {ColorTimer = 1}
             switch(ColorTimer) {
               case 0: Color = "rgb(255,255,255)"; break;
               case 1: Color = "rgb(255,55,55)"; break;
@@ -326,12 +333,38 @@ if (game.step % 15 === 0) {
         break;
       }
     }
+    if (game.step % 75 === 0) {
+      for (let ship of game.ships) {
+        switch (ship.custom.afk_main) {
+          case 0:
+            ship.custom.TimeS = AFK_time;
+            ship.setUIComponent({id:"afk_timer"+ship.id,visible:false});
+          break;
+          case 1:
+            if (Math.sqrt(Math.pow(ship.vx, 2) + Math.pow(ship.vy, 2)) < AFK_speed) {
+              ship.custom.TimeS --;
+              ship.setUIComponent({id: "afk_timer"+ship.id,position: [40,10,20,20],clickable: false,visible: true,
+                components: [
+                  {type: "text", position: [0,0,100,50], color: "rgb(255,55,55)", value:"AFK time left: "+ship.custom.TimeS},
+                ]
+              });
+              if (ship.custom.TimeS <= 0) {
+                spectator_ship(ship);
+              }
+            } else {
+              ship.setUIComponent({id:"afk_timer"+ship.id,visible:false});
+              ship.custom.TimeS = 30;
+            }
+          break;
+        }
+      }
+    }
     if (!game.custom.admin && game.ships[0]) {
       game.custom.admin = true;
       game.ships[0].setUIComponent(Admin);
     }
   }
-};
+}
 
 var ship_instructor = function(ship, message, character = "Lucina", delay = 0, hide_after = 0) {
   if (!ship || !message || !message.length) {return}
@@ -354,7 +387,7 @@ var ship_instructor = function(ship, message, character = "Lucina", delay = 0, h
 var next_ship_button = function(ship) {
   if (ship.custom.spectator) {spectator_ship(ship);}
   else if (!ship.custom.next_switch || game.step >= ship.custom.next_switch) {
-    ship.custom.next_switch = game.step + switch_ship_delay;
+    ship.custom.next_switch = game.step + switch_ship_delay*60;
     var next_type;
     if (ship.type >= switch_ship_codes[0] && ship.type <= switch_ship_codes[1]) {
       if (ship.type === switch_ship_codes[1]) {next_type = switch_ship_codes[0]
@@ -368,7 +401,7 @@ var next_ship_button = function(ship) {
 var previous_ship_button = function(ship) {
   if (ship.custom.spectator) {spectator_ship(ship);}
   else if (!ship.custom.next_switch || game.step >= ship.custom.next_switch) {
-    ship.custom.next_switch = game.step + switch_ship_delay;
+    ship.custom.next_switch = game.step + switch_ship_delay*60;
     var next_type;
     if (ship.type >= switch_ship_codes[0] && ship.type <= switch_ship_codes[1]) {
       if (ship.type === switch_ship_codes[0]) {next_type = switch_ship_codes[1]
@@ -381,14 +414,16 @@ var previous_ship_button = function(ship) {
 
 var spectator_ship = function(ship) {
   if (!ship.custom.spectator_switch || game.step >= ship.custom.spectator_switch) {
-    ship.custom.spectator_switch = game.step + spectator_switch_delay;
+    ship.custom.spectator_switch = game.step + spectator_switch_delay*60;
     if (ship.custom.spectator) {
       ship.custom.spectator = false;
+      ship.custom.afk_main = 1;
       if (!ship.custom.last_ship) { ship.custom.last_ship = switch_ship_codes[0] }
       ship.set({type: ship.custom.last_ship, collider: true, shield: 999, crystals: 720, stats: 88888888});
     } else {
       ship.custom.spectator = true;
       ship.custom.last_ship = ship.type;
+      ship.custom.afk_main = 0;
       ship.set({type: spectator_ship_code, crystals: 0, stats: 88888888, shield: 999, collider: false});
     }
   }
@@ -407,7 +442,7 @@ var regen = function(ship){
   var level = Math.trunc(ship.type / 100);
   var cargo = 1280;
   if (!ship.custom.Regenerate || game.step >= ship.custom.Regenerate) {
-    ship.custom.Regenerate = game.step + Regenerate_delay;
+    ship.custom.Regenerate = game.step + Regenerate_delay*60;
     switch (level) {
       case 1: crystals = 20; break; 
       case 2: crystals = 80; break; 
@@ -425,7 +460,7 @@ var Stats_button = function(ship) {
   var level = Math.trunc(ship.type / 100);
   var max = 11111111 * level;
   if (!ship.custom.stats || game.step >= ship.custom.stats) {
-    ship.custom.stats = game.step + Stats_delay;
+    ship.custom.stats = game.step + Stats_delay*60;
     if (level < 7) {
       if (stats == max) {
         ship.custom.keep_maxed = false;
@@ -446,7 +481,7 @@ var Teleport_Center = function(ship) {
   var x = (Math.random() - 0.5) * game.options.map_size * 0.6;
   var y = (Math.random() - 0.5) * game.options.map_size * 0.6;
   if (!ship.custom.spawn || game.step >= ship.custom.spawn) {
-    ship.custom.spawn = game.step + spawn_zone_delay;
+    ship.custom.spawn = game.step + spawn_zone_delay*60;
     ship.set({x: x, y: y});
   }
 };
@@ -467,7 +502,7 @@ var TP_points_button = function(ship) {
   var level = Math.trunc(ship.type / 100);
   var max_stats = 11111111 * level;
   if (!ship.custom.TP_points || game.step >= ship.custom.TP_points) {
-    ship.custom.TP_points = game.step + TP_points_delay;
+    ship.custom.TP_points = game.step + TP_points_delay*60;
     if (ship.stats > 0) {ship.setUIComponent(Stats)} 
     else {ship.setUIComponent(Stats2)}
     ship.setUIComponent(Tp_Spawn);
@@ -485,7 +520,7 @@ var TP_points_button = function(ship) {
 // Hide_Buttons Commands
 var Hide_Buttons_a = function(ship) {
   if (!ship.custom.TP_points || game.step >= ship.custom.TP_points) {
-    ship.custom.TP_points = game.step + TP_points_delay;
+    ship.custom.TP_points = game.step + TP_points_delay*60;
     Exit_screen(ship);
     ship.setUIComponent(Show_Buttons);
     ship.setUIComponent({id: "Hide_Buttons",visible: false});
@@ -561,7 +596,7 @@ var MapCenter = {
 var ModVersion = {
   id: "ModVersion",
   obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/v1.1_Img.png",
+  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/v1.2s.png",
 };
 
 AddObject = function(Name,ID,x,y,sx,sy,r,rz) {
@@ -651,12 +686,6 @@ set = function(who,what,crystals,stats=88888888){
   game.modding.terminal.echo(" | Type: "+what+", Crystals: "+crystals+", Stats: "+stats+"\n");
 };
 
-crystals = function(who,crystals){
-  game.ships[who].set({crystals:crystals});
-  game.modding.terminal.echo(" | Player: "+game.ships[who].name+", id: "+who+" Has successfully been given:");
-  game.modding.terminal.echo(" | Crystals: "+crystals+"\n");
-};
-
 // Teleportation commands
 tpto = function(who,towho){
   ship = game.ships[towho];
@@ -708,7 +737,6 @@ game.modding.commands.helpmoderation = function(){
 };
 game.modding.commands.helpgeneral = function(){
   game.modding.terminal.echo(" | set(who,type,crystals,stats) ⮞ "+"Replace: game.ships[0].set({});.");
-  game.modding.terminal.echo(" | crystals(who,crystals) ⮞ "+"To give a certain amout of crystals to someone.");
   game.modding.terminal.echo(" | tpto(who,towho) ⮞ "+"To teleport a player to another player.");
   game.modding.terminal.echo(" | tp(who,x,y) ⮞ "+"To teleport someone.");
   game.modding.terminal.echo(" | tpall(x,y) ⮞ "+"To teleports everyone.");
