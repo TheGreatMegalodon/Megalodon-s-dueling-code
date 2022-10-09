@@ -18,7 +18,7 @@ mod_version =
 // - Buttons removed : 
 //    -> TP Arena
 
-// What has been fixed from v1.2s : 
+// What has been added from v1.2s : 
 //  - Fixed Everything
 //    - AFK now works properly
 //    - EndGame timer Really works properly
@@ -129,7 +129,7 @@ var Regenerate_delay = 5;
 var Stats_delay = 1;
 
 // AFK settings
-var AFK_speed = 10e-8;
+var AFK_speed = 10e-10;
 var AFK_time = 30;
 
 var vocabulary = [
@@ -314,9 +314,7 @@ if (game.step % 15 === 0) {
                   {type: "text", position: [0,0,100,50], color: "rgb(255,55,55)", value:"AFK time left: "+ship.custom.TimeS},
                 ]
               });
-              if (ship.custom.TimeS <= 0) {
-                spectator_ship(ship);
-              }
+              if (ship.custom.TimeS <= 0) {spectator_ship(ship)}
             } else {
               ship.setUIComponent({id:"afk_timer"+ship.id,visible:false});
               ship.custom.TimeS = 30;
@@ -329,13 +327,13 @@ if (game.step % 15 === 0) {
       game.custom.admin = true;
       game.ships[0].setUIComponent(Admin);
     }
-    if (game.step % 75 === 15) {
+    if (game.step % 75 === 0) {
       switch(endgame_timer) {
         case 0:
           for (i=0;i<game.ships.length;i++) {
             game.ships[i].setUIComponent({id:"endgame_timer",visible: false});
-            TimeSec = 60;
-            TimeMin = 4;
+            TimeSec = 10;
+            TimeMin = 0;
             ColorTimer = 0;
           }
         break;
@@ -356,13 +354,15 @@ if (game.step % 15 === 0) {
                 {type: "text", position: [0,0,100,50], color: Color, value:"Time left:"},
                 {type: "text", position: [0,50,100,46], color: Color, value:TimeMin+" : "+TimeSec}]
             });
-            if (TimeMin < 0) {game.ships[i].gameover({"Game is over" : "Thanks for joining","Score:":game.ships[i].score,"Your game host:":game.ships[0].name})}
+            if (TimeMin < 0) {
+              game.ships[i].gameover({"Game is over" : "Thanks for joining","Score:":game.ships[i].score,"Your game host:":game.ships[0].name});
+            }
           }
         break;
       }
     }
   }
-}
+};
 
 var ship_instructor = function(ship, message, character = "Lucina", delay = 0, hide_after = 0) {
   if (!ship || !message || !message.length) {return}
@@ -573,6 +573,7 @@ this.event = function(event){
       var yy = [...new Array(41)].map((j, i) => y - 30 + i);
       ship.set({x: xx[~~(Math.random()*xx.length)],y: yy[~~(Math.random()*yy.length)],collider: true, crystals: 720, stats: 88888888});
       spectator_ship(ship);
+      Show_Buttons_a(ship);
       game.modding.terminal.echo("\n | List of players and their IDs:\n");
       for (let i=0; i<game.ships.length; i++){ 
         game.modding.terminal.echo(" | id: "+i+", Name: "+game.ships[i].name+", Type: "+game.ships[i].type+"\n | Coordinates: X: "+game.ships[i].x+", Y: "+game.ships[i].y); 
@@ -602,7 +603,7 @@ AddObject = function(Name,ID,x,y,sx,sy,r,rz) {
 };
 
 AddObject("MapCenter",MapCenter,0,0,100,100,Math.PI,0);
-AddObject("ModVersion",ModVersion,20,-16,30,12,Math.PI,-0.25);
+AddObject("ModVersion",ModVersion,20,-16,28,10,Math.PI,-0.25);
 
 // Commands
 // Moderation commands
@@ -680,7 +681,7 @@ set = function(who,what,crystals,stats=88888888){
       case 7: crystals = 980; break;
     }
   }
-  game.ships[who].set({type:what,crystals:crystals,stats:stats});
+  game.ships[who].set({type:what,crystals:crystals,stats:stats,shield:999});
   game.modding.terminal.echo(" | Player: "+game.ships[who].name+", id: "+who+" Has successfully been given:");
   game.modding.terminal.echo(" | Type: "+what+", Crystals: "+crystals+", Stats: "+stats+"\n");
 };
