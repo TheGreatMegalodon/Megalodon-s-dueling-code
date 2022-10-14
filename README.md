@@ -9,7 +9,7 @@
 
 ### Mod Versions: 
 * **~v0.3.3~**  *(Not supported)*
-* **v1.1s**
+* **v1.2.2s**
 
 ### Mod creator: 
 * **Megalodon**
@@ -64,7 +64,7 @@ First of all you have to remove any code, like in this image:
 
 Next you have to choose between the 2 verion of the mod that are available:
 * [~0.3.3~](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Full.js) (Not supported)
-* [1.1s](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Optimized.js) (Optimized Version)
+* [1.2.2s](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Optimized.js) (Optimized Version)
 
 Then just simply paste the version you choosed in your Modding tab.
 
