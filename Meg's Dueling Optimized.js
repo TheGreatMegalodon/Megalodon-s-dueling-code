@@ -1,5 +1,5 @@
 mod_version =
-" v1.2.1s";
+" v1.2.2s";
 
 // Mod creator : Megalodon
 // Coding support : Lotus/Notus, Bhpsngum
@@ -18,10 +18,9 @@ mod_version =
 // - Buttons removed : 
 //    -> TP Arena
 
-// What has been added from v1.2s : 
-//  - Fixed Everything
-//    - AFK now works properly
-//    - EndGame timer Really works properly
+// What has been fixed from v1.2.1s : 
+//  - Fixed issues.
+//    - As an admin ship, the afk timeout doesn't show up.
 
 // Type " help " for more information about the mod and his commands.
 
@@ -128,9 +127,12 @@ var TP_points_delay = 2;
 var Regenerate_delay = 5;
 var Stats_delay = 1;
 
+// End Game time
+var EndGameTime = 5;
+
 // AFK settings
 var AFK_speed = 10e-10;
-var AFK_time = 30;
+var AFK_time = 45;
 
 var vocabulary = [
   { text: "You", icon:"\u004e", key:"O" },
@@ -292,29 +294,32 @@ if (game.step % 15 === 0) {
       }
     if (ship.custom.init !== true) {
       ship.custom.init = true;
-        ship_instructor(ship, "GET SOME TIPS!\nPush [9] to regen your ship", "Zoltar");
-        ship_instructor(ship, "Push [0] to open the menu and use the same key to close it", "Zoltar", 5);
-        ship_instructor(ship, "Push [8] to become spectator, [8] or if the menu is open [3]/[4] to exit it", "Zoltar", 10, 6);
-        ship.setUIComponent(Menu_);
-        ship.setUIComponent(Regen);
-        ship.setUIComponent(Spectate);
-        ship.setUIComponent(Hide_Buttons);
-      }
-      if (game.step % 75 === 0) {
-        switch (ship.custom.afk_main) {
-          case 0:
-            ship.custom.TimeS = AFK_time;
-            ship.setUIComponent({id:"afk_timer"+ship.id,visible:false});
-          break;
-          case 1:
+      ship_instructor(ship, "GET SOME TIPS!\nPush [9] to regen your ship", "Zoltar");
+      ship_instructor(ship, "Push [0] to open the menu and use the same key to close it", "Zoltar", 5);
+      ship_instructor(ship, "Push [8] to become spectator, [8] or if the menu is open [3]/[4] to exit it", "Zoltar", 10, 6);
+      ship.setUIComponent(Menu_);
+      ship.setUIComponent(Regen);
+      ship.setUIComponent(Spectate);
+      ship.setUIComponent(Hide_Buttons);
+    }
+     if (game.step % 75 === 0) {
+      switch (ship.custom.afk_main) {
+        case 0:
+          ship.custom.TimeS = AFK_time;
+          ship.setUIComponent({id:"afk_timer"+ship.id,visible:false});
+        break;
+        case 1:
+          if (ship.alive === true) {
             if (Math.sqrt(Math.pow(ship.vx, 2) + Math.pow(ship.vy, 2)) <= AFK_speed) {
               ship.custom.TimeS --;
               ship.setUIComponent({id: "afk_timer"+ship.id,position: [40,10,20,20],clickable: false,visible: true,
-                components: [
-                  {type: "text", position: [0,0,100,50], color: "rgb(255,55,55)", value:"AFK time left: "+ship.custom.TimeS},
-                ]
+                components: [{type: "text", position: [0,0,100,50], color: "rgb(255,55,55)", value:"AFK time left: "+ship.custom.TimeS},]
               });
               if (ship.custom.TimeS <= 0) {spectator_ship(ship)}
+              } else {
+                ship.setUIComponent({id:"afk_timer"+ship.id,visible:false});
+                ship.custom.TimeS = 30;
+              }
             } else {
               ship.setUIComponent({id:"afk_timer"+ship.id,visible:false});
               ship.custom.TimeS = 30;
@@ -333,7 +338,7 @@ if (game.step % 15 === 0) {
           for (i=0;i<game.ships.length;i++) {
             game.ships[i].setUIComponent({id:"endgame_timer",visible: false});
             TimeSec = 59;
-            TimeMin = 4;
+            TimeMin = EndGameTime - 1;
             ColorTimer = 0;
           }
         break;
@@ -354,7 +359,7 @@ if (game.step % 15 === 0) {
                 {type: "text", position: [0,0,100,50], color: Color, value:"Time left:"},
                 {type: "text", position: [0,50,100,46], color: Color, value:TimeMin+" : "+TimeSec}]
             });
-            if (TimeMin < 0) {game.ships[i].gameover({"Game is over" : "Thanks for joining","Score:":game.ships[i].score,"Your game host:":game.ships[0].name})}
+            if (TimeMin < 0) {game.ships[i].gameover({"Game is over" : "Thanks for joining","Score:":game.ships[i].score,"Your game host:":game.ships[0].name}),endgame_timer = 0}
           }
         break;
       }
@@ -432,6 +437,8 @@ var admin_ship = function(ship) {
     } else { next_type = ship.type + 1 }
   } else { next_type = admin_ship_codes[0] }
   ship.set({type: next_type});
+  if (next_type <= admin_ship_codes[1]) {ship.custom.afk_main = 0}
+  else {ship.custom.afk_main = 1}
 };
 
 var regen = function(ship){
@@ -580,7 +587,6 @@ this.event = function(event){
     break;
     case "ship_destroyed":
       Object.assign(ship.custom, { x: ship.x, y: ship.y });
-    break;
    }
 };
 
@@ -593,7 +599,7 @@ var MapCenter = {
 var ModVersion = {
   id: "ModVersion",
   obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/v1.2.1s_Img.png",
+  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/v1.2.2s_Img.png",
 };
 
 AddObject = function(Name,ID,x,y,sx,sy,r,rz) {
@@ -601,7 +607,7 @@ AddObject = function(Name,ID,x,y,sx,sy,r,rz) {
 };
 
 AddObject("MapCenter",MapCenter,0,0,100,100,Math.PI,0);
-AddObject("ModVersion",ModVersion,20,-16,28,10,Math.PI,-0.25);
+AddObject("ModVersion",ModVersion,20,-16,24,7,Math.PI,-0.25);
 
 // Commands
 // Moderation commands
@@ -654,8 +660,8 @@ gameover = function(start) {
   };
   switch(start) {
     case 1:
-      title("The game is ending in 5 Minutes","rgba(255,55,55,0.8)");
-      game.modding.terminal.echo(" | Game is ending in: 5 Minutes\n");
+      title("The game is ending in "+EndGameTime+" Minutes","rgba(255,55,55,0.8)");
+      game.modding.terminal.echo(" | Game is ending in: "+EndGameTime+" Minutes\n");
     break;
     case 0:
       title("The game is extended","rgba(55,255,55,0.8)");
