@@ -295,7 +295,7 @@ To change a ship's ID you will need to go on the Ship Editor Website, for this c
 
 [![ShipEditor](https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/Ship_Editor_button.png)](https://starblast.io/shipeditor/)
 
-Now import your ship using [Code converter](https://bhpsngum.github.io/starblast/sscv/) to conver your Mod Export ship code to the right language. And then paste it into The [Ship Editor](https://starblast.io/shipeditor/) tab, **Make sure there is nothing in it before pasting the nex code!!**
+Now import your ship using [Code converter](https://bhpsngum.github.io/starblast/sscv/) to conver your Mod Export ship code to the right language. And then paste it into The [Ship Editor](https://starblast.io/shipeditor/) tab, **Make sure there is nothing in it before pasting the next code!!**
 
 To change a ship's ID you will then head to the first part of the code, like that one:
 ```js
