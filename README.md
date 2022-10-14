@@ -9,7 +9,7 @@
 
 ### Mod Versions: 
 * **~v0.3.3~**  *(Not supported)*
-* **v1.1s**  *(Most used)*
+* **v1.1s**
 
 ### Mod creator: 
 * **Megalodon**
@@ -19,9 +19,8 @@
 * **Bhpsngum**
 
 ## Comming soon!!
-```diff
-- Nothing yet
-```
+* Kills/Deaths, counter.
+* More game optimization.
 
 ## Summary
 * [Help](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#help)
