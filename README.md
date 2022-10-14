@@ -361,7 +361,7 @@ return model =
   
 ];
  ```
-Don't forget to add a coma after the ship's ID, or it will who you an error message.
+Don't forget to add a coma after the ship's ID, or it will show you an error message.
 
 and then, head to [the variables](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#the-variables) part, see this lane:
 ```js
