@@ -21,6 +21,7 @@ mod_version =
 // What has been fixed from v1.2.1s : 
 //  - Fixed issues.
 //    - As an admin ship, the afk timeout doesn't show up.
+//    - The endgame timer isn't broken anymore
 
 // Type " help " for more information about the mod and his commands.
 
@@ -126,9 +127,6 @@ var spectator_switch_delay = 2;
 var TP_points_delay = 2;
 var Regenerate_delay = 5;
 var Stats_delay = 1;
-
-// End Game time
-var EndGameTime = 5;
 
 // AFK settings
 var AFK_speed = 10e-10;
@@ -294,6 +292,7 @@ if (game.step % 15 === 0) {
       }
     if (ship.custom.init !== true) {
       ship.custom.init = true;
+      endgame_timer = 0;
       ship_instructor(ship, "GET SOME TIPS!\nPush [9] to regen your ship", "Zoltar");
       ship_instructor(ship, "Push [0] to open the menu and use the same key to close it", "Zoltar", 5);
       ship_instructor(ship, "Push [8] to become spectator, [8] or if the menu is open [3]/[4] to exit it", "Zoltar", 10, 6);
@@ -303,10 +302,13 @@ if (game.step % 15 === 0) {
       ship.setUIComponent(Hide_Buttons);
     }
      if (game.step % 75 === 0) {
+      reset_afk_timer = function() {
+        ship.custom.TimeS = AFK_time;
+        ship.setUIComponent({id:"afk_timer"+ship.id,visible:false});
+      };
       switch (ship.custom.afk_main) {
         case 0:
-          ship.custom.TimeS = AFK_time;
-          ship.setUIComponent({id:"afk_timer"+ship.id,visible:false});
+          reset_afk_timer();
         break;
         case 1:
           if (ship.alive === true) {
@@ -317,12 +319,10 @@ if (game.step % 15 === 0) {
               });
               if (ship.custom.TimeS <= 0) {spectator_ship(ship)}
               } else {
-                ship.setUIComponent({id:"afk_timer"+ship.id,visible:false});
-                ship.custom.TimeS = 30;
+                reset_afk_timer();
               }
             } else {
-              ship.setUIComponent({id:"afk_timer"+ship.id,visible:false});
-              ship.custom.TimeS = 30;
+              reset_afk_timer();
             }
           break;
         }
@@ -335,35 +335,47 @@ if (game.step % 15 === 0) {
     if (game.step % 75 === 0) {
       switch(endgame_timer) {
         case 0:
-          for (i=0;i<game.ships.length;i++) {
-            game.ships[i].setUIComponent({id:"endgame_timer",visible: false});
-            TimeSec = 59;
-            TimeMin = EndGameTime - 1;
+          for (let ship of game.ships) {
+            ship.setUIComponent({id:"endgame_timer",visible: false});
+            Time = 300;
             ColorTimer = 0;
           }
         break;
         case 1:
-          TimeSec --;
-          if (TimeSec <= 0) {
-            TimeSec =59;
-            TimeMin --;
-          }
-          if (TimeMin < 1) {ColorTimer = 1}
+          Time--;
+          if (Time < 1) {ColorTimer = 1}
           switch(ColorTimer) {
             case 0: Color = "rgb(255,255,255)"; break;
             case 1: Color = "rgb(255,55,55)"; break;
           }
-          for (i=0;i<game.ships.length;i++) {
-            game.ships[i].setUIComponent({id: "endgame_timer",position: [85,42,10,10],clickable: false,visible: true,
+          for (let ship of game.ships) {
+            ship.setUIComponent({id: "endgame_timer",position: [85,42,10,10],clickable: false,visible: true,
               components: [
                 {type: "text", position: [0,0,100,50], color: Color, value:"Time left:"},
-                {type: "text", position: [0,50,100,46], color: Color, value:TimeMin+" : "+TimeSec}]
+                {type: "text", position: [0,50,100,46], color: Color, value:format_time(Time)}
+              ]
             });
-            if (TimeMin < 0) {game.ships[i].gameover({"Game is over" : "Thanks for joining","Score:":game.ships[i].score,"Your game host:":game.ships[0].name}),endgame_timer = 0}
+            if (Time < 0) {ship.gameover({"Game is over" : "Thanks for joining","Score:":ship.score,"Your game host:":game.ships[0].name}),endgame_timer = 0}
           }
         break;
       }
     }
+  }
+};
+
+format_time = function(time) {
+  if (time > 0) {
+    minutes = Math.floor(time/60);
+    seconds = time % 60;
+    if (time % 60 === 0) { 
+      minutes = time/60; seconds = "00"; return minutes.toString()+":"+seconds;
+    }
+    if (seconds < 10) {
+      seconds = "0"+seconds.toString();
+    }
+    return minutes.toString()+":"+seconds.toString();
+  } else { 
+    return "0:00";
   }
 };
 
@@ -607,7 +619,7 @@ AddObject = function(Name,ID,x,y,sx,sy,r,rz) {
 };
 
 AddObject("MapCenter",MapCenter,0,0,100,100,Math.PI,0);
-AddObject("ModVersion",ModVersion,20,-16,24,7,Math.PI,-0.25);
+AddObject("ModVersion",ModVersion,20,-16,24,6.5,Math.PI,-0.25);
 
 // Commands
 // Moderation commands
@@ -660,8 +672,8 @@ gameover = function(start) {
   };
   switch(start) {
     case 1:
-      title("The game is ending in "+EndGameTime+" Minutes","rgba(255,55,55,0.8)");
-      game.modding.terminal.echo(" | Game is ending in: "+EndGameTime+" Minutes\n");
+      title("The game is ending in 5 Minutes","rgba(255,55,55,0.8)");
+      game.modding.terminal.echo(" | Game is ending in: 5 Minutes\n");
     break;
     case 0:
       title("The game is extended","rgba(55,255,55,0.8)");
