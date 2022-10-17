@@ -599,6 +599,7 @@ this.event = function(event){
     break;
     case "ship_destroyed":
       Object.assign(ship.custom, { x: ship.x, y: ship.y });
+    break;
    }
 };
 
