@@ -22,6 +22,7 @@ mod_version =
 //  - Fixed issues.
 //    - As an admin ship, the afk timeout doesn't show up.
 //    - The endgame timer isn't broken anymore
+//      - Now also has a cooldown of 15 seconds
 
 // Type " help " for more information about the mod and his commands.
 
@@ -130,7 +131,8 @@ var Stats_delay = 1;
 
 // AFK settings
 var AFK_speed = 10e-10;
-var AFK_time = 45;
+var AFK_time = 30;
+var AFK_Cooldown = 15;
 
 var vocabulary = [
   { text: "You", icon:"\u004e", key:"O" },
@@ -301,11 +303,12 @@ if (game.step % 15 === 0) {
       ship.setUIComponent(Spectate);
       ship.setUIComponent(Hide_Buttons);
     }
+    reset_afk_timer = function() {
+      ship.custom.TimeS = AFK_time;
+      ship.setUIComponent({id:"afk_timer"+ship.id,visible:false});
+      ship.custom.AFK_Cooldown_time = AFK_Cooldown;
+    };
      if (game.step % 75 === 0) {
-      reset_afk_timer = function() {
-        ship.custom.TimeS = AFK_time;
-        ship.setUIComponent({id:"afk_timer"+ship.id,visible:false});
-      };
       switch (ship.custom.afk_main) {
         case 0:
           reset_afk_timer();
@@ -313,11 +316,14 @@ if (game.step % 15 === 0) {
         case 1:
           if (ship.alive === true) {
             if (Math.sqrt(Math.pow(ship.vx, 2) + Math.pow(ship.vy, 2)) <= AFK_speed) {
-              ship.custom.TimeS --;
-              ship.setUIComponent({id: "afk_timer"+ship.id,position: [40,10,20,20],clickable: false,visible: true,
-                components: [{type: "text", position: [0,0,100,50], color: "rgb(255,55,55)", value:"AFK time left: "+ship.custom.TimeS},]
-              });
-              if (ship.custom.TimeS <= 0) {spectator_ship(ship)}
+              ship.custom.AFK_Cooldown_time --;
+              if (ship.custom.AFK_Cooldown_time <= 0) {
+                ship.custom.TimeS --;
+                ship.setUIComponent({id: "afk_timer"+ship.id,position: [40,10,20,20],clickable: false,visible: true,
+                  components: [{type: "text", position: [0,0,100,50], color: "rgb(255,55,55)", value:"AFK time left: "+ship.custom.TimeS},]
+                });
+                if (ship.custom.TimeS <= 0) {spectator_ship(ship)}
+                }
               } else {
                 reset_afk_timer();
               }
