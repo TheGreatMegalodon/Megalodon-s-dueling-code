@@ -130,7 +130,7 @@ var Regenerate_delay = 5;
 var Stats_delay = 1;
 
 // AFK settings
-var AFK_speed = 10e-10;
+var AFK_speed = 10e-2;
 var AFK_time = 30;
 var AFK_Cooldown = 15;
 
