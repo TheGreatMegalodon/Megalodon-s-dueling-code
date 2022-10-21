@@ -102,7 +102,7 @@ var ships = [
   Hydrus_626,
   Sphinx_627,
   Persuasion_628,
-  Star_Drive_29,
+  Star_Drive_629,
   Typhoon_630,
 ];
 
