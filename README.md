@@ -21,7 +21,6 @@
 ## Comming soon!!
 * Kills/Deaths, leaderboard.
 * Adding all the vanilla ship-tree.
-
 * v1.2.2 (original)
 
 ## Summary
