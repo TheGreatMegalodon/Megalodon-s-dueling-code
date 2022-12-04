@@ -22,6 +22,8 @@
 * Kills/Deaths, leaderboard.
 * Adding all the vanilla ship-tree.
 
+* v1.2.2 (original)
+
 ## Summary
 * [Help](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#help)
   * [How to host a dueling game](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#how-to-host-a-dueling-game)
