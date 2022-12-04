@@ -19,8 +19,8 @@
 * **Bhpsngum**
 
 ## Comming soon!!
-* Kills/Deaths, counter.
-* More game optimization.
+* Kills/Deaths, leaderboard.
+* Adding all the vanilla ship-tree.
 
 ## Summary
 * [Help](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#help)
