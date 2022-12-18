@@ -21,6 +21,7 @@
 ## Comming soon!!
 * Adding all the vanilla ship-tree.
 * v1.3.0 (original)
+* More features on the AFK Checker system
 
 ## Summary
 * [Help](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#help)
