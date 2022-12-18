@@ -1,3 +1,3 @@
-Mod_version = "Meg's dueling v3.3"
+Mod_version = "Meg's dueling v1.3.0"
 
-// Not supported
+// Classsic version in comming
