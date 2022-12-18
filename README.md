@@ -8,20 +8,19 @@
 # Meg's dueling Documentation
 
 ### Mod Versions: 
-* **~v0.3.3~**  *(Not supported)*
-* **v1.2.2s**
+* **v1.3.0**  *(in comming)*
+* **v1.3.0s**
 
 ### Mod creator: 
 * **Megalodon**
 
 ### Coding support:
-* **Lotus/Notus**
+* **Lotus**
 * **Bhpsngum**
 
 ## Comming soon!!
-* Kills/Deaths, leaderboard.
 * Adding all the vanilla ship-tree.
-* v1.2.2 (original)
+* v1.3.0 (original)
 
 ## Summary
 * [Help](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#help)
@@ -64,8 +63,8 @@ First of all you have to remove any code, like in this image:
 </div>
 
 Next you have to choose between the 2 verion of the mod that are available:
-* [~0.3.3~](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Full.js) (Not supported)
-* [1.2.2s](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Optimized.js) (Optimized Version)
+* [1.3.0](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Full.js) (Classical Version)
+* [1.3.0s](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Optimized.js) (Official Version)
 
 Then just simply paste the version you choosed in your Modding tab.
 
