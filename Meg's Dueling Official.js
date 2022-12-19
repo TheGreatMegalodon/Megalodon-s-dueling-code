@@ -556,8 +556,8 @@ this.event = function(event){
     break;
     case "ship_destroyed":
       Object.assign(ship.custom,{x:ship.x,y:ship.y});
-      ship.custom.Deaths++
-      event.killer.custom.Kills++
+      if (ship) {ship.custom.Deaths++}
+      if (event.killer) {event.killer.custom.Kills++}
     break;
   }
 };
