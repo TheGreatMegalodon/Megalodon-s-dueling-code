@@ -296,26 +296,28 @@ if (game.step % 15 === 0) {
 };
 
 var updateScoreboard = function(game) {
-  let sorted_ships_Kills = [...game.ships].sort((a, b) => b.custom.Kills - a.custom.Kills).slice(0, 8);
+  let sorted_ships_KDratio = [...game.ships].sort((a, b) => (b.custom.Kills-b.custom.Deaths) - (a.custom.Kills-a.custom.Deaths)).slice(0, 8);
+  for (let ship of game.ships) {if (ship.id === sorted_ships_KDratio[0].id && ship.custom.Kills >= 1) {ship.custom.C_color = "rgb(255, 215, 0)"} else {ship.custom.C_color = "rgb(255, 255, 255)"}}
   let Scoreboard = {
     id: "scoreboard",
     clickable: false,
     visible: true,
     components: [
       {type: "box",position:[0, 0, 100, 10],fill:"rgba(255, 255, 255, 0.35)"},
+      {type: "box",position:[81, 0, 7.5, 10],fill:"rgba(55, 255, 55, 0.35)"},
+      {type: "box",position:[88.5, 0, 7.5, 10],fill:"rgba(255, 55, 55, 0.35)"},
       {type: "text",position:[3, 1, 69, 8.5],value: "Players", color: "rgb(255,255,255)", align: "left"},
       {type: "text",position:[66, 1, 29, 8.5],value: "K/D", color: "rgb(255,255,255)", align: "right"},
-      {type: "text", position: [0,0, 29, 9.25], value: ""}, // reset text size
-      ...(sorted_ships_Kills).map((ship, i) => [
-        {type: "player", index: i, position:[0, 11.25 * i + 11, 72, 9.25],id: sorted_ships_Kills[i].id, color: "rgb(255, 255, 255)", value: "", align:"left"},
-        {type: "text",position:[74, 11.25 * i + 11.5, 29, 8.5],value: sorted_ships_Kills[i].custom.Kills+"/"+ship.custom.Deaths, color: "rgb(255,55,55)", align:"center"}
+      ...(sorted_ships_KDratio).map((ship, i) => [
+        {type: "player", index: i, position:[0, 11.25 * i + 11, 75.5, 9.25],id: sorted_ships_KDratio[i].id, color: ship.custom.C_color, value: "", align:"left"},
+        {type: "text",position:[74, 11.25 * i + 11.5, 29, 8.5],value: sorted_ships_KDratio[i].custom.Kills+"/"+ship.custom.Deaths, color: "rgb(255,255,255)", align:"center"}
       ]).flat(Infinity)
     ]
   }
   for (let ship of game.ships) {
     let components = [...Scoreboard.components];
     let index = components.findIndex(c => c.type == "player" && c.id === ship.id);
-    if (index != -1) {Scoreboard.components.splice(index + 2, 0, {type:"box",position: [0, (components[index].index) * 21.25, 100, 11.25],fill:"rgba(200, 200, 255, 0.15)"})}
+    if (index != -1) {Scoreboard.components.splice(index + 2, 0, {type:"box",position: [0, components[index].index * 11.25 + 10.50, 100, 10],fill:"rgba(200, 200, 255, 0.15)"})}
     ship != null && ship.setUIComponent(Scoreboard);
     Scoreboard.components = components;
   }
