@@ -297,7 +297,6 @@ if (game.step % 15 === 0) {
 
 var updateScoreboard = function(game) {
   let sorted_ships_Kills = [...game.ships].sort((a, b) => b.custom.Kills - a.custom.Kills).slice(0, 8);
-  for (let ship of sorted_ships_Kills) {if (ship.team === 0) {ship.custom.color = "rgb(55,255,55)"} else {ship.custom.color = "rgb(155, 55, 255)"} if (ship.team === 2 || ship.team === null) {ship.custom.color = "rgb(255, 255, 255)"}if (ship.custom.MotherShip === true && ship.team === 0) {ship.custom.HighLightColor = "rgba(55, 255, 55, 0.15)"}if (ship.custom.MotherShip === true && ship.team === 1) {ship.custom.HighLightColor = "rgba(155, 55, 255, 0.15)"}if (ship.custom.MotherShip !== true) {ship.custom.HighLightColor = "rgba(200, 200, 255, 0.15)"}}
   let Scoreboard = {
     id: "scoreboard",
     clickable: false,
@@ -308,7 +307,7 @@ var updateScoreboard = function(game) {
       {type: "text",position:[66, 1, 29, 8.5],value: "K/D", color: "rgb(255,255,255)", align: "right"},
       {type: "text", position: [0,0, 29, 9.25], value: ""}, // reset text size
       ...(sorted_ships_Kills).map((ship, i) => [
-        {type: "player", index: i, position:[0, 11.25 * i + 10 + 1, 72, 9.25],id: sorted_ships_Kills[i].id, color: ship.custom.color, value: "", align:"left"},
+        {type: "player", index: i, position:[0, 11.25 * i + 11, 72, 9.25],id: sorted_ships_Kills[i].id, color: "rgb(255, 255, 255)", value: "", align:"left"},
         {type: "text",position:[74, 11.25 * i + 11.5, 29, 8.5],value: sorted_ships_Kills[i].custom.Kills+"/"+ship.custom.Deaths, color: "rgb(255,55,55)", align:"center"}
       ]).flat(Infinity)
     ]
@@ -316,7 +315,7 @@ var updateScoreboard = function(game) {
   for (let ship of game.ships) {
     let components = [...Scoreboard.components];
     let index = components.findIndex(c => c.type == "player" && c.id === ship.id);
-    if (index != -1) {Scoreboard.components.splice(index + 2, 0, {type:"box",position: [0, (components[index].index) * 11.25 + 10, 100, 11.25],fill:"rgba(200, 200, 255, 0.15)"})}
+    if (index != -1) {Scoreboard.components.splice(index + 2, 0, {type:"box",position: [0, (components[index].index) * 21.25, 100, 11.25],fill:"rgba(200, 200, 255, 0.15)"})}
     ship != null && ship.setUIComponent(Scoreboard);
     Scoreboard.components = components;
   }
