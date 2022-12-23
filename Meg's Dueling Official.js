@@ -1,13 +1,12 @@
 mod_version =
-" v1.3.0s";
+" v1.3.1s";
 
 // Mod creator : Megalodon
 // Coding support : Lotus, Bhpsngum
 
-// What has been fixed from v1.2.2s : 
+// What has been fixed from v1.3.0s : 
 //  - Fixed issues.
-//    - Admin is having less issues
-//  - Added a custom leaderboard
+//  - You can now ban and unban people from the game
 
 // Type " help " for more information about the mod and his integrated commands.
 
@@ -28,6 +27,9 @@ var Stats_delay = 1;
 var AFK_speed = 10e-4;
 var AFK_time = 30;
 var AFK_Cooldown = 20;
+
+// Other
+var BannedList = [];
 
 // Admin
 var Spectator_191 = '{"name":"Spectator","level":1.9,"model":1,"size":0.025,"zoom":0.075,"specs":{"shield":{"capacity":[1e-30,1e-30],"reload":[1000,1000]},"generator":{"capacity":[1e-30,1e-30],"reload":[1,1]},"ship":{"mass":1,"speed":[200,200],"rotation":[1000,1000],"acceleration":[1000,1000]}},"bodies":{"face":{"section_segments":100,"angle":0,"offset":{"x":0,"y":0,"z":0},"position":{"x":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"y":[-2,-2,2,2],"z":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"width":[0,1,1,0],"height":[0,1,1,0],"vertical":true,"texture":[6]}},"typespec":{"name":"Spectator","level":1,"model":1,"code":101,"specs":{"shield":{"capacity":[1e-30,1e-30],"reload":[1000,1000]},"generator":{"capacity":[1e-30,1e-30],"reload":[1,1]},"ship":{"mass":1,"speed":[200,200],"rotation":[1000,1000],"acceleration":[1000,1000]}},"shape":[0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001],"lasers":[],"radius":0.001}}';
@@ -212,28 +214,30 @@ if (game.step % 15 === 0) {
       ship.custom.crystals_last_updated = ship.last_updated;
     }
     var level = Math.trunc(ship.type / 100);
-      if (level < 7) {
-        var max_stats = 11111111 * level;
-        if (ship.custom.keep_maxed) {
-          if (ship.stats != max_stats) {
-            ship.set({stats:max_stats});
-          }
+    if (level < 7) {
+      var max_stats = 11111111 * level;
+      if (ship.custom.keep_maxed) {
+        if (ship.stats != max_stats) {
+          ship.set({stats:max_stats});
         }
-      } else if (ship.stats > 0) {
-        ship.set({stats:0});
       }
-    if (ship.custom.init !== true) {
-      ship.custom.init = true;
-      endgame_timer = 0;
-      ship.custom.Deaths = 0;
-      ship.custom.Kills = 0;
-      ship_instructor(ship, "GET SOME TIPS!\nPush [9] to regen your ship", "Zoltar");
-      ship_instructor(ship, "Push [0] to open the menu and use the same key to close it", "Zoltar", 5);
-      ship_instructor(ship, "Push [8] to become spectator, [8] or if the menu is open [3]/[4] to exit it", "Zoltar", 10, 6);
-      ship.setUIComponent(Menu_);
-      ship.setUIComponent(Regen);
-      ship.setUIComponent(Spectate);
-      ship.setUIComponent(Hide_Buttons);
+    } else if (ship.stats > 0) {
+      ship.set({stats:0});
+    }
+    if (!BannedList.includes(ship.name)) {
+      if (ship.custom.init !== true) {
+        ship.custom.init = true;
+        endgame_timer = 0;
+        ship.custom.Deaths = 0;
+        ship.custom.Kills = 0;
+        ship_instructor(ship, "GET SOME TIPS!\nPush [9] to regen your ship", "Zoltar");
+        ship_instructor(ship, "Push [0] to open the menu and use the same key to close it", "Zoltar", 5);
+        ship_instructor(ship, "Push [8] to become spectator, [8] or if the menu is open [3]/[4] to exit it", "Zoltar", 10, 6);
+        ship.setUIComponent(Menu_);
+        ship.setUIComponent(Regen);
+        ship.setUIComponent(Spectate);
+        ship.setUIComponent(Hide_Buttons);
+      }
     }
     reset_afk_timer = function() {
       ship.custom.TimeS = AFK_time;
@@ -544,6 +548,9 @@ this.event = function(event){
       else if (component === "Tp_Spawn"){Teleport_Center(ship)}
     break;
     case "ship_spawned":
+      if (BannedList.includes(ship.name)) {
+        ship.gameover({"You are banned from this game":"-"})
+      } else {
       const {x=0,y=0} = ship.custom;
       let xx = [...new Array(41)].map((j,i) => x - 30 + i);
       let yy = [...new Array(41)].map((j,i) => y - 30 + i);
@@ -553,6 +560,7 @@ this.event = function(event){
       game.modding.terminal.echo("\n | List of players and their IDs:\n");
       for (let i=0; i<game.ships.length;i++){game.modding.terminal.echo(" | id: "+i+", Name: "+game.ships[i].name+", Type: "+game.ships[i].type+"\n | Coordinates: X: "+game.ships[i].x+", Y: "+game.ships[i].y)}
       game.modding.terminal.echo("\n");
+      }
     break;
     case "ship_destroyed":
       Object.assign(ship.custom,{x:ship.x,y:ship.y});
@@ -586,7 +594,8 @@ AddObject("ModVersion",ModVersion,20,-16,24,9,Math.PI,-0.25);
 game.modding.commands.info = function(){
   game.modding.terminal.echo(" | Total amount of aliens: "+game.aliens.length)
   game.modding.terminal.echo(" | Total amount of asteroids: "+game.asteroids.length)
-  game.modding.terminal.echo(" | Total amount of players: "+game.ships.length)
+  game.modding.terminal.echo(" | Total amount of players: "+game.ships.length+"\n")
+  game.modding.terminal.echo(" | Banned players: "+BannedList)
   game.modding.terminal.echo("\n | List of players and their IDs:\n");
   for (let i=0; i<game.ships.length; i++){
     game.modding.terminal.echo(" | id: "+i+", Name: "+game.ships[i].name+", Type: "+game.ships[i].type+"\n | Coordinates: X: "+game.ships[i].x+", Y: "+game.ships[i].y); 
@@ -615,8 +624,19 @@ unidle = function(who){
 };
 
 kick = function(who,reason="Disturbing duels"){
-  game.ships[who].gameover({"You were kicked for : ":reason,"Your name: ":game.ships[who].name,"Score: ":game.ships[who].score});
+  game.ships[who].gameover({"You were kicked for : ":reason,"Your name: ":game.ships[who].name,"Score":game.ships[who].score,"Kills":game.ships[who].custom.Kills,"Deaths":game.ships[who].custom.Deaths});
   game.modding.terminal.echo(" | Player: "+game.ships[who].name+", id: "+who+" Has successfully been kicked\n");
+};
+
+ban = function(who,reason="Disturbing duels") {
+  BannedList.push(game.ships[who].name);
+  game.ships[who].gameover({"You were banned for : ":reason,"Your name: ":game.ships[who].name,"Score":game.ships[who].score,"Kills":game.ships[who].custom.Kills,"Deaths":game.ships[who].custom.Deaths});
+  game.modding.terminal.echo(" | Player: "+game.ships[who].name+", id: "+who+" Has successfully been banned\n");
+};
+
+unban = function(name) {
+  BannedList.pop(name);
+  game.modding.terminal.echo(" | Player: "+name+", Has successfully been unbanned\n");
 };
 
 gameover = function(start) {
