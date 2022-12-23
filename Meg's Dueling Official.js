@@ -595,7 +595,9 @@ game.modding.commands.info = function(){
   game.modding.terminal.echo(" | Total amount of aliens: "+game.aliens.length)
   game.modding.terminal.echo(" | Total amount of asteroids: "+game.asteroids.length)
   game.modding.terminal.echo(" | Total amount of players: "+game.ships.length+"\n")
-  game.modding.terminal.echo(" | Banned players: "+BannedList)
+  if (BannedList.length === 0) {names = "None"}
+  else {names = BannedList}
+  game.modding.terminal.echo(" | Banned players: "+names)
   game.modding.terminal.echo("\n | List of players and their IDs:\n");
   for (let i=0; i<game.ships.length; i++){
     game.modding.terminal.echo(" | id: "+i+", Name: "+game.ships[i].name+", Type: "+game.ships[i].type+"\n | Coordinates: X: "+game.ships[i].x+", Y: "+game.ships[i].y); 
@@ -728,6 +730,8 @@ game.modding.commands.helpmoderation = function(){
   game.modding.terminal.echo(" | idle(who) ⮞ "+"Makes a specific player stuck in one position.");
   game.modding.terminal.echo(" | unidle(who) ⮞ "+"Makes a specific player free.");
   game.modding.terminal.echo(" | kick(id,reason) ⮞ "+"To kick someone from the game.\n");
+  game.modding.terminal.echo(" | ban(id,reason) ⮞ "+"To ban someone from the game.\n");
+  game.modding.terminal.echo(" | unban(name) ⮞ "+"To unban someone from the game.\n");
   game.modding.terminal.echo(" | gameover(Yes/No) ⮞ "+"To end a game with a timer\n");
 };
 game.modding.commands.helpgeneral = function(){
