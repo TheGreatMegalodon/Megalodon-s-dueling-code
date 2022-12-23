@@ -85,6 +85,8 @@ Once you've press "ENTER" the mod is going to reply you with something similar a
  | Total amount of asteroids: 0
  | Total amount of players: 2
  
+ | Banned players: Lotus
+ 
  | List of players and their IDs:
   
  | id: 0, Name: Megalodon, Type: 613, Alive: true
@@ -102,10 +104,14 @@ Firstly, you can obviously see this:
  | Total amount of aliens: 0
  | Total amount of asteroids: 0
  | Total amount of players: 2
+ 
+ | Banned players: Lotus
 ```
 
 This shows you the number of aliens in the game the number of asteroids in the game and the number of players in the game.
 Thoses informations can be useful when you like to make a mess in modding!
+
+Right under it, the banned players name are shown.
 
 Next we have all of the interesting stuff.
 
