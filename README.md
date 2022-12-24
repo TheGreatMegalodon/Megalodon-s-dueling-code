@@ -1,3 +1,5 @@
+theme: tactile
+
 <div align="center">
   <br />
   <p>
