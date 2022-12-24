@@ -4,11 +4,15 @@ mod_version =
 // Mod creator : Megalodon
 // Coding support : Lotus, Bhpsngum
 
-// What has been fixed from v1.3.0s : 
+// What has been fixed/added from v1.3.0s : 
 //  - Fixed issues.
 //  - You can now ban and unban people from the game
+//  - You can now decide if you want to always pckup gems or not.
 
 // Type " help " for more information about the mod and his integrated commands.
+
+// Always pickup
+var always_pickup_gems = true;
 
 // Ship Codes
 var switch_ship_codes = [606,621];
@@ -24,9 +28,9 @@ var Regenerate_delay = 5;
 var Stats_delay = 1;
 
 // AFK settings
-var AFK_speed = 10e-4;
+var AFK_speed = 10e-2;
 var AFK_time = 30;
-var AFK_Cooldown = 20;
+var AFK_Cooldown = 15;
 
 // Other
 var BannedList = [];
@@ -208,18 +212,18 @@ this.tick = function(game) {
 if (game.step % 15 === 0) {
   updateScoreboard(game);
   for (let ship of game.ships) {
-    let max_crystals = 20 * Math.trunc(ship.type / 100)*Math.trunc(ship.type / 100);
-    if (ship.custom.crystals_last_updated != ship.last_updated && ship.crystals >= max_crystals) {
-      ship.set({crystals: max_crystals - 1});
-      ship.custom.crystals_last_updated = ship.last_updated;
+    if (always_pickup_gems) {
+      let max_crystals = 20 * Math.trunc(ship.type / 100) * Math.trunc(ship.type / 100);
+      if (ship.custom.crystals_last_updated != ship.last_updated && ship.crystals >= max_crystals) {
+        ship.set({crystals: max_crystals - 1});
+        ship.custom.crystals_last_updated = ship.last_updated;
+      }
     }
-    var level = Math.trunc(ship.type / 100);
+    let level = Math.trunc(ship.type / 100);
     if (level < 7) {
-      var max_stats = 11111111 * level;
+      let max_stats = 11111111 * level;
       if (ship.custom.keep_maxed) {
-        if (ship.stats != max_stats) {
-          ship.set({stats:max_stats});
-        }
+        if (ship.stats != max_stats) {ship.set({stats:max_stats})}
       }
     } else if (ship.stats > 0) {
       ship.set({stats:0});
@@ -424,7 +428,6 @@ var admin_ship = function(ship) {
 
 var regen = function(ship){
   let level = Math.trunc(ship.type / 100);
-  let cargo = 1280;
   if (!ship.custom.Regenerate || game.step >= ship.custom.Regenerate) {
     ship.custom.Regenerate = game.step + Regenerate_delay*60;
     switch (level) {
@@ -435,7 +438,7 @@ var regen = function(ship){
       case 5: crystals = 500; break; 
       case 6: crystals = 720; break; 
       case 7: crystals = 980; break;
-    } ship.set({crystals: cargo - 1, shield: 999});
+    } ship.set({crystals: crystals, shield: 999, generator: 999});
   }
 };
 
@@ -730,8 +733,6 @@ game.modding.commands.helpmoderation = function(){
   game.modding.terminal.echo(" | idle(who) ⮞ "+"Makes a specific player stuck in one position.");
   game.modding.terminal.echo(" | unidle(who) ⮞ "+"Makes a specific player free.");
   game.modding.terminal.echo(" | kick(id,reason) ⮞ "+"To kick someone from the game.\n");
-  game.modding.terminal.echo(" | ban(id,reason) ⮞ "+"To ban someone from the game.\n");
-  game.modding.terminal.echo(" | unban(name) ⮞ "+"To unban someone from the game.\n");
   game.modding.terminal.echo(" | gameover(Yes/No) ⮞ "+"To end a game with a timer\n");
 };
 game.modding.commands.helpgeneral = function(){
