@@ -1,5 +1,5 @@
 mod_version =
-" v1.3.1s";
+" v1.3.1";
 
 // Mod creator : Megalodon
 // Coding support : Lotus, Bhpsngum
