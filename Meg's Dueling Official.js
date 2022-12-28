@@ -590,7 +590,7 @@ AddObject = function(Name,ID,x,y,sx,sy,r,rz) {
 };
 
 AddObject("MapCenter",MapCenter,0,0,100,100,Math.PI,0);
-AddObject("ModVersion",ModVersion,20,-16,24,9,Math.PI,-0.25);
+AddObject("ModVersion",ModVersion,20,-16,27,12,Math.PI,-0.25);
 
 // Commands
 // Moderation commands
