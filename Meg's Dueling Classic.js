@@ -1,13 +1,12 @@
 mod_version =
-" v1.3.1s";
+" v1.0.0s";
 
 // Mod creator : Megalodon
 // Coding support : Lotus, Bhpsngum
 
-// What has been fixed/added from v1.3.0s : 
+// What has been optimized from the official version: 
 //  - Fixed issues.
-//  - You can now ban and unban people from the game
-//  - You can now decide if you want to always pckup gems or not.
+//  - Everything
 
 // Type " help " for more information about the mod and his integrated commands.
 
