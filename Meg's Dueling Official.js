@@ -582,7 +582,7 @@ var MapCenter = {
 var ModVersion = {
   id: "ModVersion",
   obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/v1.3.0s_Img.png",
+  emissive:"https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/v1.3.1_Img.png",
 };
 
 AddObject = function(Name,ID,x,y,sx,sy,r,rz) {
