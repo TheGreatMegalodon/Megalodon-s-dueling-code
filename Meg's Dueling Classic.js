@@ -239,11 +239,12 @@ if (game.step % 15 === 0) {
         ship.setUIComponent(Hide_Buttons);
       }
     }
-    if (!game.custom.admin && game.ships[0]) {
-      game.custom.admin = true;
-      game.ships[0].setUIComponent(Admin);
-    }
   }
+  if (!game.custom.admin && game.ships[0]) {
+    game.custom.admin = true;
+    game.ships[0].setUIComponent(Admin);
+  }
+}
 };
 
 var updateScoreboard = function(game) {
@@ -264,11 +265,11 @@ var updateScoreboard = function(game) {
         {type: "text",position:[74, 11.25 * i + 11.5, 29, 8.5],value: sorted_ships_KDratio[i].custom.Kills+"/"+ship.custom.Deaths, color: "rgb(255,255,255)", align:"center"}
       ]).flat(Infinity)
     ]
-  }
+  };
   for (let ship of game.ships) {
     let components = [...Scoreboard.components];
     let index = components.findIndex(c => c.type == "player" && c.id === ship.id);
-    if (index != -1) {Scoreboard.components.splice(index + 2, 0, {type:"box",position: [0, components[index].index * 11.25 + 10.50, 100, 10],fill:"rgba(200, 200, 255, 0.15)"})}
+    if (index !== -1) {Scoreboard.components.splice(index + 2, 0, {type:"box",position: [0, components[index].index * 11.25 + 10.50, 100, 10],fill:"rgba(200, 200, 255, 0.15)"})}
     ship != null && ship.setUIComponent(Scoreboard);
     Scoreboard.components = components;
   }
@@ -529,7 +530,7 @@ AddObject = function(Name,ID,x,y,sx,sy,r,rz) {
 };
 
 AddObject("MapCenter",MapCenter,0,0,100,100,Math.PI,0);
-AddObject("ModVersion",ModVersion,20,-16,24,9,Math.PI,-0.25);
+AddObject("ModVersion",ModVersion,20,-16,30,13,Math.PI,-0.25);
 
 // Commands
 // Moderation commands
