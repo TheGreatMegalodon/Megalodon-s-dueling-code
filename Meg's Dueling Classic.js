@@ -6,7 +6,10 @@ mod_version =
 
 // What has been optimized from the official version: 
 //  - Fixed issues.
-//  - Everything
+//  - Everything (less laggy)
+//  - Removed:
+//    - AFK checker
+//    - EndGame timer
 
 // Type " help " for more information about the mod and his integrated commands.
 
@@ -334,13 +337,11 @@ var spectator_ship = function(ship) {
     ship.custom.spectator_switch = game.step + spectator_switch_delay*60;
     if (ship.custom.spectator) {
       ship.custom.spectator = false;
-      ship.custom.afk_main = 1;
       if (ship.custom.last_ship === spectator_ship_code) {ship.custom.last_ship = switch_ship_codes[0]}
         ship.set({type: ship.custom.last_ship, collider: true, shield: 999, crystals: 720, stats: 88888888});
     } else {
       ship.custom.spectator = true;
       ship.custom.last_ship = ship.type;
-      ship.custom.afk_main = 0;
       ship.set({type: spectator_ship_code, crystals: 0, stats: 88888888, shield: 999, collider: false});
     }
   }
@@ -361,8 +362,6 @@ var admin_ship = function(ship) {
     if (ship.type === spectator_ship_code) {collider = true}
     if (ship.custom.last_admin_ship === spectator_ship_code) {collider = false}
     ship.set({type: next_type, stats: 66666666, crystals: 719, collider: collider});
-    if (next_type <= admin_ship_codes[1]) {ship.custom.afk_main = 0}
-    else {ship.custom.afk_main = 1}
   }
 };
 
@@ -584,29 +583,6 @@ unban = function(name) {
   game.modding.terminal.echo(" | Player: "+name+", Has successfully been unbanned\n");
 };
 
-gameover = function(start) {
-  endgame_timer = start;
-  ColorTimer = 0;
-  title = function(text,color) {
-    for (let ship of game.ships) {
-      ship.setUIComponent({id: "Title_game",position: [24,15,50,20],clickable: false,visible: true,
-        components: [{type: "text", position: [0,0,100,50], color: color, value:text},]
-      });
-      setTimeout( () => {ship.setUIComponent({id: "Title_game",visible: false})}, 6000);
-    }
-  };
-  switch(start) {
-    case 1:
-      title("The game is ending in 5 Minutes","rgba(255,55,55,0.8)");
-      game.modding.terminal.echo(" | Game is ending in: 5 Minutes\n");
-    break;
-    case 0:
-      title("The game is extended","rgba(55,255,55,0.8)");
-      game.modding.terminal.echo(" | Game is ending has been canceled\n");
-    break;
-  }
-};
-
 // General commands
 set = function(who,what,crystals,stats=88888888){
   var level = Math.trunc(what / 100);
@@ -673,7 +649,6 @@ game.modding.commands.helpmoderation = function(){
   game.modding.terminal.echo(" | idle(who) ⮞ "+"Makes a specific player stuck in one position.");
   game.modding.terminal.echo(" | unidle(who) ⮞ "+"Makes a specific player free.");
   game.modding.terminal.echo(" | kick(id,reason) ⮞ "+"To kick someone from the game.\n");
-  game.modding.terminal.echo(" | gameover(Yes/No) ⮞ "+"To end a game with a timer\n");
 };
 game.modding.commands.helpgeneral = function(){
   game.modding.terminal.echo(" | set(who,type,crystals,stats) ⮞ "+"Replace: game.ships[0].set({});.");
