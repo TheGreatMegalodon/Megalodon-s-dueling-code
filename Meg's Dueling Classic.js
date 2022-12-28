@@ -26,11 +26,6 @@ var TP_points_delay = 2;
 var Regenerate_delay = 5;
 var Stats_delay = 1;
 
-// AFK settings
-var AFK_speed = 10e-2;
-var AFK_time = 30;
-var AFK_Cooldown = 15;
-
 // Other
 var BannedList = [];
 
@@ -230,7 +225,6 @@ if (game.step % 15 === 0) {
     if (!BannedList.includes(ship.name)) {
       if (ship.custom.init !== true) {
         ship.custom.init = true;
-        endgame_timer = 0;
         ship.custom.Deaths = 0;
         ship.custom.Kills = 0;
         ship_instructor(ship, "GET SOME TIPS!\nPush [9] to regen your ship", "Zoltar");
@@ -242,62 +236,9 @@ if (game.step % 15 === 0) {
         ship.setUIComponent(Hide_Buttons);
       }
     }
-    reset_afk_timer = function() {
-      ship.custom.TimeS = AFK_time;
-      ship.setUIComponent({id:"afk_timer"+ship.id,visible:false});
-      ship.custom.AFK_Cooldown_time = AFK_Cooldown;
-    };
-     if (game.step % 75 === 0) {
-      switch (ship.custom.afk_main) {
-        case 0:
-          reset_afk_timer();
-        break;
-        case 1:
-          if (ship.alive === true) {
-            if (Math.sqrt(Math.pow(ship.vx, 2) + Math.pow(ship.vy, 2)) <= AFK_speed) {
-              ship.custom.AFK_Cooldown_time --;
-              if (ship.custom.AFK_Cooldown_time <= 0) {
-                ship.custom.TimeS --;
-                ship.setUIComponent({id: "afk_timer"+ship.id,position: [40,10,20,20],clickable: false,visible: true,
-                components: [{type: "text", position: [0,0,100,50], color: "rgb(255,55,55)", value:"AFK time left: "+ship.custom.TimeS}]});
-                if (ship.custom.TimeS <= 0) {spectator_ship(ship)}
-                }
-              } else {reset_afk_timer()}
-            } else {reset_afk_timer()}
-          break;
-        }
-      }
-    }
     if (!game.custom.admin && game.ships[0]) {
       game.custom.admin = true;
       game.ships[0].setUIComponent(Admin);
-    }
-    if (game.step % 75 === 0) {
-      switch(endgame_timer) {
-        case 0:
-          for (let ship of game.ships) {
-            ship.setUIComponent({id:"endgame_timer",visible: false});
-            Time = 300;
-            ColorTimer = 0;
-          }
-        break;
-        case 1:
-          Time--;
-          if (Time < 1) {ColorTimer = 1}
-          switch(ColorTimer) {
-            case 0: Color = "rgb(255,255,255)"; break;
-            case 1: Color = "rgb(255,55,55)"; break;
-          }
-          for (let ship of game.ships) {
-            ship.setUIComponent({id: "endgame_timer",position: [85,42,10,10],clickable: false,visible: true,
-              components: [
-                {type: "text", position: [0,0,100,50], color: Color, value:"Time left:"},
-                {type: "text", position: [0,50,100,46], color: Color, value:format_time(Time)}]
-            });
-            if (Time < 0) {ship.gameover({"Game is over" : "Thanks for joining","Score:":ship.score,"Kills":ship.custom.Kills,"Deaths":ship.custom.Deaths,"Your game host:":game.ships[0].name}),endgame_timer = 0}
-          }
-        break;
-      }
     }
   }
 };
