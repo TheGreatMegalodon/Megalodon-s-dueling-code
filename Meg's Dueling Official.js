@@ -6,10 +6,11 @@ mod_version =
 
 // What has been fixed/added from v1.3.0s : 
 //  - Fixed issues.
-//  - You can now ban and unban people from the game
+//  - You can now ban and unban people from the game.
 //  - You can now decide if you want to always pckup gems or not.
+//  - InGame Ban/Kick logs.
 
-// Type " help " for more information about the mod and his integrated commands.
+// See the documentation on the github page for more information about the mod and his integrated commands.
 
 // Always pickup
 var always_pickup_gems = true;
@@ -331,6 +332,13 @@ var updateScoreboard = function(game) {
   }
 };
 
+var AddText = function(ship,Value,Color,Visibility,size=5,h=20) {
+  ship.setUIComponent({id:"Text",position:[-5,-5,110,110],clickable:false,visible:true,
+    components: [{type: "text", position: [0,h,100,size], color: Color, value:Value}]
+  });
+  if (Visibility) {setTimeout(() => {ship.setUIComponent({id:"Text",visible: false})}, 5000)}
+};
+
 var format_time = function(time) {
   if (time > 0) {
     minutes = Math.floor(time/60);
@@ -629,12 +637,14 @@ unidle = function(who){
 };
 
 kick = function(who,reason="Disturbing duels"){
+  for (let ship of game.ships) {AddText(ship,"Player: "+game.ships[who].name+" has been kicked.","rgb(255,155,55)",true,4,16)}
   game.ships[who].gameover({"You were kicked for : ":reason,"Your name: ":game.ships[who].name,"Score":game.ships[who].score,"Kills":game.ships[who].custom.Kills,"Deaths":game.ships[who].custom.Deaths});
   game.modding.terminal.echo(" | Player: "+game.ships[who].name+", id: "+who+" Has successfully been kicked\n");
 };
 
 ban = function(who,reason="Disturbing duels") {
   BannedList.push(game.ships[who].name);
+  for (let ship of game.ships) {AddText(ship,"Player: "+game.ships[who].name+" has been banned.","rgb(255,55,55)",true,4,16)}
   game.ships[who].gameover({"You were banned for : ":reason,"Your name: ":game.ships[who].name,"Score":game.ships[who].score,"Kills":game.ships[who].custom.Kills,"Deaths":game.ships[who].custom.Deaths});
   game.modding.terminal.echo(" | Player: "+game.ships[who].name+", id: "+who+" Has successfully been banned\n");
 };
@@ -719,26 +729,4 @@ say = function(text="") {
     });
   }
   game.modding.terminal.echo(" | Text: "+text+" applyed\n");
-};
-
-// Commands Annex
-game.modding.commands.help = function(){
-  game.modding.terminal.echo("Mod by ⮞ Megalodon");
-  game.modding.terminal.echo("Coding support ⮞ Lotus, Bhpsngum\n");
-  game.modding.terminal.echo(" | info ⮞ "+"Gives informations about the game.");
-  game.modding.terminal.echo(" | helpgeneral ⮞ "+"very useful stuff.");
-  game.modding.terminal.echo(" | helpmoderation ⮞ "+"Every moderation related commands");
-};
-game.modding.commands.helpmoderation = function(){
-  game.modding.terminal.echo(" | idle(who) ⮞ "+"Makes a specific player stuck in one position.");
-  game.modding.terminal.echo(" | unidle(who) ⮞ "+"Makes a specific player free.");
-  game.modding.terminal.echo(" | kick(id,reason) ⮞ "+"To kick someone from the game.\n");
-  game.modding.terminal.echo(" | gameover(Yes/No) ⮞ "+"To end a game with a timer\n");
-};
-game.modding.commands.helpgeneral = function(){
-  game.modding.terminal.echo(" | set(who,type,crystals,stats) ⮞ "+"Replace: game.ships[0].set({});.");
-  game.modding.terminal.echo(" | tpto(who,towho) ⮞ "+"To teleport a player to another player.");
-  game.modding.terminal.echo(" | tp(who,x,y) ⮞ "+"To teleport someone.");
-  game.modding.terminal.echo(" | tpall(x,y) ⮞ "+"To teleports everyone.");
-  game.modding.terminal.echo(" | say(hello) ⮞ "+"To make an announcement to the players while playing.\n");
 };
