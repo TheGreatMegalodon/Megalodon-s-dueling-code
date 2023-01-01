@@ -41,12 +41,12 @@
   * [How to host a dueling game](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#how-to-host-a-dueling-game)
   * [Kick](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#kick)
   * [Ban](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ban)
-  * [GameOver](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#how-to-use-the-gameover-command)
+  * [GameOver](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#gameover-command)
 * [SET command](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#set-command)
   * [Ship Type](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-type)
   * [Ship Crystals](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-crystals)
   * [Ship Stats](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-stats)
-* [How to add your own ships](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#how-to-add-your-own-ships)
+* [How to add your own ships](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#add-your-own-ships)
 * [Command Usage](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#commands-usage) 
   * [Moderation Commands](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#moderation-commands)
   * [Basic Commands](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#basic-commands)
@@ -220,7 +220,7 @@ Player: Gilles, index: 1 Has successfully been banned
 > █
 ```
 
-### UnBan
+### Unban
 
 Now unlike the Kick command, the player that has been "banned" cannot rejoin under his original name. 
 For him to rejoin, you will have to Unban him. 
@@ -254,7 +254,7 @@ Player: Nébuleuse, reason: Being annoying, and Disturbing duels, Has successful
 ```
 Well done! you now know how to "Ban" and "Unban" someone from Meg's Dueling Starblast Custom Server!
 
-### How to use the GameOver command
+### GameOver command
 Its by far one of the most easiest command to use. All you need to know is the logic behind the code, i made it so when you type in the console:
 ```js
 > gameover(1)
@@ -356,7 +356,7 @@ set(0,601)
 > █
 ```
 
-### How to add your own ships
+### Add your own ships
 
 ```diff
 - Changes have been made on the mod, i am re-writing the whole thing, it will take a bit of time
