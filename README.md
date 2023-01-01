@@ -47,7 +47,7 @@
   * [Ship Crystals](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-crystals)
   * [Ship Stats](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-stats)
 * [Add your own ships](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#add-your-own-ships)
-* [Mod's Commands](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#mod-s-commands) 
+* [Mod's Commands](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#mods-commands) 
   * [Moderation Commands](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#moderation-commands)
   * [Basic Commands](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#basic-commands)
 
