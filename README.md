@@ -18,6 +18,16 @@
 * **Lotus**
 * **Bhpsngum**
 
+## Whats new!
+* Fixed issues.
+* Better optimization.
+* Reviewed: Ban/Unban/Kick/Idle/Unidle commands.
+* You can no longer use SubSpace client on this mod.
+  * This will kick you out of the mod.
+* Removed Command annex at the end, "help" command doesn't not work anymore.
+* Alway Pickup Gems, is a command now.
+  * apc() is now live!
+
 ## Comming soon!!
 * Adding all the vanilla ship-tree.
 * More features on the AFK Checker system
