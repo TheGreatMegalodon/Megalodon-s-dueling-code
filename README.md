@@ -78,7 +78,7 @@ Then just simply paste the version you choosed in your Modding tab.
 
 and enjoy!
 
-#### Kick
+### Kick
 To kick a player it is very easy. While your mod is running, you first need to write in the console:
 
 ```js
@@ -175,7 +175,7 @@ you can then put anything you want between the quotation marks.
 
 If an error shows up, please restart the mod.
 
-#### Ban
+### Ban
 
 It is vers easy aswell to ban a player.
 The ban system is "NAME" based, which means to counter a ban a plyer just needs to change his name, there are no other way to ban a player.
@@ -187,7 +187,20 @@ In the console just like the "Kick" Command, you will have to type:
 ```
 (I will skip a few parts, for more details check: [Kick](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#kick))
 
+#### How to use the GameOver command
+Its by far one of the most easiest command to use. All you need to know is the logic behind the code, i made it so when you type in the console:
+```js
+> gameover(1)
+> █
+```
+A timer of 5 minutes starts, and the ned of thoses 5 minutes the game will kick everyone and close the game.
 
+**But** if you feel like you can run the mod a little more, then just do in the console:
+```js
+> gameover(0)
+> █
+```
+it will then stop and reset the timer, and you will be able to continue your duels like nothing has ever hapened.
 
 ### SET Command
 
@@ -282,23 +295,8 @@ set(0,601)
 - Changes have been made on the mod, i am re-writing the whole thing, it will take a bit of time
 ```
 
-### Commands Usage
+## Commands Usage
 **Here you will find all of the commands that you can use while running the mod.**
-
-#### How to use the GameOver command
-Its by far one of the most easiest command to use. All you need to know is the logic behind the code, i made it so when you type in the console:
-```js
-> gameover(1)
-> █
-```
-A timer of 5 minutes starts, and the ned of thoses 5 minutes the game will kick everyone and close the game.
-
-**But** if you feel like you can run the mod a little more, then just do in the console:
-```js
-> gameover(0)
-> █
-```
-it will then stop and reset the timer, and you will be able to continue your duels like nothing has ever hapened.
 
 ### Moderation Commands
 
