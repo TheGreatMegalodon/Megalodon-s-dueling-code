@@ -211,8 +211,33 @@ Player: Gilles, index: 1 Has successfully been banned
 > █
  ```
 Onve you've seen that, congratulation you have succesfuly Banned your first player!
+You can also add a custom reason like with the kick command:
+```js
+
+```
 
 ### UnBan
+
+Now unlike the Kick command, the player that has been "banned" cannot rejoin under his original name. 
+For him to rejoin, you will have to Unban him. 
+To do so you can do this command:
+```js
+> banlist█
+```
+Then press "ENTER", this will show you all of the players that have been banned on the current game. 
+It should also look like this:
+```js
+> banlist
+Index: 0, Name: Megalodon, Reason: Disturbing duels
+Index: 1, Name: Nébuleuse, Reason: Being annoying, and Disturbing duels.
+❗INFO Type: unban(index), to unabn a player.
+
+> █
+```
+Now with this list you will be looking at the index number. This number will allow you to choose who do you want to Unban. 
+In My case I will take Nébuleuse as an example. 
+To Unban him i will need to write: 
+
 
 ### How to use the GameOver command
 Its by far one of the most easiest command to use. All you need to know is the logic behind the code, i made it so when you type in the console:
@@ -335,7 +360,7 @@ set(0,601)
 | `idle()` | Makes a specific player stuck in one position and disable his buttons. | idle("**player index**") | `idle(0)` |
 | `unidle()` | Makes a specific player free, and makes his buttons usable again. | unidle("**player index**") | `unidle(0)` |
 | `kick()` | To kick someone from the game. more details [here](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#kick). | kick("**player index**","**reason**") | `kick(1)` or `kick(1,"can't stand the power of modding")` |
-| `ban()` | To ban someone from the game, works like the `kick()` command | ban("**player index**","**reason**") | `kick(1)` or `kick(1,"You cannot rejoin now ;)")` |
+| `ban()` | To ban someone from the game, works like the `kick()` command | ban("**player index**","**reason**") | `ban(1)` or `ban(1,"You cannot rejoin now ;)")` |
 | `unban()` | To unban someone from the game, using the exact same name is really important | unban("**player NAME**") | `unban("Bylolopro")` |
 | `banlist` | shows a list of all the banned players and their INDEX to unban them | -- | `banlist` |
 | `gameover()` | Give the opportunity to end a dueling game smoothly | gameover(**0 or 1**) | `gameover(1)` |
