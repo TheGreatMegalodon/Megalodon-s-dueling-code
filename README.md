@@ -298,12 +298,14 @@ it will then stop and reset the timer, and you will be able to continue your due
 | `kick()` | To kick someone from the game. more details [here](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#kick). | kick("**player ID**","**reason**") | `kick(1)` or `kick(1,"can't stand the power of modding")` |
 | `ban()` | To ban someone from the game, works like the `kick()` command | ban("**player ID**","**reason**") | `kick(1)` or `kick(1,"You cannot rejoin now ;)")` |
 | `unban()` | To unban someone from the game, using the exact same name is really important | unban("**player NAME**") | `unban("Bylolopro")` |
-|`gameover()`| Give the opportunity to end a dueling game smoothly | gameover(**0 or 1**) | `gameover(1)` |
+| `banlist` | shows a list of all the banned players and their INDEX to unban them | -- | `banlist` |
+| `gameover()` | Give the opportunity to end a dueling game smoothly | gameover(**0 or 1**) | `gameover(1)` |
 
 ### Basic Commands
 
 | **Command Name** | **What is it for** | **How to use it** | **Usage example** |
 | - | - | - | - |
+| `apc` | You are now able to choose if you want to be able to always pickup gems or not | -- | apc |
 | `set()` | basically replace: game.ships[0].set({});. | set("**player ID**","**[What ship](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-type)**","**[How many crystals](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-crystals)**","**[What stats](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-stats)**") See more about it [here](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#set-command) | `set(0,605,500,45232455)` |
 | `tpto()` | To teleport a player to another player. | tpto("**player ID**","**to player ID**") | `tpto(0,1)` |
 | `tp()` | To teleport someone at specific coordinates. | tp("**player ID**","**X value**","**Y value**") | `tp(0,200,200)` |
