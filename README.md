@@ -32,6 +32,10 @@
 * Adding all the vanilla ship-tree.
 * More features on the AFK Checker system
 
+## Support
+* [Support Discord Server](https://discord.gg/KXvCq4N)
+* Discord: Megalodon#0001
+
 ## Summary
 * [Help](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#help)
   * [How to host a dueling game](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#how-to-host-a-dueling-game)
@@ -49,13 +53,7 @@
 
 ## Help
 
-**⚠️ Small skills in modding are required to use thoses commands.**
-
-While runing the mod you can always type:
-```js
-> help█
-```
-To see all the commands you can use.
+**⚠️ Small skills in Modding/Coding are required to use thoses commands and use the mod.**
 
 ### How to host a dueling game
 
@@ -80,7 +78,7 @@ Then just simply paste the version you choosed in your Modding tab.
 
 and enjoy!
 
-### Kick
+#### Kick
 To kick a player it is very easy. While your mod is running, you first need to write in the console:
 
 ```js
@@ -90,18 +88,18 @@ To kick a player it is very easy. While your mod is running, you first need to w
 Once you've press "ENTER" the mod is going to reply you with something similar as this:
 
 ```js
- | Total amount of aliens: 0
- | Total amount of asteroids: 0
- | Total amount of players: 2
+Total amount of aliens: 0
+Total amount of asteroids: 0
+Total amount of players: 2
  
- | Banned players: Lotus
+Banned players: Lotus
  
- | List of players and their IDs:
+List of players and their IDs:
   
- | id: 0, Name: Megalodon, Type: 613, Alive: true
- | Coordinates: X: 7, Y: 3
- | id: 1, Name: Kylo, Type: 601, Alive: false
- | Coordinates: X: 105, Y: 356
+index: 0, Name: Megalodon, Type: 613, Alive: true
+Coordinates: X: 7, Y: 3
+index: 1, Name: Kylo, Type: 601, Alive: false
+Coordinates: X: 105, Y: 356
 > █
 ```
 
@@ -110,11 +108,11 @@ While looking at it, you can see a few informations.
 Firstly, you can obviously see this:
 
 ```js
- | Total amount of aliens: 0
- | Total amount of asteroids: 0
- | Total amount of players: 2
+Total amount of aliens: 0
+Total amount of asteroids: 0
+Total amount of players: 2
  
- | Banned players: Lotus
+Banned players: Lotus
 ```
 
 This shows you the number of aliens in the game the number of asteroids in the game and the number of players in the game.
@@ -125,18 +123,18 @@ Right under it, the banned players name are shown.
 Next we have all of the interesting stuff.
 
 ```js
- | id: 0, Name: Megalodon, Type: 613, Alive: true
- | Coordinates: X: 7, Y: 3
- | id: 1, Name: Kylo, Type: 601, Alive: false
- | Coordinates: X: 105, Y: 356
+index: 0, Name: Megalodon, Type: 613, Alive: true
+Coordinates: X: 7, Y: 3
+index: 1, Name: Kylo, Type: 601, Alive: false
+Coordinates: X: 105, Y: 356
 ```
 
-These informations shows you the ID(index) of a player and his name. Which can be useful to recognize the player you want to kick, you can also see the ship he have, if he is dead or not, and his coordinates.
+These informations shows you the index of a player and his name. Which can be useful to recognize the player you want to kick, you can also see the ship he have, if he is dead or not, and his coordinates.
 
 To kick a player you will only need the first lane:
 
 ```js
- | id: 0, Name: Megalodon, Type: 613, Alive: true
+index: 0, Name: Megalodon, Type: 613, Alive: true
 ```
 
 Watch carefuly the names, pick your cible and watch his ID, in my case its 0.
@@ -160,7 +158,7 @@ Once you've press "ENTER" this is what you should see:
 
 ```js
 > kick(0)
- | Player: Megalodon, id: 0 Has successfully been kicked
+ | Player: Megalodon, index: 0 Has successfully been kicked
 > █
 ```
 
@@ -177,11 +175,23 @@ you can then put anything you want between the quotation marks.
 
 If an error shows up, please restart the mod.
 
-### Ban
+#### Ban
+
+It is vers easy aswell to ban a player.
+The ban system is "NAME" based, which means to counter a ban a plyer just needs to change his name, there are no other way to ban a player.
+(DM me on discord if you have any other ideas on how we could imporve the banning system, credits will also be given).
+
+In the console just like the "Kick" Command, you will have to type:
+```js
+> info█
+```
+(I will skip a few parts, for more details check: [Kick](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#kick))
+
+
 
 ### SET Command
 
-### Ship Type
+#### Ship Type
 
 The `ship.type` is a way to recognize a ship without his name.
 
@@ -200,7 +210,7 @@ Next we can take the A-Speedster, A-Speedster is a `Tier 6` and he is the `5th s
 
 And its the same thing for all of ships in starblast.
 
-### Ship Crystals
+#### Ship Crystals
 
 You basically don't need to set any value, its automatically giving the right amount of gems.
 
@@ -210,7 +220,7 @@ if you want to change the ship type, stats, and crystals amount at the same time
 set(0,602,560)
 ```
 
-### Ship Stats
+#### Ship Stats
 
 Stats are simple as `ship.type`
 
@@ -266,16 +276,16 @@ set(0,601)
 > █
 ```
 
-## How to add your own ships
+### How to add your own ships
 
 ```diff
 - Changes have been made on the mod, i am re-writing the whole thing, it will take a bit of time
 ```
 
-## Commands Usage
+### Commands Usage
 **Here you will find all of the commands that you can use while running the mod.**
 
-### How to use the GameOver command
+#### How to use the GameOver command
 Its by far one of the most easiest command to use. All you need to know is the logic behind the code, i made it so when you type in the console:
 ```js
 > gameover(1)
@@ -313,7 +323,3 @@ it will then stop and reset the timer, and you will be able to continue your due
 | `tp()` | To teleport someone at specific coordinates. | tp("**player ID**","**X value**","**Y value**") | `tp(0,200,200)` |
 | `tpall()` | To teleports everyone at specific coordinates. | tpall("**X value**","**Y value**") | `tpall(200,200)` |
 | `say("")` | To make a text appear while playing. | say("**Your message**") Writing `say()` will delete your message. | `say("The game ends soon")` |
-
-## Support
-* [Support Discord Server](https://discord.gg/KXvCq4N)
-* Discord: Megalodon#0001
