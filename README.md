@@ -213,7 +213,11 @@ Player: Gilles, index: 1 Has successfully been banned
 Onve you've seen that, congratulation you have succesfuly Banned your first player!
 You can also add a custom reason like with the kick command:
 ```js
+> ban(1,"You cannot rejoin now")
+Player: Gilles, index: 1 Has successfully been banned
+❗INFO Type: banlist, to see all of the banned players.
 
+> █
 ```
 
 ### UnBan
@@ -229,21 +233,31 @@ It should also look like this:
 ```js
 > banlist
 Index: 0, Name: Megalodon, Reason: Disturbing duels
-Index: 1, Name: Nébuleuse, Reason: Being annoying, and Disturbing duels.
+Index: 1, Name: Nébuleuse, Reason: Being annoying, and Disturbing duels
 ❗INFO Type: unban(index), to unabn a player.
 
 > █
 ```
 Now with this list you will be looking at the index number. This number will allow you to choose who do you want to Unban. 
 In My case I will take Nébuleuse as an example. 
-To Unban him i will need to write: 
+To Unban him I will need to write: 
 
+```js
+> unban(1)█
+```
+By pressing "ENTER" this will show up:
+```js
+> unban(0)
+Player: Nébuleuse, reason: Being annoying, and Disturbing duels, Has successfully been unbanned
+
+> █
+```
+Well done! you now know how to "Ban" and "Unban" someone from Meg's Dueling Starblast Custom Server!
 
 ### How to use the GameOver command
 Its by far one of the most easiest command to use. All you need to know is the logic behind the code, i made it so when you type in the console:
 ```js
 > gameover(1)
-
 > █
 ```
 A timer of 5 minutes starts, and the ned of thoses 5 minutes the game will kick everyone and close the game.
@@ -251,7 +265,6 @@ A timer of 5 minutes starts, and the ned of thoses 5 minutes the game will kick 
 **But** if you feel like you can run the mod a little more, then just do in the console:
 ```js
 > gameover(0)
-
 > █
 ```
 it will then stop and reset the timer, and you will be able to continue your duels like nothing has ever hapened.
