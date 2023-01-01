@@ -40,13 +40,14 @@
 * [Help](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#help)
   * [How to host a dueling game](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#how-to-host-a-dueling-game)
   * [Kick](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#kick)
+  * [Ban](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ban)
+  * [GameOver](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#how-to-use-the-gameover-command)
 * [SET command](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#set-command)
   * [Ship Type](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-type)
   * [Ship Crystals](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-crystals)
   * [Ship Stats](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-stats)
 * [How to add your own ships](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#how-to-add-your-own-ships)
-* [Command Usage](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#commands-usage)
-  * [GameOver command](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#how-to-use-the-gameover-command) 
+* [Command Usage](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#commands-usage) 
   * [Moderation Commands](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#moderation-commands)
   * [Basic Commands](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#basic-commands)
 * [Support](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#support)
@@ -94,12 +95,13 @@ Total amount of players: 2
  
 Banned players: Lotus
  
-List of players and their IDs:
+Player's and their index's:
   
 index: 0, Name: Megalodon, Type: 613, Alive: true
 Coordinates: X: 7, Y: 3
 index: 1, Name: Kylo, Type: 601, Alive: false
 Coordinates: X: 105, Y: 356
+
 > █
 ```
 
@@ -123,6 +125,8 @@ Right under it, the banned players name are shown.
 Next we have all of the interesting stuff.
 
 ```js
+Player's and their index's:
+
 index: 0, Name: Megalodon, Type: 613, Alive: true
 Coordinates: X: 7, Y: 3
 index: 1, Name: Kylo, Type: 601, Alive: false
@@ -137,20 +141,22 @@ To kick a player you will only need the first lane:
 index: 0, Name: Megalodon, Type: 613, Alive: true
 ```
 
-Watch carefuly the names, pick your cible and watch his ID, in my case its 0.
+Watch carefuly the names, pick your cible and watch his index, in my case its 0.
 The command you're gonna be using to kick someone is:
 
 ```js
 > kick()
+
 > █
 ```
 
-Remember the ID, of the player, and write it down between the parenthesis.
+Remember the index, of the player, and write it down between the parenthesis.
 
 For my case its gonna look like this:
 
 ```js
 > kick(0)
+
 > █
 ```
 
@@ -158,7 +164,8 @@ Once you've press "ENTER" this is what you should see:
 
 ```js
 > kick(0)
- | Player: Megalodon, index: 0 Has successfully been kicked
+ Player: Megalodon, index: 0 Has successfully been kicked
+ 
 > █
 ```
 
@@ -169,6 +176,7 @@ but if you still want to set a custom reason you will need to write it like this
 
 ```js
 kick(0,"Not skilled enough to survive")
+
 ```
 
 you can then put anything you want between the quotation marks.
@@ -187,10 +195,30 @@ In the console just like the "Kick" Command, you will have to type:
 ```
 (I will skip a few parts, for more details check: [Kick](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#kick))
 
-#### How to use the GameOver command
+Once you've got the Index of the player you wants to ban just simply write:
+
+```js
+> ban("player index")
+
+> █
+```
+ Once you've press "ENTER" you should see this:
+ ```js
+> ban(1)
+Player: Gilles, index: 1 Has successfully been banned
+❗INFO Type: banlist, to see all of the banned players.
+
+> █
+ ```
+Onve you've seen that, congratulation you have succesfuly Banned your first player!
+
+### UnBan
+
+### How to use the GameOver command
 Its by far one of the most easiest command to use. All you need to know is the logic behind the code, i made it so when you type in the console:
 ```js
 > gameover(1)
+
 > █
 ```
 A timer of 5 minutes starts, and the ned of thoses 5 minutes the game will kick everyone and close the game.
@@ -198,6 +226,7 @@ A timer of 5 minutes starts, and the ned of thoses 5 minutes the game will kick 
 **But** if you feel like you can run the mod a little more, then just do in the console:
 ```js
 > gameover(0)
+
 > █
 ```
 it will then stop and reset the timer, and you will be able to continue your duels like nothing has ever hapened.
@@ -230,7 +259,7 @@ You basically don't need to set any value, its automatically giving the right am
 if you want to change the ship type, stats, and crystals amount at the same time, you can do:
 
 ```js
-set(0,602,560)
+> set(0,602,560)█
 ```
 
 #### Ship Stats
@@ -258,7 +287,7 @@ With that in your mind, lets head to the coding part.
 To remove upgardes from a ship, the stats should look like this `00000000` and in the console:
 
 ```js
-set(0,601,0,00000000)
+> set(0,601,0,00000000)█
 ```
 
 But to max a ship you will need to replace the "0" with numbers. 
@@ -303,10 +332,10 @@ set(0,601)
 | **Command Name** | **What is it for** | **How to use it** | **Usage example** |
 | - | - | - | - |
 | `info` | Gives a bunch of informations about the game and the players in it. | -- | info |
-| `idle()` | Makes a specific player stuck in one position and disable his buttons. | idle("**player ID**") | `idle(0)` |
-| `unidle()` | Makes a specific player free, and makes his buttons usable again. | unidle("**player ID**") | `unidle(0)` |
-| `kick()` | To kick someone from the game. more details [here](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#kick). | kick("**player ID**","**reason**") | `kick(1)` or `kick(1,"can't stand the power of modding")` |
-| `ban()` | To ban someone from the game, works like the `kick()` command | ban("**player ID**","**reason**") | `kick(1)` or `kick(1,"You cannot rejoin now ;)")` |
+| `idle()` | Makes a specific player stuck in one position and disable his buttons. | idle("**player index**") | `idle(0)` |
+| `unidle()` | Makes a specific player free, and makes his buttons usable again. | unidle("**player index**") | `unidle(0)` |
+| `kick()` | To kick someone from the game. more details [here](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#kick). | kick("**player index**","**reason**") | `kick(1)` or `kick(1,"can't stand the power of modding")` |
+| `ban()` | To ban someone from the game, works like the `kick()` command | ban("**player index**","**reason**") | `kick(1)` or `kick(1,"You cannot rejoin now ;)")` |
 | `unban()` | To unban someone from the game, using the exact same name is really important | unban("**player NAME**") | `unban("Bylolopro")` |
 | `banlist` | shows a list of all the banned players and their INDEX to unban them | -- | `banlist` |
 | `gameover()` | Give the opportunity to end a dueling game smoothly | gameover(**0 or 1**) | `gameover(1)` |
@@ -316,8 +345,8 @@ set(0,601)
 | **Command Name** | **What is it for** | **How to use it** | **Usage example** |
 | - | - | - | - |
 | `apc` | You are now able to choose if you want to be able to always pickup gems or not | -- | apc |
-| `set()` | basically replace: game.ships[0].set({});. | set("**player ID**","**[What ship](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-type)**","**[How many crystals](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-crystals)**","**[What stats](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-stats)**") See more about it [here](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#set-command) | `set(0,605,500,45232455)` |
-| `tpto()` | To teleport a player to another player. | tpto("**player ID**","**to player ID**") | `tpto(0,1)` |
-| `tp()` | To teleport someone at specific coordinates. | tp("**player ID**","**X value**","**Y value**") | `tp(0,200,200)` |
+| `set()` | basically replace: game.ships[0].set({});. | set("**player index**","**[What ship](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-type)**","**[How many crystals](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-crystals)**","**[What stats](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#ship-stats)**") See more about it [here](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#set-command) | `set(0,605,500,45232455)` |
+| `tpto()` | To teleport a player to another player. | tpto("**player index**","**to player index**") | `tpto(0,1)` |
+| `tp()` | To teleport someone at specific coordinates. | tp("**player index**","**X value**","**Y value**") | `tp(0,200,200)` |
 | `tpall()` | To teleports everyone at specific coordinates. | tpall("**X value**","**Y value**") | `tpall(200,200)` |
 | `say("")` | To make a text appear while playing. | say("**Your message**") Writing `say()` will delete your message. | `say("The game ends soon")` |
