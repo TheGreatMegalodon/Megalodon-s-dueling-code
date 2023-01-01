@@ -19,6 +19,7 @@
 * **Bhpsngum**
 
 ## Whats new!
+* New beautiful Custom LeaderBoard based on the player's K/D
 * Fixed issues.
 * Better optimization.
 * Reviewed: Ban/Unban/Kick/Idle/Unidle commands.
