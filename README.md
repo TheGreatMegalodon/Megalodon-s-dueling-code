@@ -177,6 +177,8 @@ you can then put anything you want between the quotation marks.
 
 If an error shows up, please restart the mod.
 
+### Ban
+
 ### SET Command
 
 ### Ship Type
