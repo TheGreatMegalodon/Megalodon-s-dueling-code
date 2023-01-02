@@ -183,7 +183,9 @@ If an error shows up, please restart the mod.
 ### Ban
 
 It is vers easy aswell to ban a player.
-The ban system is "NAME" based, which means to counter a ban a plyer just needs to change his name, there are no other way to ban a player.
+The ban system is "NAME" based, which means to counter a ban, the player just needs to change his name.
+
+There are no other way to ban a player.
 (DM me on discord if you have any other ideas on how we could imporve the banning system, credits will also be given).
 
 In the console just like the "Kick" Command, you will have to type:
@@ -192,11 +194,10 @@ In the console just like the "Kick" Command, you will have to type:
 ```
 (I will skip a few parts, for more details check: [Kick](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#kick))
 
-Once you've got the Index of the player you wants to ban just simply write:
+Once you've got the Index of the player you want to ban just simply write:
 
 ```js
-> ban("player index")█
-
+> ban("player index")
 > █
 ```
  Once you've press "ENTER" you should see this:
@@ -207,8 +208,11 @@ Player: Gilles, index: 1 Has successfully been banned
 
 > █
  ```
-Onve you've seen that, congratulation you have succesfuly Banned your first player!
-You can also add a custom reason like with the kick command:
+And congratulation you have succesfuly Banned your first player!
+
+But!
+
+You can also add a custom reason like the kick command:
 ```js
 > ban(1,"You cannot rejoin now")
 Player: Gilles, index: 1 Has successfully been banned
@@ -225,8 +229,9 @@ To do so you can do this command:
 ```js
 > banlist█
 ```
-Then press "ENTER", this will show you all of the players that have been banned on the current game. 
-It should also look like this:
+Once you've press "ENTER", all of the players that have been banned on the current game will show up with their ban reason.
+
+It should look like this:
 ```js
 > banlist
 Index: 0, Name: Megalodon, Reason: Disturbing duels
