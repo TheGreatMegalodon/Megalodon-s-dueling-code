@@ -146,7 +146,6 @@ The command you're gonna be using to kick someone is:
 
 ```js
 > kick()
-
 > █
 ```
 
@@ -156,7 +155,6 @@ For my case its gonna look like this:
 
 ```js
 > kick(0)
-
 > █
 ```
 
@@ -175,8 +173,7 @@ You can also add a custom reason, but keep in mind that this part is optional.
 but if you still want to set a custom reason you will need to write it like this:
 
 ```js
-kick(0,"Not skilled enough to survive")
-
+> kick(0,"Not skilled enough to survive")█
 ```
 
 you can then put anything you want between the quotation marks.
@@ -198,7 +195,7 @@ In the console just like the "Kick" Command, you will have to type:
 Once you've got the Index of the player you wants to ban just simply write:
 
 ```js
-> ban("player index")
+> ban("player index")█
 
 > █
 ```
