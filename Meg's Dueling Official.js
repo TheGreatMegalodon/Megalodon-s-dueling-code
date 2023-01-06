@@ -204,7 +204,6 @@ if (game.step % 30 === 0) {
         ship.custom.keep_maxed = true;
         ship.custom.Deaths = 0;
         ship.custom.Kills = 0;
-        AddText(ship,"Meg's Dueling v1.3.3 (BETA) ","rgba(55,255,55,0.8)",true,8,40);
         ship.setUIComponent(Menu_);
         ship.setUIComponent(Regen);
         ship.setUIComponent(Spectate);
