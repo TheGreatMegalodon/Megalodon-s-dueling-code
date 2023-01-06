@@ -96,7 +96,7 @@ this.options = {
   // Game Options
   map_name: "Meg's Dueling",
   max_level: 6,
-  max_players: 200,
+  max_players: 69,
   starting_ship: 613,
   map_size: 120,
   speed_mod: 1.2,
