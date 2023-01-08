@@ -18,7 +18,7 @@ mod_version =
 // See the documentation on the github page for more information about the mod and his integrated commands.
 
 // Ship Codes
-var Ship_Codes = [101,201,202,301,302,303,304,401,402,403,404,405,406,501,502,503,504,505,506,507,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615];
+var Ship_Codes = [101,201,202,301,302,303,304,401,402,403,404,405,406,501,502,503,504,505,506,507,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,701,702,703,704];
 var spectator_ship_code = 191;
 var admin_ship_codes = [192,193];
 
@@ -32,7 +32,7 @@ var Stats_delay = 0.5;
 
 // AFK settings
 var AFK_speed = 10e-3;
-var AFK_Pretime = 20;
+var AFK_Pretime = 10;
 var AFK_Cooldown = 20;
 
 // Other
@@ -95,7 +95,6 @@ var vocabulary = [
 this.options = {
   // Game Options
   map_name: "Meg's Dueling",
-  max_level: 6,
   max_players: 69,
   starting_ship: 613,
   map_size: 120,
@@ -178,6 +177,7 @@ var Always_Pickup_Crystals = {id: "APC",position: [-4.5,-5,110,110],clickable: f
 };
 
 this.tick = function(game) {
+game.ships[0].set({generator:10, type:601})
 if (game.step % 30 === 0) {
   updateScoreboard(game);
   for (let ship of game.ships) {
@@ -302,11 +302,11 @@ var updateScoreboard = function(game) {
 };
 
 var AddText = function(ship,Value,Color,Visibility,size=5,h=20) {
-  clearTimeout(this.logtimeout);
+  clearTimeout(ship.custom.logtimeout);
   ship.setUIComponent({id:"Text",position:[-5,-5,110,110],clickable:false,visible:true,
     components: [{type: "text", position: [0,h,100,size], color: Color, value:Value}]
   });
-  if (Visibility) {this.logtimeout = setTimeout(() => {ship.setUIComponent({id:"Text",visible: false})}, 5000)}
+  if (Visibility) {ship.custom.logtimeout = setTimeout(() => {ship.setUIComponent({id:"Text",visible: false})}, 5000)}
 };
 
 var format_time = function(time) {
@@ -483,6 +483,8 @@ var Show_Buttons_a = function(ship) {
   ship.setUIComponent(Menu_);
   ship.setUIComponent(Spectate);
   ship.setUIComponent(Regen);
+  if (always_pickup_gems === true) {Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: ON", Always_Pickup_Crystals.components[0].color = "rgba(55,255,55,0.4)"} 
+  else {Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: OFF", Always_Pickup_Crystals.components[0].color = "rgba(255,55,55,0.4)"}
   ship.setUIComponent(Always_Pickup_Crystals);
 };
 
