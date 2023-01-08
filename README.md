@@ -20,14 +20,14 @@
 
 ## Whats new!
 - Fixed issues.
-  - Better optimization.
-  - Starblast vanilla full shiptree added
-  - Buttons reworked :
-    - Next ship
-    - Previous Ship
-    - Stats Button
-  - Remove a useless button (Stats2)
-  - Added a BETA logo, because why not
+- Better optimization.
+- Starblast vanilla full shiptree added
+- Buttons reworked :
+  - Next ship
+  - Previous Ship
+  - Stats Button
+- Remove a useless button (Stats2)
+- Added a BETA logo, because why not
 
 ## Comming soon!!
 * Adding all the vanilla ship-tree.
