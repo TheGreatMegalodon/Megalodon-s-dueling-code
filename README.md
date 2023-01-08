@@ -30,8 +30,8 @@
 - Added a BETA logo, because why not
 
 ## Comming soon!!
-* Adding all the vanilla ship-tree.
-* More features on the AFK Checker system
+* More features on the AFK Checker system.
+* More documentation.
 
 ## Support
 * [Support Discord Server](https://discord.gg/KXvCq4N)
