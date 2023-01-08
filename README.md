@@ -79,7 +79,8 @@ Then just simply paste the version you choosed in your Modding tab.
 
 and enjoy!
 
-###・Kick
+### Kick
+
 To kick a player it is very easy. While your mod is running, you first need to write in the console:
 
 ```js
