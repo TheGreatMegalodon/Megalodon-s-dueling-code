@@ -26,7 +26,7 @@
   - Next ship
   - Previous Ship
   - Stats Button
-- Remove a useless button (Stats2)
+- Removed a useless button: (Stats2)
 - Added a BETA logo, because why not
 
 ## Comming soon!!
