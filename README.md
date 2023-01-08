@@ -361,7 +361,7 @@ set(0,601)
 ### Add your own ships
 
 ```diff
-- Changes have been made on the mod, i am re-writing the whole thing, it will take a bit of time
+- Comming soon.
 ```
 
 ## Mod's Commands
