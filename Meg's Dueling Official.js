@@ -177,7 +177,6 @@ var Always_Pickup_Crystals = {id: "APC",position: [-4.5,-5,110,110],clickable: f
 };
 
 this.tick = function(game) {
-game.ships[0].set({generator:10, type:601})
 if (game.step % 30 === 0) {
   updateScoreboard(game);
   for (let ship of game.ships) {
