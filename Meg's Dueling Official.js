@@ -32,8 +32,8 @@ var Stats_delay = 0.5;
 
 // AFK settings
 var AFK_speed = 10e-3;
-var AFK_Pretime = 10;
-var AFK_Cooldown = 20;
+var AFK_Pretime = 20;
+var AFK_Cooldown = 10;
 
 // Other
 var endgame_timer = 0;
@@ -99,6 +99,7 @@ this.options = {
   starting_ship: 613,
   map_size: 120,
   speed_mod: 1.2,
+  max_level: 7,
   weapons_store: false,
   // Others Options
   soundtrack: "red_mist.mp3", //civilisation.mp3 | procedurality.mp3 | argon.mp3 | crystals.mp3 | red_mist.mp3 | warp_drive.mp3
