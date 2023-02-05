@@ -472,17 +472,15 @@ this.tick = function(game) {
       let level = Math.trunc(ship.type / 100);
       if (level < 7) {
         let max_stats = 11111111 * level;
-        if (ship.custom.keep_maxed) {
-          if (ship.stats != max_stats) {
-            ship.set({
-              stats: max_stats
-            })
-          }
+        if (ship.custom.keep_maxed === true) {
+          ship.set({
+            stats: max_stats
+          });
+        } else {
+          ship.set({
+            stats: 0
+          });
         }
-      } else if (ship.stats > 0) {
-        ship.set({
-          stats: 0
-        })
       }
       if (!BannedList.includes(ship.name)) {
         if (ship.custom.init !== true) {
@@ -496,9 +494,9 @@ this.tick = function(game) {
           ship.setUIComponent(Spectate);
           ship.setUIComponent(Hide_Buttons);
           if (always_pickup_gems === true) {
-            Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: ON", Always_Pickup_Crystals.components[0].color = "rgba(55,255,55,0.4)"
+            Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: ON", Always_Pickup_Crystals.components[0].color = "rgba(55,255,55,0.4)";
           } else {
-            Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: OFF", Always_Pickup_Crystals.components[0].color = "rgba(255,55,55,0.4)"
+            Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: OFF", Always_Pickup_Crystals.components[0].color = "rgba(255,55,55,0.4)";
           }
           ship.setUIComponent(Always_Pickup_Crystals);
         }
@@ -528,14 +526,14 @@ this.tick = function(game) {
                     }]
                   });
                   if (ship.custom.TimeS <= 0) {
-                    spectator_ship(ship), ship.custom.isAFK = true
+                    spectator_ship(ship), ship.custom.isAFK = true;
                   }
                 }
               } else {
-                reset_afk_timer(ship)
+                reset_afk_timer(ship);
               }
             } else {
-              reset_afk_timer(ship)
+              reset_afk_timer(ship);
             }
             break;
         }
@@ -560,7 +558,7 @@ this.tick = function(game) {
         case 1:
           Time--;
           if (Time < 1) {
-            ColorTimer = 1
+            ColorTimer = 1;
           }
           switch (ColorTimer) {
             case 0:
@@ -597,14 +595,12 @@ this.tick = function(game) {
                 "Kills": ship.custom.Kills,
                 "Deaths": ship.custom.Deaths,
                 "Your game host:": game.ships[0].name
-              }), endgame_timer = 0
+              });
+              endgame_timer = 0;
             }
           }
           break;
       }
-    }
-    for (let ship of game.ships) {
-
     }
   }
 };
@@ -613,12 +609,12 @@ function updateScoreboard(game) {
   let sorted_ships_KDratio = [...game.ships].sort((a, b) => (b.custom.Kills - b.custom.Deaths) - (a.custom.Kills - a.custom.Deaths)).slice(0, 8);
   for (let ship of game.ships) {
     if (ship.id === sorted_ships_KDratio[0].id && ship.custom.Kills >= 1) {
-      ship.custom.C_color = "rgb(255, 215, 0)"
+      ship.custom.C_color = "rgb(255, 215, 0)";
     } else {
-      ship.custom.C_color = "rgb(255, 255, 255)"
+      ship.custom.C_color = "rgb(255, 255, 255)";
     }
     if (ship.custom.isAFK) {
-      ship.custom.C_color = "rgb(111,111,111)"
+      ship.custom.C_color = "rgb(111,111,111)";
     }
   }
   let Scoreboard = {
@@ -768,7 +764,7 @@ function next_ship_button(ship) {
     ship.custom.next_switch = game.step + switch_ship_delay * 60;
     index = Ship_Codes.indexOf(ship.type);
     if (index >= 0) {
-      next_type = Ship_Codes[(index + 1) % Ship_Codes.length]
+      next_type = Ship_Codes[(index + 1) % Ship_Codes.length];
     }
     let max_crystals = 20 * Math.trunc(next_type / 100) * Math.trunc(next_type / 100);
     ship.custom.last_ship = next_type;
@@ -791,10 +787,10 @@ function previous_ship_button(ship) {
   } else if (!ship.custom.next_switch || game.step >= ship.custom.next_switch) {
     ship.custom.next_switch = game.step + switch_ship_delay * 60;
     if (ship.type === Ship_Codes[0]) {
-      previous_type = Ship_Codes[Math.max(Ship_Codes.length - 1)]
+      previous_type = Ship_Codes[Math.max(Ship_Codes.length - 1)];
     } else {
       if (Ship_Codes.indexOf(ship.type) >= 0) {
-        previous_type = Ship_Codes[(Ship_Codes.indexOf(ship.type) - 1) % Ship_Codes.length]
+        previous_type = Ship_Codes[(Ship_Codes.indexOf(ship.type) - 1) % Ship_Codes.length];
       }
     }
     let max_crystals = 20 * Math.trunc(previous_type / 100) * Math.trunc(previous_type / 100);
@@ -818,7 +814,7 @@ function spectator_ship(ship) {
       ship.custom.afk_main = 1;
       ship.custom.isAFK = false;
       if (ship.custom.last_ship === spectator_ship_code) {
-        ship.custom.last_ship = switch_ship_codes[0]
+        ship.custom.last_ship = switch_ship_codes[0];
       }
       let max_crystals = 20 * Math.trunc(ship.custom.last_ship / 100) * Math.trunc(ship.custom.last_ship / 100);
       ship.set({
@@ -876,18 +872,18 @@ function admin_ship(ship) {
   } else {
     if (ship.type >= admin_ship_codes[0] && ship.type <= admin_ship_codes[1]) {
       if (ship.type === admin_ship_codes[1]) {
-        next_type = ship.custom.last_admin_ship
+        next_type = ship.custom.last_admin_ship;
       } else {
-        next_type = ship.type + 1
+        next_type = ship.type + 1;
       }
     } else {
       ship.custom.last_admin_ship = ship.type, next_type = admin_ship_codes[0]
     }
     if (ship.type === spectator_ship_code) {
-      collider = true
+      collider = true;
     }
     if (ship.custom.last_admin_ship === spectator_ship_code) {
-      collider = false
+      collider = false;
     }
     let max_crystals = 20 * Math.trunc(next_type / 100) * Math.trunc(next_type / 100);
     ship.set({
@@ -921,11 +917,11 @@ function update_stats_button(ship) {
   let level = Math.trunc(ship.type / 100);
   let max = 11111111 * level;
   if (!ship.custom.keep_maxed) {
-    Stats.components[1].value = "⚠️ Stats [7]",
-      ship.setUIComponent(Stats);
+    Stats.components[1].value = "⚠️ Stats [7]";
+    ship.setUIComponent(Stats);
   } else {
-    Stats.components[1].value = "Stats [7]",
-      ship.setUIComponent(Stats);
+    Stats.components[1].value = "Stats [7]";
+    ship.setUIComponent(Stats);
   }
 }
 
@@ -935,19 +931,10 @@ function Stats_button(ship) {
   let max = 11111111 * level;
   if (stats === max) {
     ship.custom.keep_maxed = false;
-    ship.set({
-      stats: 00000000
-    });
-    update_stats_button(ship);
   } else {
     ship.custom.keep_maxed = true;
-    ship.set({
-      stats: max,
-      shield: 999,
-      generator: 999
-    });
-    update_stats_button(ship);
   }
+  update_stats_button(ship);
 }
 
 function Teleport_Center(ship) {
