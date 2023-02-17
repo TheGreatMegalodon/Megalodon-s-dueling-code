@@ -901,15 +901,17 @@ function admin_ship(ship) {
 }
 
 function regen(ship) {
-  let level = Math.trunc(ship.type / 100);
-  if (!ship.custom.Regenerate || game.step >= ship.custom.Regenerate) {
-    ship.custom.Regenerate = game.step + Regenerate_delay * 60;
-    let max_crystals = 20 * Math.trunc(ship.type / 100) * Math.trunc(ship.type / 100);
-    ship.set({
-      crystals: max_crystals,
-      shield: 999,
-      generator: 999
-    });
+  if (ship.type !== spectator_ship_code) {
+    let level = Math.trunc(ship.type / 100);
+    if (!ship.custom.Regenerate || game.step >= ship.custom.Regenerate) {
+      ship.custom.Regenerate = game.step + Regenerate_delay * 60;
+      let max_crystals = 20 * Math.trunc(ship.type / 100) * Math.trunc(ship.type / 100);
+      ship.set({
+        crystals: max_crystals,
+        shield: 999,
+        generator: 999
+      });
+    }
   }
 };
 
