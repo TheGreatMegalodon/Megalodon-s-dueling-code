@@ -21,17 +21,20 @@
 ## Whats new!
 - Fixed issues.
 - Better optimization.
-- Starblast vanilla full shiptree added
+- Starblast vanilla full shiptree added (execpt for T7)
 - Buttons reworked :
   - Next ship
   - Previous Ship
   - Stats Button
 - Removed a useless button: (Stats2)
 - Added a BETA logo, because why not
+- New features on the AFK checker
+  - Don't be scared of the RCS afk players now ;)
+  - Rotating also counts on the AFK system
 
 ## Comming soon!!
-* More features on the AFK Checker system.
 * More documentation.
+* More optimization.
 
 ## Support
 * [Support Discord Server](https://discord.gg/KXvCq4N)
