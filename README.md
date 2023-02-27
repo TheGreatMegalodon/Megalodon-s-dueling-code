@@ -266,7 +266,7 @@ Its by far one of the most easiest command to use. All you need to know is the l
 > gameover(1)
 > █
 ```
-A timer of 5 minutes starts, and the ned of thoses 5 minutes the game will kick everyone and close the game.
+A timer of 5 minutes starts, and the end of thoses 5 minutes the game will kick everyone and close the game.
 
 **But** if you feel like you can run the mod a little more, then just do in the console:
 ```js
