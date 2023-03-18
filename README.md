@@ -380,7 +380,7 @@ set(0,601)
 | `unidle()` | Makes a specific player free, and makes his buttons usable again. | unidle("**player index**") | `unidle(0)` |
 | `kick()` | To kick someone from the game. more details [here](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code#kick). | kick("**player index**","**reason**") | `kick(1)` or `kick(1,"can't stand the power of modding")` |
 | `ban()` | To ban someone from the game, works like the `kick()` command | ban("**player index**","**reason**") | `ban(1)` or `ban(1,"You cannot rejoin now ;)")` |
-| `unban()` | To unban someone from the game, using the exact same name is really important | unban("**player NAME**") | `unban("Bylolopro")` |
+| `unban()` | To unban someone from the game | unban("**player index**") | `unban(1)` |
 | `banlist` | shows a list of all the banned players and their INDEX to unban them | -- | `banlist` |
 | `gameover()` | Give the opportunity to end a dueling game smoothly | gameover(**0 or 1**) | `gameover(1)` |
 
