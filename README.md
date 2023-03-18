@@ -8,7 +8,7 @@
 # Meg's dueling Documentation
 
 ### Mod Versions: 
-* **v1.3.4**
+* **v1.3.5**
 * **v1.0.0s**
 
 ### Mod creator: 
@@ -75,7 +75,7 @@ First of all you have to remove any code, like in this image:
 </div>
 
 Next you have to choose between the 2 verion of the mod that are available:
-* [1.3.4](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Official.js) (Official Version)
+* [1.3.5](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Official.js) (Official Version)
 * [1.0.0s](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Classic.js) (Classical Version)
 
 Then just simply paste the version you choosed in your Modding tab, press Start..
