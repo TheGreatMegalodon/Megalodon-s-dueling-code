@@ -1,16 +1,11 @@
 mod_version =
-  " v1.3.4";
+  " v1.3.5";
 
 // Mod creator : Megalodon
 // Coding support : Lotus, Bhpsngum
 
-// What has been fixed/added from v1.3.3: 
-//  - Fixed issues.
-//  - More optimization
-//  - New features on the AFK checker
-//    - Don't be scared of the RCS afk players now ;)
-//    - Rotating also counts on the AFK system
-//  - No more T7
+// What has been fixed/added from v1.3.4: 
+//  - Added a Wrap button that allows you to find players by teleporting to them. 
 
 // See the documentation on the github page for more information about the mod and his integrated commands.
 
@@ -26,6 +21,7 @@ var spectator_switch_delay = 2;
 var TP_points_delay = 2;
 var Regenerate_delay = 4;
 var Stats_delay = 0.5;
+var wrap_delay = 1;
 
 // AFK settings
 var AFK_speed = 10e-3;
@@ -392,6 +388,28 @@ var Stats = {
   ]
 };
 
+var Wrap = {
+  id: "Wrap",
+  position: [32, 53, 10, 5.5],
+  clickable: true,
+  visible: true,
+  shortcut: "6",
+  components: [{
+      type: "box",
+      position: [0, 0, 100, 100],
+      fill: "rgba(55, 255, 55, 0.50)",
+      stroke: "rgb(55, 255, 55)",
+      width: 9
+    },
+    {
+      type: "text",
+      position: [0, 17, 100, 62],
+      value: "Wrap [6]",
+      color: "#ffffff"
+    }
+  ]
+};
+
 var Box_Exit_screen = {
   id: "Box_Exit_screen",
   position: [58, 61, 10, 5.5],
@@ -474,13 +492,9 @@ this.tick = function(game) {
       if (level < 7) {
         let max_stats = 11111111 * level;
         if (ship.custom.keep_maxed === true) {
-          ship.set({
-            stats: max_stats
-          });
+          ship.set({stats: max_stats});
         } else {
-          ship.set({
-            stats: 0
-          });
+          ship.set({stats: 0});
         }
       }
       if (!BannedList.includes(ship.name)) {
@@ -490,15 +504,13 @@ this.tick = function(game) {
           ship.custom.keep_maxed = true;
           ship.custom.Deaths = 0;
           ship.custom.Kills = 0;
+          ship.custom.warpIndex = 0;
           ship.setUIComponent(Menu_);
           ship.setUIComponent(Regen);
           ship.setUIComponent(Spectate);
           ship.setUIComponent(Hide_Buttons);
-          if (always_pickup_gems === true) {
-            Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: ON", Always_Pickup_Crystals.components[0].color = "rgba(55,255,55,0.4)";
-          } else {
-            Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: OFF", Always_Pickup_Crystals.components[0].color = "rgba(255,55,55,0.4)";
-          }
+          if (always_pickup_gems === true) Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: ON", Always_Pickup_Crystals.components[0].color = "rgba(55,255,55,0.4)";
+          else Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: OFF", Always_Pickup_Crystals.components[0].color = "rgba(255,55,55,0.4)";
           ship.setUIComponent(Always_Pickup_Crystals);
         }
       }
@@ -526,49 +538,27 @@ this.tick = function(game) {
                       value: "AFK time left: " + ship.custom.TimeS
                     }]
                   });
-                  if (ship.custom.TimeS <= 0) {
-                    spectator_ship(ship), ship.custom.isAFK = true;
-                  }
+                  if (ship.custom.TimeS <= 0) spectator_ship(ship), ship.custom.isAFK = true;
                 }
-              } else {
-                reset_afk_timer(ship);
-              }
-            } else {
-              reset_afk_timer(ship);
-            }
+              } else reset_afk_timer(ship);
+            } else reset_afk_timer(ship);
             break;
         }
       }
     }
-    if (!game.custom.admin && game.ships[0]) {
-      game.custom.admin = true;
-      game.ships[0].setUIComponent(Admin);
-    }
+    if (!game.custom.admin && game.ships[0]) game.custom.admin = true, game.ships[0].setUIComponent(Admin);
     if (game.step % 60 === 0) {
       switch (endgame_timer) {
         case 0:
           for (let ship of game.ships) {
-            ship.setUIComponent({
-              id: "endgame_timer",
-              visible: false
-            });
+            ship.setUIComponent({id: "endgame_timer", visible: false});
             Time = 300;
-            ColorTimer = 0;
           }
           break;
         case 1:
           Time--;
-          if (Time < 1) {
-            ColorTimer = 1;
-          }
-          switch (ColorTimer) {
-            case 0:
-              Color = "rgb(255,255,255)";
-              break;
-            case 1:
-              Color = "rgb(255,55,55)";
-              break;
-          }
+          if (Time <= 1) Color = "rgb(255,55,55)";
+          else Color = "rgb(255,255,255)";
           for (let ship of game.ships) {
             ship.setUIComponent({
               id: "endgame_timer",
@@ -609,13 +599,12 @@ this.tick = function(game) {
 function updateScoreboard(game) {
   let sorted_ships_KDratio = [...game.ships].sort((a, b) => (b.custom.Kills - b.custom.Deaths) - (a.custom.Kills - a.custom.Deaths)).slice(0, 8);
   for (let ship of game.ships) {
-    if (ship.id === sorted_ships_KDratio[0].id && ship.custom.Kills >= 1) {
-      ship.custom.C_color = "rgb(255, 215, 0)";
+    if (ship.name === "Megalodon") {
+      ship.custom.C_color = "#005cb9";
     } else {
-      ship.custom.C_color = "rgb(255, 255, 255)";
-    }
-    if (ship.custom.isAFK) {
-      ship.custom.C_color = "rgb(111,111,111)";
+      if (ship.id === sorted_ships_KDratio[0].id && ship.custom.Kills >= 1) ship.custom.C_color = "rgb(255, 215, 0)";
+      else ship.custom.C_color = "rgb(255, 255, 255)";
+      if (ship.custom.isAFK) ship.custom.C_color = "rgb(111,111,111)";
     }
   }
   let Scoreboard = {
@@ -639,7 +628,7 @@ function updateScoreboard(game) {
       },
       {
         type: "text",
-        position: [3, 1, 69, 8.5],
+        position: [3, 0.7, 69, 8.5],
         value: "Players",
         color: "rgb(255,255,255)",
         align: "left"
@@ -673,13 +662,7 @@ function updateScoreboard(game) {
   for (let ship of game.ships) {
     let components = [...Scoreboard.components];
     let index = components.findIndex(c => c.type == "player" && c.id === ship.id);
-    if (index != -1) {
-      Scoreboard.components.splice(index + 2, 0, {
-        type: "box",
-        position: [0, components[index].index * 11.25 + 10.50, 100, 10],
-        fill: "rgba(200, 200, 255, 0.15)"
-      })
-    }
+    if (index != -1) Scoreboard.components.splice(index + 2, 0, {type: "box",position: [0, components[index].index * 11.25 + 10.50, 100, 10],fill: "rgba(200, 200, 255, 0.15)"})
     ship != null && ship.setUIComponent(Scoreboard);
     Scoreboard.components = components;
   }
@@ -756,6 +739,22 @@ function format_time(time) {
   }
 }
 
+function wrap_ship(ship, game) {
+  if (!ship.custom.spectator) spectator_ship(ship);
+  else if (!ship.custom.wrap || game.step >= ship.custom.wrap) {
+    ship.custom.wrap = game.step + wrap_delay * 60;
+    if (game.ships.length > 1) {
+      if (ship.custom.warpIndex >= game.ships.length-1) ship.custom.warpIndex = 0;
+      else ship.custom.warpIndex++;
+      if (ship.custom.warpIndex === game.ships.indexOf(ship)) {
+        if (ship.custom.warpIndex >= game.ships.length-1) ship.custom.warpIndex = 0;
+        else ship.custom.warpIndex++;
+      }
+    }
+    ship.set({x: game.ships[ship.custom.warpIndex].x, y: game.ships[ship.custom.warpIndex].y, vx: 0, vy: 0});
+  }
+}
+
 function next_ship_button(ship) {
   let index;
   let next_type;
@@ -814,9 +813,7 @@ function spectator_ship(ship) {
       ship.custom.spectator = false;
       ship.custom.afk_main = 1;
       ship.custom.isAFK = false;
-      if (ship.custom.last_ship === spectator_ship_code) {
-        ship.custom.last_ship = switch_ship_codes[0];
-      }
+      if (ship.custom.last_ship === spectator_ship_code) ship.custom.last_ship = switch_ship_codes[0];
       let max_crystals = 20 * Math.trunc(ship.custom.last_ship / 100) * Math.trunc(ship.custom.last_ship / 100);
       ship.set({
         type: ship.custom.last_ship,
@@ -976,6 +973,10 @@ function Exit_screen(ship) {
     visible: false
   });
   ship.setUIComponent({
+    id: "Wrap",
+    visible: false
+  });
+  ship.setUIComponent({
     id: "Box_Exit_screen",
     visible: false
   });
@@ -983,11 +984,12 @@ function Exit_screen(ship) {
 
 function TP_points_button(ship) {
   let level = Math.trunc(ship.type / 100);
-  let max_stats = 11111111 * level;
+  let max_stats = 11111111 * level; 
   if (!ship.custom.TP_points || game.step >= ship.custom.TP_points) {
     ship.custom.TP_points = game.step + TP_points_delay * 60;
     update_stats_button(ship);
-    ship.setUIComponent(Stats)
+    ship.setUIComponent(Stats);
+    ship.setUIComponent(Wrap);
     ship.setUIComponent(Tp_Spawn);
     ship.setUIComponent(next_ship);
     ship.setUIComponent(previous_ship);
@@ -1046,7 +1048,7 @@ function Show_Buttons_a(ship) {
   ship.setUIComponent(Always_Pickup_Crystals);
 }
 
-this.event = function(event) {
+this.event = function(event, game) {
   var ship = event.ship;
   switch (event.name) {
     case "ui_component_clicked":
@@ -1080,6 +1082,8 @@ this.event = function(event) {
           Stats_button(ship)
         } else if (component === "Tp_Spawn") {
           Teleport_Center(ship)
+        } else if (component === "Wrap") {
+          wrap_ship(ship, game);
         }
       }
       break;
@@ -1255,7 +1259,6 @@ unban = function(index) {
 
 gameover = function(start) {
   endgame_timer = start;
-  ColorTimer = 0;
   switch (start) {
     case 1:
       for (let ship of game.ships) AddText(ship, "The game is ending in 5 Minutes", "rgba(255,55,55,0.8)", true, 4, 16);
