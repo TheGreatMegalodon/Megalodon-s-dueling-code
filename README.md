@@ -2,7 +2,7 @@
   <br />
   <p>
     <a href="https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/"><img src="https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/073a4de7d7f091565295ea95d4b281d9.png" width="2000" alt="Megalodon-s-dueling-code" /></a>
-    <a href="https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/"><img src="https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/6588219adbdf56e2eb0f0f985793478a.png" width="500" alt="Megalodon-s-dueling-code" /></a>
+    <a href="https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/"><img src="https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/6588219adbdf56e2eb0f0f985793478a.png" width="100" alt="Megalodon-s-dueling-code" /></a>
   </p>
 </div>
 
