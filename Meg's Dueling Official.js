@@ -62,106 +62,70 @@ const ships = [
   B_Speedster_615 = '{"name":"B-Speedster","level":6,"model":15,"size":1.6,"specs":{"shield":{"capacity":[250,350],"reload":[8,10]},"generator":{"capacity":[90,150],"reload":[25,40]},"ship":{"mass":210,"speed":[90,100],"rotation":[50,70],"acceleration":[100,130]}},"bodies":{"main":{"section_segments":10,"offset":{"x":0,"y":0,"z":0},"position":{"x":[0,0,0,0,0,0,0],"y":[-100,-95,0,0,60,85,75],"z":[0,0,0,0,0,0,0]},"width":[0,10,40,20,22,15,0],"height":[0,5,30,30,20,15,0],"texture":[6,18,5,11,15,17],"propeller":true,"laser":{"damage":[48,94],"rate":1,"type":2,"speed":[185,240],"recoil":70,"number":1,"error":0}},"core":{"vertical":true,"angle":180,"section_segments":[30,90,150,210,270,330],"offset":{"x":0,"y":-5,"z":-40},"position":{"x":[0,0,0,0,0,0,0],"y":[-40,-40,-43,-40,-30,0,0],"z":[0,0,0,0,0,0,0]},"width":[1,13,18,23,30,30,0],"height":[1,13,18,23,30,30,0],"texture":[16.9,4.9,63,3.9,9.9,0.9,11.9]},"ye":{"vertical":true,"section_segments":12,"offset":{"x":0,"y":38,"z":-40},"position":{"x":[0,0,0],"y":[-10,-3,-1],"z":[0,0,0]},"width":[0,5,0],"height":[0,5,0],"texture":[5]},"shield":{"section_segments":12,"offset":{"x":30,"y":-40,"z":0},"position":{"x":[-6,0,0,0,0,-4],"y":[-70,-60,-10,15,30,40],"z":[0,0,0,0,0,0]},"width":[0,3,3,3,3,0],"height":[0,5,5,8,3,0],"texture":63,"angle":16},"cockpit":{"section_segments":8,"offset":{"x":0,"y":-60,"z":15},"position":{"x":[0,0,0,0,0,0,0],"y":[-20,0,20,40,50],"z":[-7,-5,0,0,0]},"width":[0,10,10,10,0],"height":[0,10,15,12,0],"texture":[9]},"side_propulsors":{"section_segments":10,"offset":{"x":50,"y":25,"z":0},"position":{"x":[0,0,0,0,0,0,0,0,0,0],"y":[-20,-15,0,10,20,25,30,40,80,70],"z":[0,0,0,0,0,0,0,0,0,0]},"width":[0,15,20,20,20,15,15,20,10,0],"height":[0,15,20,20,20,15,15,20,10,0],"propeller":true,"texture":[4,4,2,2,5,63,5,4,17]},"cannons":{"section_segments":12,"offset":{"x":30,"y":40,"z":30},"position":{"x":[0,0,0,0,0,0,0],"y":[-50,-45,-20,0,20,30,40],"z":[0,0,0,0,0,0,0]},"width":[0,5,7,10,3,5,0],"height":[0,5,7,8,3,5,0],"angle":0,"laser":{"damage":[8,12],"rate":2,"type":1,"speed":[100,130],"number":1,"angle":-10,"error":0},"propeller":false,"texture":[6,4,10,4,63,4]}},"wings":{"join":{"offset":{"x":0,"y":0,"z":10},"length":[40,0],"width":[10,20],"angle":[-1],"position":[0,30],"texture":[63],"bump":{"position":0,"size":25}}},"typespec":{"name":"B-Speedster","level":6,"model":13,"code":613,"specs":{"shield":{"capacity":[250,350],"reload":[8,10]},"generator":{"capacity":[90,150],"reload":[25,40]},"ship":{"mass":210,"speed":[90,100],"rotation":[50,70],"acceleration":[100,130]}},"shape":[3.384,3.353,3.037,2.443,2.076,1.832,1.659,1.541,1.458,1.406,1.378,1.341,1.248,1.801,2.197,2.375,2.52,2.637,3.021,3.288,3.665,3.862,3.713,2.623,2.758,2.725,2.758,2.623,3.713,3.862,3.665,3.288,3.021,2.637,2.52,2.375,2.197,1.801,1.248,1.341,1.378,1.406,1.458,1.541,1.659,1.832,2.076,2.443,3.037,3.353],"lasers":[{"x":0,"y":-3.2,"z":0,"angle":0,"damage":[48,94],"rate":1,"type":2,"speed":[185,240],"number":1,"spread":0,"error":0,"recoil":70},{"x":0.96,"y":-0.32,"z":0.96,"angle":0,"damage":[8,12],"rate":2,"type":1,"speed":[100,130],"number":1,"spread":-10,"error":0,"recoil":0},{"x":-0.96,"y":-0.32,"z":0.96,"angle":0,"damage":[8,12],"rate":2,"type":1,"speed":[100,130],"number":1,"spread":-10,"error":0,"recoil":0}],"radius":3.862}}',
 ];
 
-const vocabulary = [{
-    text: "You",
-    icon: "\u004e",
-    key: "O"
+const vocabulary = [
+  { 
+    text: "You", icon: "\u004e", key: "O"
   },
-  {
-    text: "Me",
-    icon: "\u004f",
-    key: "E"
+  { 
+    text: "Me", icon: "\u004f", key: "E"
   },
-  {
-    text: "Wait",
-    icon: "\u0048",
-    key: "T"
+  { 
+    text: "Wait", icon: "\u0048", key: "T"
   },
-  {
-    text: "Yes",
-    icon: "\u004c",
-    key: "Y"
+  { 
+    text: "Yes", icon: "\u004c", key: "Y"
   },
 
   {
-    text: "No",
-    icon: "\u004d",
-    key: "N"
+    text: "No", icon: "\u004d", key: "N"
   },
   {
-    text: "Hello",
-    icon: "\u0045",
-    key: "H"
+    text: "Hello", icon: "\u0045", key: "H"
   },
   {
-    text: "Sorry",
-    icon: "\u00a1",
-    key: "S"
+    text: "Sorry", icon: "\u00a1", key: "S"
   },
   {
-    text: "Thanks",
-    icon: "\u0041",
-    key: "X"
+    text: "Thanks", icon: "\u0041", key: "X"
   },
 
   {
-    text: "Attack",
-    icon: "\u0049",
-    key: "A"
+    text: "Attack", icon: "\u0049", key: "A"
   },
   {
-    text: "Follow Me",
-    icon: "\u0050",
-    key: "F"
+    text: "Follow Me", icon: "\u0050", key: "F"
   },
   {
-    text: "Good Game",
-    icon: "\u00a3",
-    key: "G"
+    text: "Good Game", icon: "\u00a3", key: "G"
   },
   {
-    text: "Spectate",
-    icon: "\u0059",
-    key: "L"
+    text: "Spectate", icon: "\u0059", key: "L"
   },
 
   {
-    text: "Gems",
-    icon: "\u0044",
-    key: "M"
+    text: "Gems", icon: "\u0044", key: "M"
   },
   {
-    text: "Stats",
-    icon: "\u0078",
-    key: "K"
+    text: "Stats", icon: "\u0078", key: "K"
   },
   {
-    text: "Hmm",
-    icon: "\u004b",
-    key: "Q"
+    text: "Hmm", icon: "\u004b", key: "Q"
   },
   {
-    text: "No Prb",
-    icon: "\u0047",
-    key: "P"
+    text: "No Prb", icon: "\u0047", key: "P"
   },
 
   {
-    text: "Discord",
-    icon: "\u007b",
-    key: "D"
+    text: "Discord", icon: "\u007b", key: "D"
   },
   {
-    text: "Idiot",
-    icon: "\u0079",
-    key: "I"
+    text: "Idiot", icon: "\u0079", key: "I"
   },
   {
-    text: "Lag",
-    icon: "\u0069",
-    key: "J"
+    text: "Lag", icon: "\u0069", key: "J"
   }
 ];
+
 
 MapOpen();
 this.options = {
@@ -187,18 +151,12 @@ const Admin = {
   clickable: true,
   visible: true,
   shortcut: "1",
-  components: [{
-      type: "box",
-      position: [0, 0, 100, 100],
-      fill: "rgba(255, 255, 255, 0.40)",
-      stroke: "#FFFFFF",
-      width: 8
+  components: [
+    {
+      type: "box", position: [0, 0, 100, 100], fill: "rgba(255, 255, 255, 0.40)", stroke: "#FFFFFF", width: 8
     },
     {
-      type: "text",
-      position: [0, 20, 100, 60],
-      value: "Admin [1]",
-      color: "#FFFFFF"
+      type: "text", position: [0, 20, 100, 60], value: "Admin [1]", color: "#FFFFFF"
     }
   ]
 };
@@ -210,18 +168,12 @@ const Spectate = {
   clickable: true,
   visible: true,
   shortcut: "8",
-  components: [{
-      type: "box",
-      position: [0, 0, 100, 100],
-      fill: "rgba(40, 40, 215, 0.40)",
-      stroke: "#2828D7",
-      width: 8
+  components: [
+    {
+      type: "box", position: [0, 0, 100, 100], fill: "rgba(40, 40, 215, 0.40)", stroke: "#2828D7", width: 8
     },
     {
-      type: "text",
-      position: [0, 20, 100, 60],
-      value: "Spectate [8]",
-      color: "#ffffff"
+      type: "text", position: [0, 20, 100, 60], value: "Spectate [8]", color: "#ffffff"
     }
   ]
 };
@@ -232,18 +184,12 @@ const Regen = {
   clickable: true,
   visible: true,
   shortcut: "9",
-  components: [{
-      type: "box",
-      position: [0, 0, 100, 100],
-      fill: "rgba(0, 255, 0, 0.40)",
-      stroke: "#00FF00",
-      width: 8
+  components: [
+    {
+      type: "box", position: [0, 0, 100, 100], fill: "rgba(0, 255, 0, 0.40)", stroke: "#00FF00", width: 8
     },
     {
-      type: "text",
-      position: [0, 20, 100, 60],
-      value: "Regen [9]",
-      color: "#ffffff"
+      type: "text", position: [0, 20, 100, 60], value: "Regen [9]", color: "#ffffff"
     }
   ]
 };
@@ -254,18 +200,12 @@ const Menu_ = {
   clickable: true,
   visible: true,
   shortcut: "0",
-  components: [{
-      type: "box",
-      position: [0, 0, 100, 100],
-      fill: "rgba(255, 0, 0, 0.40)",
-      stroke: "#FF0000",
-      width: 8
+  components: [
+    {
+      type: "box", position: [0, 0, 100, 100], fill: "rgba(255, 0, 0, 0.40)", stroke: "#FF0000", width: 8
     },
     {
-      type: "text",
-      position: [0, 20, 100, 60],
-      value: "Menu [0]",
-      color: "#ffffff"
+      type: "text", position: [0, 20, 100, 60], value: "Menu [0]", color: "#ffffff"
     }
   ]
 };
@@ -276,30 +216,18 @@ const Square = {
   position: [30, 30, 40, 40],
   clickable: false,
   visible: true,
-  components: [{
-      type: "box",
-      position: [0, 0, 100, 100],
-      fill: "rgba(255,255,255, 0.20)",
-      stroke: "#FFFFFF",
-      width: 12
+  components: [
+    {
+      type: "box", position: [0, 0, 100, 100], fill: "rgba(255,255,255, 0.20)", stroke: "#FFFFFF", width: 12
     },
     {
-      type: "box",
-      position: [0, 0, 100, 15],
-      stroke: "#FFFFFF",
-      width: 6
+      type: "box", position: [0, 0, 100, 15], stroke: "#FFFFFF", width: 6
     },
     {
-      type: "round",
-      position: [34, 24, 32, 55],
-      stroke: "#FFFFFF",
-      width: 5
+      type: "round", position: [34, 24, 32, 55], stroke: "#FFFFFF", width: 5
     },
     {
-      type: "text",
-      position: [30, -2, 40, 20],
-      value: "Actions Menu",
-      color: "#FFFFFF"
+      type: "text", position: [30, -2, 40, 20], value: "Actions Menu", color: "#FFFFFF"
     }
   ]
 };
@@ -310,18 +238,12 @@ const next_ship = {
   clickable: true,
   visible: true,
   shortcut: "3",
-  components: [{
-      type: "box",
-      position: [0, 0, 100, 100],
-      fill: "rgba(0, 148, 255, 0.50)",
-      stroke: "rgb(0, 148, 255)",
-      width: 9
+  components: [
+    {
+      type: "box", position: [0, 0, 100, 100], fill: "rgba(0, 148, 255, 0.50)", stroke: "rgb(0, 148, 255)", width: 9
     },
     {
-      type: "text",
-      position: [0, 17, 100, 62],
-      value: "Next [3]",
-      color: "#ffffff"
+      type: "text", position: [0, 17, 100, 62], value: "Next [3]", color: "#ffffff"
     }
   ]
 };
@@ -332,18 +254,12 @@ const previous_ship = {
   clickable: true,
   visible: true,
   shortcut: "4",
-  components: [{
-      type: "box",
-      position: [0, 0, 100, 100],
-      fill: "rgba(0, 148, 255, 0.50)",
-      stroke: "rgb(0, 148, 255)",
-      width: 9
+  components: [
+    {
+      type: "box", position: [0, 0, 100, 100], fill: "rgba(0, 148, 255, 0.50)", stroke: "rgb(0, 148, 255)", width: 9
     },
     {
-      type: "text",
-      position: [0, 17, 100, 62],
-      value: "Previous [4]",
-      color: "#ffffff"
+      type: "text", position: [0, 17, 100, 62], value: "Previous [4]", color: "#ffffff"
     }
   ]
 };
@@ -354,18 +270,12 @@ const Tp_Spawn = {
   clickable: true,
   visible: true,
   shortcut: "5",
-  components: [{
-      type: "box",
-      position: [0, 0, 100, 100],
-      fill: "rgba(255, 0, 0, 0.50)",
-      stroke: "rgb(255, 0, 0)",
-      width: 9
+  components: [
+    {
+      type: "box", position: [0, 0, 100, 100], fill: "rgba(255, 0, 0, 0.50)", stroke: "rgb(255, 0, 0)", width: 9
     },
     {
-      type: "text",
-      position: [0, 17, 100, 62],
-      value: "Center [5]",
-      color: "#ffffff"
+      type: "text", position: [0, 17, 100, 62], value: "Center [5]", color: "#ffffff"
     }
   ]
 };
@@ -376,18 +286,12 @@ const Stats = {
   clickable: true,
   visible: true,
   shortcut: "7",
-  components: [{
-      type: "box",
-      position: [0, 0, 100, 100],
-      fill: "rgba(255, 232, 0, 0.50)",
-      stroke: "rgb(255, 232, 0)",
-      width: 9
+  components: [
+    {
+      type: "box", position: [0, 0, 100, 100], fill: "rgba(255, 232, 0, 0.50)", stroke: "rgb(255, 232, 0)", width: 9
     },
     {
-      type: "text",
-      position: [0, 17, 100, 62],
-      value: "Stats [7]",
-      color: "#ffffff"
+      type: "text", position: [0, 17, 100, 62], value: "Stats [7]", color: "#ffffff"
     }
   ]
 };
@@ -398,18 +302,12 @@ const Wrap = {
   clickable: true,
   visible: true,
   shortcut: "6",
-  components: [{
-      type: "box",
-      position: [0, 0, 100, 100],
-      fill: "rgba(55, 255, 55, 0.50)",
-      stroke: "rgb(55, 255, 55)",
-      width: 9
+  components: [
+    {
+      type: "box", position: [0, 0, 100, 100], fill: "rgba(55, 255, 55, 0.50)", stroke: "rgb(55, 255, 55)", width: 9
     },
     {
-      type: "text",
-      position: [0, 17, 100, 62],
-      value: "Wrap [6]",
-      color: "#ffffff"
+      type: "text", position: [0, 17, 100, 62], value: "Wrap [6]", color: "#ffffff"
     }
   ]
 };
@@ -420,18 +318,12 @@ const Box_Exit_screen = {
   clickable: true,
   visible: true,
   shortcut: "0",
-  components: [{
-      type: "box",
-      position: [0, 0, 100, 100],
-      fill: "rgba(255,255,255, 0.40)",
-      stroke: "#ffffff",
-      width: 9
+  components: [
+    {
+      type: "box", position: [0, 0, 100, 100], fill: "rgba(255,255,255, 0.40)", stroke: "#ffffff", width: 9
     },
     {
-      type: "text",
-      position: [0, 17, 100, 62],
-      value: "Exit [0]",
-      color: "#ffffff"
+      type: "text", position: [0, 17, 100, 62], value: "Exit [0]", color: "#ffffff"
     }
   ]
 };
@@ -443,12 +335,11 @@ const HideShow_Buttons = {
   clickable: true,
   visible: true,
   shortcut: "2",
-  components: [{
-    type: "text",
-    position: [0, 0, 100, 100],
-    value: "Hide Buttons [2]",
-    color: "#ffffff"
-  }]
+  components: [
+    {
+      type: "text", position: [0, 0, 100, 100], value: "Hide Buttons [2]", color: "#ffffff"
+    }
+  ]
 };
 
 // Other
@@ -457,12 +348,11 @@ const Always_Pickup_Crystals = {
   position: [-4.5, -5, 110, 110],
   clickable: false,
   visible: true,
-  components: [{
-    type: "text",
-    position: [-4, 5, 100, 3],
-    value: "--",
-    color: "#ffffff"
-  }]
+  components: [
+    {
+      type: "text", position: [-4, 5, 100, 3], value: "--", color: "#ffffff"
+    }
+  ]
 };
 
 this.tick = function(game) {
@@ -491,37 +381,21 @@ this.tick = function(game) {
           ship.custom.Deaths = 0;
           ship.custom.Kills = 0;
           ship.custom.warpIndex = 0;
-          ship.setUIComponent(Menu_);
-          ship.setUIComponent(Regen);
-          ship.setUIComponent(Spectate);
+          for (let mainComponents of gameMainComponents) ship.setUIComponent(mainComponents);
           ship.setUIComponent(HideShow_Buttons);
           setAPC(ship);
         }
       }
       if (game.step % 60 === 0) {
         switch (ship.custom.afk_main) {
-          case 0:
-            reset_afk_timer(ship);
-            break;
+          case 0: reset_afk_timer(ship); break;
           case 1:
             if (ship.alive === true) {
               getShipAFKinfo(ship, ship.vx, ship.vy, ship.r);
               if (Math.sqrt(Math.pow(ship.vx, 2) + Math.pow(ship.vy, 2)) <= AFK_speed && ship.custom.r1 === ship.custom.r2 || ship.custom.point1.x === ship.custom.point2.x && ship.custom.point2.x === ship.custom.point3.x && ship.custom.r1 === ship.custom.r2) {
                 ship.custom.AFK_Cooldown_time--;
                 if (ship.custom.AFK_Cooldown_time <= 0) {
-                  ship.custom.TimeS--;
-                  ship.setUIComponent({
-                    id: "afk_timer" + ship.id,
-                    position: [40, 10, 20, 20],
-                    clickable: false,
-                    visible: true,
-                    components: [{
-                      type: "text",
-                      position: [0, 0, 100, 50],
-                      color: "rgb(255,55,55)",
-                      value: "AFK time left: " + ship.custom.TimeS
-                    }]
-                  });
+                  AddText(ship, "AFK in: "+ship.custom.TimeS--, "rgba(255,55,55,0.8)", true, 1500);
                   if (ship.custom.TimeS <= 0) spectator_ship(ship), ship.custom.isAFK = true;
                 }
               } else reset_afk_timer(ship);
@@ -536,6 +410,12 @@ this.tick = function(game) {
     }
   }
 };
+
+function reset_afk_timer(ship) {
+  ship.custom.TimeS = AFK_Pretime;
+  ship.setUIComponent({id: "afk_timer" + ship.id, visible: false});
+  ship.custom.AFK_Cooldown_time = AFK_Cooldown;
+}
 
 function updateScoreboard(game) {
   let sorted_ships_KDratio = [...game.ships].sort((a, b) => (b.custom.Kills - b.custom.Deaths) - (a.custom.Kills - a.custom.Deaths)).slice(0, 8);
@@ -553,49 +433,25 @@ function updateScoreboard(game) {
     clickable: false,
     visible: true,
     components: [{
-        type: "box",
-        position: [0, 0, 100, 10],
-        fill: "rgba(255, 255, 255, 0.35)"
+        type: "box", position: [0, 0, 100, 10], fill: "rgba(255, 255, 255, 0.35)"
       },
       {
-        type: "box",
-        position: [81, 0, 7.5, 10],
-        fill: "rgba(55, 255, 55, 0.35)"
+        type: "box", position: [81, 0, 7.5, 10], fill: "rgba(55, 255, 55, 0.35)"
       },
       {
-        type: "box",
-        position: [88.5, 0, 7.5, 10],
-        fill: "rgba(255, 55, 55, 0.35)"
+        type: "box", position: [88.5, 0, 7.5, 10], fill: "rgba(255, 55, 55, 0.35)"
       },
       {
-        type: "text",
-        position: [3, 0.7, 69, 8.5],
-        value: "Players",
-        color: "rgb(255,255,255)",
-        align: "left"
+        type: "text", position: [3, 0.7, 69, 8.5], value: "Players", color: "rgb(255,255,255)", align: "left"
       },
       {
-        type: "text",
-        position: [66, 1, 29, 8.5],
-        value: "K/D",
-        color: "rgb(255,255,255)",
-        align: "right"
+        type: "text", position: [66, 1, 29, 8.5], value: "K/D", color: "rgb(255,255,255)", align: "right"
       },
       ...(sorted_ships_KDratio).map((ship, i) => [{
-          type: "player",
-          index: i,
-          position: [0, 11.25 * i + 11, 75.5, 9.25],
-          id: sorted_ships_KDratio[i].id,
-          color: ship.custom.C_color,
-          value: "",
-          align: "left"
+          type: "player", index: i, position: [0, 11.25 * i + 11, 75.5, 9.25], id: sorted_ships_KDratio[i].id, color: ship.custom.C_color, value: "", align: "left"
         },
         {
-          type: "text",
-          position: [74, 11.25 * i + 11.5, 29, 8.5],
-          value: sorted_ships_KDratio[i].custom.Kills + "/" + ship.custom.Deaths,
-          color: "rgb(255,255,255)",
-          align: "center"
+          type: "text", position: [74, 11.25 * i + 11.5, 29, 8.5], value: sorted_ships_KDratio[i].custom.Kills + "/" + ship.custom.Deaths, color: "rgb(255,255,255)", align: "center"
         }
       ]).flat(Infinity)
     ]
@@ -621,32 +477,15 @@ function MapOpen() {
   game.modding.terminal.echo("[[!bgu;Blue;]https://discord.gg/KXvCq4N\n]");
 }
 
-function reset_afk_timer(ship) {
-  ship.custom.TimeS = AFK_Pretime;
-  ship.setUIComponent({
-    id: "afk_timer" + ship.id,
-    visible: false
-  });
-  ship.custom.AFK_Cooldown_time = AFK_Cooldown;
-}
-
 function getShipAFKinfo(ship, ship_vx, ship_vy, ship_r) {
-  ship.custom.point1 = {
-    x: ship_vx,
-    y: ship_vy
-  };
+  ship.custom.point1 = {x: ship_vx, y: ship_vy};
   ship.custom.r1 = ship_r;
   setTimeout(() => {
-    ship.custom.point2 = {
-      x: ship_vx,
-      y: ship_vy
-    }, ship.custom.r2 = ship_r
+    ship.custom.point2 = {x: ship_vx, y: ship_vy}, 
+    ship.custom.r2 = ship_r
   }, 200);
   setTimeout(() => {
-    ship.custom.point3 = {
-      x: ship_vx,
-      y: ship_vy
-    }
+    ship.custom.point3 = {x: ship_vx, y: ship_vy}
   }, 400);
 }
 
@@ -657,12 +496,11 @@ function AddText(ship, Value, Color, Visibility, time=4000) {
     position: [-5, -5, 110, 110],
     clickable: false,
     visible: true,
-    components: [{
-      type: "text",
-      position: [0, 16, 100, 4],
-      color: Color,
-      value: Value
-    }]
+    components: [
+      {
+        type: "text", position: [0, 16, 100, 4], color: Color, value: Value
+      }
+    ]
   });
   if (Visibility) {
     ship.custom.logtimeout = setTimeout(() => {
@@ -800,17 +638,12 @@ function admin_ship(ship) {
       position: [-5, -5, 110, 110],
       clickable: false,
       visible: true,
-      components: [{
-          type: "text",
-          position: [0, 40, 100, 5],
-          color: "rgb(255,155,55)",
-          value: "You cannot switch to the admin ships"
+      components: [
+        {
+          type: "text", position: [0, 40, 100, 5], color: "rgb(255,155,55)", value: "You cannot switch to the admin ships"
         },
         {
-          type: "text",
-          position: [0, 45, 100, 5],
-          color: "rgb(255,155,55)",
-          value: "while being in spectator mode"
+          type: "text", position: [0, 45, 100, 5], color: "rgb(255,155,55)", value: "while being in spectator mode"
         }
       ]
     });
@@ -1008,7 +841,7 @@ AddObject = function(Name, ID, x, y, sx, sy, rz) {
 };
 
 AddObject("MapCenter", MapCenter, -1, 0, 115, 65, 0);
-AddObject("ModVersion", ModVersion, 26, -11, 24, 6.5, -0.25);
+AddObject("ModVersion", ModVersion, 26, -10.4, 24, 6.5, -0.30);
 AddObject("BETAlogo", BETAlogo, -43.5, -1.5, 20, 10, 0);
 
 // Commands
@@ -1039,9 +872,7 @@ idle = function(who, txt) {
 
 unidle = function(who) {
   if (game.ships[who].custom.ISidle === true) {
-    game.ships[who].set({
-      idle: false
-    });
+    game.ships[who].set({idle: false});
     game.ships[who].custom.ISidle = false;
     game.modding.terminal.echo("the player: " + game.ships[who].name + ", index: " + who + " has been unfreezed\n");
   } else modding.terminal.error(new Error("\nThis player is not frozen\n"));
@@ -1138,10 +969,7 @@ say = function(text = "") {
       visible: true,
       components: [
         {
-        type: "text",
-        position: [0, 0, 100, 20],
-        color: "#FFFFFF",
-        value: text
+          type: "text", position: [0, 0, 100, 20], color: "#FFFFFF", value: text
         }
       ]
     });
