@@ -33,6 +33,8 @@
   - Don't be scared of the RCS afk players now ;)
   - Rotating also counts on the AFK system
 - New Wrap button that allows you to find players by teleporting to them.
+- Added "Supprot message" when hosting.
+- New game OBJ's.
 
 ## Comming soon!!
 * More documentation.
