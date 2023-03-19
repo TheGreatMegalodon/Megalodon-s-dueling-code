@@ -1,11 +1,12 @@
-mod_version =
-  " v1.3.5";
-
+mod_version = "v1.3.5";
 // Mod creator : Megalodon
 // Coding support : Lotus, Bhpsngum
 
 // What has been fixed/added from v1.3.4: 
+//  - Added "Supprot message" when hosting.
 //  - Added a Wrap button that allows you to find players by teleporting to them. 
+//  - New game OBJ's.
+//  - More optimiaztion.
 
 // See the documentation on the github page for more information about the mod and his integrated commands.
 
@@ -160,6 +161,7 @@ var vocabulary = [{
   }
 ];
 
+MapOpen();
 this.options = {
   // Game Options
   map_name: "Meg's Dueling",
@@ -433,8 +435,8 @@ var Box_Exit_screen = {
 };
 
 //Hide buttons
-var Hide_Buttons = {
-  id: "Hide_Buttons",
+var HideShow_Buttons = {
+  id: "HideShow_Buttons",
   position: [4.8, 27.5, 11, 7],
   clickable: true,
   visible: true,
@@ -443,20 +445,6 @@ var Hide_Buttons = {
     type: "text",
     position: [0, 0, 100, 100],
     value: "Hide Buttons [2]",
-    color: "#ffffff"
-  }]
-};
-
-var Show_Buttons = {
-  id: "Show_Buttons",
-  position: [4.8, 27.5, 11, 7],
-  clickable: true,
-  visible: true,
-  shortcut: "2",
-  components: [{
-    type: "text",
-    position: [0, 0, 100, 100],
-    value: "Show Buttons [2]",
     color: "#ffffff"
   }]
 };
@@ -482,33 +470,29 @@ this.tick = function(game) {
       if (always_pickup_gems) {
         let max_crystals = 20 * Math.trunc(ship.type / 100) * Math.trunc(ship.type / 100);
         if (ship.custom.crystals_last_updated != ship.last_updated && ship.crystals >= max_crystals) {
-          ship.set({
-            crystals: max_crystals - 1
-          });
+          ship.set({crystals: max_crystals - 1});
           ship.custom.crystals_last_updated = ship.last_updated;
         }
       }
       let level = Math.trunc(ship.type / 100);
       if (level < 7) {
         let max_stats = 11111111 * level;
-        if (ship.custom.keep_maxed === true) {
-          ship.set({stats: max_stats});
-        } else {
-          ship.set({stats: 0});
-        }
+        if (ship.custom.keep_maxed === true) {ship.set({stats: max_stats})} 
+        else {ship.set({stats: 0})}
       }
       if (!BannedList.includes(ship.name)) {
         if (ship.custom.init !== true) {
           ship.custom.init = true;
           ship.custom.ISidle = false;
           ship.custom.keep_maxed = true;
+          ship.custom.ButtonsShowed = true;
           ship.custom.Deaths = 0;
           ship.custom.Kills = 0;
           ship.custom.warpIndex = 0;
           ship.setUIComponent(Menu_);
           ship.setUIComponent(Regen);
           ship.setUIComponent(Spectate);
-          ship.setUIComponent(Hide_Buttons);
+          ship.setUIComponent(HideShow_Buttons);
           if (always_pickup_gems === true) Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: ON", Always_Pickup_Crystals.components[0].color = "rgba(55,255,55,0.4)";
           else Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: OFF", Always_Pickup_Crystals.components[0].color = "rgba(255,55,55,0.4)";
           ship.setUIComponent(Always_Pickup_Crystals);
@@ -668,6 +652,12 @@ function updateScoreboard(game) {
   }
 };
 
+function MapOpen() {
+  game.modding.terminal.echo("[[b;Cyan;]\nMeg's Dueling\nVersion: "+mod_version+"\nAll credits goes to Megalodon#0001\n]");
+  game.modding.terminal.echo("[[bg;Gold;]Support Server:]");
+  game.modding.terminal.echo("[[!bgu;Blue;]https://discord.gg/KXvCq4N\n]");
+}
+
 function reset_afk_timer(ship) {
   ship.custom.TimeS = AFK_Pretime;
   ship.setUIComponent({
@@ -697,7 +687,7 @@ function getShipAFKinfo(ship, ship_vx, ship_vy, ship_r) {
   }, 400);
 }
 
-function AddText(ship, Value, Color, Visibility, size = 5, h = 20) {
+function AddText(ship, Value, Color, Visibility, size = 4, h = 16) {
   clearTimeout(ship.custom.logtimeout);
   ship.setUIComponent({
     id: "Text",
@@ -717,7 +707,7 @@ function AddText(ship, Value, Color, Visibility, size = 5, h = 20) {
         id: "Text",
         visible: false
       })
-    }, 5000)
+    }, 4000)
   }
 }
 
@@ -752,6 +742,8 @@ function wrap_ship(ship, game) {
       }
     }
     ship.set({x: game.ships[ship.custom.warpIndex].x, y: game.ships[ship.custom.warpIndex].y, vx: 0, vy: 0});
+  } else {
+    AddText(ship, "Hold up! You're clicking too fast!", "rgba(255,255,255,0.8)", true);
   }
 }
 
@@ -776,6 +768,8 @@ function next_ship_button(ship) {
     });
     update_stats_button(ship);
     reset_afk_timer(ship);
+  } else {
+    AddText(ship, "Hold up! You're clicking too fast!", "rgba(255,255,255,0.8)", true);
   }
 }
 
@@ -803,6 +797,8 @@ function previous_ship_button(ship) {
     });
     update_stats_button(ship);
     reset_afk_timer(ship);
+  } else {
+    AddText(ship, "Hold up! You're clicking too fast!", "rgba(255,255,255,0.8)", true);
   }
 }
 
@@ -834,6 +830,8 @@ function spectator_ship(ship) {
         collider: false
       });
     }
+  } else {
+    AddText(ship, "Hold up! You're clicking too fast!", "rgba(255,255,255,0.8)", true);
   }
 }
 
@@ -909,6 +907,8 @@ function regen(ship) {
         shield: 999,
         generator: 999
       });
+    } else {
+      AddText(ship, "Hold up! You're clicking too fast!", "rgba(255,255,255,0.8)", true);
     }
   }
 };
@@ -946,6 +946,8 @@ function Teleport_Center(ship) {
       x: x,
       y: y
     });
+  } else {
+    AddText(ship, "Hold up! You're clicking too fast!", "rgba(255,255,255,0.8)", true);
   }
 }
 
@@ -999,53 +1001,37 @@ function TP_points_button(ship) {
       id: "Menu_",
       visible: false
     });
+  } else {
+    AddText(ship, "Hold up! You're clicking too fast!", "rgba(255,255,255,0.8)", true);
   }
 }
 
-// Hide_Buttons Commands
-function Hide_Buttons_a(ship) {
+// HideShow_Buttons Command  "HideShow_Buttons"
+function Manage_Buttons(ship) {
   if (!ship.custom.TP_points || game.step >= ship.custom.TP_points) {
     ship.custom.TP_points = game.step + TP_points_delay * 60;
-    Exit_screen(ship);
-    ship.setUIComponent(Show_Buttons);
-    ship.setUIComponent({
-      id: "Hide_Buttons",
-      visible: false
-    });
-    ship.setUIComponent({
-      id: "Regen",
-      visible: false
-    });
-    ship.setUIComponent({
-      id: "Spectate",
-      visible: false
-    });
-    ship.setUIComponent({
-      id: "Menu_",
-      visible: false
-    });
-    ship.setUIComponent({
-      id: "APC",
-      visible: false
-    });
-  }
-}
-
-function Show_Buttons_a(ship) {
-  ship.setUIComponent(Hide_Buttons);
-  ship.setUIComponent({
-    id: "Show_Buttons",
-    visible: false
-  });
-  ship.setUIComponent(Menu_);
-  ship.setUIComponent(Spectate);
-  ship.setUIComponent(Regen);
-  if (always_pickup_gems === true) {
-    Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: ON", Always_Pickup_Crystals.components[0].color = "rgba(55,255,55,0.4)"
+    if (ship.custom.ButtonsShowed === true) {
+      Exit_screen(ship);
+      ship.setUIComponent({id: "Regen",visible: false});
+      ship.setUIComponent({id: "Spectate",visible: false});
+      ship.setUIComponent({id: "Menu_",visible: false});
+      ship.setUIComponent({id: "APC",visible: false});
+      HideShow_Buttons.components[0].value = "Show Buttons [2]";
+      ship.custom.ButtonsShowed = false;
+    } else {
+      ship.setUIComponent(Menu_);
+      ship.setUIComponent(Spectate);
+      ship.setUIComponent(Regen);
+      if (always_pickup_gems === true) Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: ON", Always_Pickup_Crystals.components[0].color = "rgba(55,255,55,0.4)";
+      else Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: OFF", Always_Pickup_Crystals.components[0].color = "rgba(255,55,55,0.4)";
+      ship.setUIComponent(Always_Pickup_Crystals);
+      HideShow_Buttons.components[0].value = "Hide Buttons [2]";
+      ship.custom.ButtonsShowed = true;
+    }
+    ship.setUIComponent(HideShow_Buttons);
   } else {
-    Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: OFF", Always_Pickup_Crystals.components[0].color = "rgba(255,55,55,0.4)"
+    AddText(ship, "Hold up! You're clicking too fast!", "rgba(255,255,255,0.8)", true);
   }
-  ship.setUIComponent(Always_Pickup_Crystals);
 }
 
 this.event = function(event, game) {
@@ -1061,27 +1047,25 @@ this.event = function(event, game) {
       }
       if (ship.custom.ISidle !== true) {
         if (component === "Menu_") {
-          TP_points_button(ship)
-        } else if (component === "Hide_Buttons") {
-          Hide_Buttons_a(ship)
-        } else if (component === "Show_Buttons") {
-          Show_Buttons_a(ship)
+          TP_points_button(ship);
+        } else if (component === "HideShow_Buttons") {
+          Manage_Buttons(ship);
         } else if (component === "Box_Exit_screen") {
-          Exit_screen(ship)
+          Exit_screen(ship);
         } else if (component === "Regen") {
-          regen(ship)
+          regen(ship);
         } else if (component === "Spectate") {
-          spectator_ship(ship)
+          spectator_ship(ship);
         } else if (component === "Admin") {
-          admin_ship(ship)
+          admin_ship(ship);
         } else if (component === "next_ship") {
-          next_ship_button(ship)
+          next_ship_button(ship);
         } else if (component === "previous_ship") {
-          previous_ship_button(ship)
+          previous_ship_button(ship);
         } else if (component === "Stats") {
-          Stats_button(ship)
+          Stats_button(ship);
         } else if (component === "Tp_Spawn") {
-          Teleport_Center(ship)
+          Teleport_Center(ship);
         } else if (component === "Wrap") {
           wrap_ship(ship, game);
         }
@@ -1091,7 +1075,7 @@ this.event = function(event, game) {
       if (BannedList.includes(ship.name)) {
         ship.set({idle: true});
         ship.custom.IDidle = true;
-        ship.gameover({"-": "-"});
+        ship.gameover({"You are banned from": "this game"});
       } else {
         const {x = 0, y = 0} = ship.custom;
         let xx = [...new Array(41)].map((j, i) => x - 30 + i);
@@ -1111,10 +1095,7 @@ this.event = function(event, game) {
       }
       break;
     case "ship_destroyed":
-      Object.assign(ship.custom, {
-        x: ship.x,
-        y: ship.y
-      });
+      Object.assign(ship.custom, {x: ship.x, y: ship.y});
       if (ship) ship.custom.Deaths++
       if (event.killer) event.killer.custom.Kills++;
       break;
@@ -1125,12 +1106,12 @@ this.event = function(event, game) {
 var MapCenter = {
   id: "MapCenter",
   obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive: "https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/megs_dueling_center_arena_nocircle.png",
+  emissive: "https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/megs_dueling_center_map_with_speedsters.png",
 };
 var ModVersion = {
   id: "ModVersion",
   obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive: "https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/v1.3.4_Img.png",
+  emissive: "https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/v1.3.5_Img.png",
 };
 var BETAlogo = {
   id: "BETAlogo",
@@ -1138,38 +1119,26 @@ var BETAlogo = {
   emissive: "https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/BETA.png",
 };
 
-AddObject = function(Name, ID, x, y, sx, sy, r, rz) {
+AddObject = function(Name, ID, x, y, sx, sy, rz) {
   game.setObject({
     id: Name,
     type: ID,
-    position: {
-      x: x,
-      y: y,
-      z: -15
-    },
-    scale: {
-      x: sx,
-      y: sy,
-      z: 0
-    },
-    rotation: {
-      x: r,
-      y: 0,
-      z: rz
-    }
+    position: {x: x, y: y, z: -15},
+    scale: {x: sx, y: sy, z: 0},
+    rotation: {x: Math.PI, y: 0, z: rz}
   });
 };
 
-AddObject("MapCenter", MapCenter, 0, 0, 100, 100, Math.PI, 0);
-AddObject("ModVersion", ModVersion, 26, -14, 28, 9, Math.PI, -0.25);
-AddObject("BETAlogo", BETAlogo, -38.5, -8, 20, 10, Math.PI, 0);
+AddObject("MapCenter", MapCenter, -1, 0, 115, 65, 0);
+AddObject("ModVersion", ModVersion, 26, -11, 24, 6.5, -0.25);
+AddObject("BETAlogo", BETAlogo, -43.5, -1.5, 20, 10, 0);
 
 // Commands
 // Moderation commands
 game.modding.commands.info = function() {
-  game.modding.terminal.echo("Total amount of aliens: " + game.aliens.length)
-  game.modding.terminal.echo("Total amount of asteroids: " + game.asteroids.length)
-  game.modding.terminal.echo("Total amount of players: " + game.ships.length + "\n")
+  game.modding.terminal.echo("Total amount of aliens: "+game.aliens.length)
+  game.modding.terminal.echo("Total amount of asteroids: "+game.asteroids.length)
+  game.modding.terminal.echo("Total amount of players: "+game.ships.length+"\n")
   if (BannedList.length === 0) names = "None";
   else names = BannedList;
   game.modding.terminal.echo("Banned players: " + names)
@@ -1204,7 +1173,7 @@ unidle = function(who) {
 
 kick = function(who, reason = "Disturbing duels") {
   if (game.ships.includes(game.ships[who])) {
-    for (let ship of game.ships) AddText(ship, "Player: " + game.ships[who].name + " has been kicked.", "rgb(255,155,55)", true, 4, 16);
+    for (let ship of game.ships) AddText(ship, "Player: " + game.ships[who].name + " has been kicked.", "rgb(255,155,55)", true);
     idle(who, true);
     game.ships[who].gameover({
       "You were kicked for : ": reason,
@@ -1224,7 +1193,7 @@ ban = function(who, reason = "Disturbing duels") {
     BannedList.push(game.ships[who].name);
     BannedListReasons.push(reason);
     idle(who, true);
-    for (let ship of game.ships) AddText(ship, "Player: " + game.ships[who].name + " has been banned.", "rgb(255,55,55)", true, 4, 16);
+    for (let ship of game.ships) AddText(ship, "Player: " + game.ships[who].name + " has been banned.", "rgb(255,55,55)", true);
     game.ships[who].gameover({
       "You were banned for : ": reason,
       "Your name: ": game.ships[who].name,
@@ -1261,11 +1230,11 @@ gameover = function(start) {
   endgame_timer = start;
   switch (start) {
     case 1:
-      for (let ship of game.ships) AddText(ship, "The game is ending in 5 Minutes", "rgba(255,55,55,0.8)", true, 4, 16);
+      for (let ship of game.ships) AddText(ship, "The game is ending in 5 Minutes", "rgba(255,55,55,0.8)", true);
       game.modding.terminal.echo("Game is ending in: 5 Minutes\n");
       break;
     case 0:
-      for (let ship of game.ships) AddText(ship, "The game is extended", "rgba(55,255,55,0.8)", true, 4, 16);
+      for (let ship of game.ships) AddText(ship, "The game is extended", "rgba(55,255,55,0.8)", true);
       game.modding.terminal.echo("Game is ending has been canceled\n");
       break;
   }
