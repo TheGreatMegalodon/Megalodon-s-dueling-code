@@ -35,6 +35,8 @@
 - New Wrap button that allows you to find players by teleporting to them.
 - Added "Supprot message" when hosting.
 - New game OBJ's.
+- Removed gameover() command.
+- Created new function and Optimized Old function.
 
 ## Comming soon!!
 * More documentation.
@@ -386,7 +388,6 @@ set(0,601)
 | `ban()` | To ban someone from the game, works like the `kick()` command | ban("**player index**","**reason**") | `ban(1)` or `ban(1,"You cannot rejoin now ;)")` |
 | `unban()` | To unban someone from the game | unban("**player index**") | `unban(1)` |
 | `banlist` | shows a list of all the banned players and their INDEX to unban them | -- | `banlist` |
-| `gameover()` | Give the opportunity to end a dueling game smoothly | gameover(**0 or 1**) | `gameover(1)` |
 
 ### Basic Commands
 
