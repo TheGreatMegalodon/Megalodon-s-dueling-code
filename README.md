@@ -43,6 +43,7 @@
 * More optimization.
 
 ## Support
+* [Discord Dueling Server](https://discord.gg/MF7zwS89TU)
 * [Support Discord Server](https://discord.gg/KXvCq4N)
 * Discord: Megalodon#0001
 
