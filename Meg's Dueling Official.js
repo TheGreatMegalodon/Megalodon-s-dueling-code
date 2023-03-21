@@ -472,7 +472,7 @@ function setAPC(ship) {
 }
 
 function MapOpen() {
-  game.modding.terminal.echo("[[b;Cyan;]\nMeg's Dueling\nVersion: "+mod_version+"\nAll credits goes to Megalodon#0001\n]");
+  game.modding.terminal.echo("[[bg;dodgerblue;]\n - Meg's Dueling - ]\n[[i;Cyan;]\nVersion: "+mod_version+"\nAll credits goes to Megalodon#0001\n]");
   game.modding.terminal.echo("[[bg;Gold;]Support Server:]");
   game.modding.terminal.echo("[[!bgu;Blue;]https://discord.gg/KXvCq4N\n]");
 }
