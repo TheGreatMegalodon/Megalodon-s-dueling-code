@@ -9,7 +9,7 @@
 # Meg's dueling Documentation
 
 ### Mod Version: 
-* **v1.3.5**
+* [**1.3.5**](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Official.js)
 
 ### Mod creator: 
 * **Megalodon**
