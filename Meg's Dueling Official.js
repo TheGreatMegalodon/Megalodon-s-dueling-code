@@ -10,32 +10,40 @@ const mod_version =
 //  - More optimiaztion.
 //  - Removed gameover() command.
 //  - Created new function and Optimized Old function.
+//  - Better Status button (should have less issues)
+//  - New features un the AFK checker
+//    - added the ability to control the AFK checker
+//  - Should be less laggy in general
 
 // See the documentation on the github page for more information about the mod and his integrated commands.
+// link : https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md
 
 // Ship Codes
 const Ship_Codes = [101, 201, 202, 301, 302, 303, 304, 401, 402, 403, 404, 405, 406, 501, 502, 503, 504, 505, 506, 507, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615];
 const spectator_ship_code = 191;
 const admin_ship_codes = [192, 193];
 
-// Delays
+// Delays (in seconds)
 const spawn_zone_delay = 2;
 const switch_ship_delay = 0.25;
 const spectator_switch_delay = 2;
 const TP_points_delay = 2;
 const Regenerate_delay = 4;
 const Stats_delay = 0.5;
-const wrap_delay = 1;
+const wrap_delay = 0.25;
+const Mb_delay = 2;
 
 // AFK settings
-const AFK_speed = 10e-3;
-const AFK_Pretime = 20;
+const Enable_AFK = true; // allow AFK | true / false
+const AFK_speed = 10e-2;
+const AFK_rotation = 0.8;
+const AFK_Pretime = 10;
 const AFK_Cooldown = 20;
 
 // Other
-const always_pickup_gems = true;
-const BannedList = [];
-const BannedListReasons = [];
+var always_pickup_gems = true; // always pickup gems | true / false
+var BannedList = [];
+var BannedListReasons = [];
 
 // Admin
 const Spectator_191 = '{"name":"Spectator","level":1.9,"model":1,"size":0.025,"zoom":0.075,"specs":{"shield":{"capacity":[1e-30,1e-30],"reload":[1000,1000]},"generator":{"capacity":[1e-30,1e-30],"reload":[1,1]},"ship":{"mass":1,"speed":[200,200],"rotation":[1000,1000],"acceleration":[1000,1000]}},"bodies":{"face":{"section_segments":100,"angle":0,"offset":{"x":0,"y":0,"z":0},"position":{"x":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"y":[-2,-2,2,2],"z":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"width":[0,1,1,0],"height":[0,1,1,0],"vertical":true,"texture":[6]}},"typespec":{"name":"Spectator","level":1,"model":1,"code":101,"specs":{"shield":{"capacity":[1e-30,1e-30],"reload":[1000,1000]},"generator":{"capacity":[1e-30,1e-30],"reload":[1,1]},"ship":{"mass":1,"speed":[200,200],"rotation":[1000,1000],"acceleration":[1000,1000]}},"shape":[0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001],"lasers":[],"radius":0.001}}';
@@ -356,22 +364,10 @@ const Always_Pickup_Crystals = {
 };
 
 this.tick = function(game) {
-  if (game.step % 30 === 0) {
+  if (game.step % 60 === 0) {
     updateScoreboard(game);
     for (let ship of game.ships) {
-      if (always_pickup_gems) {
-        let max_crystals = 20 * Math.trunc(ship.type / 100) * Math.trunc(ship.type / 100);
-        if (ship.custom.crystals_last_updated != ship.last_updated && ship.crystals >= max_crystals) {
-          ship.set({crystals: max_crystals - 1});
-          ship.custom.crystals_last_updated = ship.last_updated;
-        }
-      }
-      let level = Math.trunc(ship.type / 100);
-      if (level < 7) {
-        let max_stats = 11111111 * level;
-        if (ship.custom.keep_maxed === true) {ship.set({stats: max_stats})} 
-        else {ship.set({stats: 0})}
-      }
+      AFKship(ship);
       if (!BannedList.includes(ship.name)) {
         if (ship.custom.init !== true) {
           ship.custom.init = true;
@@ -386,30 +382,42 @@ this.tick = function(game) {
           setAPC(ship);
         }
       }
-      if (game.step % 60 === 0) {
-        switch (ship.custom.afk_main) {
-          case 0: reset_afk_timer(ship); break;
-          case 1:
-            if (ship.alive === true) {
-              getShipAFKinfo(ship, ship.vx, ship.vy, ship.r);
-              if (Math.sqrt(Math.pow(ship.vx, 2) + Math.pow(ship.vy, 2)) <= AFK_speed && ship.custom.r1 === ship.custom.r2 || ship.custom.point1.x === ship.custom.point2.x && ship.custom.point2.x === ship.custom.point3.x && ship.custom.r1 === ship.custom.r2) {
-                ship.custom.AFK_Cooldown_time--;
-                if (ship.custom.AFK_Cooldown_time <= 0) {
-                  AddText(ship, "AFK in: "+ship.custom.TimeS--, "rgba(255,55,55,0.8)", true, 1500);
-                  if (ship.custom.TimeS <= 0) spectator_ship(ship), ship.custom.isAFK = true;
-                }
-              } else reset_afk_timer(ship);
-            } else reset_afk_timer(ship);
-            break;
-        }
-      }
     }
     if (!game.custom.admin && game.ships[0]) {
       game.custom.admin = true;
       game.ships[0].setUIComponent(Admin);
     }
   }
+  if (game.step % 20 === 0) {
+    for (let ship of game.ships) {
+      if (always_pickup_gems) {
+        let max_crystals = 20 * Math.trunc(ship.type / 100) * Math.trunc(ship.type / 100);
+        if (ship.custom.crystals_last_updated != ship.last_updated && ship.crystals >= max_crystals) {
+          ship.set({crystals: max_crystals - 1});
+          ship.custom.crystals_last_updated = ship.last_updated;
+        }
+      }
+    }
+  }
 };
+
+function AFKship(ship) {
+  switch (ship.custom.afk_main) {
+    case 0: reset_afk_timer(ship); break;
+    case 1:
+      if (ship.alive === true) {
+        getShipAFKinfo(ship, ship.vx, ship.vy, ship.r);
+        if (Math.sqrt(Math.pow(ship.vx, 2) + Math.pow(ship.vy, 2)) <= AFK_speed && Math.abs(ship.custom.r1 - ship.custom.r2) <= AFK_rotation || ship.custom.point1.x === ship.custom.point2.x && ship.custom.point2.x === ship.custom.point3.x && Math.abs(ship.custom.r1 - ship.custom.r2) <= AFK_rotation) {
+          ship.custom.AFK_Cooldown_time--;
+          if (ship.custom.AFK_Cooldown_time <= 0) {
+            alert(ship, "Ship is going AFK in:", ship.custom.TimeS--,"rgba(255,55,55,0.8)", 1500);
+            if (ship.custom.TimeS <= 0) spectator_ship(ship), ship.custom.isAFK = true;
+          }
+        } else reset_afk_timer(ship);
+      } else reset_afk_timer(ship);
+      break;
+  }
+}
 
 function reset_afk_timer(ship) {
   ship.custom.TimeS = AFK_Pretime;
@@ -417,10 +425,22 @@ function reset_afk_timer(ship) {
   ship.custom.AFK_Cooldown_time = AFK_Cooldown;
 }
 
+function getShipAFKinfo(ship, ship_vx, ship_vy, ship_r) {
+  ship.custom.point1 = {x: ship_vx, y: ship_vy};
+  ship.custom.r1 = ship_r;
+  setTimeout(() => {
+    ship.custom.point2 = {x: ship_vx, y: ship_vy}, 
+    ship.custom.r2 = ship_r;
+    setTimeout(() => {
+      ship.custom.point3 = {x: ship_vx, y: ship_vy};
+    }, 200);
+  }, 200);
+}
+
 function updateScoreboard(game) {
   let sorted_ships_KDratio = [...game.ships].sort((a, b) => (b.custom.Kills - b.custom.Deaths) - (a.custom.Kills - a.custom.Deaths)).slice(0, 8);
   for (let ship of game.ships) {
-    if (ship.name === "Megalodon") {
+    if (["Megalodon", "ҒꝚ▸Megalodon"].includes(ship.name)) {
       ship.custom.C_color = "#005cb9";
     } else {
       if (ship.id === sorted_ships_KDratio[0].id && ship.custom.Kills >= 1) ship.custom.C_color = "rgb(255, 215, 0)";
@@ -473,23 +493,11 @@ function setAPC(ship) {
 
 function MapOpen() {
   game.modding.terminal.echo("[[bg;dodgerblue;]\n - Meg's Dueling - ]\n[[i;Cyan;]\nVersion: "+mod_version+"\nAll credits goes to Megalodon#0001\n]");
-  game.modding.terminal.echo("[[bg;Gold;]Support Server:]");
-  game.modding.terminal.echo("[[!bgu;Blue;]https://discord.gg/KXvCq4N\n]");
+  game.modding.terminal.echo("[[bg;Gold;]Support Server & documentation:]");
+  game.modding.terminal.echo("https://discord.gg/KXvCq4N\nhttps://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md\n");
 }
 
-function getShipAFKinfo(ship, ship_vx, ship_vy, ship_r) {
-  ship.custom.point1 = {x: ship_vx, y: ship_vy};
-  ship.custom.r1 = ship_r;
-  setTimeout(() => {
-    ship.custom.point2 = {x: ship_vx, y: ship_vy}, 
-    ship.custom.r2 = ship_r
-  }, 200);
-  setTimeout(() => {
-    ship.custom.point3 = {x: ship_vx, y: ship_vy}
-  }, 400);
-}
-
-function AddText(ship, Value, Color, Visibility, time=4000) {
+function alert(ship, Value1, Value2 = "", Color = "rgba(255,255,255,0.8)", time = 2000) {
   clearTimeout(ship.custom.logtimeout);
   ship.setUIComponent({
     id: "Text",
@@ -498,18 +506,14 @@ function AddText(ship, Value, Color, Visibility, time=4000) {
     visible: true,
     components: [
       {
-        type: "text", position: [0, 16, 100, 4], color: Color, value: Value
+        type: "text", position: [0, 16, 100, 4], color: Color, value: Value1
+      },
+      {
+        type: "text", position: [0, 21, 100, 4], color: Color, value: Value2
       }
     ]
   });
-  if (Visibility) {
-    ship.custom.logtimeout = setTimeout(() => {
-      ship.setUIComponent({
-        id: "Text",
-        visible: false
-      })
-    }, time);
-  }
+  ship.custom.logtimeout = setTimeout(() => {ship.setUIComponent({id: "Text",visible: false})}, time);
 }
 
 function format_time(time) {
@@ -535,21 +539,23 @@ function wrap_ship(ship, game) {
   else if (!ship.custom.wrap || game.step >= ship.custom.wrap) {
     ship.custom.wrap = game.step + wrap_delay * 60;
     if (game.ships.length > 1) {
-      if (ship.custom.warpIndex >= game.ships.length-1) ship.custom.warpIndex = 0;
-      else ship.custom.warpIndex++;
+      if (ship.custom.warpIndex >= game.ships.length-1) ship.custom.warpIndex = 0, echo("start 0");
+      else ship.custom.warpIndex++, echo("start 1");
       if (ship.custom.warpIndex === game.ships.indexOf(ship)) {
-        if (ship.custom.warpIndex >= game.ships.length-1) ship.custom.warpIndex = 0;
-        else ship.custom.warpIndex++;
+        if (ship.custom.warpIndex >= game.ships.length-1) ship.custom.warpIndex = 0, echo("end 0");
+        else ship.custom.warpIndex++, echo("end 1");
       }
-    }
+    } else alert(ship, "Only one player is in the game.");
     ship.set({x: game.ships[ship.custom.warpIndex].x, y: game.ships[ship.custom.warpIndex].y, vx: 0, vy: 0});
-  } else AddText(ship, "Hold up! You're clicking too fast!", "rgba(255,255,255,0.8)", true, 2000);
+  } else alert(ship, "Hold up! You're clicking too fast!");
 }
 
 function next_ship_button(ship) {
   let index;
   let next_type;
-  if (ship.custom.spectator) {
+  if (admin_ship_codes.includes(ship.type)) {
+    admin_ship(ship, true);
+  } else if (ship.custom.spectator) {
     spectator_ship(ship)
   } else if (!ship.custom.next_switch || game.step >= ship.custom.next_switch) {
     ship.custom.next_switch = game.step + switch_ship_delay * 60;
@@ -567,13 +573,15 @@ function next_ship_button(ship) {
     });
     update_stats_button(ship);
     reset_afk_timer(ship);
-  } else AddText(ship, "Hold up! You're clicking too fast!", "rgba(255,255,255,0.8)", true, 2000);
+  } else alert(ship, "Hold up! You're clicking too fast!");
 }
 
 function previous_ship_button(ship) {
   let index;
   let previous_type;
-  if (ship.custom.spectator) {
+  if (admin_ship_codes.includes(ship.type)) {
+    admin_ship(ship, true);
+  } else if (ship.custom.spectator) {
     spectator_ship(ship)
   } else if (!ship.custom.next_switch || game.step >= ship.custom.next_switch) {
     ship.custom.next_switch = game.step + switch_ship_delay * 60;
@@ -594,7 +602,7 @@ function previous_ship_button(ship) {
     });
     update_stats_button(ship);
     reset_afk_timer(ship);
-  } else AddText(ship, "Hold up! You're clicking too fast!", "rgba(255,255,255,0.8)", true, 2000);
+  } else alert(ship, "Hold up! You're clicking too fast!");
 }
 
 function spectator_ship(ship) {
@@ -612,6 +620,7 @@ function spectator_ship(ship) {
         shield: 999,
         crystals: max_crystals
       });
+      update_stats_button(ship, false);
     } else {
       ship.custom.spectator = true;
       ship.custom.last_ship = ship.type;
@@ -625,46 +634,33 @@ function spectator_ship(ship) {
         collider: false
       });
     }
-  } else AddText(ship, "Hold up! You're clicking too fast!", "rgba(255,255,255,0.8)", true, 2000);
+  } else alert(ship, "Hold up! You're clicking too fast!");
 }
 
-function admin_ship(ship) {
+function admin_ship(ship, off = false) {
   let next_type;
   let collider;
-  if (ship.type === spectator_ship_code) {
-    clearTimeout(this.sadmtimeout);
-    ship.setUIComponent({
-      id: "cannotgotoadmship",
-      position: [-5, -5, 110, 110],
-      clickable: false,
-      visible: true,
-      components: [
-        {
-          type: "text", position: [0, 40, 100, 5], color: "rgb(255,155,55)", value: "You cannot switch to the admin ships"
-        },
-        {
-          type: "text", position: [0, 45, 100, 5], color: "rgb(255,155,55)", value: "while being in spectator mode"
-        }
-      ]
-    });
-    this.sadmtimeout = setTimeout(() => {
-      ship.setUIComponent({id: "cannotgotoadmship",visible: false})
-    }, 2500);
-  } else {
-    if (ship.type >= admin_ship_codes[0] && ship.type <= admin_ship_codes[1]) {
-      if (ship.type === admin_ship_codes[1]) {
-        next_type = ship.custom.last_admin_ship;
-      } else {
-        next_type = ship.type + 1;
-      }
+  if (ship.type === spectator_ship_code) alert(ship, "You cannot switch to the admin ships", "while being in spectator mode", "rgb(255,155,55)");
+  else {
+    if (off === true) {
+      next_type = ship.custom.last_admin_ship;
     } else {
-      ship.custom.last_admin_ship = ship.type, next_type = admin_ship_codes[0]
-    }
-    if (ship.type === spectator_ship_code) {
-      collider = true;
-    }
-    if (ship.custom.last_admin_ship === spectator_ship_code) {
-      collider = false;
+      if (ship.type >= admin_ship_codes[0] && ship.type <= admin_ship_codes[1]) {
+        if (ship.type === admin_ship_codes[1]) {
+          next_type = ship.custom.last_admin_ship;
+        } else {
+          next_type = ship.type + 1;
+        }
+      } else {
+        ship.custom.last_admin_ship = ship.type;
+        next_type = admin_ship_codes[0];
+      }
+      if (ship.type === spectator_ship_code) {
+        collider = true;
+      }
+      if (ship.custom.last_admin_ship === spectator_ship_code) {
+        collider = false;
+      }
     }
     let max_crystals = 20 * Math.trunc(next_type / 100) * Math.trunc(next_type / 100);
     ship.set({type: next_type, stats: 66666666, crystals: max_crystals, collider: collider});
@@ -683,29 +679,33 @@ function regen(ship) {
       ship.custom.Regenerate = game.step + Regenerate_delay * 60;
       let max_crystals = 20 * Math.trunc(ship.type / 100) * Math.trunc(ship.type / 100);
       ship.set({crystals: max_crystals, shield: 999, generator: 999});
-    } else AddText(ship, "Hold up! You're clicking too fast!", "rgba(255,255,255,0.8)", true, 2000);
+    } else alert(ship, "Hold up! You're clicking too fast!");
   }
 };
 
-function update_stats_button(ship) {
-  let level = Math.trunc(ship.type / 100);
-  let max = 11111111 * level;
+function update_stats_button(ship, op_button = true) {
   if (!ship.custom.keep_maxed) {
-    Stats.components[1].value = "⚠️ Stats [7]";
-    ship.setUIComponent(Stats);
+    ship.set({stats: 0});
+    if (op_button) {
+      Stats.components[1].value = "⚠️ Stats [7]";
+      ship.setUIComponent(Stats);
+    }
   } else {
-    Stats.components[1].value = "Stats [7]";
-    ship.setUIComponent(Stats);
+    ship.set({stats: 88888888});
+    if (op_button) {
+      Stats.components[1].value = "Stats [7]";
+      ship.setUIComponent(Stats);
+    }
   }
 }
 
 function Stats_button(ship) {
-  let stats = ship.stats;
-  let level = Math.trunc(ship.type / 100);
-  let max = 11111111 * level;
-  if (stats === max) ship.custom.keep_maxed = false;
-  else ship.custom.keep_maxed = true;
-  update_stats_button(ship);
+  if (ship.type === spectator_ship_code || admin_ship_codes.includes(ship.type)) alert(ship, "You can't interact with the stats of that ship");
+  else {
+    if (ship.stats === 11111111 * Math.trunc(ship.type / 100)) ship.custom.keep_maxed = false;
+    else ship.custom.keep_maxed = true;
+    update_stats_button(ship);
+  }
 }
 
 function Teleport_Center(ship) {
@@ -714,7 +714,7 @@ function Teleport_Center(ship) {
   if (!ship.custom.spawn || game.step >= ship.custom.spawn) {
     ship.custom.spawn = game.step + spawn_zone_delay * 60;
     ship.set({x: x, y: y});
-  } else AddText(ship, "Hold up! You're clicking too fast!", "rgba(255,255,255,0.8)", true, 2000);
+  } else alert(ship, "Hold up! You're clicking too fast!");
 }
 
 // Exit Screen Commands
@@ -733,15 +733,15 @@ function TP_points_button(ship) {
     update_stats_button(ship);
     for (let Components of gameComponents) ship.setUIComponent(Components);
     ship.setUIComponent({id: "Menu_", visible: false});
-  } else AddText(ship, "Hold up! You're clicking too fast!", "rgba(255,255,255,0.8)", true, 2000);
+  } else alert(ship, "Hold up! You're clicking too fast!");
 }
 
 // HideShow_Buttons Command
 const gameMainComponents = [Regen, Spectate, Menu_];
 const gameMainComponentsID = ["Regen", "Spectate", "Menu_", "APC"];
 function Manage_Buttons(ship) {
-  if (!ship.custom.TP_points || game.step >= ship.custom.TP_points) {
-    ship.custom.TP_points = game.step + TP_points_delay * 60;
+  if (!ship.custom.Mb || game.step >= ship.custom.Mb) {
+    ship.custom.Mb = game.step + Mb_delay * 60;
     if (ship.custom.ButtonsShowed === true) {
       Exit_screen(ship);
       for (let mainComponentsID of gameMainComponentsID) ship.setUIComponent({id: mainComponentsID,visible: false});
@@ -754,7 +754,7 @@ function Manage_Buttons(ship) {
       setAPC(ship);
     }
     ship.setUIComponent(HideShow_Buttons);
-  } else AddText(ship, "Hold up! You're clicking too fast!", "rgba(255,255,255,0.8)", true, 2000);
+  } else alert(ship, "Hold up! You're clicking too fast!");
 }
 
 this.event = function(event, game) {
@@ -840,9 +840,9 @@ AddObject = function(Name, ID, x, y, sx, sy, rz) {
   });
 };
 
-AddObject("MapCenter", MapCenter, -1, 0, 115, 65, 0);
-AddObject("ModVersion", ModVersion, 26, -10.4, 24, 6.5, -0.30);
-AddObject("BETAlogo", BETAlogo, -43.5, -1.5, 20, 10, 0);
+AddObject("MapCenter", MapCenter, -1, 0, 95, 52, 0);
+AddObject("ModVersion", ModVersion, 21, -8.5, 18, 5, -0.30);
+AddObject("BETAlogo", BETAlogo, -36, -1.25, 18, 9, 0);
 
 // Commands
 // Moderation commands
@@ -880,7 +880,7 @@ unidle = function(who) {
 
 kick = function(who, reason = "Disturbing duels") {
   if (game.ships.includes(game.ships[who])) {
-    for (let ship of game.ships) AddText(ship, "Player: " + game.ships[who].name + " has been kicked.", "rgb(255,155,55)", true);
+    for (let ship of game.ships) alert(ship, "Player: " + game.ships[who].name, "has been kicked.", "rgba(255,155,55,0.8)");
     idle(who, true);
     game.ships[who].gameover({"You were kicked for" : reason, "Kills": game.ships[who].custom.Kills, "Deaths": game.ships[who].custom.Deaths});
     game.modding.terminal.echo("Player: " + game.ships[who].name + ", index: " + who + " Has successfully been kicked\n");
@@ -893,7 +893,7 @@ ban = function(who, reason = "Disturbing duels") {
     BannedListReasons.push(reason);
     idle(who, true);
     game.ships[who].gameover({"You were banned for" : reason, "Kills": game.ships[who].custom.Kills, "Deaths": game.ships[who].custom.Deaths});
-    for (let ship of game.ships) AddText(ship, "Player: " + game.ships[who].name + " has been banned.", "rgb(255,55,55)", true);
+    for (let ship of game.ships) alert(ship, "Player: " + game.ships[who].name, "has been banned.", "rgba(255,55,55,0.8)");
     game.modding.terminal.echo("Player: " + game.ships[who].name + ", index: " + who + " Has successfully been banned\n" + "\n❗INFO Type: banlist, to see all of the banned players.\n");
   } else modding.terminal.error(new Error("\n" + "The index you used doesn't exist, try again with a valid index\n"));
 };
@@ -909,6 +909,7 @@ unban = function(index) {
   if (BannedList.includes(BannedList[index])) {
     BannedListReasons.splice(index, 1);
     BannedList.splice(index, 1);
+    for (let ship of game.ships) alert(ship, "Player: " + BannedList[index], "has been unbanned.", "rgba(55,255,55,0.8)");
     game.modding.terminal.echo("Player: " + BannedList[index] + ", reason: " + BannedListReasons[index] + ", Has successfully been unbanned\n");
   } else modding.terminal.error(new Error("\n" + "You gave a wrong index or the players that you're trying to unban isn't banned or got unbanned before.\n"));
 };
@@ -961,8 +962,8 @@ tpall = function(x, y) {
 
 // Announce command
 say = function(text = "") {
-  for (i = 0; i < game.ships.length; i++) {
-    game.ships[i].setUIComponent({
+  for (let ship of game.ships) {
+    ship.setUIComponent({
       id: "announceText",
       position: [20, 75, 50, 25],
       clickable: false,
