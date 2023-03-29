@@ -370,7 +370,7 @@ set(0,601,0,24354321)
 
 You don't need to put `66666666` as stats to max your ship, the default value is `88888888` which means you ship get totally maxed.
 
-It would look like this with using the defauld value:
+It would look like this using the default values:
 
 ```js
 set(0,601)
