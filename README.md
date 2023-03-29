@@ -397,7 +397,7 @@ set(0,601)
 | `ban()` | To ban someone from the game, works like the `kick()` command | ban(**player index**,"**reason**") | `ban(1)` or `ban(1,"You cannot rejoin now ;)")` |
 | `unban()` | To unban someone from the game | unban(**player index**) | `unban(1)` |
 | `banlist` | shows a list of all the banned players and their INDEX to unban them | -- | `banlist` |
-| `admin()` | allows you to give the admin power to a player ingame | `admin(**player index**, **duration (in seconds)**)` | `admin(0)` or `admin(0, 20)` |
+| `admin()` | allows you to give the admin power to a player ingame | admin(**player index**, **duration (in seconds)**) | `admin(0)` or `admin(0, 20)` |
 
 ### Basic Commands
 
