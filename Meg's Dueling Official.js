@@ -11,6 +11,7 @@ What has been fixed/added from v1.3.6:
     - adding a custom color on your name on the leaderboard.
   - Optimized even more
   - removed usless parts from the code.
+  - minor changes in the overall code
 
 See the documentation on the github page for more information about the mod and his integrated commands.
 link : https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md
@@ -40,7 +41,6 @@ const Enable_AFK = true; // allow AFK | true / false
 const AFK_Cooldown = 30;
 
 // Other
-var admin_number = 1; // from 1 to infinity
 var always_pickup_gems = true; // always pickup gems | true / false
 var BannedList = [];
 var BannedListReasons = [];
@@ -96,7 +96,7 @@ const vocabulary = [
   {text: "Lag", icon: "\u0069", key: "J"}
 ];
 
-MapOpen();
+if (!game.custom.launched) MapOpen();
 const music = ["civilisation.mp3", "procedurality.mp3", "argon.mp3", "crystals.mp3", "red_mist.mp3", "warp_drive.mp3"];
 this.options = {
   map_name: "Meg's Dueling",
@@ -327,7 +327,7 @@ this.tick = function(game) {
   if (game.step % 60 === 0) {
     updateScoreboard(game);
     for (let ship of game.ships) {
-      AFKship(ship);
+      if (Enable_AFK) AFKship(ship);
       if (!BannedList.includes(ship.name)) {
         if (!ship.custom.init) {
           ship.custom.init = true;
@@ -343,11 +343,9 @@ this.tick = function(game) {
         }
       }
     }
-    for (let i = 0; i<admin_number; i++) {
-      if (!game.ships[i].custom.admin) {
-        game.ships[i].custom.admin = true;
-        game.ships[i].setUIComponent(Admin);
-      }
+    if (!game.ships[i].custom.admin) {
+      game.ships[i].custom.admin = true;
+      game.ships[i].setUIComponent(Admin);
     }
   }
   if (game.step % 20 === 0) {
@@ -447,6 +445,7 @@ function setAPC(ship) {
 }
 
 function MapOpen() {
+  game.custom.launched = true;
   game.modding.terminal.echo("[[bg;dodgerblue;]\n - Meg's Dueling - ]\n[[i;Cyan;]\nVersion: "+mod_version+"\nAll credits goes to Megalodon#0001\n]");
   game.modding.terminal.echo("[[bg;Gold;]Support Server & documentation:]");
   game.modding.terminal.echo("https://discord.gg/KXvCq4N\nhttps://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md\n");
@@ -485,17 +484,11 @@ function format_time(time) {
   } else return "0:00";
 }
 
-function getIndex(ship) {
-  for (let i = 0; i<game.ships.length; i++) {
-    if (game.ships[i].name == ship.name) return i;
-  }
-}
-
 function wrap_ship(ship, game) {
-  if (!ship.custom.spectator) spectator_ship(ship);
-  else if (!ship.custom.wrap || game.step >= ship.custom.wrap) {
+  if (!ship.custom.wrap || game.step >= ship.custom.wrap) {
     ship.custom.wrap = game.step + wrap_delay * 60;
     if (game.ships.length > 1) {
+      if (!ship.custom.spectator) spectator_ship(ship);
       ship.custom.warpIndex = (ship.custom.warpIndex + 1) % game.ships.length;
       game.ships.indexOf(ship) === ship.custom.warpIndex ? (ship.custom.warpIndex = (ship.custom.warpIndex + 1) % game.ships.length) : undefined;
       ship.set({x: game.ships[ship.custom.warpIndex].x, y: game.ships[ship.custom.warpIndex].y, vx: 0, vy: 0});
@@ -700,9 +693,8 @@ this.event = function(event, game) {
     case "ui_component_clicked":
       var component = event.id;
       if (component == "using_subspace") {
-        ship.set({idle: true});
-        ship.custom.IDidle = true;
-        ship.gameover({"You have been caugth": "using Subspace"});
+        idle(game.ships.indexOf(ship), false);
+        ship.gameover({"Subspace isn't allowed":"in Meg's Dueling"});
         break;
       }
       if (ship.custom.ISidle !== true) {
@@ -721,8 +713,7 @@ this.event = function(event, game) {
       break;
     case "ship_spawned":
       if (BannedList.includes(ship.name)) {
-        ship.set({idle: true});
-        ship.custom.IDidle = true;
+        idle(game.ships.indexOf(ship), false);
         ship.gameover({"You are banned from this game": "sorry."});
       } else {
         const {x = 0, y = 0} = ship.custom;
@@ -782,18 +773,18 @@ AddObject("BETAlogo", BETAlogo, -36, -1.25, 18, 9, 0);
 // Commands
 // Moderation commands
 game.modding.commands.info = function() {
-  game.modding.terminal.echo("Total amount of aliens: "+game.aliens.length)
-  game.modding.terminal.echo("Total amount of asteroids: "+game.asteroids.length)
-  game.modding.terminal.echo("Total amount of players: "+game.ships.length+"\n")
+  game.modding.terminal.echo("Total amount of aliens: "+game.aliens.length);
+  game.modding.terminal.echo("Total amount of asteroids: "+game.asteroids.length);
+  game.modding.terminal.echo("Total amount of players: "+game.ships.length+"\n");
   if (BannedList.length === 0) names = "None";
   else names = BannedList;
-  game.modding.terminal.echo("Banned players: " + names)
+  game.modding.terminal.echo("Banned players: " + names);
   game.modding.terminal.echo("\nPlayer's and their index's:\n");
-  for (let i = 0; i < game.ships.length; i++) game.modding.terminal.echo("Index: " + i + ", Name: " + game.ships[i].name + ", Ship type: " + game.ships[i].type + "\nCoordinates: X: " + game.ships[i].x + ", Y: " + game.ships[i].y)
+  for (let i = 0; i < game.ships.length; i++) game.modding.terminal.echo("Index: " + i + ", Name: " + game.ships[i].name + ", Ship type: " + game.ships[i].type + "\nCoordinates: X: " + Math.round(game.ships[i].x) + ", Y: " + Math.round(game.ships[i].y));
   game.modding.terminal.echo("\n");
 };
 
-idle = function(who, txt) {
+idle = function(who, txt = true) {
   if (game.ships[who].custom.ISidle === true) {
     modding.terminal.error(new Error("\n" + game.ships[who].name + ", is already frozen.\n"));
   } else {
@@ -801,7 +792,7 @@ idle = function(who, txt) {
     Exit_screen(game.ships[who]);
     game.ships[who].custom.ISidle = true;
     if (game.ships[who].type !== 191) spectator_ship(game.ships[who])
-    if (!txt) game.modding.terminal.echo("the player: " + game.ships[who].name + ", index: " + who + " has been freezed\n❗INFO Type unidle(index), to unfreeze a player.\n")
+    if (txt) game.modding.terminal.echo("the player: " + game.ships[who].name + ", index: " + who + " has been freezed\n❗INFO Type unidle(index), to unfreeze a player.\n")
   }
 };
 
@@ -816,7 +807,7 @@ unidle = function(who) {
 kick = function(who, reason = "Disturbing duels") {
   if (game.ships.includes(game.ships[who])) {
     for (let ship of game.ships) alert(ship, "Player: " + game.ships[who].name, "has been kicked.", "rgba(255,155,55,0.8)");
-    idle(who, true);
+    idle(who, false);
     game.ships[who].gameover({"You were kicked for" : reason, "Kills": game.ships[who].custom.Kills, "Deaths": game.ships[who].custom.Deaths});
     game.modding.terminal.echo("Player: " + game.ships[who].name + ", index: " + who + " Has successfully been kicked\n");
   } else modding.terminal.error(new Error("\n" + "The index you used doesn't exist, try again with a valid index\n"));
@@ -826,7 +817,7 @@ ban = function(who, reason = "Disturbing duels") {
   if (game.ships.includes(game.ships[who])) {
     BannedList.push(game.ships[who].name);
     BannedListReasons.push(reason);
-    idle(who, true);
+    idle(who, false);
     game.ships[who].gameover({"You were banned for" : reason, "Kills": game.ships[who].custom.Kills, "Deaths": game.ships[who].custom.Deaths});
     for (let ship of game.ships) alert(ship, "Player: " + game.ships[who].name, "has been banned.", "rgba(255,55,55,0.8)");
     game.modding.terminal.echo("Player: " + game.ships[who].name + ", index: " + who + " Has successfully been banned\n" + "\n❗INFO Type: banlist, to see all of the banned players.\n");
@@ -851,7 +842,7 @@ unban = function(index) {
 
 // General commands
 admin = function(who, duration=undefined) {
-  if (who >= admin_number) {
+  if (!game.ships[who].custom.admin) {
     clearTimeout(game.ships[who].custom.adm);
     if (game.ships[who].custom.admin) {
       game.ships[who].setUIComponent({id: "Admin", visible: false});
@@ -887,11 +878,14 @@ game.modding.commands.apc = function() {
   }
 };
 
-set = function(who, what, crystals, stats = 88888888) {
-  if (crystals === undefined) crystals = 20 * Math.trunc(what / 100) * Math.trunc(what / 100);
-  game.ships[who].set({type: what, crystals: crystals, stats: stats, shield: 999});
-  game.modding.terminal.echo("Player: " + game.ships[who].name + ", index: " + who + " Has successfully been given:");
-  game.modding.terminal.echo("Type: " + what + ", Crystals: " + crystals + ", Stats: " + stats + "\n");
+set = function(who, what, max_crystals, max_stats){
+  if (game.ships[who].custom.Spectator) modding.terminal.error(new Error("\n" + "This player is on the spectator mode and cannot get switched to another ship\n"));
+  else {
+    if (!max_stats && max_stats !== 0) if (Math.trunc(what / 100) < 7)  max_stats = 11111111 * Math.trunc(what / 100); else max_stats = 0; else max_stats;
+    if (!max_crystals) max_crystals = 20 * Math.trunc(what / 100) * Math.trunc(what / 100); else max_crystals;
+    game.ships[who].set({type: what, crystals: max_crystals, stats: max_stats, shield: 999, collider: true});
+    game.modding.terminal.echo(`Player: ${game.ships[who].name}, index: ${who} Has successfully been given:\nShip Type: ${what}, Crystals: ${max_crystals}, Stats: ${max_stats}\n`);
+  }
 };
 
 // Announce command
