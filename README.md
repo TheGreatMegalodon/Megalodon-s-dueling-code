@@ -1,5 +1,3 @@
-# ⚠️ Using the mod isn't safe, a major bug that has been discovered and is currently getting fixed.
-
 <div align="center">
   <br />
   <p>
@@ -11,7 +9,7 @@
 # Meg's dueling Documentation
 
 ### Mod Version: 
-* [1.3.6](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Official.js)
+* [1.3.7](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Official.js)
 * Smallest [Dueling Mod](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Unofficial%20Meg's%20Dueling.js)
 
 ### Mod creator: 
@@ -93,7 +91,7 @@ First of all you have to remove any code, like in this image:
 </div>
 
 Next you will have to copy the mod given bellow:
-* [1.3.6](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Official.js) (Official Version)
+* [1.3.7 (click here)](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Official.js) (Official Version)
 
 Then just simply paste it in your Modding tab, press Start..
 
