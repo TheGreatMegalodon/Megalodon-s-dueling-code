@@ -1,26 +1,24 @@
 const mod_version =
-"v1.3.6";
+"v1.3.7";
 
 /*
  |  Mod creator : Megalodon
  |  Coding support : Lotus, Bhpsngum
 
-What has been fixed/added from v1.3.5: 
-  - Removed 3 commands:
-    - tpall / tpto / tp
-  - Created 1 new command:
-    - Admin command (allows you to give the admin power to a play ingame)
-  - You can now choose how many players will have the admin permission when entering the game.
-  - More optimiaztion.
-  - Created new function and Optimized Old function.
-  - Overall mod works better
-  - Admin ships reworked
-  - You will now always see yourself on the leaderboard
-  - No more issues on the stats button!
+What has been fixed/added from v1.3.6: 
+  - Fixed the AFK checker, it should normally work fine..
+  - Added costomizations options
+    - adding a custom color on your name on the leaderboard.
+  - Optimized even more
+  - removed usless parts from the code.
 
 See the documentation on the github page for more information about the mod and his integrated commands.
 link : https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md
 */
+
+// LeaderBoard Feature: (leave thoses variables empty if you don't want a special color on the leaderboard)
+var YourIGN_Name = ""; // Put here your "in Game Name"!
+var YourIGN_Color = ""; // Put here your "Favorite Color" using a Hex code (they usally look like this: #6a65ff)!
 
 // Ship Codes
 const Ship_Codes = [101, 201, 202, 301, 302, 303, 304, 401, 402, 403, 404, 405, 406, 501, 502, 503, 504, 505, 506, 507, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615];
@@ -39,10 +37,7 @@ const Mb_delay = 2;
 
 // AFK settings
 const Enable_AFK = true; // allow AFK | true / false
-const AFK_speed = 10e-2;
-const AFK_rotation = 0.3;
-const AFK_Pretime = 10;
-const AFK_Cooldown = 20;
+const AFK_Cooldown = 30;
 
 // Other
 var admin_number = 1; // from 1 to infinity
@@ -368,53 +363,35 @@ this.tick = function(game) {
   }
 };
 
-function AFKship(ship) {
+async function AFKship(ship) {
   switch (ship.custom.afk_main) {
-    case 0: reset_AFK(ship); break;
+    case 0: ship.custom.TimeAFK = AFK_Cooldown; break;
     case 1:
-      if (ship.alive === true) {
-        checkConstantSpeed_AFK(ship);
-        checkRotation_AFK(ship);
-        if (ship.custom.point1.x === ship.custom.point2.x && ship.custom.point2.x === ship.custom.point3.x || Math.abs(ship.custom.r1 - ship.custom.r2) <= AFK_rotation) {
-          ship.custom.AFK_Cooldown_time--;
-          if (ship.custom.AFK_Cooldown_time <= 0) {
-            alert(ship, "Ship is going AFK in:", ship.custom.TimeS--,"rgba(255,55,55,0.8)", 1500);
-            if (ship.custom.TimeS <= -1) spectator_ship(ship), ship.custom.isAFK = true;
-          }
-        } else reset_AFK(ship);
-      } else reset_AFK(ship);
+      if (ship.alive) {
+        ship.custom.TimeAFK--;
+        if (ship.custom.TimeAFK <= 10) {
+          ship.custom.r1 = ship.r;
+          await new Promise(resolve => setTimeout(resolve, 200));
+          ship.custom.r2 = ship.r;
+          if (Math.abs(ship.custom.r1 - ship.custom.r2) <= 2e-5) {
+            alert(ship, "Going AFK in", ship.custom.TimeAFK,"rgba(255,55,55,0.8)", 1500);
+            if (ship.custom.TimeAFK <= 0) {
+              spectator_ship(ship);
+              ship.custom.isAFK = true;
+            }
+          } else ship.custom.TimeAFK = AFK_Cooldown;
+        }
+      } else ship.custom.TimeAFK = AFK_Cooldown;
       break;
   }
-}
-
-function reset_AFK(ship) {
-  ship.custom.TimeS = AFK_Pretime;
-  ship.custom.AFK_Cooldown_time = AFK_Cooldown;
-}
-
-function checkConstantSpeed_AFK(ship) {
-  ship.custom.point1 = {x: ship.vx, y: ship.vy};
-  setTimeout(() => {
-    ship.custom.point2 = {x: ship.vx, y: ship.vy}, 
-    setTimeout(() => {ship.custom.point3 = {x: ship.vx, y: ship.vy}}, 200);
-  }, 200);
-}
-
-function checkRotation_AFK(ship) {
-  ship.custom.r1 = ship.r;
-  setTimeout(() => {ship.custom.r2 = ship.r}, 200);
 }
 
 function updateScoreboard(game) {
   let sorted_ships_KDratio = [...game.ships].sort((a, b) => (b.custom.Kills - b.custom.Deaths) - (a.custom.Kills - a.custom.Deaths)).slice(0, 8);
   for (let ship of game.ships) {
-    if (["Megalodon", "ҒꝚ▸Megalodon"].includes(ship.name)) {
-      ship.custom.C_color = "#005cb9";
-    } else {
-      if (ship.id === sorted_ships_KDratio[0].id && ship.custom.Kills >= 1) ship.custom.C_color = "rgb(255, 215, 0)";
-      else ship.custom.C_color = "rgb(255, 255, 255)";
-      if (ship.custom.isAFK) ship.custom.C_color = "rgb(111,111,111)";
-    }
+    if (ship.name == YourIGN_Name) ship.custom.customColor = YourIGN_Color;
+    else if (["Megalodon", "ҒꝚ▸Megalodon"].includes(ship.name)) ship.custom.customColor = "#005cb9";
+    else ship.custom.customColor = ship.custom.isAFK ? "rgb(200,111,111)" : ship.custom.spectator ? "rgb(155,155,155)" : (ship.id === sorted_ships_KDratio[0].id && ship.custom.Kills >= 1) ? "rgb(255, 215, 0)" : "rgb(255, 255, 255)";
   }
   let Scoreboard = {
     id: "scoreboard",
@@ -436,9 +413,9 @@ function updateScoreboard(game) {
       {
         type: "text", position: [66, 1, 29, 8.5], value: "K/D", color: "rgb(255,255,255)", align: "right"
       },
-      ...(sorted_ships_KDratio).map((ship, i) => [
+      ...sorted_ships_KDratio.map((ship, i) => [
         {
-          type: "player", index: i, position: [0, 11.25 * i + 11, 75.5, 9.25], id: sorted_ships_KDratio[i].id, color: ship.custom.C_color, value: "", align: "left"
+          type: "player", index: i, position: [0, 11.25 * i + 11, 75.5, 9.25], id: sorted_ships_KDratio[i].id, color: ship.custom.customColor, value: "", align: "left"
         },
         {
           type: "text", position: [74, 11.25 * i + 11.5, 29, 8.5], value: sorted_ships_KDratio[i].custom.Kills + "/" + ship.custom.Deaths, color: "rgb(255,255,255)", align: "center"
@@ -453,7 +430,7 @@ function updateScoreboard(game) {
     if (index == -1) {
       let last = Scoreboard.components.at(-2);
       last.id = ship.id;
-      last.color = ship.custom.C_color;
+      last.color = ship.custom.customColor;
       Scoreboard.components.at(-1).value = ship.custom.Kills + "/" + ship.custom.Deaths;
       index = Scoreboard.components.length - 2;
     }
@@ -508,19 +485,22 @@ function format_time(time) {
   } else return "0:00";
 }
 
+function getIndex(ship) {
+  for (let i = 0; i<game.ships.length; i++) {
+    if (game.ships[i].name == ship.name) return i;
+  }
+}
+
 function wrap_ship(ship, game) {
   if (!ship.custom.spectator) spectator_ship(ship);
   else if (!ship.custom.wrap || game.step >= ship.custom.wrap) {
     ship.custom.wrap = game.step + wrap_delay * 60;
     if (game.ships.length > 1) {
-      if (ship.custom.warpIndex >= game.ships.length-1) ship.custom.warpIndex = 0;
-      else ship.custom.warpIndex++;
-      if (ship.custom.warpIndex === game.ships.indexOf(ship)) {
-        if (ship.custom.warpIndex >= game.ships.length-1) ship.custom.warpIndex = 0;
-        else ship.custom.warpIndex++;
-      }
-    } else alert(ship, "Only one player is in the game.");
-    ship.set({x: game.ships[ship.custom.warpIndex].x, y: game.ships[ship.custom.warpIndex].y, vx: 0, vy: 0});
+      ship.custom.warpIndex = (ship.custom.warpIndex + 1) % game.ships.length;
+      game.ships.indexOf(ship) === ship.custom.warpIndex ? (ship.custom.warpIndex = (ship.custom.warpIndex + 1) % game.ships.length) : undefined;
+      ship.set({x: game.ships[ship.custom.warpIndex].x, y: game.ships[ship.custom.warpIndex].y, vx: 0, vy: 0});
+      alert(ship, `You have been teleported to ${game.ships[ship.custom.warpIndex].name}`, "", "rgba(55,255,55,0.8)");
+    } else alert(ship, "You are the only player in this game.");
   } else alert(ship, "Hold up! You're clicking too fast!");
 }
 
@@ -777,7 +757,7 @@ var MapCenter = {
 var ModVersion = {
   id: "ModVersion",
   obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive: "https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/v1.3.6_Img.png",
+  emissive: "https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/v1.3.7_Img.png",
 };
 var BETAlogo = {
   id: "BETAlogo",
@@ -796,7 +776,7 @@ AddObject = function(Name, ID, x, y, sx, sy, rz) {
 };
 
 AddObject("MapCenter", MapCenter, -1, 0, 95, 52, 0);
-AddObject("ModVersion", ModVersion, 21, -8.5, 20, 6, -0.30);
+AddObject("ModVersion", ModVersion, 21, -8.5, 24, 22, -0.30);
 AddObject("BETAlogo", BETAlogo, -36, -1.25, 18, 9, 0);
 
 // Commands
