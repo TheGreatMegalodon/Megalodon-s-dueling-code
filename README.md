@@ -1,5 +1,5 @@
 # ⚠️ Using the mod isn't safe, a major bug has been discovered.
-# The new unbugged version will arrive soon..
+## The new unbugged version will arrive soon..
 
 <div align="center">
   <br />
