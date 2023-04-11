@@ -1,4 +1,4 @@
-# ⚠️ Using the mod isn't safe, a major bug that has been discovered is currently getting fixed.
+# ⚠️ Using the mod isn't safe, a major bug that has been discovered and is currently getting fixed.
 
 <div align="center">
   <br />
