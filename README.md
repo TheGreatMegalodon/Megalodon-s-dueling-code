@@ -274,21 +274,6 @@ Player: Nébuleuse, reason: Being annoying, and Disturbing duels, Has successful
 ```
 Well done! you now know how to "Ban" and "Unban" someone from Meg's Dueling Starblast Custom Server!
 
-### GameOver command
-Its by far one of the most easiest command to use. All you need to know is the logic behind the code, i made it so when you type in the console:
-```js
-> gameover(1)
-> █
-```
-A timer of 5 minutes starts, and the end of thoses 5 minutes the game will kick everyone and close the game.
-
-**But** if you feel like you can run the mod a little more, then just do in the console:
-```js
-> gameover(0)
-> █
-```
-it will then stop and reset the timer, and you will be able to continue your duels like nothing has ever hapened.
-
 ### SET Command
 
 #### Ship Type
