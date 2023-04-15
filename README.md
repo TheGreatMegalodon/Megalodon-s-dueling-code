@@ -5,7 +5,7 @@
   </p>
 </div>
 
-# [Documentation](https://megalodon-dueling.notion.site/14fded21b2e648039ed441fc13fb7431?v=5fad1d643458413bbc09149b9cf8c6e4)
+# Documentation [(Click here)](https://megalodon-dueling.notion.site/14fded21b2e648039ed441fc13fb7431?v=5fad1d643458413bbc09149b9cf8c6e4)
 
 ### Mod Version: 
 * [1.3.7](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Official.js) Most Popular
