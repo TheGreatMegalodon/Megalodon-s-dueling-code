@@ -8,8 +8,8 @@
 # Meg's dueling Documentation
 
 ### Mod Version: 
-* [1.3.7](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Official.js)
-* Smallest [Dueling Mod](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Unofficial%20Meg's%20Dueling.js)
+* [1.3.7](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Official.js) Most Popular
+* [1.0.0](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Unofficial%20Meg's%20Dueling.js) Smallest Dueling mod
 
 ### Mod creator: 
 * **Megalodon**
