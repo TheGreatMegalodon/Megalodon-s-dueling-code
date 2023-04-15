@@ -5,14 +5,14 @@
   </p>
 </div>
 
-## Mod Version: 
+### Mod Version: 
 * [1.3.7](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Official.js) Most Popular
 * [1.0.0](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Unofficial%20Meg's%20Dueling.js) Smallest Dueling mod
 
-## Mod creator: 
+### Mod creator: 
 * **Megalodon**
 
-## Coding support:
+### Coding support:
 * **Lotus**
 * **Bhpsngum**
 
