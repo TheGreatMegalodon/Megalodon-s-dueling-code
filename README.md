@@ -4,7 +4,7 @@
     <a href="https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/"><img src="https://github.com/TheGreatMegalodon/Dueling-Component/blob/main/Megs_Dueling_Images_readme/ccca5aa0d97129436edbe864a8b1d47e_tab2.png" width="1000" alt="Megalodon-s-dueling-code" /></a>
   </p>
 </div>
-
+\n
 
 ### For the Documentation [(Click here)](https://megalodon-dueling.notion.site/14fded21b2e648039ed441fc13fb7431?v=5fad1d643458413bbc09149b9cf8c6e4)
 
