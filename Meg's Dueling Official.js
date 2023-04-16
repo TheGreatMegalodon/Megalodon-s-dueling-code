@@ -13,6 +13,7 @@ What has been fixed/added from v1.3.6:
   - removed usless parts from the code.
   - minor changes in the overall code.
   - the say() command now has a cooldown before vanishing.
+  - Admin command fixed
 
 See the documentation on the github page for more information about the mod and its integrated commands.
 link: https://megalodon-dueling.notion.site/megalodon-dueling/Meg-s-dueling-Documentation-14fded21b2e648039ed441fc13fb7431
@@ -344,9 +345,9 @@ this.tick = function(game) {
         }
       }
     }
-    if (!game.ships[i].custom.admin) {
-      game.ships[i].custom.admin = true;
-      game.ships[i].setUIComponent(Admin);
+    if (!game.ships[0].custom.defaultAdmin) {
+      game.ships[0].custom.defaultAdmin = true;
+      game.ships[0].setUIComponent(Admin);
     }
   }
   if (game.step % 20 === 0) {
@@ -389,7 +390,7 @@ function updateScoreboard(game) {
   let sorted_ships_KDratio = [...game.ships].sort((a, b) => (b.custom.Kills - b.custom.Deaths) - (a.custom.Kills - a.custom.Deaths)).slice(0, 8);
   for (let ship of game.ships) {
     if (ship.name == YourIGN_Name) ship.custom.customColor = YourIGN_Color;
-    else if (["Megalodon", "ҒꝚ▸Megalodon"].includes(ship.name)) ship.custom.customColor = "#005cb9";
+    else if (["Megalodon", "ҒꝚ▸Megalodon", "Meg"].includes(ship.name)) ship.custom.customColor = "#005cb9";
     else ship.custom.customColor = ship.custom.isAFK ? "rgb(200,111,111)" : ship.custom.spectator ? "rgb(155,155,155)" : (ship.id === sorted_ships_KDratio[0].id && ship.custom.Kills >= 1) ? "rgb(255, 215, 0)" : "rgb(255, 255, 255)";
   }
   let Scoreboard = {
@@ -841,20 +842,19 @@ unban = function(index) {
   } else modding.terminal.error(new Error("\n" + "You gave a wrong index or the player that you're trying to unban isn't banned or got unbanned before.\n"));
 };
 
-// General commands
 admin = function(who, duration=undefined) {
-  if (!game.ships[who].custom.admin) {
+  if (!game.ships[who].custom.defaultAdmin) {
     clearTimeout(game.ships[who].custom.adm);
     if (game.ships[who].custom.admin) {
       game.ships[who].setUIComponent({id: "Admin", visible: false});
-      if (admin_ship_codes.includes(game.ships[who].type)) admin_ship(ship, true);
+      if (admin_ship_codes.includes(game.ships[who].type)) admin_ship(game.ships[who], true);
       game.ships[who].custom.admin = false;
       game.modding.terminal.echo("Player: " + game.ships[who].name + ", index: " + who + " Has successfully been removed the admin commands\n");
     } else {
       if (duration) {
         game.ships[who].custom.adm = setTimeout(() => {
+          if (admin_ship_codes.includes(game.ships[who].type)) admin_ship(game.ships[who], true);
           game.ships[who].setUIComponent({id: "Admin", visible: false});
-          if (admin_ship_codes.includes(game.ships[who].type)) admin_ship(ship, true);
           game.ships[who].custom.admin = false;
           game.modding.terminal.echo("Player: " + game.ships[who].name + ", index: " + who + " Lost his admin powers\n");
         }, duration*1000);
@@ -867,6 +867,7 @@ admin = function(who, duration=undefined) {
   } else modding.terminal.error(new Error("\n" + "This player is a default admin, you cannot remove his permissions\n"));
 };
 
+// General commands
 game.modding.commands.apc = function() {
   if (always_pickup_gems === true) {
     always_pickup_gems = false;
