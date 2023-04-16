@@ -15,7 +15,7 @@ What has been fixed/added from v1.3.6:
   - the say() command now has a cooldown before vanishing.
 
 See the documentation on the github page for more information about the mod and his integrated commands.
-link : https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md
+link: https://megalodon-dueling.notion.site/megalodon-dueling/Meg-s-dueling-Documentation-14fded21b2e648039ed441fc13fb7431
 */
 
 // LeaderBoard Feature: (leave thoses variables empty if you don't want a special color on the leaderboard)
@@ -449,7 +449,7 @@ function MapOpen() {
   game.custom.launched = true;
   game.modding.terminal.echo("[[bg;dodgerblue;]\n - Meg's Dueling - ]\n[[i;Cyan;]\nVersion: "+mod_version+"\nAll credits goes to Megalodon#0001\n]");
   game.modding.terminal.echo("[[bg;Gold;]Support Server & documentation:]");
-  game.modding.terminal.echo("https://discord.gg/KXvCq4N\nhttps://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md\n");
+  game.modding.terminal.echo("https://discord.gg/KXvCq4N\nhttps://megalodon-dueling.notion.site/megalodon-dueling/Meg-s-dueling-Documentation-14fded21b2e648039ed441fc13fb7431");
 }
 
 function alert(ship, Value1, Value2 = "", Color = "rgba(255,255,255,0.8)", time = 2500) {
