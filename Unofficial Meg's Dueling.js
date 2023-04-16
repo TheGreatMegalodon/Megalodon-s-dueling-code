@@ -1,4 +1,8 @@
-// classic Dueling by: Megalodon
+const Version = 
+      1.0.0;
+/*
+Small Dueling Mod by: Megalodon
+*/
 
 var regen_button = {
   id: "regen",
