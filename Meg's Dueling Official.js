@@ -6,12 +6,13 @@ const mod_version =
  |  Coding support : Lotus, Bhpsngum
 
 What has been fixed/added from v1.3.6: 
-  - Fixed the AFK checker, it should normally work fine..
-  - Added costomizations options
+  - Fixed the AFK checker, it should normally work fine..!
+  - Added costomizations options.
     - adding a custom color on your name on the leaderboard.
-  - Optimized even more
+  - Optimized even more.
   - removed usless parts from the code.
-  - minor changes in the overall code
+  - minor changes in the overall code.
+  - the say() command now has a cooldown before vanishing.
 
 See the documentation on the github page for more information about the mod and his integrated commands.
 link : https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md
@@ -889,8 +890,9 @@ set = function(who, what, max_crystals, max_stats){
 };
 
 // Announce command
-say = function(text = "") {
+say = function(text = "", duration = 4) {
   for (let ship of game.ships) {
+    clearTimeout(ship.custom.gameAnnouncement);
     ship.setUIComponent({
       id: "announceText",
       position: [20, 75, 50, 25],
@@ -902,6 +904,12 @@ say = function(text = "") {
         }
       ]
     });
+    ship.custom.gameAnnouncement = setTimeout(() => {
+      ship.setUIComponent({
+        id: "announceText", 
+        visible: false
+      });
+    }, duration*1000);
   }
-  game.modding.terminal.echo("Text: " + text + " applyed\n");
+  game.modding.terminal.echo(`Text: ${text} applyed\n`);
 };
