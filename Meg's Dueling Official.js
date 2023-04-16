@@ -14,7 +14,7 @@ What has been fixed/added from v1.3.6:
   - minor changes in the overall code.
   - the say() command now has a cooldown before vanishing.
 
-See the documentation on the github page for more information about the mod and his integrated commands.
+See the documentation on the github page for more information about the mod and its integrated commands.
 link: https://megalodon-dueling.notion.site/megalodon-dueling/Meg-s-dueling-Documentation-14fded21b2e648039ed441fc13fb7431
 */
 
