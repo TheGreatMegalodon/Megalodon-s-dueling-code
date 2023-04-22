@@ -51,11 +51,6 @@ const getWarning = false; // Get a warning everytime a suspicious player joins t
 const Enable_antiCheat = true; // Changing the value while the mod is running isn't recomanded.
 const Enable_AFK = true; // Allow AFK | true / false
 const AFK_Cooldown = 40;
-
-// Other
-var always_pickup_crystals = true; // Always pickup crystals | true / false.
-var BannedList = [];
-var BannedListReasons = [];
 const anchorMenu = { 
   anchor: {x: 0, y: 0},
   look: {
@@ -63,6 +58,11 @@ const anchorMenu = {
     opacity: "0.30"
   }
 };
+
+// Other
+var always_pickup_crystals = true; // Always pickup crystals | true / false.
+var BannedList = [];
+var BannedListReasons = [];
 
 // Admin
 const Spectator_191 = '{"name":"Spectator","level":1.9,"model":1,"size":0.025,"zoom":0.075,"specs":{"shield":{"capacity":[1e-30,1e-30],"reload":[1000,1000]},"generator":{"capacity":[1e-30,1e-30],"reload":[1,1]},"ship":{"mass":1,"speed":[200,200],"rotation":[1000,1000],"acceleration":[1000,1000]}},"bodies":{"face":{"section_segments":100,"angle":0,"offset":{"x":0,"y":0,"z":0},"position":{"x":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"y":[-2,-2,2,2],"z":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"width":[0,1,1,0],"height":[0,1,1,0],"vertical":true,"texture":[6]}},"typespec":{"name":"Spectator","level":1,"model":1,"code":101,"specs":{"shield":{"capacity":[1e-30,1e-30],"reload":[1000,1000]},"generator":{"capacity":[1e-30,1e-30],"reload":[1,1]},"ship":{"mass":1,"speed":[200,200],"rotation":[1000,1000],"acceleration":[1000,1000]}},"shape":[0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001],"lasers":[],"radius":0.001}}';
@@ -119,8 +119,8 @@ const vocabulary = [
 ];
 
 if (!game.custom.launched) MapOpen();
-var music = ["civilisation.mp3", "procedurality.mp3", "argon.mp3", "crystals.mp3", "red_mist.mp3", "warp_drive.mp3"];
-var musicApplyed = music[~~(Math.random() * music.length)];
+const music = ["civilisation.mp3", "procedurality.mp3", "argon.mp3", "crystals.mp3", "red_mist.mp3", "warp_drive.mp3"];
+const musicApplyed = music[~~(Math.random() * music.length)];
 this.options = {
   map_name: "Meg's Dueling",
   max_players: 69, // :D haha funny
@@ -136,7 +136,7 @@ this.options = {
 };
 
 // Admin buttons
-const Admin = {
+var Admin = {
   id: "Admin",
   position: [21, 0, 7.2, 4],
   clickable: true,
@@ -149,7 +149,7 @@ const Admin = {
 };
 
 // Buttons
-const Spectate = {
+var Spectate = {
   id: "Spectate",
   position: [72.2, 4.8, 7.6, 4],
   clickable: true,
@@ -161,7 +161,7 @@ const Spectate = {
   ]
 };
 
-const Regen = {
+var Regen = {
   id: "Regen",
   position: [72.2, 0, 7.6, 4],
   clickable: true,
@@ -173,7 +173,7 @@ const Regen = {
   ]
 };
 
-const Menu_ = {
+var Menu_ = {
   id: "Menu_",
   position: [64.1, 0, 7.6, 4],
   clickable: true,
@@ -186,7 +186,7 @@ const Menu_ = {
 };
 
 // Switch Screen
-const Square = {
+var Square = {
   id: "Square",
   position: [30+anchorMenu.anchor.x,30+anchorMenu.anchor.y,40,40],
   clickable: false,
@@ -199,7 +199,7 @@ const Square = {
   ]
 };
 
-const next_ship = {
+var next_ship = {
   id: "next_ship",
   position: [31+anchorMenu.anchor.x, 37.5+anchorMenu.anchor.y, 10, 5.5],
   clickable: true,
@@ -211,7 +211,7 @@ const next_ship = {
   ]
 };
 
-const previous_ship = {
+var previous_ship = {
   id: "previous_ship",
   position: [59+anchorMenu.anchor.x, 37.5+anchorMenu.anchor.y, 10, 5.5],
   clickable: true,
@@ -223,7 +223,7 @@ const previous_ship = {
   ]
 };
 
-const Tp_Spawn = {
+var Tp_Spawn = {
   id: "Tp_Spawn",
   position: [59+anchorMenu.anchor.x, 45+anchorMenu.anchor.y, 10, 5.5],
   clickable: true,
@@ -235,7 +235,7 @@ const Tp_Spawn = {
   ]
 };
 
-const Stats = {
+var Stats = {
   id: "Stats",
   position: [31+anchorMenu.anchor.x, 45+anchorMenu.anchor.y, 10, 5.5],
   clickable: true,
@@ -247,7 +247,7 @@ const Stats = {
   ]
 };
 
-const Wrap = {
+var Wrap = {
   id: "Wrap",
   position: [31+anchorMenu.anchor.x, 52.5+anchorMenu.anchor.y, 10, 5.5],
   clickable: true,
@@ -260,7 +260,7 @@ const Wrap = {
 };
 
 //Hide buttons
-const HideShow_Buttons = {
+var HideShow_Buttons = {
   id: "HideShow_Buttons",
   position: [4.8, 27.5, 11, 7],
   clickable: true,
@@ -272,7 +272,7 @@ const HideShow_Buttons = {
 };
 
 // Other
-const Always_Pickup_Crystals = {
+var Always_Pickup_Crystals = {
   id: "APC",
   position: [-4.5, -5, 110, 110],
   clickable: false,
