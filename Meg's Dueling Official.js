@@ -6,14 +6,22 @@ const mod_version =
  |  Coding support : Lotus, Bhpsngum
 
 What has been fixed/added from v1.3.6: 
+  - Huge changes in the whole code
   - Fixed the AFK checker, it should normally work fine..!
   - Added costomizations options.
     - adding a custom color on your name on the leaderboard.
   - Optimized even more.
-  - removed usless parts from the code.
-  - minor changes in the overall code.
   - the say() command now has a cooldown before vanishing.
-  - Admin command fixed
+  - Admin command fixed.
+  - Every game commands has been reviewed.
+  - Every button has been remodeled.
+  - Added T7's:
+    - Odyssey
+    - Shadow X-3
+    - Bastion
+    - Aries
+    - Poseidon
+    - Warthog
 
 See the documentation on the github page for more information about the mod and its integrated commands.
 link: https://megalodon-dueling.notion.site/megalodon-dueling/Meg-s-dueling-Documentation-14fded21b2e648039ed441fc13fb7431
@@ -24,7 +32,7 @@ var YourIGN_Name = ""; // Put here your "in Game Name"!
 var YourIGN_Color = ""; // Put here your "Favorite Color" using a Hex code (they usally look like this: #6a65ff)!
 
 // Ship Codes
-const Ship_Codes = [101, 201, 202, 301, 302, 303, 304, 401, 402, 403, 404, 405, 406, 501, 502, 503, 504, 505, 506, 507, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615];
+const Ship_Codes = [101, 201, 202, 301, 302, 303, 304, 401, 402, 403, 404, 405, 406, 501, 502, 503, 504, 505, 506, 507, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615, 701, 702, 703, 704, 705, 706];
 const spectator_ship_code = 191;
 const admin_ship_codes = [192, 193];
 
@@ -38,14 +46,23 @@ const Stats_delay = 0.5;
 const wrap_delay = 0.25;
 const Mb_delay = 2;
 
-// AFK settings
-const Enable_AFK = true; // allow AFK | true / false
-const AFK_Cooldown = 30;
+// Game settings
+const getWarning = false; // Get a warning everytime a suspicious player joins the game. (Beta Feature)
+const Enable_antiCheat = true; // Changing the value while the mod is running isn't recomanded.
+const Enable_AFK = true; // Allow AFK | true / false
+const AFK_Cooldown = 40;
 
 // Other
-var always_pickup_gems = true; // always pickup gems | true / false
+var always_pickup_crystals = true; // Always pickup crystals | true / false.
 var BannedList = [];
 var BannedListReasons = [];
+const anchorMenu = { 
+  anchor: {x: 0, y: 0},
+  look: {
+    componentBoxWidth: 6,
+    opacity: "0.30"
+  }
+};
 
 // Admin
 const Spectator_191 = '{"name":"Spectator","level":1.9,"model":1,"size":0.025,"zoom":0.075,"specs":{"shield":{"capacity":[1e-30,1e-30],"reload":[1000,1000]},"generator":{"capacity":[1e-30,1e-30],"reload":[1,1]},"ship":{"mass":1,"speed":[200,200],"rotation":[1000,1000],"acceleration":[1000,1000]}},"bodies":{"face":{"section_segments":100,"angle":0,"offset":{"x":0,"y":0,"z":0},"position":{"x":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"y":[-2,-2,2,2],"z":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"width":[0,1,1,0],"height":[0,1,1,0],"vertical":true,"texture":[6]}},"typespec":{"name":"Spectator","level":1,"model":1,"code":101,"specs":{"shield":{"capacity":[1e-30,1e-30],"reload":[1000,1000]},"generator":{"capacity":[1e-30,1e-30],"reload":[1,1]},"ship":{"mass":1,"speed":[200,200],"rotation":[1000,1000],"acceleration":[1000,1000]}},"shape":[0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001],"lasers":[],"radius":0.001}}';
@@ -70,6 +87,9 @@ const ships = [
   Contraband_613 = '{"name":"Contraband","level":6,"model":13,"size":1.6,"zoom":0.85,"specs":{"shield":{"capacity":[190,275],"reload":[6,8]},"generator":{"capacity":[125,200],"reload":[30,42.5]},"ship":{"mass":150,"speed":[100,125],"rotation":[60,80],"acceleration":[70,120]}},"bodies":{"main":{"section_segments":8,"offset":{"x":0,"y":0,"z":0},"position":{"x":[0,0,0,0,0,0,0,0,0,0,0],"y":[-75,-80,-20,0,15,20,60,65,80,100,90],"z":[0,0,0,0,0,0,0,0,0,0,0]},"width":[0,8,24,26,20,20,20,20,25,12,0],"height":[0,5,25,25,20,15,15,15,20,10,0],"texture":[1,2,4,63,5,10,5,63,4,17],"propeller":true,"laser":{"damage":[100,150],"rate":1,"type":2,"speed":[110,150],"recoil":250,"number":1,"error":0}},"cockpit":{"section_segments":8,"offset":{"x":0,"y":-55,"z":15},"position":{"x":[0,0,0,0,0,0,0],"y":[-10,0,20,40,50],"z":[-7,-5,0,0,0]},"width":[0,5,10,10,0],"height":[0,10,15,12,0],"texture":[9]},"side_propulsors":{"section_segments":8,"offset":{"x":35,"y":25,"z":0},"position":{"x":[0,0,0,0,0,0,0,0,0,0,0],"y":[-20,-15,-4,6,15,20,35,40,50,85,75],"z":[0,0,0,0,0,0,0,0,0,0,0]},"width":[0,15,20,20,20,15,15,18,18,10,0],"height":[0,15,20,20,20,15,15,18,16,10,0],"propeller":true,"texture":[4,4,63,3,5,8,5,63,4,17]},"cannons":{"section_segments":12,"offset":{"x":18,"y":65,"z":20},"position":{"x":[0,0,0,0,0],"y":[-50,-45,-20,-5,5],"z":[0,0,0,0,0]},"width":[0,5,7,8,0],"height":[0,5,7,8,0],"angle":0,"laser":{"damage":[4,8],"rate":4,"type":1,"speed":[150,200],"number":1,"error":0},"propeller":false,"texture":[6,4,63,4,63,4]}},"wings":{"join":{"offset":{"x":0,"y":20,"z":0},"length":[37,0],"width":[20,70],"angle":[0],"position":[-95,0],"texture":[63],"doubleside":true,"bump":{"position":0,"size":0}},"join2":{"offset":{"x":25,"y":52,"z":0},"length":[35],"width":[10,10],"angle":[0],"position":[0,0,0,50],"texture":[8],"doubleside":1,"bump":{"position":0,"size":0}},"wing1":{"doubleside":true,"offset":{"x":50,"y":52,"z":-36},"length":[0,30,20,30],"width":[0,0,100,100,0],"angle":[110,70,90,110],"position":[0,0,0,0,0],"texture":[63],"bump":{"position":0,"size":5}}},"typespec":{"name":"Contraband","level":6,"model":15,"code":615,"specs":{"shield":{"capacity":[190,275],"reload":[6,8]},"generator":{"capacity":[125,200],"reload":[30,42.5]},"ship":{"mass":150,"speed":[100,125],"rotation":[60,80],"acceleration":[70,120]}},"shape":[2.72,2.573,2.079,1.758,1.578,1.455,1.368,1.312,1.283,1.278,1.269,1.222,1.193,1.961,2.033,2.148,2.313,2.561,2.818,3.145,3.625,3.791,3.803,3.701,3.223,3.206,3.223,3.701,3.803,3.791,3.625,3.145,2.818,2.561,2.313,2.148,2.033,1.961,1.193,1.222,1.269,1.278,1.283,1.312,1.368,1.455,1.578,1.758,2.079,2.573],"lasers":[{"x":0,"y":-2.56,"z":0,"angle":0,"damage":[100,150],"rate":1,"type":2,"speed":[110,150],"number":1,"spread":0,"error":0,"recoil":250},{"x":0.576,"y":0.48,"z":0.64,"angle":0,"damage":[4,8],"rate":4,"type":1,"speed":[150,200],"number":1,"spread":0,"error":0,"recoil":0},{"x":-0.576,"y":0.48,"z":0.64,"angle":0,"damage":[4,8],"rate":4,"type":1,"speed":[150,200],"number":1,"spread":0,"error":0,"recoil":0}],"radius":3.803}}',
   C_Speedster_614 = '{"name":"C-Speedster","level":6,"model":14,"size":1.4,"specs":{"shield":{"capacity":[150,250],"reload":[8,10]},"generator":{"capacity":[150,200],"reload":[20,35]},"ship":{"mass":155,"speed":[100,125],"rotation":[55,75],"acceleration":[95,145]}},"bodies":{"main":{"section_segments":8,"offset":{"x":0,"y":0,"z":0},"position":{"x":[0,0,0,0,0,0,0],"y":[-85,-80,-50,0,0,70,65],"z":[0,0,0,0,0,0,0]},"width":[0,10,21,28,20,20,0],"height":[0,7,16,25,20,15,0],"texture":[63,4,11,5,18,12],"propeller":true,"laser":{"damage":[25,65],"rate":3,"type":1,"speed":[160,200],"number":1}},"cockpit":{"section_segments":8,"offset":{"x":0,"y":-50,"z":15},"position":{"x":[0,0,0,0,0,0,0],"y":[-20,0,20,40,50],"z":[-7,-5,0,0,0]},"width":[0,8,10,10,0],"height":[0,10,12,12,0],"texture":[9]},"side_propulsors":{"section_segments":8,"offset":{"x":35,"y":25,"z":0},"position":{"x":[0,0,0,0,0,0,0,0,0,0,0],"y":[-20,-15,-4,6,15,20,35,40,50,85,75],"z":[0,0,0,0,0,0,0,0,0,0,0]},"width":[0,15,20,20,20,15,15,18,18,10,0],"height":[0,15,20,20,20,15,15,18,16,10,0],"propeller":true,"texture":[4,4,63,3,5,8,5,63,4,17]},"tops":{"section_segments":12,"offset":{"x":15,"y":45,"z":20},"position":{"x":[0,0,0,0,0,0,0],"y":[-45,-40,-25,0,15,40,35],"z":[0,0,0,0,0,0,0]},"width":[0,5,10,13,11,6,0],"height":[0,5,9,8,6,5,0],"propeller":1,"angle":0,"texture":[5,4,10,63,4,17]}},"wings":{"join":{"offset":{"x":0,"y":0,"z":10},"length":[40,0],"width":[10,20],"angle":[-1],"position":[0,30],"texture":[63],"bump":{"position":0,"size":25}},"join1":{"offset":{"x":0,"y":20,"z":0},"length":[37],"width":[20,70],"angle":[0],"position":[-95,-10],"texture":[63],"doubleside":true,"bump":{"position":0,"size":0}},"join2":{"offset":{"x":0,"y":50,"z":0},"length":[30],"width":[20,70],"angle":[0],"position":[-95,-10],"texture":[63],"doubleside":true,"bump":{"position":0,"size":0}}},"typespec":{"name":"C-Speedster","level":6,"model":14,"code":614,"specs":{"shield":{"capacity":[150,250],"reload":[8,10]},"generator":{"capacity":[150,200],"reload":[20,35]},"ship":{"mass":155,"speed":[100,125],"rotation":[55,75],"acceleration":[95,145]}},"shape":[2.38,2.312,2.007,1.668,1.485,1.388,1.314,1.274,1.253,1.179,1.113,1.066,1.042,1.043,1.487,1.656,1.757,1.903,1.92,2.239,2.689,3.102,3.328,3.238,2.423,1.964,2.423,3.238,3.328,3.102,2.689,2.239,1.92,1.903,1.757,1.656,1.487,1.043,1.042,1.066,1.113,1.179,1.253,1.274,1.314,1.388,1.485,1.668,2.007,2.312],"lasers":[{"x":0,"y":-2.38,"z":0,"angle":0,"damage":[25,65],"rate":3,"type":1,"speed":[160,200],"number":1,"spread":0,"error":0,"recoil":0}],"radius":3.328}}',
   B_Speedster_615 = '{"name":"B-Speedster","level":6,"model":15,"size":1.6,"specs":{"shield":{"capacity":[250,350],"reload":[8,10]},"generator":{"capacity":[90,150],"reload":[25,40]},"ship":{"mass":210,"speed":[90,100],"rotation":[50,70],"acceleration":[100,130]}},"bodies":{"main":{"section_segments":10,"offset":{"x":0,"y":0,"z":0},"position":{"x":[0,0,0,0,0,0,0],"y":[-100,-95,0,0,60,85,75],"z":[0,0,0,0,0,0,0]},"width":[0,10,40,20,22,15,0],"height":[0,5,30,30,20,15,0],"texture":[6,18,5,11,15,17],"propeller":true,"laser":{"damage":[48,94],"rate":1,"type":2,"speed":[185,240],"recoil":70,"number":1,"error":0}},"core":{"vertical":true,"angle":180,"section_segments":[30,90,150,210,270,330],"offset":{"x":0,"y":-5,"z":-40},"position":{"x":[0,0,0,0,0,0,0],"y":[-40,-40,-43,-40,-30,0,0],"z":[0,0,0,0,0,0,0]},"width":[1,13,18,23,30,30,0],"height":[1,13,18,23,30,30,0],"texture":[16.9,4.9,63,3.9,9.9,0.9,11.9]},"ye":{"vertical":true,"section_segments":12,"offset":{"x":0,"y":38,"z":-40},"position":{"x":[0,0,0],"y":[-10,-3,-1],"z":[0,0,0]},"width":[0,5,0],"height":[0,5,0],"texture":[5]},"shield":{"section_segments":12,"offset":{"x":30,"y":-40,"z":0},"position":{"x":[-6,0,0,0,0,-4],"y":[-70,-60,-10,15,30,40],"z":[0,0,0,0,0,0]},"width":[0,3,3,3,3,0],"height":[0,5,5,8,3,0],"texture":63,"angle":16},"cockpit":{"section_segments":8,"offset":{"x":0,"y":-60,"z":15},"position":{"x":[0,0,0,0,0,0,0],"y":[-20,0,20,40,50],"z":[-7,-5,0,0,0]},"width":[0,10,10,10,0],"height":[0,10,15,12,0],"texture":[9]},"side_propulsors":{"section_segments":10,"offset":{"x":50,"y":25,"z":0},"position":{"x":[0,0,0,0,0,0,0,0,0,0],"y":[-20,-15,0,10,20,25,30,40,80,70],"z":[0,0,0,0,0,0,0,0,0,0]},"width":[0,15,20,20,20,15,15,20,10,0],"height":[0,15,20,20,20,15,15,20,10,0],"propeller":true,"texture":[4,4,2,2,5,63,5,4,17]},"cannons":{"section_segments":12,"offset":{"x":30,"y":40,"z":30},"position":{"x":[0,0,0,0,0,0,0],"y":[-50,-45,-20,0,20,30,40],"z":[0,0,0,0,0,0,0]},"width":[0,5,7,10,3,5,0],"height":[0,5,7,8,3,5,0],"angle":0,"laser":{"damage":[8,12],"rate":2,"type":1,"speed":[100,130],"number":1,"angle":-10,"error":0},"propeller":false,"texture":[6,4,10,4,63,4]}},"wings":{"join":{"offset":{"x":0,"y":0,"z":10},"length":[40,0],"width":[10,20],"angle":[-1],"position":[0,30],"texture":[63],"bump":{"position":0,"size":25}}},"typespec":{"name":"B-Speedster","level":6,"model":13,"code":613,"specs":{"shield":{"capacity":[250,350],"reload":[8,10]},"generator":{"capacity":[90,150],"reload":[25,40]},"ship":{"mass":210,"speed":[90,100],"rotation":[50,70],"acceleration":[100,130]}},"shape":[3.384,3.353,3.037,2.443,2.076,1.832,1.659,1.541,1.458,1.406,1.378,1.341,1.248,1.801,2.197,2.375,2.52,2.637,3.021,3.288,3.665,3.862,3.713,2.623,2.758,2.725,2.758,2.623,3.713,3.862,3.665,3.288,3.021,2.637,2.52,2.375,2.197,1.801,1.248,1.341,1.378,1.406,1.458,1.541,1.659,1.832,2.076,2.443,3.037,3.353],"lasers":[{"x":0,"y":-3.2,"z":0,"angle":0,"damage":[48,94],"rate":1,"type":2,"speed":[185,240],"number":1,"spread":0,"error":0,"recoil":70},{"x":0.96,"y":-0.32,"z":0.96,"angle":0,"damage":[8,12],"rate":2,"type":1,"speed":[100,130],"number":1,"spread":-10,"error":0,"recoil":0},{"x":-0.96,"y":-0.32,"z":0.96,"angle":0,"damage":[8,12],"rate":2,"type":1,"speed":[100,130],"number":1,"spread":-10,"error":0,"recoil":0}],"radius":3.862}}',
+    // KEST 1.3.3
+  Poseidon_705 = '{"name":"Poseidon","level":7,"model":5,"size":4,"specs":{"shield":{"capacity":[650,650],"reload":[15,15]},"generator":{"capacity":[300,300],"reload":[100,100]},"ship":{"mass":650,"speed":[50,50],"rotation":[25,25],"acceleration":[120,120]}},"bodies":{"main":{"section_segments":20,"offset":{"x":0,"y":0,"z":0},"position":{"x":[0,0,0,0,0,0,0,0,0,0,0,0],"y":[-100,-80,-75,-90,-80,0,30,40,80,90,80],"z":[0,0,0,0,0,0,0,0,0,0,0]},"width":[0,5,10,15,20,25,20,15,20,15,0],"height":[0,5,10,15,20,25,20,15,20,15,0],"texture":[13,13,13,4,1,10,4,12,63,13],"laser":{"damage":[125,125],"rate":0.7,"type":1,"speed":[95,95],"number":1,"error":3,"recoil":50},"propeller":true},"shield":{"section_segments":14,"offset":{"x":70,"y":0,"z":0},"position":{"x":[-25,-20,-5,0,0,0,0,0,0,0,0,0],"y":[-100,-80,-60,-40,-35,0,35,45,65,70,60],"z":[0,0,0,0,0,0,0,0,0,0,0]},"width":[0,4,8,6,15,20,15,6,12,8,0],"height":[0,4,8,6,15,20,15,6,12,8,0],"texture":[13,63,63,4,8,3,4,12,63,13],"propeller":true},"sidecannons":{"section_segments":20,"offset":{"x":110,"y":0,"z":0},"position":{"x":[0,0,0,0,0],"y":[10,18,15,20,40],"z":[0,0,0,0,0]},"width":[0,5,10,15,20],"height":[0,5,10,15,15],"texture":[13,13,63,63,4],"angle":-90,"laser":{"damage":[10,10],"rate":4,"type":1,"speed":[200,200],"number":2,"angle":45}},"cockpit":{"section_segments":8,"offset":{"x":0,"y":-39,"z":17},"position":{"x":[0,0,0,0],"y":[-35,-10,10,35],"z":[0,0,0,0]},"width":[10,15,15,10],"height":[5,8,10,5],"texture":[9,9,9]}},"wings":{"bridge1":{"offset":{"x":15,"y":20,"z":-5},"length":[45],"width":[18,6],"angle":[10],"position":[0,0],"texture":[4],"bump":{"position":0,"size":50},"doubleside":true},"bridge2":{"offset":{"x":15,"y":-10,"z":5},"length":[45],"width":[18,16],"angle":[-10],"position":[0,10],"texture":[63],"bump":{"position":0,"size":15},"doubleside":true},"bridge3":{"offset":{"x":15,"y":-40,"z":-5},"length":[45],"width":[18,6],"angle":[10],"position":[0,20],"texture":[4],"bump":{"position":0,"size":50},"doubleside":true},"winglets1":{"offset":{"x":16,"y":-70,"z":10},"length":[15],"width":[18,13],"angle":[45],"position":[0,-10],"texture":[63],"bump":{"position":0,"size":10},"doubleside":true},"winglets2":{"offset":{"x":16,"y":-70,"z":-10},"length":[15],"width":[18,13],"angle":[-45],"position":[0,-10],"texture":[63],"bump":{"position":0,"size":10},"doubleside":true}},"typespec":{"name":"Poseidon","level":7,"model":6,"code":706,"specs":{"shield":{"capacity":[650,650],"reload":[15,15]},"generator":{"capacity":[300,300],"reload":[100,100]},"ship":{"mass":650,"speed":[50,50],"rotation":[25,25],"acceleration":[120,120]}},"shape":[8,7.299,7.24,8.773,8.634,7.85,7.586,7.547,7.295,7.326,7.292,7.516,7.994,8,7.516,7.292,7.326,7.869,8.372,8.18,2.921,3.185,4.206,7.07,7.299,7.214,7.299,7.07,4.206,3.185,2.921,8.18,8.372,7.869,7.326,7.292,7.516,7.994,8,7.516,7.292,7.326,7.295,7.547,7.586,7.85,8.634,8.773,7.24,7.299],"lasers":[{"x":0,"y":-8,"z":0,"angle":0,"damage":[125,125],"rate":0.7,"type":1,"speed":[95,95],"number":1,"spread":0,"error":3,"recoil":50},{"x":8,"y":0,"z":0,"angle":-90,"damage":[10,10],"rate":4,"type":1,"speed":[200,200],"number":2,"spread":45,"error":0,"recoil":0},{"x":-8,"y":0,"z":0,"angle":90,"damage":[10,10],"rate":4,"type":1,"speed":[200,200],"number":2,"spread":45,"error":0,"recoil":0}],"radius":8.773}}',
+  Warthog_706 = '{"name":"Warthog","level":7,"model":6,"size":3,"specs":{"shield":{"capacity":[350,350],"reload":[15,15]},"generator":{"capacity":[140,140],"reload":[80,80]},"ship":{"mass":300,"speed":[60,60],"rotation":[35,35],"acceleration":[85,85]}},"bodies":{"main":{"section_segments":10,"offset":{"x":0,"y":0,"z":0},"position":{"x":[0,0,0,0,0,0,0],"y":[-140,-110,-30,0,80,160,165],"z":[0,0,0,3,10,20,24]},"width":[0,15,26,28,22,6,0],"height":[0,15,25,25,20,8,0],"texture":[63,1,10,1,2,4]},"cockpit":{"section_segments":8,"offset":{"x":0,"y":-30,"z":10},"position":{"x":[0,0,0],"y":[-70,-50,0],"z":[-3,-3,0]},"width":[8,13,13],"height":[10,25,15],"texture":[9]},"engines":{"section_segments":10,"offset":{"x":30,"y":0,"z":5},"position":{"x":[-29,0,0,0,0],"y":[-18,60,100,110,100],"z":[-2.7,0,0,0,0]},"width":[22,22,20,18,0],"height":[24,22,20,18,0],"propeller":true,"texture":[10,13,12,17]},"cannon":{"section_segments":8,"offset":{"x":0,"y":-90,"z":-15},"position":{"x":[0,0,0,0,0,0],"y":[-40,-30,-20,0,20,10],"z":[0,0,0,5,10,20]},"width":[0,5,6,6,6,0],"height":[0,6,7,7,7,0],"angle":0,"propeller":false,"texture":[6,3,4],"laser":{"damage":[80,80],"rate":2,"type":2,"speed":[85,85],"number":1}}},"wings":{"main":{"doubleside":true,"offset":{"x":10,"y":20,"z":15},"length":[70,60,15],"width":[60,50,40,25],"angle":[-10,-5,45],"position":[0,10,0,0],"texture":[8,2,63],"bump":{"position":10,"size":10}},"winglets":{"doubleside":true,"offset":{"x":5,"y":-75,"z":5},"length":[35],"width":[35,20],"angle":[-5],"position":[0,5],"texture":[63],"bump":{"position":10,"size":10}},"tail":{"doubleside":true,"offset":{"x":0,"y":140,"z":20},"length":[60,20],"width":[50,40,30],"angle":[10,40],"position":[-6,7,9,0],"texture":[11,63],"bump":{"position":0,"size":11}}},"typespec":{"name":"Warthog","level":7,"model":2,"code":702,"specs":{"shield":{"capacity":[350,350],"reload":[15,15]},"generator":{"capacity":[140,140],"reload":[80,80]},"ship":{"mass":300,"speed":[60,60],"rotation":[35,35],"acceleration":[85,85]}},"shape":[8.4,7.425,5.402,5.349,5.363,4.463,2.32,2.061,1.882,1.761,1.675,2.107,3.33,9.029,9.169,8.87,7.45,6.39,5.56,4.775,5.6,10.479,10.805,10.485,9.962,9.9,9.962,10.485,10.805,10.479,5.6,4.775,5.56,6.39,7.45,8.87,9.169,9.029,8.322,2.107,1.675,1.761,1.882,2.061,2.32,4.463,5.363,5.349,5.402,7.425],"lasers":[{"x":0,"y":-7.8,"z":-0.9,"angle":0,"damage":[80,80],"rate":2,"type":2,"speed":[85,85],"number":1,"spread":0,"error":0,"recoil":0}],"radius":10.805}}',
 ];
 
 const vocabulary = [
@@ -99,16 +119,17 @@ const vocabulary = [
 ];
 
 if (!game.custom.launched) MapOpen();
-const music = ["civilisation.mp3", "procedurality.mp3", "argon.mp3", "crystals.mp3", "red_mist.mp3", "warp_drive.mp3"];
+var music = ["civilisation.mp3", "procedurality.mp3", "argon.mp3", "crystals.mp3", "red_mist.mp3", "warp_drive.mp3"];
+var musicApplyed = music[~~(Math.random() * music.length)];
 this.options = {
   map_name: "Meg's Dueling",
   max_players: 69, // :D haha funny
-  starting_ship: 605,
+  starting_ship: 801,
   map_size: 100,
   speed_mod: 1.2,
-  max_level: 6,
+  max_level: 8,
   weapons_store: false,
-  soundtrack: music[~~(Math.random() * music.length)],
+  soundtrack: musicApplyed,
   vocabulary: vocabulary,
   ships: ships,
   custom_map: "",
@@ -122,12 +143,8 @@ const Admin = {
   visible: true,
   shortcut: "1",
   components: [
-    {
-      type: "box", position: [0, 0, 100, 100], fill: "rgba(255, 255, 255, 0.40)", stroke: "#FFFFFF", width: 8
-    },
-    {
-      type: "text", position: [0, 20, 100, 60], value: "Admin [1]", color: "#FFFFFF"
-    }
+    {type: "box", position: [0, 0, 100, 100], fill: `rgba(255, 255, 255, ${anchorMenu.look.opacity})`, stroke: "#FFFFFF", width: anchorMenu.look.componentBoxWidth},
+    {type: "text", position: [0, 20, 100, 60], value: "Admin [1]", color: "#FFFFFF"}
   ]
 };
 
@@ -139,12 +156,8 @@ const Spectate = {
   visible: true,
   shortcut: "8",
   components: [
-    {
-      type: "box", position: [0, 0, 100, 100], fill: "rgba(40, 40, 215, 0.40)", stroke: "#2828D7", width: 8
-    },
-    {
-      type: "text", position: [0, 20, 100, 60], value: "Spectate [8]", color: "#ffffff"
-    }
+    {type: "box", position: [0, 0, 100, 100], fill: `rgba(55, 55, 255, ${anchorMenu.look.opacity})`, stroke: "#2828D7", width: anchorMenu.look.componentBoxWidth},
+    {type: "text", position: [0, 20, 100, 60], value: "Spectate [8]", color: "#ffffff"}
   ]
 };
 
@@ -155,12 +168,8 @@ const Regen = {
   visible: true,
   shortcut: "9",
   components: [
-    {
-      type: "box", position: [0, 0, 100, 100], fill: "rgba(0, 255, 0, 0.40)", stroke: "#00FF00", width: 8
-    },
-    {
-      type: "text", position: [0, 20, 100, 60], value: "Regen [9]", color: "#ffffff"
-    }
+    {type: "box", position: [0, 0, 100, 100], fill: `rgba(55, 255, 55, ${anchorMenu.look.opacity})`, stroke: "#00FF00", width: anchorMenu.look.componentBoxWidth},
+    {type: "text", position: [0, 20, 100, 60], value: "Regen [9]", color: "#ffffff"}
   ]
 };
 
@@ -171,130 +180,82 @@ const Menu_ = {
   visible: true,
   shortcut: "0",
   components: [
-    {
-      type: "box", position: [0, 0, 100, 100], fill: "rgba(255, 0, 0, 0.40)", stroke: "#FF0000", width: 8
-    },
-    {
-      type: "text", position: [0, 20, 100, 60], value: "Menu [0]", color: "#ffffff"
-    }
+    {type: "box", position: [0, 0, 100, 100], fill: `rgba(255, 55, 55, ${anchorMenu.look.opacity})`, stroke: "#FF0000", width: anchorMenu.look.componentBoxWidth},
+    {type: "text", position: [0, 20, 100, 60], value: "Menu [0]", color: "#ffffff"}
   ]
 };
 
 // Switch Screen
 const Square = {
   id: "Square",
-  position: [30, 30, 40, 40],
+  position: [30+anchorMenu.anchor.x,30+anchorMenu.anchor.y,40,40],
   clickable: false,
   visible: true,
   components: [
-    {
-      type: "box", position: [0, 0, 100, 100], fill: "rgba(255,255,255, 0.20)", stroke: "#FFFFFF", width: 12
-    },
-    {
-      type: "box", position: [0, 0, 100, 15], stroke: "#FFFFFF", width: 6
-    },
-    {
-      type: "round", position: [34, 24, 32, 55], stroke: "#FFFFFF", width: 5
-    },
-    {
-      type: "text", position: [30, -2, 40, 20], value: "Actions Menu", color: "#FFFFFF"
-    }
+    {type:"box",position:[0,10,100,84],fill: `rgba(155, 155, 155, ${anchorMenu.look.opacity})`},
+    {type:"box",position:[0,0,35,12],fill:"rgba(200, 200, 200)"},
+    {type:"box",position:[0,8,100,6],fill:"rgba(200, 200, 200)"},
+    {type: "text",position:[-0.1,2,35,10],value:"Actions Menu",color:"#000000"}
   ]
 };
 
 const next_ship = {
   id: "next_ship",
-  position: [32, 39, 10, 5.5],
+  position: [31+anchorMenu.anchor.x, 37.5+anchorMenu.anchor.y, 10, 5.5],
   clickable: true,
   visible: true,
   shortcut: "3",
   components: [
-    {
-      type: "box", position: [0, 0, 100, 100], fill: "rgba(0, 148, 255, 0.50)", stroke: "rgb(0, 148, 255)", width: 9
-    },
-    {
-      type: "text", position: [0, 17, 100, 62], value: "Next [3]", color: "#ffffff"
-    }
+    {type: "box", position: [0, 0, 100, 100], fill: `rgba(0, 148, 255, ${anchorMenu.look.opacity})`, stroke: "rgb(0, 148, 255)", width: anchorMenu.look.componentBoxWidth},
+    {type: "text", position: [0, 17, 100, 62], value: "Next [3]", color: "#ffffff"}
   ]
 };
 
 const previous_ship = {
   id: "previous_ship",
-  position: [58, 39, 10, 5.5],
+  position: [59+anchorMenu.anchor.x, 37.5+anchorMenu.anchor.y, 10, 5.5],
   clickable: true,
   visible: true,
   shortcut: "4",
   components: [
-    {
-      type: "box", position: [0, 0, 100, 100], fill: "rgba(0, 148, 255, 0.50)", stroke: "rgb(0, 148, 255)", width: 9
-    },
-    {
-      type: "text", position: [0, 17, 100, 62], value: "Previous [4]", color: "#ffffff"
-    }
+    {type: "box", position: [0, 0, 100, 100], fill: `rgba(0, 148, 255, ${anchorMenu.look.opacity})`, stroke: "rgb(0, 148, 255)", width: anchorMenu.look.componentBoxWidth},
+    {type: "text", position: [0, 17, 100, 62], value: "Previous [4]", color: "#ffffff"}
   ]
 };
 
 const Tp_Spawn = {
   id: "Tp_Spawn",
-  position: [58, 46, 10, 5.5],
+  position: [59+anchorMenu.anchor.x, 45+anchorMenu.anchor.y, 10, 5.5],
   clickable: true,
   visible: true,
   shortcut: "5",
   components: [
-    {
-      type: "box", position: [0, 0, 100, 100], fill: "rgba(255, 0, 0, 0.50)", stroke: "rgb(255, 0, 0)", width: 9
-    },
-    {
-      type: "text", position: [0, 17, 100, 62], value: "Center [5]", color: "#ffffff"
-    }
+    {type: "box", position: [0, 0, 100, 100], fill: `rgba(255, 55, 55, ${anchorMenu.look.opacity})`, stroke: "rgb(255, 0, 0)", width: anchorMenu.look.componentBoxWidth},
+    {type: "text", position: [0, 17, 100, 62], value: "Center [5]", color: "#ffffff"}
   ]
 };
 
 const Stats = {
   id: "Stats",
-  position: [32, 46, 10, 5.5],
+  position: [31+anchorMenu.anchor.x, 45+anchorMenu.anchor.y, 10, 5.5],
   clickable: true,
   visible: true,
   shortcut: "7",
   components: [
-    {
-      type: "box", position: [0, 0, 100, 100], fill: "rgba(255, 232, 0, 0.50)", stroke: "rgb(255, 232, 0)", width: 9
-    },
-    {
-      type: "text", position: [0, 17, 100, 62], value: "Stats [7]", color: "#ffffff"
-    }
+    {type: "box", position: [0, 0, 100, 100], fill: `rgba(255, 232, 0, ${anchorMenu.look.opacity})`, stroke: "rgb(255, 232, 0)", width: anchorMenu.look.componentBoxWidth},
+    {type: "text", position: [0, 17, 100, 62], value: "Stats [7]", color: "#ffffff"}
   ]
 };
 
 const Wrap = {
   id: "Wrap",
-  position: [32, 53, 10, 5.5],
+  position: [31+anchorMenu.anchor.x, 52.5+anchorMenu.anchor.y, 10, 5.5],
   clickable: true,
   visible: true,
   shortcut: "6",
   components: [
-    {
-      type: "box", position: [0, 0, 100, 100], fill: "rgba(55, 255, 55, 0.50)", stroke: "rgb(55, 255, 55)", width: 9
-    },
-    {
-      type: "text", position: [0, 17, 100, 62], value: "Wrap [6]", color: "#ffffff"
-    }
-  ]
-};
-
-const Box_Exit_screen = {
-  id: "Box_Exit_screen",
-  position: [58, 61, 10, 5.5],
-  clickable: true,
-  visible: true,
-  shortcut: "0",
-  components: [
-    {
-      type: "box", position: [0, 0, 100, 100], fill: "rgba(255,255,255, 0.40)", stroke: "#ffffff", width: 9
-    },
-    {
-      type: "text", position: [0, 17, 100, 62], value: "Exit [0]", color: "#ffffff"
-    }
+    {type: "box", position: [0, 0, 100, 100], fill: `rgba(55, 255, 55, ${anchorMenu.look.opacity})`, stroke: "rgb(55, 255, 55)", width: anchorMenu.look.componentBoxWidth},
+    {type: "text", position: [0, 17, 100, 62], value: "Wrap [6]", color: "#ffffff"}
   ]
 };
 
@@ -306,9 +267,7 @@ const HideShow_Buttons = {
   visible: true,
   shortcut: "2",
   components: [
-    {
-      type: "text", position: [0, 0, 100, 100], value: "Hide Buttons [2]", color: "#ffffff"
-    }
+    {type: "text", position: [0, 0, 100, 100], value: "Hide Buttons [2]", color: "#ffffff"}
   ]
 };
 
@@ -319,47 +278,23 @@ const Always_Pickup_Crystals = {
   clickable: false,
   visible: true,
   components: [
-    {
-      type: "text", position: [-4, 5, 100, 3], value: "--", color: "#ffffff"
-    }
+    {type: "text", position: [-4, 5, 100, 3], value: "--", color: "#ffffff"}
   ]
 };
 
 this.tick = function(game) {
-  if (game.step % 60 === 0) {
+  if (game.step % 60 === 0 && game.custom.launched) {
     updateScoreboard(game);
-    for (let ship of game.ships) {
-      if (Enable_AFK) AFKship(ship);
-      if (!BannedList.includes(ship.name)) {
-        if (!ship.custom.init) {
-          ship.custom.init = true;
-          ship.custom.ISidle = false;
-          ship.custom.keep_maxed = true;
-          ship.custom.ButtonsShowed = true;
-          ship.custom.Deaths = 0;
-          ship.custom.Kills = 0;
-          ship.custom.warpIndex = 0;
-          for (let mainComponents of gameMainComponents) ship.setUIComponent(mainComponents);
-          ship.setUIComponent(HideShow_Buttons);
-          setAPC(ship);
-        }
-      }
-    }
-    if (!game.ships[0].custom.defaultAdmin) {
-      game.ships[0].custom.defaultAdmin = true;
-      game.ships[0].setUIComponent(Admin);
-    }
+    for (const ship of game.ships) if (Enable_AFK) AFKship(ship);
   }
-  if (game.step % 20 === 0) {
-    for (let ship of game.ships) {
-      if (always_pickup_gems) {
-        let max_crystals = 20 * Math.trunc(ship.type / 100) * Math.trunc(ship.type / 100);
-        if (ship.custom.crystals_last_updated != ship.last_updated && ship.crystals >= max_crystals) {
-          ship.set({crystals: max_crystals - 1});
-          ship.custom.crystals_last_updated = ship.last_updated;
-        }
+  if (game.step % 20 === 0 && always_pickup_crystals) {
+    game.ships.forEach((ship) => {
+      let max_crystals = 20 * Math.pow(Math.trunc(ship.type / 100), 2);
+      if (ship.crystals >= max_crystals && ship.custom.crystals_last_updated !== ship.last_updated) {
+        ship.set({ crystals: max_crystals - 1 });
+        ship.custom.crystals_last_updated = ship.last_updated;
       }
-    }
+    });
   }
 };
 
@@ -370,10 +305,9 @@ async function AFKship(ship) {
       if (ship.alive) {
         ship.custom.TimeAFK--;
         if (ship.custom.TimeAFK <= 10) {
-          ship.custom.r1 = ship.r;
-          await new Promise(resolve => setTimeout(resolve, 200));
-          ship.custom.r2 = ship.r;
-          if (Math.abs(ship.custom.r1 - ship.custom.r2) <= 2e-5) {
+          ship.custom.oldR = ship.r;
+          await new Promise(resolve => setTimeout(resolve, 400));
+          if (Math.abs(ship.custom.oldR - ship.r) <= 2e-5) {
             alert(ship, "Going AFK in", ship.custom.TimeAFK,"rgba(255,55,55,0.8)", 1500);
             if (ship.custom.TimeAFK <= 0) {
               spectator_ship(ship);
@@ -388,43 +322,43 @@ async function AFKship(ship) {
 
 function updateScoreboard(game) {
   let sorted_ships_KDratio = [...game.ships].sort((a, b) => (b.custom.Kills - b.custom.Deaths) - (a.custom.Kills - a.custom.Deaths)).slice(0, 8);
-  for (let ship of game.ships) {
+  game.ships.forEach((ship) => {
     if (ship.name == YourIGN_Name) ship.custom.customColor = YourIGN_Color;
-    else if (["Megalodon", "ҒꝚ▸Megalodon", "Meg"].includes(ship.name)) ship.custom.customColor = "#005cb9";
+    else if (ship.name.includes(["Megalodon"])) ship.custom.customColor = "#005cb9";
     else ship.custom.customColor = ship.custom.isAFK ? "rgb(200,111,111)" : ship.custom.spectator ? "rgb(155,155,155)" : (ship.id === sorted_ships_KDratio[0].id && ship.custom.Kills >= 1) ? "rgb(255, 215, 0)" : "rgb(255, 255, 255)";
-  }
+  });
   let Scoreboard = {
     id: "scoreboard",
     clickable: false,
     visible: true,
     components: [
-      {
-        type: "box", position: [0, 0, 100, 10], fill: "rgba(255, 255, 255, 0.35)"
-      },
-      {
-        type: "box", position: [81, 0, 7.5, 10], fill: "rgba(55, 255, 55, 0.35)"
-      },
-      {
-        type: "box", position: [88.5, 0, 7.5, 10], fill: "rgba(255, 55, 55, 0.35)"
-      },
-      {
-        type: "text", position: [3, 0.7, 69, 8.5], value: "Players", color: "rgb(255,255,255)", align: "left"
-      },
-      {
-        type: "text", position: [66, 1, 29, 8.5], value: "K/D", color: "rgb(255,255,255)", align: "right"
-      },
+      {type: "box", position: [0, 0, 100, 10], fill: "rgba(255, 255, 255, 0.35)"},
+      {type: "box", position: [81, 0, 7.5, 10], fill: "rgba(55, 255, 55, 0.35)"},
+      {type: "box", position: [88.5, 0, 7.5, 10], fill: "rgba(255, 55, 55, 0.35)"},
+      {type: "text", position: [3, 0.7, 69, 8.5], value: "Players", color: "rgb(255,255,255)", align: "left"},
+      {type: "text", position: [66, 1, 29, 8.5], value: "K/D", color: "rgb(255,255,255)", align: "right"},
       ...sorted_ships_KDratio.map((ship, i) => [
         {
-          type: "player", index: i, position: [0, 11.25 * i + 11, 75.5, 9.25], id: sorted_ships_KDratio[i].id, color: ship.custom.customColor, value: "", align: "left"
+          type: "player", 
+          index: i, 
+          position: [0, 11.25 * i + 11, 77, 9.25], 
+          id: sorted_ships_KDratio[i].id, 
+          color: ship.custom.customColor, 
+          value: "", 
+          align: "left"
         },
         {
-          type: "text", position: [74, 11.25 * i + 11.5, 29, 8.5], value: sorted_ships_KDratio[i].custom.Kills + "/" + ship.custom.Deaths, color: "rgb(255,255,255)", align: "center"
+          type: "text", 
+          position: [74, 11.25 * i + 11.5, 29, 8.5], 
+          value: sorted_ships_KDratio[i].custom.Kills + "/" + ship.custom.Deaths, 
+          color: "rgb(255,255,255)", 
+          align: "center"
         }
       ]).flat(Infinity)
     ]
   };
   for (let ship of game.ships) {
-    if (ship == null) continue;
+    if (ship === null) continue;
     let components = [...Scoreboard.components];
     let index = components.findIndex(c => c.type == "player" && c.id === ship.id);
     if (index == -1) {
@@ -434,26 +368,33 @@ function updateScoreboard(game) {
       Scoreboard.components.at(-1).value = ship.custom.Kills + "/" + ship.custom.Deaths;
       index = Scoreboard.components.length - 2;
     }
-    Scoreboard.components.splice(index, 0, {type: "box",position: [0, components[index].index * 11.25 + 10.50, 100, 10],fill: "rgba(200, 200, 255, 0.15)"})
+    Scoreboard.components.splice(index, 0, {type: "box",position: [0, components[index].index * 11.25 + 10.50, 100, 10],fill: "rgba(200, 200, 255, 0.15)"});
     ship.setUIComponent(Scoreboard);
     Scoreboard.components = components;
   }
 };
 
+function getCords(size, info, random = true) {
+  const mapSize = size + 1;
+  const newInfo = Array(mapSize).fill(0).map((_, i) => (info.cords - Math.round(size / 2)) + i);
+  return random ? newInfo[~~(Math.random() * newInfo.length)] : newInfo;
+}
+
 function setAPC(ship) {
-  if (always_pickup_gems === true) Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: ON", Always_Pickup_Crystals.components[0].color = "rgba(55,255,55,0.4)";
-  else Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: OFF", Always_Pickup_Crystals.components[0].color = "rgba(255,55,55,0.4)";
+  const isAlwaysPickup = always_pickup_crystals ? "ON" : "OFF";
+  Always_Pickup_Crystals.components[0].value = `Always Pickup Crystals: ${isAlwaysPickup}`;
+  Always_Pickup_Crystals.components[0].color = always_pickup_crystals ? "rgba(55, 255, 55, 0.4)" : "rgba(255, 55, 55, 0.4)";
   ship.setUIComponent(Always_Pickup_Crystals);
 }
 
 function MapOpen() {
-  game.custom.launched = true;
   game.modding.terminal.echo("[[bg;dodgerblue;]\n - Meg's Dueling - ]\n[[i;Cyan;]\nVersion: "+mod_version+"\nAll credits goes to Megalodon#0001\n]");
   game.modding.terminal.echo("[[bg;Gold;]Support Server & documentation:]");
-  game.modding.terminal.echo("https://discord.gg/KXvCq4N\nhttps://megalodon-dueling.notion.site/megalodon-dueling/Meg-s-dueling-Documentation-14fded21b2e648039ed441fc13fb7431");
+  game.modding.terminal.echo("https://discord.gg/KXvCq4N\nhttps://megalodon-dueling.notion.site/megalodon-dueling/Meg-s-dueling-Documentation-14fded21b2e648039ed441fc13fb7431\n");
+  game.custom.launched = true;
 }
 
-function alert(ship, Value1, Value2 = "", Color = "rgba(255,255,255,0.8)", time = 2500) {
+function alert(ship, Value1 = "", Value2 = "", Color = "rgba(255,255,255,0.8)", time = 2500) {
   clearTimeout(ship.custom.logtimeout);
   ship.custom.logtimeout = setTimeout(() => {ship.setUIComponent({id: "Text", visible: false})}, time);
   ship.setUIComponent({
@@ -462,12 +403,8 @@ function alert(ship, Value1, Value2 = "", Color = "rgba(255,255,255,0.8)", time 
     clickable: false,
     visible: true,
     components: [
-      {
-        type: "text", position: [0, 16, 100, 4], color: Color, value: Value1
-      },
-      {
-        type: "text", position: [0, 21, 100, 4], color: Color, value: Value2
-      }
+      {type: "text", position: [0, 18, 100, 4], color: Color, value: Value1},
+      {type: "text", position: [0, 23, 100, 4], color: Color, value: Value2}
     ]
   });
 }
@@ -486,16 +423,33 @@ function format_time(time) {
   } else return "0:00";
 }
 
+function newPlayerJoined(ship) {
+  const playerName = ship.name;
+  const containsClan = new RegExp(["ҒꝚ▸", "ҒR▸", "ᚫᚱ▸", "FЯ▸", "✯", "F℣➛", "【🔥IS】", "⌥Ƒᔦ", "SᄅF̶ ", "[S&C]", "[△]", "ɆØ₮⇝", "ɆØ₵➛", "[NUB]", "Λᴄᗯ"].join("|"));
+  const safeClans = (["ҒꝚ▸", "ҒR▸", "ᚫᚱ▸", "FЯ▸","【🔥IS】", "SᄅF̶ ", "[S&C]", "[△]", "ɆØ₵➛", "Λᴄᗯ"])
+  game.modding.terminal.echo(`[[g;#fffc50;]\nNew player joined \nIndex: ${game.ships.indexOf(ship)}, Name: ${ship.name}]`);
+  if (getWarning) {
+    if (containsClan.test(ship.name) && getWarning) {
+      game.modding.terminal.echo(`[[g;#d3d3d3;]The recently joined player is a member of ⭢] [[gub;#d3d3d3;]${ship.name.match(containsClan)[0]}]`);
+      safeClans.includes(ship.name.match(containsClan)[0]) ? game.modding.terminal.echo(`[[g;#85ff97;] ⮡ Typically, this group does not engage in cheating and is unlikely to create any problems.]`) : game.modding.terminal.echo(`[[g;#ff6666;] ⮡  Be cautious of this clan as they have a reputation for being friendly towards cheaters.]`);
+    } else game.modding.terminal.echo(`[[g;#d3d3d3;]The player does not belong to any renowned clan/team.]`);
+  }
+}
+
 function wrap_ship(ship, game) {
   if (!ship.custom.wrap || game.step >= ship.custom.wrap) {
     ship.custom.wrap = game.step + wrap_delay * 60;
-    if (game.ships.length > 1) {
-      if (!ship.custom.spectator) spectator_ship(ship);
+    if (game.ships.length <= 1) {
+      alert(ship, "You are the only player in this game.");
+      return;
+    } else if (!ship.custom.spectator) {
+      spectator_ship(ship);
+    } else if (game.ships.length > 1) {
       ship.custom.warpIndex = (ship.custom.warpIndex + 1) % game.ships.length;
       game.ships.indexOf(ship) === ship.custom.warpIndex ? (ship.custom.warpIndex = (ship.custom.warpIndex + 1) % game.ships.length) : undefined;
-      ship.set({x: game.ships[ship.custom.warpIndex].x, y: game.ships[ship.custom.warpIndex].y, vx: 0, vy: 0});
-      alert(ship, `You have been teleported to ${game.ships[ship.custom.warpIndex].name}`, "", "rgba(55,255,55,0.8)");
-    } else alert(ship, "You are the only player in this game.");
+      ship.set({x: getCords(10, {cords: game.ships[ship.custom.warpIndex].x}), y: getCords(10, {cords: game.ships[ship.custom.warpIndex].y}), vx: 0, vy: 0});
+      alert(ship, `You have been teleported to ${game.ships[ship.custom.warpIndex].name}`);
+    }
   } else alert(ship, "Hold up! You're clicking too fast!");
 }
 
@@ -509,9 +463,7 @@ function next_ship_button(ship) {
   } else if (!ship.custom.next_switch || game.step >= ship.custom.next_switch) {
     ship.custom.next_switch = game.step + switch_ship_delay * 60;
     index = Ship_Codes.indexOf(ship.type);
-    if (index >= 0) {
-      next_type = Ship_Codes[(index + 1) % Ship_Codes.length];
-    }
+    if (index >= 0) next_type = Ship_Codes[(index + 1) % Ship_Codes.length];
     ship.custom.last_ship = next_type;
     ship.set({
       type: next_type, collider: true, shield: 999,
@@ -534,9 +486,7 @@ function previous_ship_button(ship) {
     if (ship.type === Ship_Codes[0]) {
       previous_type = Ship_Codes[Math.max(Ship_Codes.length - 1)];
     } else {
-      if (Ship_Codes.indexOf(ship.type) >= 0) {
-        previous_type = Ship_Codes[(Ship_Codes.indexOf(ship.type) - 1) % Ship_Codes.length];
-      }
+      if (Ship_Codes.indexOf(ship.type) >= 0) previous_type = Ship_Codes[(Ship_Codes.indexOf(ship.type) - 1) % Ship_Codes.length];
     }
     ship.custom.last_ship = previous_type;
     ship.set({
@@ -548,7 +498,7 @@ function previous_ship_button(ship) {
   } else alert(ship, "Hold up! You're clicking too fast!");
 }
 
-function spectator_ship(ship) {
+function spectator_ship(ship, rps=true) {
   if (!ship.custom.spectator_switch || game.step >= ship.custom.spectator_switch) {
     ship.custom.spectator_switch = game.step + spectator_switch_delay * 60;
     if (ship.custom.spectator) {
@@ -563,7 +513,7 @@ function spectator_ship(ship) {
       update_stats_button(ship, false);
     } else {
       ship.custom.spectator = true;
-      ship.custom.last_ship = ship.type;
+      ship.custom.last_ship = rps ? ship.type : 605;
       ship.custom.stats = ship.stats;
       ship.custom.afk_main = 0;
       ship.set({
@@ -611,50 +561,46 @@ function regen(ship) {
 };
 
 function update_stats_button(ship, op_button = true, allow_stats = true, check_max = false) {
-  if (check_max) {
-    if (ship.stats === 11111111 * Math.trunc(ship.type / 100)) ship.custom.keep_maxed = true;
-    else ship.custom.keep_maxed = false;
-  }
-  if (!ship.custom.keep_maxed) {
-    if (allow_stats) ship.set({stats: 0});
-    if (op_button) {
-      Stats.components[1].value = "⚠️ Stats [7]";
-      ship.setUIComponent(Stats);
-    }
-  } else {
-    if (allow_stats) ship.set({stats: 88888888});
-    if (op_button) {
-      Stats.components[1].value = "Stats [7]";
-      ship.setUIComponent(Stats);
-    }
+  if (check_max) ship.custom.keep_maxed = (ship.stats === 11111111 * Math.trunc(ship.type / 100)) ? true : false;
+  if (allow_stats) ship.set({stats: ship.custom.keep_maxed ? 88888888 : 0});
+  if (op_button) {
+    Stats.components[1].value = ship.custom.keep_maxed ? "Stats [7]" : "⚠️ Stats [7]";
+    ship.setUIComponent(Stats);
   }
 }
 
 function Stats_button(ship) {
-  if (ship.type === spectator_ship_code || admin_ship_codes.includes(ship.type)) alert(ship, "You can't interact with the stats", "while being in that ship");
-  else {
-    if (ship.stats === 11111111 * Math.trunc(ship.type / 100)) ship.custom.keep_maxed = false;
-    else ship.custom.keep_maxed = true;
-    update_stats_button(ship);
+  if (spectator_ship_code === ship.type || admin_ship_codes.includes(ship.type)) {
+    alert(ship, "You can't interact with the stats", "while being in that ship");
+    return;
   }
+  ship.custom.keep_maxed = ship.stats !== 11111111 * Math.trunc(ship.type / 100);
+  update_stats_button(ship);
 }
+
 
 function Teleport_Center(ship) {
   if (!ship.custom.spawn || game.step >= ship.custom.spawn) {
     ship.custom.spawn = game.step + spawn_zone_delay * 60;
     ship.set({
-      x: (Math.random() - 0.5) * game.options.map_size * 0.6, 
-      y: (Math.random() - 0.5) * game.options.map_size * 0.6
+      x: getCords(20, {cords: 0}), 
+      y: getCords(20, {cords: 0})
     });
   } else alert(ship, "Hold up! You're clicking too fast!");
 }
 
 // Exit Screen Commands
-const gameComponents = [Stats, Wrap, Tp_Spawn, next_ship, previous_ship, Box_Exit_screen, Square];
+const gameComponents = [Stats, Wrap, Tp_Spawn, next_ship, previous_ship, Square];
 const gameComponentsID = ["Tp_Spawn", "Square", "next_ship", "previous_ship", "Stats", "Wrap", "Box_Exit_screen"];
-function Exit_screen(ship) {
-  ship.setUIComponent(Menu_);
-  for (let ComponentsID of gameComponentsID) ship.setUIComponent({id: ComponentsID, visible: false});
+function Exit_screen(ship, withMenu = true) {
+  if (withMenu) {
+    Menu_.components[0].fill = `rgba(255, 55, 55, ${anchorMenu.look.opacity})`;
+    Menu_.components[0].stroke = "#FF0000";
+    Menu_.components[1].value = "Open [0]";
+    Menu_.position = [64.1, 0, 7.6, 4];
+    ship.setUIComponent(Menu_);
+  }
+  gameComponentsID.forEach(id => ship.setUIComponent({ id, visible: false }));
 }
 
 function TP_points_button(ship) {
@@ -663,9 +609,18 @@ function TP_points_button(ship) {
   if (!ship.custom.TP_points || game.step >= ship.custom.TP_points) {
     ship.custom.TP_points = game.step + TP_points_delay * 60;
     update_stats_button(ship, true, false, true);
-    for (let Components of gameComponents) ship.setUIComponent(Components);
-    ship.setUIComponent({id: "Menu_", visible: false});
+    Menu_.components[0].fill = `rgba(200, 200, 200, ${anchorMenu.look.opacity})`;
+    Menu_.components[0].stroke = "#FFFFFF";
+    Menu_.components[1].value = "Close [0]";
+    Menu_.position = [59+anchorMenu.anchor.x, 60+anchorMenu.anchor.y, 10, 5.5];
+    ship.setUIComponent(Menu_);
+    gameComponents.forEach(component => ship.setUIComponent(component));
   } else alert(ship, "Hold up! You're clicking too fast!");
+}
+
+function update_Menu(ship) {ship.setUIComponent(Menu_);
+  ship.custom.isOpen ? Exit_screen(ship) : TP_points_button(ship);
+  ship.custom.isOpen = !ship.custom.isOpen;
 }
 
 // HideShow_Buttons Command
@@ -674,72 +629,127 @@ const gameMainComponentsID = ["Regen", "Spectate", "Menu_", "APC"];
 function Manage_Buttons(ship) {
   if (!ship.custom.Mb || game.step >= ship.custom.Mb) {
     ship.custom.Mb = game.step + Mb_delay * 60;
-    if (ship.custom.ButtonsShowed === true) {
-      Exit_screen(ship);
-      for (let mainComponentsID of gameMainComponentsID) ship.setUIComponent({id: mainComponentsID,visible: false});
-      HideShow_Buttons.components[0].value = "Show Buttons [2]";
-      ship.custom.ButtonsShowed = false;
+    if (ship.custom.ButtonsShowed) {
+      gameMainComponentsID.forEach(id => ship.setUIComponent({ id, visible: false }));
+      Exit_screen(ship, false);
     } else {
-      for (let mainComponents of gameMainComponents) ship.setUIComponent(mainComponents);
-      HideShow_Buttons.components[0].value = "Hide Buttons [2]";
-      ship.custom.ButtonsShowed = true;
+      if (ship.custom.isOpen) update_Menu(ship);
+      gameMainComponents.forEach(component => ship.setUIComponent(component));
       setAPC(ship);
     }
+    ship.custom.ButtonsShowed = !ship.custom.ButtonsShowed;
+    HideShow_Buttons.components[0].value = ship.custom.ButtonsShowed ? "Show Buttons [2]" : "Hide Buttons [2]";
     ship.setUIComponent(HideShow_Buttons);
   } else alert(ship, "Hold up! You're clicking too fast!");
 }
 
 this.event = function(event, game) {
-  var ship = event.ship;
   switch (event.name) {
     case "ui_component_clicked":
-      var component = event.id;
-      if (component == "using_subspace") {
-        idle(game.ships.indexOf(ship), false);
-        ship.gameover({"Subspace isn't allowed":"in Meg's Dueling"});
-        break;
-      }
-      if (ship.custom.ISidle !== true) {
-        if (component === "Menu_") TP_points_button(ship);
-        else if (component === "HideShow_Buttons") Manage_Buttons(ship);
-        else if (component === "Box_Exit_screen") Exit_screen(ship);
-        else if (component === "Regen") regen(ship);
-        else if (component === "Spectate") spectator_ship(ship);
-        else if (component === "Admin") admin_ship(ship);
-        else if (component === "next_ship") next_ship_button(ship);
-        else if (component === "previous_ship") previous_ship_button(ship);
-        else if (component === "Stats") Stats_button(ship);
-        else if (component === "Tp_Spawn") Teleport_Center(ship);
-        else if (component === "Wrap") wrap_ship(ship, game);
+      if (event.id === "using_subspace" && Enable_antiCheat) {
+        idle(game.ships.indexOf(event.ship), false);
+        event.ship.gameover({
+          "Subspace isn't allowed": "in Meg's Dueling"
+        });
+      } else if (!event.ship.custom.ISidle) {
+        switch (event.id) {
+          case "Menu_": update_Menu(event.ship); break;
+          case "HideShow_Buttons": Manage_Buttons(event.ship); break;
+          case "Regen": regen(event.ship); break;
+          case "Spectate": spectator_ship(event.ship); break;
+          case "Admin": admin_ship(event.ship); break;
+          case "next_ship": next_ship_button(event.ship); break;
+          case "previous_ship": previous_ship_button(event.ship); break;
+          case "Stats": Stats_button(event.ship); break;
+          case "Tp_Spawn": Teleport_Center(event.ship); break;
+          case "Wrap": wrap_ship(event.ship, game); break;
+        }
       }
       break;
     case "ship_spawned":
-      if (BannedList.includes(ship.name)) {
-        idle(game.ships.indexOf(ship), false);
-        ship.gameover({"You are banned from this game": "sorry."});
-      } else {
-        const {x = 0, y = 0} = ship.custom;
-        let xx = [...new Array(41)].map((j, i) => x - 30 + i);
-        let yy = [...new Array(41)].map((j, i) => y - 30 + i);
-        ship.set({
-          x: xx[~~(Math.random() * xx.length)],
-          y: yy[~~(Math.random() * yy.length)],
-          collider: true, crystals: 720, stats: 88888888
+      if (BannedList.includes(event.ship.name)) {
+        idle(game.ships.indexOf(event.ship), false);
+        event.ship.gameover({
+          "You are banned from this game": "-",
+          "reason":BannedListReasons[BannedList.indexOf(event.ship.name)]
         });
-        spectator_ship(ship);
-        Show_Buttons_a(ship);
-        game.modding.terminal.echo("\n | List of players and their IDs:\n");
-        for (let i = 0; i < game.ships.length; i++) game.modding.terminal.echo(" | id: " + i + ", Name: " + game.ships[i].name + ", Type: " + game.ships[i].type + "\n | Coordinates: X: " + game.ships[i].x + ", Y: " + game.ships[i].y);
-        game.modding.terminal.echo("\n");
+        break;
+      }
+      if (!game.ships[0].custom.defaultAdmin) {
+        game.ships[0].custom.defaultAdmin = true;
+        game.ships[0].setUIComponent(Admin);
+      }
+      if (!event.ship.custom.init) {
+        for (let i = 0; i<2; i++) update_Menu(event.ship);
+        event.ship.custom = {
+          init: true, ISidle: false, keep_maxed: true, ButtonsShowed: true, Deaths: 0, Kills: 0, warpIndex: 0, isOpen: false,
+          ...event.ship.custom
+        };
+        event.ship.set({type: 605});
+        for (const component of gameMainComponents) event.ship.setUIComponent(component);
+        event.ship.setUIComponent(HideShow_Buttons);
+        setAPC(event.ship);
+        Teleport_Center(event.ship);
+        spectator_ship(event.ship, false);
+        newPlayerJoined(event.ship);
+      } else {
+        const {x = 0, y = 0} = event.ship.custom;
+        event.ship.set({
+          x: getCords(20, {cords: x}),
+          y: getCords(20, {cords: y})
+        });
+        if (!event.ship.custom.spectator) spectator_ship(event.ship);
+        if (!event.ship.custom.ButtonsShowed) Manage_Buttons(event.ship);
       }
       break;
     case "ship_destroyed":
-      Object.assign(ship.custom, {x: ship.x, y: ship.y});
-      if (ship) ship.custom.Deaths++
-      if (event.killer) event.killer.custom.Kills++;
+      if (event.ship) { event.ship.custom.Deaths++;
+        Object.assign(event.ship.custom, {x: event.ship.x, y: event.ship.y, type: event.ship.type});
+        if (event.killer) event.killer.custom.Kills++;
+      }
+      break;
+    case "ship_disconnected":
+      if (event.ship.custom.ISidle && !BannedList.includes(event.ship.name)) {
+        BannedList.push(event.ship.name);
+        BannedListReasons.push("Left while being frozen");
+      }
+      if (!BannedList.includes(event.ship.name)) game.modding.terminal.echo(`\n[[g;#ff8770;]${event.ship.name} just left the game.]`);
       break;
   }
-};
+}
+
+;(function(){
+  var internals_init = function() {
+    if (game.custom.shipDisconnected_init) return;
+    const modding = game.modding;
+    const internals = Object.values(modding).find(val => val && typeof val.shipDisconnected === "function");
+    if (!internals) {
+      modding.terminal.error(new Error("Failed to initialize 'ship_disconnected' event: modding internals object not found"));
+      return;
+    }
+    if (!internals.shipDisconnected.old) {
+      function shipDisconnected({id} = {}) {
+        if (modding.context.event && id) var ship = game.findShip(id);
+        var result = shipDisconnected.old.apply(this, arguments);
+        if (ship) {
+          try {
+            modding.context.event({ name: "ship_disconnected", ship }, game);
+          } catch (e) {}
+        }
+        return result;
+      }
+      shipDisconnected.old = internals.shipDisconnected;
+      internals.shipDisconnected = shipDisconnected;
+    }
+    game.custom.shipDisconnected_init = true;
+  }
+  var tick = this.tick;
+  this.tick = function() {
+    this.tick = tick;
+    try { internals_init() } catch(e){}
+    return typeof this.tick == "function" && this.tick.apply(this, arguments);
+  }
+}).call(this);
 
 // Images
 var MapCenter = {
@@ -772,127 +782,137 @@ AddObject("MapCenter", MapCenter, -1, 0, 95, 52, 0);
 AddObject("ModVersion", ModVersion, 21, -8.5, 24, 22, -0.30);
 AddObject("BETAlogo", BETAlogo, -36, -1.25, 18, 9, 0);
 
+
 // Commands
 // Moderation commands
-game.modding.commands.info = function() {
-  game.modding.terminal.echo("Total amount of aliens: "+game.aliens.length);
-  game.modding.terminal.echo("Total amount of asteroids: "+game.asteroids.length);
-  game.modding.terminal.echo("Total amount of players: "+game.ships.length+"\n");
-  if (BannedList.length === 0) names = "None";
-  else names = BannedList;
-  game.modding.terminal.echo("Banned players: " + names);
-  game.modding.terminal.echo("\nPlayer's and their index's:\n");
-  for (let i = 0; i < game.ships.length; i++) game.modding.terminal.echo("Index: " + i + ", Name: " + game.ships[i].name + ", Ship type: " + game.ships[i].type + "\nCoordinates: X: " + Math.round(game.ships[i].x) + ", Y: " + Math.round(game.ships[i].y));
-  game.modding.terminal.echo("\n");
+game.modding.commands.info = function() { // [[g;#70aeff;]
+  const totalPlayers = game.ships.length;
+  const bannedPlayers = BannedList.length === 0 ? "None" : BannedList;
+  game.modding.terminal.echo(`\n[[g;#70aeff;]Total amount of aliens: ${game.aliens.length}]`);
+  game.modding.terminal.echo(`[[g;#70aeff;]Total amount of asteroids: ${game.asteroids.length}]`);
+  game.modding.terminal.echo(`[[g;#70aeff;]Total amount of players: ${totalPlayers}\n]`);
+  game.modding.terminal.echo(`[[g;#70aeff;]Banned players: ${bannedPlayers}\n]`);
+  game.modding.terminal.echo("[[g;#70aeff;]Player's and their index's:\n]");
+  for (let i = 0; i < totalPlayers; i++) {
+    const player = game.ships[i];
+    game.modding.terminal.echo(`[[g;#70e4ff;]Index: ${i}, Name: ${player.name}, Ship type: ${player.type}\nCoordinates: X: ${Math.round(player.x)}, Y: ${Math.round(player.y)}\n]`);
+  }
 };
 
-idle = function(who, txt = true) {
-  if (game.ships[who].custom.ISidle === true) {
-    modding.terminal.error(new Error("\n" + game.ships[who].name + ", is already frozen.\n"));
+idle = function(who, showMessage = true) {
+  const ship = game.ships[who];
+  if (ship.custom.ISidle) {
+    modding.terminal.error(new Error(`${ship.name} is already frozen.`));
+    return;
   } else {
-    game.ships[who].set({idle: true});
-    Exit_screen(game.ships[who]);
-    game.ships[who].custom.ISidle = true;
-    if (game.ships[who].type !== 191) spectator_ship(game.ships[who])
-    if (txt) game.modding.terminal.echo("the player: " + game.ships[who].name + ", index: " + who + " has been freezed\n❗INFO Type unidle(index), to unfreeze a player.\n")
+    ship.set({ idle: true });
+    Exit_screen(ship);
+    ship.custom.ISidle = true;
+    if (ship.type !== 191) spectator_ship(ship);
+    if (showMessage) game.modding.terminal.echo(`[[g;#70ffc1;]The player ${ship.name}, index ${who}, has been frozen.]\n❗INFO Type unidle() to unfreeze a player.`);
   }
 };
 
 unidle = function(who) {
-  if (game.ships[who].custom.ISidle === true) {
-    game.ships[who].set({idle: false});
-    game.ships[who].custom.ISidle = false;
-    game.modding.terminal.echo("the player: " + game.ships[who].name + ", index: " + who + " has been unfreezed\n");
-  } else modding.terminal.error(new Error("\nThis player is not frozen\n"));
+  const ship = game.ships[who];
+  if (ship.custom.ISidle) {
+    ship.set({ idle: false });
+    ship.custom.ISidle = false;
+    game.modding.terminal.echo(`[[g;#70ffc1;]The player ${ship.name}, index ${who}, has been unfrozen.]`);
+  } else modding.terminal.error(new Error("This player is not frozen."));
 };
 
 kick = function(who, reason = "Disturbing duels") {
-  if (game.ships.includes(game.ships[who])) {
-    for (let ship of game.ships) alert(ship, "Player: " + game.ships[who].name, "has been kicked.", "rgba(255,155,55,0.8)");
+  if (game.ships[who]) {
+    game.ships.forEach(function(ship) {alert(ship, "Player: " + game.ships[who].name + "has been kicked", "", "rgba(255,155,55,0.8)")});
     idle(who, false);
     game.ships[who].gameover({"You were kicked for" : reason, "Kills": game.ships[who].custom.Kills, "Deaths": game.ships[who].custom.Deaths});
-    game.modding.terminal.echo("Player: " + game.ships[who].name + ", index: " + who + " Has successfully been kicked\n");
-  } else modding.terminal.error(new Error("\n" + "The index you used doesn't exist, try again with a valid index\n"));
+    game.modding.terminal.echo(`[[g;#70ffc1;]Player: ${game.ships[who].name}, index: ${who}, has been kicked\n]`);
+  } else modding.terminal.error(new Error("\nThe index you used doesn't exist, try again with a valid index\n"));
 };
 
 ban = function(who, reason = "Disturbing duels") {
-  if (game.ships.includes(game.ships[who])) {
-    BannedList.push(game.ships[who].name);
-    BannedListReasons.push(reason);
-    idle(who, false);
-    game.ships[who].gameover({"You were banned for" : reason, "Kills": game.ships[who].custom.Kills, "Deaths": game.ships[who].custom.Deaths});
-    for (let ship of game.ships) alert(ship, "Player: " + game.ships[who].name, "has been banned.", "rgba(255,55,55,0.8)");
-    game.modding.terminal.echo("Player: " + game.ships[who].name + ", index: " + who + " Has successfully been banned\n" + "\n❗INFO Type: banlist, to see all of the banned players.\n");
-  } else modding.terminal.error(new Error("\n" + "The index you used doesn't exist, try again with a valid index\n"));
+  const ship = game.ships[who];
+  if (!ship) {
+    game.modding.terminal.error(new Error("\nThe index you used doesn't exist, try again with a valid index\n"));
+    return;
+  }
+  BannedList.push(ship.name);
+  BannedListReasons.push(reason);
+  idle(who, false);
+  ship.gameover({ "You were banned for": reason, Kills: ship.custom.Kills, Deaths: ship.custom.Deaths });
+  for (const otherShip of game.ships) alert(otherShip, `Player: ${ship.name} has been banned.`, "", "rgba(255,55,55,0.8)");
+  game.modding.terminal.echo(`[[g;#70ffc1;]Player: ${ship.name}, index: ${who} has successfully been banned]\n\n❗INFO Type: banlist, to see all of the banned players.\n`);
 };
 
 game.modding.commands.banlist = function() {
   if (BannedList.length > 0) {
-    for (let i = 0; i < BannedList.length; i++) game.modding.terminal.echo("Index: " + i + ", Name: " + BannedList[i] + ", Reason: " + BannedListReasons[i]);
-    game.modding.terminal.echo("❗INFO Type: unban(index), to unabn a player.\n");
-  } else modding.terminal.error(new Error("\n" + "There are no banned players in this game.\n"));
+    game.modding.terminal.echo(`[[g;#70aeff;]\nBanned player list:\nBanned Players Amount: ${BannedList.length}]\n`);
+    BannedList.forEach((player, index) => {game.modding.terminal.echo(`[[g;#70e4ff;]Index: ${index}, Name: ${player}, Reason: ${BannedListReasons[index]}]`)});
+    game.modding.terminal.echo("❗INFO Type: unban(index), to unban a player.\n");
+  } else game.modding.terminal.error(new Error("\n" + "There are no banned players in this game.\n"));
 };
 
 unban = function(index) {
   if (BannedList.includes(BannedList[index])) {
+    game.ships.forEach(ship => { alert(ship, "Player: " + BannedList[index] + "has been unbanned.", "", "rgba(55,255,55,0.8)")});
+    game.modding.terminal.echo("[[g;#70ffc1;]Player: " + BannedList[index] + ", reason: " + BannedListReasons[index] + ", Has successfully been unbanned\n]");
     BannedListReasons.splice(index, 1);
     BannedList.splice(index, 1);
-    for (let ship of game.ships) alert(ship, "Player: " + BannedList[index], "has been unbanned.", "rgba(55,255,55,0.8)");
-    game.modding.terminal.echo("Player: " + BannedList[index] + ", reason: " + BannedListReasons[index] + ", Has successfully been unbanned\n");
-  } else modding.terminal.error(new Error("\n" + "You gave a wrong index or the player that you're trying to unban isn't banned or got unbanned before.\n"));
+  } else modding.terminal.error(new Error("\n" + "You gave a wrong index or the player that you're trying to unban isn't banned or already got unbanned.\n"));
 };
 
-admin = function(who, duration=undefined) {
-  if (!game.ships[who].custom.defaultAdmin) {
-    clearTimeout(game.ships[who].custom.adm);
-    if (game.ships[who].custom.admin) {
-      game.ships[who].setUIComponent({id: "Admin", visible: false});
-      if (admin_ship_codes.includes(game.ships[who].type)) admin_ship(game.ships[who], true);
-      game.ships[who].custom.admin = false;
-      game.modding.terminal.echo("Player: " + game.ships[who].name + ", index: " + who + " Has successfully been removed the admin commands\n");
+admin = function(who, duration = Infinity) {
+  const ship = game.ships[who];
+  if (!ship.custom.defaultAdmin) {
+    clearTimeout(ship.custom.adm);
+    if (ship.custom.admin) {
+      ship.setUIComponent({id: "Admin", visible: false});
+      if (admin_ship_codes.includes(ship.type)) admin_ship(ship, true);
+      ship.custom.admin = false;
+      game.modding.terminal.echo(`[[g;#ff8770;]Player: ${ship.name}, index: ${who} has had their admin commands removed]\n`);
     } else {
-      if (duration) {
-        game.ships[who].custom.adm = setTimeout(() => {
-          if (admin_ship_codes.includes(game.ships[who].type)) admin_ship(game.ships[who], true);
-          game.ships[who].setUIComponent({id: "Admin", visible: false});
-          game.ships[who].custom.admin = false;
-          game.modding.terminal.echo("Player: " + game.ships[who].name + ", index: " + who + " Lost his admin powers\n");
-        }, duration*1000);
+      if (duration !== Infinity) {
+        ship.custom.adm = setTimeout(() => {
+          if (admin_ship_codes.includes(ship.type)) admin_ship(ship, true);
+          ship.setUIComponent({id: "Admin", visible: false});
+          ship.custom.admin = false;
+          game.modding.terminal.echo(`[[g;#ff8770;]Player: ${ship.name}, index: ${who} has lost their admin powers]\n`);
+        }, duration * 1000);
       }
-      game.ships[who].setUIComponent(Admin);
-      game.ships[who].custom.admin = true;
-      if (duration === undefined) duration = Infinity;
-      game.modding.terminal.echo("Player: " + game.ships[who].name + ", index: " + who + ", Duration: " + duration + " Has successfully been given the admin commands\n");
+      ship.setUIComponent(Admin);
+      ship.custom.admin = true;
+      game.modding.terminal.echo(`[[g;#70ffc1;]Player: ${ship.name}, index: ${who}, Duration: ${duration} has been given the admin commands]\n`);
     }
-  } else modding.terminal.error(new Error("\n" + "This player is a default admin, you cannot remove his permissions\n"));
+  } else modding.terminal.error(new Error(`\nThis player is a default admin, you cannot remove their permissions`));
 };
 
 // General commands
 game.modding.commands.apc = function() {
-  if (always_pickup_gems === true) {
-    always_pickup_gems = false;
-    for (let ship of game.ships) if (ship.custom.ButtonsShowed === true) setAPC(ship);
-    game.modding.terminal.echo("Always Pickup Crystals feature is now OFF\n");
-  } else {
-    always_pickup_gems = true;
-    for (let ship of game.ships) if (ship.custom.ButtonsShowed === true) setAPC(ship);
-    game.modding.terminal.echo("Always Pickup Crystals feature is now ON\n");
-  }
+  always_pickup_crystals = !always_pickup_crystals;
+  game.ships.forEach(ship => {
+    if (ship.custom.ButtonsShowed) setAPC(ship);
+  });
+  const status = always_pickup_crystals ? "ON" : "OFF";
+  const color = always_pickup_crystals ? "#70ffc1" : "#ff8770";
+  game.modding.terminal.echo(`[[g;${color};]Always Pickup Crystals feature is now ${status}\n]`);
 };
 
-set = function(who, what, max_crystals, max_stats){
-  if (game.ships[who].custom.Spectator) modding.terminal.error(new Error("\n" + "This player is on the spectator mode and cannot get switched to another ship\n"));
-  else {
-    if (!max_stats && max_stats !== 0) if (Math.trunc(what / 100) < 7)  max_stats = 11111111 * Math.trunc(what / 100); else max_stats = 0; else max_stats;
-    if (!max_crystals) max_crystals = 20 * Math.trunc(what / 100) * Math.trunc(what / 100); else max_crystals;
-    game.ships[who].set({type: what, crystals: max_crystals, stats: max_stats, shield: 999, collider: true});
-    game.modding.terminal.echo(`Player: ${game.ships[who].name}, index: ${who} Has successfully been given:\nShip Type: ${what}, Crystals: ${max_crystals}, Stats: ${max_stats}\n`);
+set = function(who, what, max_crystals = 0, max_stats = 0) {
+  const ship = game.ships[who];
+  if (ship.custom.spectator) {
+    modding.terminal.error(new Error(`${ship.name} is on the spectator mode and cannot be switched to another ship.`));
+    return;
   }
-};
+  if (!max_stats) max_stats = Math.trunc(what / 100) < 7 ? 11111111 * Math.trunc(what / 100) : 0;
+  if (!max_crystals) max_crystals = 20 * Math.trunc(what / 100) ** 2;
+  ship.set({type: what, crystals: max_crystals, stats: max_stats, shield: 999, collider: true});
+  game.modding.terminal.echo(`[[g;#70ffc1;]Player ${ship.name} (index: ${who}) has been given:\nShip Type: ${what}, Crystals: ${max_crystals}, Stats: ${max_stats}\n]`);
+}
 
 // Announce command
 say = function(text = "", duration = 4) {
-  for (let ship of game.ships) {
+  game.ships.forEach(ship => {
     clearTimeout(ship.custom.gameAnnouncement);
     ship.setUIComponent({
       id: "announceText",
@@ -900,17 +920,15 @@ say = function(text = "", duration = 4) {
       clickable: false,
       visible: true,
       components: [
-        {
-          type: "text", position: [0, 0, 100, 20], color: "#FFFFFF", value: text
-        }
+        {type: "text",position: [0, 0, 100, 20],color: "#FFFFFF",value: text}
       ]
     });
     ship.custom.gameAnnouncement = setTimeout(() => {
       ship.setUIComponent({
-        id: "announceText", 
+        id: "announceText",
         visible: false
       });
-    }, duration*1000);
-  }
-  game.modding.terminal.echo(`Text: ${text} applyed\n`);
-};
+    }, duration * 1000);
+  });
+  game.modding.terminal.echo(`[[g;#70ffc1;]Text: ${text} applied]\n`);
+}
