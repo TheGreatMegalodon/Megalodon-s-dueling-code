@@ -1,4 +1,4 @@
-const mod_version =
+const mod_version = 
 "v1.3.7";
 
 /*
