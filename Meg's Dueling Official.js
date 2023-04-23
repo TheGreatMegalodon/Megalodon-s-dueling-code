@@ -1,4 +1,4 @@
-const mod_version = 
+const mod_version =
 "v1.3.7";
 
 /*
@@ -51,6 +51,11 @@ const getWarning = false; // Get a warning everytime a suspicious player joins t
 const Enable_antiCheat = true; // Changing the value while the mod is running isn't recomanded.
 const Enable_AFK = true; // Allow AFK | true / false
 const AFK_Cooldown = 40;
+
+// Other
+var always_pickup_crystals = true; // Always pickup crystals | true / false.
+var BannedList = [];
+var BannedListReasons = [];
 const anchorMenu = { 
   anchor: {x: 0, y: 0},
   look: {
@@ -58,11 +63,6 @@ const anchorMenu = {
     opacity: "0.30"
   }
 };
-
-// Other
-var always_pickup_crystals = true; // Always pickup crystals | true / false.
-var BannedList = [];
-var BannedListReasons = [];
 
 // Admin
 const Spectator_191 = '{"name":"Spectator","level":1.9,"model":1,"size":0.025,"zoom":0.075,"specs":{"shield":{"capacity":[1e-30,1e-30],"reload":[1000,1000]},"generator":{"capacity":[1e-30,1e-30],"reload":[1,1]},"ship":{"mass":1,"speed":[200,200],"rotation":[1000,1000],"acceleration":[1000,1000]}},"bodies":{"face":{"section_segments":100,"angle":0,"offset":{"x":0,"y":0,"z":0},"position":{"x":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"y":[-2,-2,2,2],"z":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"width":[0,1,1,0],"height":[0,1,1,0],"vertical":true,"texture":[6]}},"typespec":{"name":"Spectator","level":1,"model":1,"code":101,"specs":{"shield":{"capacity":[1e-30,1e-30],"reload":[1000,1000]},"generator":{"capacity":[1e-30,1e-30],"reload":[1,1]},"ship":{"mass":1,"speed":[200,200],"rotation":[1000,1000],"acceleration":[1000,1000]}},"shape":[0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001],"lasers":[],"radius":0.001}}';
@@ -106,7 +106,7 @@ const vocabulary = [
   {text: "Attack", icon: "\u0049", key: "A"},
   {text: "Follow Me", icon: "\u0050", key: "F"},
   {text: "Good Game", icon: "\u00a3", key: "G"},
-  {text: "Spectate", icon: "\u0059", key: "L"},
+  {text: "Leave", icon: "\u00b3", key: "L"},
 
   {text: "Gems", icon: "\u0044", key: "M"},
   {text: "Stats", icon: "\u0078", key: "K"},
@@ -115,12 +115,13 @@ const vocabulary = [
   
   {text: "Discord", icon: "\u007b", key: "D"},
   {text: "Idiot", icon: "\u0079", key: "I"},
-  {text: "Lag", icon: "\u0069", key: "J"}
+  {text: "Lag", icon: "\u0069", key: "J"},
+  {text: "Spectate", icon: "\u0059", key: "W"}
 ];
 
 if (!game.custom.launched) MapOpen();
-const music = ["civilisation.mp3", "procedurality.mp3", "argon.mp3", "crystals.mp3", "red_mist.mp3", "warp_drive.mp3"];
-const musicApplyed = music[~~(Math.random() * music.length)];
+var music = ["civilisation.mp3", "procedurality.mp3", "argon.mp3", "crystals.mp3", "red_mist.mp3", "warp_drive.mp3"];
+var musicApplyed = music[~~(Math.random() * music.length)];
 this.options = {
   map_name: "Meg's Dueling",
   max_players: 69, // :D haha funny
@@ -136,7 +137,7 @@ this.options = {
 };
 
 // Admin buttons
-var Admin = {
+const Admin = {
   id: "Admin",
   position: [21, 0, 7.2, 4],
   clickable: true,
@@ -149,7 +150,7 @@ var Admin = {
 };
 
 // Buttons
-var Spectate = {
+const Spectate = {
   id: "Spectate",
   position: [72.2, 4.8, 7.6, 4],
   clickable: true,
@@ -161,7 +162,7 @@ var Spectate = {
   ]
 };
 
-var Regen = {
+const Regen = {
   id: "Regen",
   position: [72.2, 0, 7.6, 4],
   clickable: true,
@@ -173,7 +174,7 @@ var Regen = {
   ]
 };
 
-var Menu_ = {
+const Menu_ = {
   id: "Menu_",
   position: [64.1, 0, 7.6, 4],
   clickable: true,
@@ -186,7 +187,7 @@ var Menu_ = {
 };
 
 // Switch Screen
-var Square = {
+const Square = {
   id: "Square",
   position: [30+anchorMenu.anchor.x,30+anchorMenu.anchor.y,40,40],
   clickable: false,
@@ -199,7 +200,7 @@ var Square = {
   ]
 };
 
-var next_ship = {
+const next_ship = {
   id: "next_ship",
   position: [31+anchorMenu.anchor.x, 37.5+anchorMenu.anchor.y, 10, 5.5],
   clickable: true,
@@ -211,7 +212,7 @@ var next_ship = {
   ]
 };
 
-var previous_ship = {
+const previous_ship = {
   id: "previous_ship",
   position: [59+anchorMenu.anchor.x, 37.5+anchorMenu.anchor.y, 10, 5.5],
   clickable: true,
@@ -223,7 +224,7 @@ var previous_ship = {
   ]
 };
 
-var Tp_Spawn = {
+const Tp_Spawn = {
   id: "Tp_Spawn",
   position: [59+anchorMenu.anchor.x, 45+anchorMenu.anchor.y, 10, 5.5],
   clickable: true,
@@ -235,7 +236,7 @@ var Tp_Spawn = {
   ]
 };
 
-var Stats = {
+const Stats = {
   id: "Stats",
   position: [31+anchorMenu.anchor.x, 45+anchorMenu.anchor.y, 10, 5.5],
   clickable: true,
@@ -247,7 +248,7 @@ var Stats = {
   ]
 };
 
-var Wrap = {
+const Wrap = {
   id: "Wrap",
   position: [31+anchorMenu.anchor.x, 52.5+anchorMenu.anchor.y, 10, 5.5],
   clickable: true,
@@ -260,7 +261,7 @@ var Wrap = {
 };
 
 //Hide buttons
-var HideShow_Buttons = {
+const HideShow_Buttons = {
   id: "HideShow_Buttons",
   position: [4.8, 27.5, 11, 7],
   clickable: true,
@@ -272,7 +273,7 @@ var HideShow_Buttons = {
 };
 
 // Other
-var Always_Pickup_Crystals = {
+const Always_Pickup_Crystals = {
   id: "APC",
   position: [-4.5, -5, 110, 110],
   clickable: false,
@@ -675,11 +676,11 @@ this.event = function(event, game) {
         });
         break;
       }
-      if (!game.ships[0].custom.defaultAdmin) {
-        game.ships[0].custom.defaultAdmin = true;
-        game.ships[0].setUIComponent(Admin);
-      }
       if (!event.ship.custom.init) {
+        if (!game.ships[0].custom.defaultAdmin) {
+          game.ships[0].custom.defaultAdmin = true;
+          game.ships[0].setUIComponent(Admin);
+        }
         for (let i = 0; i<2; i++) update_Menu(event.ship);
         event.ship.custom = {
           init: true, ISidle: false, keep_maxed: true, ButtonsShowed: true, Deaths: 0, Kills: 0, warpIndex: 0, isOpen: false,
@@ -694,12 +695,12 @@ this.event = function(event, game) {
         newPlayerJoined(event.ship);
       } else {
         const {x = 0, y = 0} = event.ship.custom;
+        if (!event.ship.custom.spectator) spectator_ship(event.ship);
+        if (!event.ship.custom.ButtonsShowed) Manage_Buttons(event.ship);
         event.ship.set({
           x: getCords(20, {cords: x}),
           y: getCords(20, {cords: y})
         });
-        if (!event.ship.custom.spectator) spectator_ship(event.ship);
-        if (!event.ship.custom.ButtonsShowed) Manage_Buttons(event.ship);
       }
       break;
     case "ship_destroyed":
@@ -709,11 +710,14 @@ this.event = function(event, game) {
       }
       break;
     case "ship_disconnected":
-      if (event.ship.custom.ISidle && !BannedList.includes(event.ship.name)) {
-        BannedList.push(event.ship.name);
-        BannedListReasons.push("Left while being frozen");
+      if (!BannedList.includes(event.ship.name)) {
+        if (event.ship.custom.ISidle) {
+          BannedList.push(event.ship.name);
+          BannedListReasons.push("Left while being frozen");
+          return;
+        }
+        game.modding.terminal.echo(`\n[[g;#ff8770;]${event.ship.name} just left the game.]`);
       }
-      if (!BannedList.includes(event.ship.name)) game.modding.terminal.echo(`\n[[g;#ff8770;]${event.ship.name} just left the game.]`);
       break;
   }
 }
@@ -752,40 +756,44 @@ this.event = function(event, game) {
 }).call(this);
 
 // Images
-var MapCenter = {
-  id: "MapCenter",
-  obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive: "https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/megs_dueling_center_map_with_speedsters.png",
-};
-var ModVersion = {
-  id: "ModVersion",
-  obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive: "https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/v1.3.7_Img.png",
-};
-var BETAlogo = {
-  id: "BETAlogo",
-  obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
-  emissive: "https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/BETA.png",
-};
+const images = {
+  MapCenter: {
+    id: "MapCenter",
+    obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
+    emissive: "https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/megs_dueling_center_map_with_speedsters.png",
+  },
+  ModVersion: {
+    id: "ModVersion",
+    obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
+    emissive: "https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/v1.3.7_Img.png",
+  },
+  BETAlogo: {
+    id: "BETAlogo",
+    obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
+    emissive: "https://raw.githubusercontent.com/TheGreatMegalodon/Dueling-Component/main/Dueling_Component/BETA.png",
+  }
+}
 
-AddObject = function(Name, ID, x, y, sx, sy, rz) {
+AddObject = function(Name, ID, info) {
+  const defaultInfo = {x: 0, y: 0, sx: 0, sy: 0, rz: 0};
+  info = {...defaultInfo, ...info};
   game.setObject({
     id: Name,
     type: ID,
-    position: {x: x, y: y, z: -15},
-    scale: {x: sx, y: sy, z: 0},
-    rotation: {x: Math.PI, y: 0, z: rz}
+    position: {x: info.x, y: info.y, z: -15},
+    scale: {x: info.sx, y: info.sy, z: 0},
+    rotation: {x: Math.PI, y: 0, z: info.rz}
   });
 };
 
-AddObject("MapCenter", MapCenter, -1, 0, 95, 52, 0);
-AddObject("ModVersion", ModVersion, 21, -8.5, 24, 22, -0.30);
-AddObject("BETAlogo", BETAlogo, -36, -1.25, 18, 9, 0);
+AddObject("MapCenter", images.MapCenter, {x: -1, sx: 95, sy: 52});
+AddObject("ModVersion", images.ModVersion, {x: 21, y: -8.5, sx: 24, sy: 22, rz: -0.30});
+AddObject("BETAlogo", images.BETAlogo, {x: -36, y: -1.25, sx: 15, sy: 9});
 
 
 // Commands
 // Moderation commands
-game.modding.commands.info = function() { // [[g;#70aeff;]
+game.modding.commands.info = function() {
   const totalPlayers = game.ships.length;
   const bannedPlayers = BannedList.length === 0 ? "None" : BannedList;
   game.modding.terminal.echo(`\n[[g;#70aeff;]Total amount of aliens: ${game.aliens.length}]`);
@@ -826,7 +834,12 @@ kick = function(who, reason = "Disturbing duels") {
   if (game.ships[who]) {
     game.ships.forEach(function(ship) {alert(ship, "Player: " + game.ships[who].name + "has been kicked", "", "rgba(255,155,55,0.8)")});
     idle(who, false);
-    game.ships[who].gameover({"You were kicked for" : reason, "Kills": game.ships[who].custom.Kills, "Deaths": game.ships[who].custom.Deaths});
+    game.ships[who].gameover({
+      "You got kicked from the game" : "-",
+      "Reason" : reason, 
+      "Kills" : game.ships[who].custom.Kills, 
+      "Deaths" : game.ships[who].custom.Deaths
+    });
     game.modding.terminal.echo(`[[g;#70ffc1;]Player: ${game.ships[who].name}, index: ${who}, has been kicked\n]`);
   } else modding.terminal.error(new Error("\nThe index you used doesn't exist, try again with a valid index\n"));
 };
@@ -840,17 +853,27 @@ ban = function(who, reason = "Disturbing duels") {
   BannedList.push(ship.name);
   BannedListReasons.push(reason);
   idle(who, false);
-  ship.gameover({ "You were banned for": reason, Kills: ship.custom.Kills, Deaths: ship.custom.Deaths });
-  for (const otherShip of game.ships) alert(otherShip, `Player: ${ship.name} has been banned.`, "", "rgba(255,55,55,0.8)");
+  ship.gameover({
+    "You got banned from the game" : "-",
+    "Reason" : reason, 
+    "Kills" : ship.custom.Kills, 
+    "Deaths" : ship.custom.Deaths
+  });
+  for (const otherShip of game.ships) {
+    alert(otherShip, `Player: ${ship.name} has been banned.`, "", "rgba(255,55,55,0.8)");
+    if (otherShip.name == ship.name) {
+      setTimeout(() => {alert(otherShip, `Warning!`, "Your name matches with a banned player name.", "rgba(255,55,55,0.8)")}, 3500);
+    }
+  }
   game.modding.terminal.echo(`[[g;#70ffc1;]Player: ${ship.name}, index: ${who} has successfully been banned]\n\n❗INFO Type: banlist, to see all of the banned players.\n`);
 };
 
 game.modding.commands.banlist = function() {
   if (BannedList.length > 0) {
-    game.modding.terminal.echo(`[[g;#70aeff;]\nBanned player list:\nBanned Players Amount: ${BannedList.length}]\n`);
+    game.modding.terminal.echo(`[[g;#70aeff;]Banned player list:]\n\n[[g;#689bdd;]Banned Players Amount: ${BannedList.length}]\n`);
     BannedList.forEach((player, index) => {game.modding.terminal.echo(`[[g;#70e4ff;]Index: ${index}, Name: ${player}, Reason: ${BannedListReasons[index]}]`)});
-    game.modding.terminal.echo("❗INFO Type: unban(index), to unban a player.\n");
-  } else game.modding.terminal.error(new Error("\n" + "There are no banned players in this game.\n"));
+    game.modding.terminal.echo(`\n❗INFO Type: unban(index), to unban a player.\n`);
+  } else game.modding.terminal.error(new Error(`\nThere are no banned players in this game.\n`));
 };
 
 unban = function(index) {
