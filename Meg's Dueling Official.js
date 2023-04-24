@@ -711,7 +711,8 @@ this.event = function(event, game) {
       break;
     case "ship_disconnected":
       if (!BannedList.includes(event.ship.name)) {
-        if (event.ship.custom.ISidle) {
+        if (event.ship.custom.ISidle && !event.ship.custom.hasBeenKicked) {
+          event.ship.custom.hasBeenKicked = !event.ship.custom.hasBeenKicked;
           BannedList.push(event.ship.name);
           BannedListReasons.push("Left while being frozen");
           return;
@@ -834,6 +835,7 @@ kick = function(who, reason = "Disturbing duels") {
   if (game.ships[who]) {
     game.ships.forEach(function(ship) {alert(ship, "Player: " + game.ships[who].name + "has been kicked", "", "rgba(255,155,55,0.8)")});
     idle(who, false);
+    game.ships[who].custom.hasBeenKicked = true;
     game.ships[who].gameover({
       "You got kicked from the game" : "-",
       "Reason" : reason, 
