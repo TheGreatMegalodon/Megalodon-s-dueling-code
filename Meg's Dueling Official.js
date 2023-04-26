@@ -129,7 +129,7 @@ this.options = {
   starting_ship: 801,
   map_size: 100,
   speed_mod: 1.2,
-  max_level: 8,
+  max_level: 1,
   weapons_store: false,
   soundtrack: musicApplyed,
   vocabulary: vocabulary,
