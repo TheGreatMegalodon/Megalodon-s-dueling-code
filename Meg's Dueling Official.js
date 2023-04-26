@@ -22,6 +22,7 @@ What has been fixed/added from v1.3.6:
     - Aries
     - Poseidon
     - Warthog
+  - Problem resolved with the update of the menu button
 
 See the documentation on the github page for more information about the mod and its integrated commands.
 link: https://megalodon-dueling.notion.site/megalodon-dueling/Meg-s-dueling-Documentation-14fded21b2e648039ed441fc13fb7431
@@ -635,6 +636,7 @@ function Manage_Buttons(ship) {
       Exit_screen(ship, false);
     } else {
       if (ship.custom.isOpen) update_Menu(ship);
+      if (Menu_.position[0] === 59+anchorMenu.anchor.x && Menu_.position[1] === 60+anchorMenu.anchor.y && Menu_.position[2] === 10 && Menu_.position[3] === 5.5) Exit_screen(ship);
       gameMainComponents.forEach(component => ship.setUIComponent(component));
       setAPC(ship);
     }
