@@ -1,5 +1,5 @@
 const Version = 
-      1.0.0;
+      "1.0.0";
 /*
 Small Dueling Mod by: Megalodon
 */
