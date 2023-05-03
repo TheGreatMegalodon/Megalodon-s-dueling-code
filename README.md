@@ -10,7 +10,7 @@
 
 ### Mod Version: 
 * [1.3.7](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Official.js) Most Popular
-* [1.0.0](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Unofficial%20Meg's%20Dueling.js) Smallest Dueling mod
+* [1.0.1](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20(Light%20Version).js) Light Dueling mod
 
 ### Mod creator: 
 * **Megalodon**
