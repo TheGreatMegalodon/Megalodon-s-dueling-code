@@ -623,14 +623,14 @@ function alert(ship, Value1 = "", Value2 = "", Color = "rgba(255,255,255,0.8)", 
 }
 
 function format_time(time) {
-	if (time > 0) {
-		minutes = Math.floor(time / 60);
-		seconds = time % 60;
-		if (time % 60 === 0) return `${(time / 60).toString()}:00`;
-		if (seconds < 10) seconds = `0${seconds.toString()}`;
-		if (minutes < 1) return seconds.toString();
-		return `${minutes.toString()}:${seconds.toString()}`;
-	} else return "0:00";
+  if (time > 0) {
+    minutes = Math.floor(time / 60);
+    seconds = time % 60;
+    if (time % 60 === 0) return `${(time / 60).toString()}:00`;
+    if (seconds < 10) seconds = `0${seconds.toString()}`;
+    if (minutes < 1) return seconds.toString();
+    return `${minutes.toString()}:${seconds.toString()}`;
+  } else return "0:00";
 }
 
 function newPlayerJoined(ship) {
