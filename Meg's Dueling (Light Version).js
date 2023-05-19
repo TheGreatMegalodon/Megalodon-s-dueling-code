@@ -2,9 +2,87 @@ const mod_version =
 	"1.1.1";
 
 /*
-Light Dueling Mod by: Megalodon
-Idea: Bylolopro360
+
+# WARNING!
+Meg's dueling documentation don't apply/support that mod!
+
+# Light Dueling Mod by: 
+	Megalodon
+# Idea: 
+	Bylolopro360
+
+# Commands summary:
+info:  Returns the entire player list (name + index). 
+	Ex: info
+kick:  Allow the game hoster to kick a player.
+	Ex: kick(1, "stop trolling")
+set():  Allow to change a player's ship to another (cannot use that command to put the player in spectator mode or in admin ship).
+	Ex: set(0, 605)
+admin():  Allows the hoster to give the admin ship to someone.
+	Ex: admin(0)
+
+		Have fun!
+
 */
+
+game.modding.commands.info = function() {
+  const players = game.ships.map((ship, index) => `Index: ${index}, Name: ${ship.name}`).join("\n");
+  game.modding.terminal.echo(`Total amount of players: ${game.ships.length}\n\nPlayer's and their index's:\n${players}\n`);
+};
+
+kick = function(who, reason = "Disturbing duels") {
+  const ship = game.ships[who];
+  if (!ship) {
+    game.modding.terminal.error(new Error("The index you used doesn't exist, try again with a valid index\n"));
+    return;
+  }
+  ship.gameover({ "You were kicked for" : reason});
+  game.modding.terminal.echo("Player: " + ship.name + ", index: " + who + " Has successfully been kicked\n");
+};
+
+set = function(who, what, max_crystals, max_stats) {
+  const ship = game.ships[who];
+  if (!ship) {
+    game.modding.terminal.error(new Error("The index you used doesn't exist, try again with a valid index\n"));
+    return;
+  }
+  if (!gameSettings.shipCodes.includes(what.toString())) {
+    game.modding.terminal.error(new Error("Wrong ship type, try again with a valid ship type\n"));
+    return;
+  }
+  max_stats = (!max_stats && Math.trunc(what / 100) < 7) ? 11111111 * Math.trunc(what / 100) : max_stats || 0;
+  max_crystals = max_crystals || 20 * Math.trunc(what / 100) ** 2;
+  ship.set({ type: what, crystals: max_crystals, stats: max_stats, shield: 999, collider: true });
+  game.modding.terminal.echo(`Player: ${ship.name}, index: ${who} Has successfully been given\nShip: ${gameSettings.shipInfo.main[what].name},  Gems: ${max_crystals}, Stats: ${max_stats}\n`);
+};
+
+admin = function(who, which) { // "p" = precision or "g" = general use admin("player index") to get off
+  const ship = game.ships[who];
+  var new_type;
+  if (!ship) {
+    game.modding.terminal.error(new Error("The index you used doesn't exist, try again with a valid index\n"));
+    return;
+  }
+  if (!gameSettings.adminCodes.includes(ship.type.toString()) || which) {
+    if (!gameSettings.adminCodes.includes(ship.type.toString())) {
+      ship.custom.oldShip = ship.type;
+    }
+    if (which == null) {
+      which = "p";
+    }
+    switch(which) {
+      case "p": new_type = gameSettings.adminCodes[0]; break;
+      case "g": new_type = gameSettings.adminCodes[1]; break;
+    }
+    game.modding.terminal.echo(`Player: ${ship.name}, index: ${who} Has successfully been given an Admin Ship\nShip: ${gameSettings.shipInfo.admin[new_type].name}\n`);
+  } else {
+    new_type = ship.custom.oldShip;
+    game.modding.terminal.echo(`Player: ${ship.name}, index: ${who} Has successfully been brought back to normal\nShip: ${gameSettings.shipInfo.main[new_type].name}\n`);
+  }
+  const maxCrystals = 20 * Math.trunc(new_type / 100) ** 2;
+  const maxStats = Math.trunc(new_type / 100) < 7 ? 11111111 * Math.trunc(new_type / 100) : 0;
+  ship.set({type: new_type, stats: maxStats, crystals: maxCrystals, collider: true});
+};
 
 var gameSettings = {
   gameButtons: { // you can add buttons by yourself, the code logic will still have to be done by hand in the `this.event` function.
@@ -256,63 +334,3 @@ function MapOpen() {
   game.modding.terminal.echo(`     [[gu;#eb171e;]Give us your feedback \u2764]\n       https://urlz.fr/lQZg\n\n`);
   game.custom.launched = true;
 }
-
-// Commands
-game.modding.commands.info = function() {
-  const players = game.ships.map((ship, index) => `Index: ${index}, Name: ${ship.name}`).join("\n");
-  game.modding.terminal.echo(`Total amount of players: ${game.ships.length}\n\nPlayer's and their index's:\n${players}\n`);
-};
-
-kick = function(who, reason = "Disturbing duels") {
-  const ship = game.ships[who];
-  if (!ship) {
-    game.modding.terminal.error(new Error("The index you used doesn't exist, try again with a valid index\n"));
-    return;
-  }
-  ship.gameover({ "You were kicked for" : reason});
-  game.modding.terminal.echo("Player: " + ship.name + ", index: " + who + " Has successfully been kicked\n");
-};
-
-set = function(who, what, max_crystals, max_stats) {
-  const ship = game.ships[who];
-  if (!ship) {
-    game.modding.terminal.error(new Error("The index you used doesn't exist, try again with a valid index\n"));
-    return;
-  }
-  if (!gameSettings.shipCodes.includes(what.toString())) {
-    game.modding.terminal.error(new Error("Wrong ship type, try again with a valid ship type\n"));
-    return;
-  }
-  max_stats = (!max_stats && Math.trunc(what / 100) < 7) ? 11111111 * Math.trunc(what / 100) : max_stats || 0;
-  max_crystals = max_crystals || 20 * Math.trunc(what / 100) ** 2;
-  ship.set({ type: what, crystals: max_crystals, stats: max_stats, shield: 999, collider: true });
-  game.modding.terminal.echo(`Player: ${ship.name}, index: ${who} Has successfully been given\nShip: ${gameSettings.shipInfo.main[what].name},  Gems: ${max_crystals}, Stats: ${max_stats}\n`);
-};
-
-admin = function(who, which) { // "p" = precision or "g" = general
-  const ship = game.ships[who];
-  var new_type;
-  if (!ship) {
-    game.modding.terminal.error(new Error("The index you used doesn't exist, try again with a valid index\n"));
-    return;
-  }
-  if (!gameSettings.adminCodes.includes(ship.type.toString()) || which) {
-    if (!gameSettings.adminCodes.includes(ship.type.toString())) {
-      ship.custom.oldShip = ship.type;
-    }
-    if (which == null) {
-      which = "p";
-    }
-    switch(which) {
-      case "p": new_type = gameSettings.adminCodes[0]; break;
-      case "g": new_type = gameSettings.adminCodes[1]; break;
-    }
-    game.modding.terminal.echo(`Player: ${ship.name}, index: ${who} Has successfully been given an Admin Ship\nShip: ${gameSettings.shipInfo.admin[new_type].name}\n`);
-  } else {
-    new_type = ship.custom.oldShip;
-    game.modding.terminal.echo(`Player: ${ship.name}, index: ${who} Has successfully been brought back to normal\nShip: ${gameSettings.shipInfo.main[new_type].name}\n`);
-  }
-  const maxCrystals = 20 * Math.trunc(new_type / 100) ** 2;
-  const maxStats = Math.trunc(new_type / 100) < 7 ? 11111111 * Math.trunc(new_type / 100) : 0;
-  ship.set({type: new_type, stats: maxStats, crystals: maxCrystals, collider: true});
-};
