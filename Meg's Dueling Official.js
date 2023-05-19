@@ -1,5 +1,5 @@
 const mod_version =
-      "v1.3.8";
+      "v1.4.0";
 
 /*
  |  Mod creator : Megalodon
@@ -266,10 +266,10 @@ var gameOptions = {
       image: "https://raw.githubusercontent.com/TheGreatMegalodon/Megalodon-s-dueling-code/main/gameImages/megs_dueling_center_map_with_speedsters.png",
       positions: { x: -1, y: 0, width: 95, height: 52, depth: 0 }
     },
-    /*"ModVersion": {
-      image: "https://raw.githubusercontent.com/TheGreatMegalodon/Megalodon-s-dueling-code/main/gameImages/versions/v1.3.8_Img.png",
-      positions: { x: 21, y: -8.5, width: 22, height: 12, depth: -0.30 }
-    },*/
+    "ModVersion": {
+      image: "https://raw.githubusercontent.com/TheGreatMegalodon/Megalodon-s-dueling-code/main/gameImages/versions/v1.4.0_Img.png",
+      positions: { x: 21, y: -8.5, width: 20, height: 8, depth: -0.30 }
+    },
     "BETAlogo": {
       image: "https://raw.githubusercontent.com/TheGreatMegalodon/Megalodon-s-dueling-code/main/gameImages/BETA.png",
       positions: { x: -36, y: -1.25, width: 15, height: 9, depth: 0 }
