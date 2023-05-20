@@ -215,7 +215,7 @@ var gameSettings = {
 game.custom.launched||MapOpen();
 !function(){const{main:e,spectator:t,admin:s}=gameSettings.shipInfo;gameSettings.gameShips=[...Object.values(e),...Object.values(t),...Object.values(s)].map((e=>e.code))}();
 !function(){const{main:e,spectator:s,admin:t}=gameSettings.shipInfo;gameSettings.shipCodes=Object.keys(e),gameSettings.specCodes=Object.keys(s),gameSettings.adminCodes=Object.keys(t)}();
-!function(){var music=["civilisation.mp3","procedurality.mp3","argon.mp3","crystals.mp3","red_mist.mp3","warp_drive.mp3"];Math.random()}(),
+!function(){var music=["civilisation.mp3","procedurality.mp3","argon.mp3","crystals.mp3","red_mist.mp3","warp_drive.mp3"];Math.random()}();
 this.options = {
   map_name: "Meg's Dueling",
   root_mode: "",
