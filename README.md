@@ -5,6 +5,8 @@
   </p>
 </div>
 
+> Any issues ?
+> contact me on discord: [(Click here)](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Official.js)
 
 ### For the Documentation [(Click here)](https://megalodon-dueling.notion.site/megalodon-dueling/Meg-s-dueling-Documentation-14fded21b2e648039ed441fc13fb7431)
 
