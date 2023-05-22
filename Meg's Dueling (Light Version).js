@@ -320,9 +320,10 @@ function spectateShip(ship) {
   const new_type = (!ship.custom.spectating) ? gameSettings.specCodes[0] : ship.custom.oldSpecType;
   ship.custom.oldSpecType = (!ship.custom.spectating) ? ship.type : ship.custom.oldSpecType;
   ship.custom.spectating = !ship.custom.spectating;
+  const collider = (new_type === gameSettings.specCodes[0]) ? false : true;
   const maxCrystals = (new_type === gameSettings.specCodes[0]) ? 0 : 20 * Math.trunc(new_type / 100) ** 2;
   const maxStats = (Math.trunc(new_type / 100) < 7) ? 11111111 * Math.trunc(new_type / 100) : 0;
-  ship.set({type: new_type, shield: 999, crystals: maxCrystals, stats: maxStats, vx: 0, vy: 0});
+  ship.set({type: new_type, shield: 999, crystals: maxCrystals, stats: maxStats, vx: 0, vy: 0, collider: collider});
 }
 
 function MapOpen() {
