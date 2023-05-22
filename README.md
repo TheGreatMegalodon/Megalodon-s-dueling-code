@@ -7,7 +7,7 @@
 
 > Any issues with one of the mods ?
 
-> please contact me on discord: [(Click here)](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/assets/69216391/dbcaa5cc-e66e-4b4e-8c0c-5cb02b6be510)
+> please contact me on discord: [(Click here)](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md#support)
 
 
 ### For the Documentation [(Click here)](https://megalodon-dueling.notion.site/megalodon-dueling/Meg-s-dueling-Documentation-14fded21b2e648039ed441fc13fb7431)
