@@ -219,6 +219,7 @@ this.options = {
   map_name: "Meg's Dueling",
   root_mode: "",
   custom_map: "",
+  speed_mod: 1.2,
   ships: gameSettings.gameShips,
   vocabulary: gameSettings.gameVocabulary,
   map_size: 70,
