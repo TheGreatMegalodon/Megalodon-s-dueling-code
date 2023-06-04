@@ -5,14 +5,14 @@
   </p>
 </div>
 
-## Any issues with one of the mods?
+## For the Documentation [(Click here)](https://megalodon-dueling.notion.site/megalodon-dueling/Meg-s-dueling-Documentation-14fded21b2e648039ed441fc13fb7431)
+
+### Any issues with one of the mods?
 > [Discord Dueling Server](https://discord.gg/MF7zwS89TU)
 > 
 > [Support Discord Server](https://discord.gg/KXvCq4N)
 > 
 > My Discord: Megalodon#0001
-
-### For the Documentation [(Click here)](https://megalodon-dueling.notion.site/megalodon-dueling/Meg-s-dueling-Documentation-14fded21b2e648039ed441fc13fb7431)
 
 ### Mod Version: 
 * [1.4.0](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Official.js) Most Popular
