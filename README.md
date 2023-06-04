@@ -5,10 +5,10 @@
   </p>
 </div>
 
-> Any issues with one of the mods ?
-
-> please contact me on discord: [(Click here)](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/README.md#support)
-
+## Any issues with one of the mods?
+> [Discord Dueling Server](https://discord.gg/MF7zwS89TU)
+> [Support Discord Server](https://discord.gg/KXvCq4N)
+> My Discord: Megalodon#0001
 
 ### For the Documentation [(Click here)](https://megalodon-dueling.notion.site/megalodon-dueling/Meg-s-dueling-Documentation-14fded21b2e648039ed441fc13fb7431)
 
@@ -22,8 +22,3 @@
 ### Coding support:
 * **Lotus**
 * **Bhpsngum**
-
-## Support
-* [Discord Dueling Server](https://discord.gg/MF7zwS89TU)
-* [Support Discord Server](https://discord.gg/KXvCq4N)
-* Discord: Megalodon#0001
