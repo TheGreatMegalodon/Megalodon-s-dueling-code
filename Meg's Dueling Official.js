@@ -507,7 +507,7 @@ function MapOpen() {
   game.modding.terminal.echo(`\n               [[gu;#00d5ff;]Current Version][[g;#00d5ff;]:]  [[gb;#ffc300;]${gameOptions.Version}]\n               [[gu;#00d5ff;]Authentication][[g;#00d5ff;]:]  [[gb;#ffc300;]#${gameOptions.Auth}]\n`);
   game.modding.terminal.echo(`               [[gu;#ffdf00;]Support Server & documentation]`);
   game.modding.terminal.echo(`                 ${gameOptions.Connexions.discord}\n                    ${gameOptions.Connexions.documentation}\n`);
-  game.modding.terminal.echo(`                   [[gu;#eb171e;]Give us your feedback] [[gb;#eb171e;]\u2764]\n                     ${gameOptions.Connexions.feedback}\n\n`);
+  game.modding.terminal.echo(`                  [[gu;#eb171e;]Give us your feedback] [[gb;#eb171e;]\u2764]\n                    ${gameOptions.Connexions.feedback}\n\n`);
   game.custom.launched = true;
 }
 
