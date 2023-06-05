@@ -1,8 +1,10 @@
 // Variables that are required for the commands to work
 
-var always_pickup_gems = true; // always pickup gems | true / false
-var BannedList = [];
-var BannedListReasons = [];
+var gameOptions = { 
+  BannedList = [],
+  BannedListReasons = [],
+  always_pickup_gems = true
+}
 
 // Functions that are required for the commands to work:
 
@@ -19,160 +21,205 @@ const Always_Pickup_Crystals = {
 };
 
 function setAPC(ship) {
-  if (always_pickup_gems === true) Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: ON", Always_Pickup_Crystals.components[0].color = "rgba(55,255,55,0.4)";
-  else Always_Pickup_Crystals.components[0].value = "Always Pickup Crystals: OFF", Always_Pickup_Crystals.components[0].color = "rgba(255,55,55,0.4)";
+  const isAlwaysPickup = gameOptions.always_pickup_crystals ? "ON" : "OFF";
+  Always_Pickup_Crystals.components[0].value = `Always Pickup Crystals: ${isAlwaysPickup}`;
+  Always_Pickup_Crystals.components[0].color = gameOptions.always_pickup_crystals ? "rgba(55, 255, 55, 0.4)" : "rgba(255, 55, 55, 0.4)";
   ship.setUIComponent(Always_Pickup_Crystals);
 }
 
-function alert(ship, Value1, Value2 = "", Color = "rgba(255,255,255,0.8)", time = 2000) {
+function alert(ship, Value1 = "", Value2 = "", Color = "rgba(255,255,255,0.8)", time = 2500) {
   clearTimeout(ship.custom.logtimeout);
+  ship.custom.logtimeout = setTimeout(() => {ship.setUIComponent({id: "Text", visible: false})}, time);
   ship.setUIComponent({
     id: "Text",
     position: [-5, -5, 110, 110],
     clickable: false,
     visible: true,
     components: [
-      {
-        type: "text", position: [0, 16, 100, 4], color: Color, value: Value1
-      },
-      {
-        type: "text", position: [0, 21, 100, 4], color: Color, value: Value2
-      }
+      {type: "text", position: [0, 18, 100, 4], color: Color, value: Value1},
+      {type: "text", position: [0, 23, 100, 4], color: Color, value: Value2}
     ]
   });
-  ship.custom.logtimeout = setTimeout(() => {ship.setUIComponent({id: "Text",visible: false})}, time);
 }
 
 // Commands
 // Moderation commands
-game.modding.commands.info = function() {
-  game.modding.terminal.echo("Total amount of aliens: "+game.aliens.length)
-  game.modding.terminal.echo("Total amount of asteroids: "+game.asteroids.length)
-  game.modding.terminal.echo("Total amount of players: "+game.ships.length+"\n")
-  if (BannedList.length === 0) names = "None";
-  else names = BannedList;
-  game.modding.terminal.echo("Banned players: " + names)
-  game.modding.terminal.echo("\nPlayer's and their index's:\n");
-  for (let i = 0; i < game.ships.length; i++) game.modding.terminal.echo("Index: " + i + ", Name: " + game.ships[i].name + ", Ship type: " + game.ships[i].type + "\nCoordinates: X: " + game.ships[i].x + ", Y: " + game.ships[i].y)
-  game.modding.terminal.echo("\n");
-};
 
-idle = function(who, txt) {
-  if (game.ships[who].custom.ISidle === true) {
-    modding.terminal.error(new Error("\n" + game.ships[who].name + ", is already frozen.\n"));
-  } else {
-    game.ships[who].set({idle: true});
-    Exit_screen(game.ships[who]);
-    game.ships[who].custom.ISidle = true;
-    if (game.ships[who].type !== 191) spectator_ship(game.ships[who])
-    if (!txt) game.modding.terminal.echo("the player: " + game.ships[who].name + ", index: " + who + " has been freezed\n❗INFO Type unidle(index), to unfreeze a player.\n")
+function getPlayerName(player) {
+  const icon = (player.custom.admin || player.custom.defaultAdmin) ? "⚔️" : (player.name.includes(["Megalodon"])) ? "🦈" : "";
+  return `${player.name.replace(/[\[\]]/g, '|')} ${icon}`;
+}
+
+game.modding.commands.info = function() {
+  const totalPlayers = game.ships.length;
+  const bannedPlayers = gameOptions.BannedList.length === 0 ? "None" : gameOptions.BannedList;
+  game.modding.terminal.echo(`\n[[g;#85ff70;]Total amount of aliens:] [[g;#fffc70;]${game.aliens.length}]`);
+  game.modding.terminal.echo(`[[g;#85ff70;]Total amount of asteroids:] [[g;#fffc70;]${game.asteroids.length}]`);
+  game.modding.terminal.echo(`[[g;#85ff70;]Total amount of players:] [[g;#fffc70;]${totalPlayers}\n]`);
+  game.modding.terminal.echo(`[[g;#ff7070;]Banned players: ${bannedPlayers}\n]`);
+  game.modding.terminal.echo(`[[g;#70aeff;]⚔️ = Has admin permisions]`);
+  game.modding.terminal.echo(`[[g;#70aeff;]🦈 = Megalodon :D]\n`);
+  game.modding.terminal.echo("[[gu;#70aeff;]Player's and their index's:\n]");
+  for (let i = 0; i < totalPlayers; i++) {
+    const player = game.ships[i];
+    const color = (player.custom.admin || player.custom.defaultAdmin) ? "#fffc70" : "#70e4ff";
+    game.modding.terminal.echo(`[[g;${color};]Index: ${i}, Name: ${getPlayerName(player)}, Ship type: ${player.type}\nCoordinates: X: ${Math.round(player.x)}, Y: ${Math.round(player.y)}\n]`);
   }
 };
 
+idle = function(who, showMessage = true) {
+  const ship = game.ships[who];
+  if (ship.custom.ISidle) {
+    modding.terminal.error(new Error(`${ship.name.replace(/[\[\]]/g, '|')} is already frozen.`));
+    return;
+  }
+  ship.set({ idle: true });
+  Exit_screen(ship);
+  ship.custom.ISidle = true;
+  if (ship.type !== 191) spectator_ship(ship);
+  if (showMessage) game.modding.terminal.echo(`[[g;#70ffc1;]The player ${getPlayerName(ship)}, index ${who}, has been frozen.]\n❗INFO Type unidle() to unfreeze a player.`);
+};
+
 unidle = function(who) {
-  if (game.ships[who].custom.ISidle === true) {
-    game.ships[who].set({idle: false});
-    game.ships[who].custom.ISidle = false;
-    game.modding.terminal.echo("the player: " + game.ships[who].name + ", index: " + who + " has been unfreezed\n");
-  } else modding.terminal.error(new Error("\nThis player is not frozen\n"));
+  const ship = game.ships[who];
+  if (!ship.custom.ISidle) {
+    modding.terminal.error(new Error("This player is not frozen."));
+    return;
+  }
+  ship.set({ idle: false });
+  ship.custom.ISidle = false;
+  game.modding.terminal.echo(`[[g;#70ffc1;]The player ${getPlayerName(ship)}, index ${who}, has been unfrozen.]`);
 };
 
 kick = function(who, reason = "Disturbing duels") {
-  if (game.ships.includes(game.ships[who])) {
-    for (let ship of game.ships) alert(ship, "Player: " + game.ships[who].name, "has been kicked.", "rgba(255,155,55,0.8)");
-    idle(who, true);
-    game.ships[who].gameover({"You were kicked for" : reason, "Kills": game.ships[who].custom.Kills, "Deaths": game.ships[who].custom.Deaths});
-    game.modding.terminal.echo("Player: " + game.ships[who].name + ", index: " + who + " Has successfully been kicked\n");
-  } else modding.terminal.error(new Error("\n" + "The index you used doesn't exist, try again with a valid index\n"));
+  const ship = game.ships[who];
+  if (!game.ships.includes(ship)) {
+    modding.terminal.error(new Error("\nThe index you used doesn't exist, try again with a valid index\n"));
+    return;
+  }
+  game.ships.forEach(function(ship) {alert(ship, `Player: ${getPlayerName(ship)} has been kicked`, "", "rgba(255,155,55,0.8)")});
+  idle(who, false);
+  ship.custom.hasBeenKicked = true;
+  ship.gameover({
+    "You got kicked from the game" : "-",
+    "Reason" : reason, 
+    "Kills" : ship.custom.Kills, 
+    "Deaths" : ship.custom.Deaths
+  });
+  game.modding.terminal.echo(`[[g;#70ffc1;]Player: ${getPlayerName(ship)}, index: ${who}, has been kicked\n]`);
 };
 
 ban = function(who, reason = "Disturbing duels") {
-  if (game.ships.includes(game.ships[who])) {
-    BannedList.push(game.ships[who].name);
-    BannedListReasons.push(reason);
-    idle(who, true);
-    game.ships[who].gameover({"You were banned for" : reason, "Kills": game.ships[who].custom.Kills, "Deaths": game.ships[who].custom.Deaths});
-    for (let ship of game.ships) alert(ship, "Player: " + game.ships[who].name, "has been banned.", "rgba(255,55,55,0.8)");
-    game.modding.terminal.echo("Player: " + game.ships[who].name + ", index: " + who + " Has successfully been banned\n" + "\n❗INFO Type: banlist, to see all of the banned players.\n");
-  } else modding.terminal.error(new Error("\n" + "The index you used doesn't exist, try again with a valid index\n"));
+  const ship = game.ships[who];
+  if (!ship) {
+    game.modding.terminal.error(new Error("\nThe index you used doesn't exist, try again with a valid index\n"));
+    return;
+  }
+  gameOptions.BannedList.push(ship.name.replace(/[\[\]]/g, '|'));
+  gameOptions.BannedListReasons.push(reason);
+  idle(who, false);
+  ship.gameover({
+    "You got banned from the game" : "-",
+    "Reason" : reason, 
+    "Kills" : ship.custom.Kills, 
+    "Deaths" : ship.custom.Deaths
+  });
+  for (const otherShip of game.ships) {
+    alert(otherShip, `Player: ${getPlayerName(ship)} has been banned.`, "", "rgba(255,55,55,0.8)");
+    if (otherShip.name.replace(/[\[\]]/g, '|') == ship.name.replace(/[\[\]]/g, '|')) {
+      setTimeout(() => {alert(otherShip, `Warning!`, "Your name matches with a banned player name.", "rgba(255,55,55,0.8)")}, 3500);
+    }
+  }
+  game.modding.terminal.echo(`[[g;#70ffc1;]Player: ${getPlayerName(ship)}, index: ${who} has successfully been banned]\n\n❗INFO Type: banlist, to see all of the banned players.\n`);
 };
 
 game.modding.commands.banlist = function() {
-  if (BannedList.length > 0) {
-    for (let i = 0; i < BannedList.length; i++) game.modding.terminal.echo("Index: " + i + ", Name: " + BannedList[i] + ", Reason: " + BannedListReasons[i]);
-    game.modding.terminal.echo("❗INFO Type: unban(index), to unabn a player.\n");
-  } else modding.terminal.error(new Error("\n" + "There are no banned players in this game.\n"));
+  if (!gameOptions.BannedList.length > 0) {
+    game.modding.terminal.error(new Error(`\nThere are no banned players in this game.\n`));
+    return;
+  }
+  game.modding.terminal.echo(`[[g;#70aeff;]Banned player list:]\n\n[[g;#689bdd;]Banned Players Amount: ${gameOptions.BannedList.length}]\n`);
+  gameOptions.BannedList.forEach((player, index) => {game.modding.terminal.echo(`[[g;#70e4ff;]Index: ${index}, Name: ${player}, Reason: ${gameOptions.BannedListReasons[index]}]`)});
+  game.modding.terminal.echo(`\n❗INFO Type: unban(index), to unban a player.\n`);
 };
 
 unban = function(index) {
-  if (BannedList.includes(BannedList[index])) {
-    BannedListReasons.splice(index, 1);
-    BannedList.splice(index, 1);
-    for (let ship of game.ships) alert(ship, "Player: " + BannedList[index], "has been unbanned.", "rgba(55,255,55,0.8)");
-    game.modding.terminal.echo("Player: " + BannedList[index] + ", reason: " + BannedListReasons[index] + ", Has successfully been unbanned\n");
-  } else modding.terminal.error(new Error("\n" + "You gave a wrong index or the players that you're trying to unban isn't banned or got unbanned before.\n"));
+  if (!gameOptions.BannedList.includes(gameOptions.BannedList[index])) {
+    modding.terminal.error(new Error("\n" + "You gave a wrong index or the player that you're trying to unban isn't banned or already got unbanned.\n"));
+    return;
+  }
+  game.ships.forEach(ship => { alert(ship, `Player: ${gameOptions.BannedList[index]} has been unbanned.`, "", "rgba(55,255,55,0.8)")});
+  game.modding.terminal.echo(`[[g;#70ffc1;]Player: ${gameOptions.BannedList[index]}, reason: ${gameOptions.BannedListReasons[index]} , Has successfully been unbanned]\n`);
+  gameOptions.BannedListReasons.splice(index, 1);
+  gameOptions.BannedList.splice(index, 1);
+};
+
+admin = function(who, duration = Infinity) {
+  const ship = game.ships[who];
+  clearTimeout(ship.custom.adm);
+  if (ship.custom.admin) {
+    ship.setUIComponent({id: "Admin", visible: false});
+    if (gameOptions.adminShip.includes(ship.type)) admin_ship(ship, true);
+    ship.custom.admin = false;
+    game.modding.terminal.echo(`[[g;#ff8770;]Player: ${getPlayerName(ship)}, index: ${who} has had their admin commands removed]\n`);
+  } else {
+    if (duration !== Infinity) {
+      ship.custom.adm = setTimeout(() => {
+        if (gameOptions.adminShip.includes(ship.type)) admin_ship(ship, true);
+        ship.setUIComponent({id: "Admin", visible: false});
+        ship.custom.admin = false;
+        game.modding.terminal.echo(`[[g;#ff8770;]Player: ${getPlayerName(ship)}, index: ${who} has lost their admin powers]\n`);
+      }, duration * 1000);
+    }
+    ship.setUIComponent(Admin);
+    ship.custom.admin = true;
+    game.modding.terminal.echo(`[[g;#70ffc1;]Player: ${getPlayerName(ship)}, index: ${who}, Duration: ${duration} has been given the admin commands]\n`);
+  }
 };
 
 // General commands
 game.modding.commands.apc = function() {
-  if (always_pickup_gems === true) {
-    always_pickup_gems = false;
-    for (let ship of game.ships) if (ship.custom.ButtonsShowed === true) setAPC(ship);
-    game.modding.terminal.echo("Always Pickup Crystals feature is now OFF\n");
-  } else {
-    always_pickup_gems = true;
-    for (let ship of game.ships) if (ship.custom.ButtonsShowed === true) setAPC(ship);
-    game.modding.terminal.echo("Always Pickup Crystals feature is now ON\n");
+  gameOptions.always_pickup_crystals = !gameOptions.always_pickup_crystals;
+  game.ships.forEach(ship => {
+    if (ship.custom.ButtonsShowed) setAPC(ship);
+  });
+  const status = gameOptions.always_pickup_crystals ? "ON" : "OFF";
+  const color = gameOptions.always_pickup_crystals ? "#70ffc1" : "#ff8770";
+  game.modding.terminal.echo(`[[g;${color};]Always Pickup Crystals feature is now ${status}\n]`);
+};
+
+set = function(who, what, max_crystals = 0, max_stats = 0) {
+  const ship = game.ships[who];
+  if (ship.custom.isAFK) {
+    modding.terminal.error(new Error(`${getPlayerName(ship)} is AFK and cannot be switched to another ship.`));
+    return;
   }
-};
-
-set = function(who, what, crystals, stats = 88888888) {
-  var level = Math.trunc(what / 100);
-  if (crystals === undefined) crystals = 20 * Math.trunc(what / 100) * Math.trunc(what / 100);
-  game.ships[who].set({type: what, crystals: crystals, stats: stats, shield: 999});
-  game.modding.terminal.echo("Player: " + game.ships[who].name + ", index: " + who + " Has successfully been given:");
-  game.modding.terminal.echo("Type: " + what + ", Crystals: " + crystals + ", Stats: " + stats + "\n");
-};
-
-// Teleportation commands
-tpto = function(who, towho) {
-  ship = game.ships[towho];
-  game.ships[who].set({x: ship.x, y: ship.y});
-  game.modding.terminal.echo("Player: " + game.ships[who].name + ", index: " + who + " Has successfully been TP to:");
-  game.modding.terminal.echo("Player: " + game.ships[towho].name + ", index: " + towho + ", coordinates: X: " + game.ships[towho].x + ", Y:" + game.ships[towho].y + "\n");
-};
-
-tp = function(who, xx, yy) {
-  game.ships[who].set({x: xx, y: yy});
-  game.modding.terminal.echo("Player: " + game.ships[who].name + ", index: " + who + " Has successfully been TP to:");
-  game.modding.terminal.echo("Coordinates: X: " + xx + ", Y:" + yy + "\n");
-};
-
-tpall = function(x, y) {
-  var x = [...new Array(21)].map((j, i) => x - 10 + i)
-  var y = [...new Array(21)].map((j, i) => y - 10 + i)
-  for (i = 0; i < game.ships.length; i++) {
-    game.ships[i].set({x: x[~~(Math.random() * x.length)],y: y[~~(Math.random() * y.length)]});
-    game.modding.terminal.echo("Player: " + game.ships[i].name + ", index: " + i);
-  }
-  game.modding.terminal.echo("Has been successfully TP to:");
-  game.modding.terminal.echo("Coordinates: X: " + x + ", Y:" + y + "\n");
-};
+  if (!max_stats) max_stats = Math.trunc(what / 100) < 7 ? 11111111 * Math.trunc(what / 100) : 0;
+  if (!max_crystals) max_crystals = 20 * Math.trunc(what / 100) ** 2;
+  const collider = (what == gameOptions.spectatorShip[0]) ? false : (ship.type == gameOptions.spectatorShip[0] && what != gameOptions.spectatorShip[0]) ? true : true;
+  ship.set({type: what, crystals: max_crystals, stats: max_stats, shield: 999, collider: collider});
+  game.modding.terminal.echo(`[[g;#70ffc1;]Player ${getPlayerName(ship)} (index: ${who}) has been given:\nShip Type: ${what}, Crystals: ${max_crystals}, Stats: ${max_stats}\n]`);
+}
 
 // Announce command
-say = function(text = "") {
-  for (let ship of game.ships) {
+say = function(text = "", duration = 4) {
+  game.ships.forEach(ship => {
+    clearTimeout(ship.custom.gameAnnouncement);
     ship.setUIComponent({
       id: "announceText",
       position: [20, 75, 50, 25],
       clickable: false,
       visible: true,
       components: [
-        {
-          type: "text", position: [0, 0, 100, 20], color: "#FFFFFF", value: text
-        }
+        {type: "text",position: [0, 0, 100, 20],color: "#FFFFFF",value: text}
       ]
     });
-  }
-  game.modding.terminal.echo("Text: " + text + " applyed\n");
-};
+    ship.custom.gameAnnouncement = setTimeout(() => {
+      ship.setUIComponent({
+        id: "announceText",
+        visible: false
+      });
+    }, duration * 1000);
+  });
+  game.modding.terminal.echo(`[[g;#70ffc1;]Text: ${text} applied]\n`);
+}
