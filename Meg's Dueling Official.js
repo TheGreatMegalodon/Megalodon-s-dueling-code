@@ -2,29 +2,41 @@
  |  Mod creator : Megalodon
  |  Coding support : Lotus, Bhpsngum
 
-What has been fixed/added from v1.3.7: 
+What has been fixed/added from v1.4.0: 
   - Huge changes in the whole code.
   - Fixed the AFK checker, has steped back from one version (the 1.3.5 afk checked is used here).
   - Better more customizable way to add the ships into a mod has been added.
   - Admin command has been reviewed.
   - SET command has been reviewed.
   - Introduction text now have smaller Urls and a better organization.
-  - Every buttons cool down have been reduced by atleast one second on each.
+  - Every buttons cooldown have been reduced by atleast one second on each.
   - better background images usage
+  - Improved UI’s
+  - Resolved a few bugs in the commands
+  - More customizable game
+  - Copyrights ©Megalodon 2023-2024
+  - Added a button
+      - “More”
+          - Allow you to check informations about the game while playing
 
 See the documentation on the github page for more information about the mod and its integrated commands.
 link: https://megalodon-dueling.notion.site/megalodon-dueling/Meg-s-dueling-Documentation-14fded21b2e648039ed441fc13fb7431
 */
 
-var gameOptions = {
+var gameOptions = { 
+  Copyright: "©Megalodon 2023-2024",
   Version: "v1.4.1",
   Creator: "Megalodon#0001",
   Name: "Meg's Dueling",
-  Auth: Auth(Math.random()*Math.floor(Math.random() * 6) + 15),
+  Auth: `#${Auth(Math.random()*Math.floor(Math.random() * 6) + 15)}`,
   Connexions: {
     discord: "https://discord.gg/KXvCq4N",
     documentation: "https://urlz.fr/lQZd",
     feedback: "https://urlz.fr/lQZg",
+  },
+  issue: {
+    1: `⚠️ Main code has been edited ⚠️`,
+    2: `Issues might occur in the future`
   },
   
   // LeaderBoard Feature: (leave thoses variables empty if you don't want a special color on the leaderboard)
@@ -145,11 +157,11 @@ var gameOptions = {
     /*"ModVersion": {
       image: "https://raw.githubusercontent.com/TheGreatMegalodon/Megalodon-s-dueling-code/main/gameImages/versions/v1.4.0_Img.png",
       positions: { x: 21, y: -8.5, width: 20, height: 8, depth: -0.30 }
-    },
+    },*/
     "BETAlogo": {
       image: "https://raw.githubusercontent.com/TheGreatMegalodon/Megalodon-s-dueling-code/main/gameImages/BETA.png",
       positions: { x: -36, y: -1.25, width: 15, height: 9, depth: 0 }
-    }*/
+    }
   },
   vocabulary: [
     {text: "You", icon: "\u004e", key: "O"},
@@ -177,7 +189,7 @@ var gameOptions = {
     {text: "Lag", icon: "\u0069", key: "J"},
     {text: "Spectate", icon: "\u0059", key: "W"}
   ],
-  getWarning: false, // Get a warning everytime a suspicious player joins the game. (Beta Feature)
+  getWarning: true, // Get a warning everytime a suspicious player joins the game. (Beta Feature)
   Enable_antiCheat: true, // Changing the value while the mod is running isn't recomanded.
   Enable_AFK: true, // Allow AFK checker to run
   AFK_Cooldown: 40,
@@ -201,6 +213,7 @@ var gameOptions = {
 };
 
 game.custom.launched||MapOpen();
+game.custom.launched&&(game.modding.terminal.echo(`\n          [[g;#ff7070;] ${gameOptions.issue[1]} ]\n          [[g;#ff7070;] ${gameOptions.issue[2]} ]\n`));
 function Auth(t){const n="abcdefghijklmnopqrstuvwxyz0123456789";let o="";for(;o.length<t;){const t=Math.floor(36*Math.random()),r=n.charAt(t);o.includes(r)||(o+=r)}return o}
 !function(){ gameOptions.ships=[...Object.values(gameOptions.shipInformations.spectator).flatMap((a=>a.code)),...Object.values(gameOptions.shipInformations.admin).flatMap((a=>a.code)),...Object.values(gameOptions.shipInformations.main).flatMap((a=>a.code))] }();
 !function(){ const{main:e,spectator:s,admin:t}=gameOptions.shipInformations; gameOptions.shipCodes=Object.keys(e), gameOptions.spectatorShip=Object.keys(s), gameOptions.adminShip=Object.keys(t) }();
@@ -276,11 +289,21 @@ const Square = {
   visible: true,
   components: [
     {type:"box",position:[0,10,100,84],fill: `rgba(155, 155, 155, ${gameOptions.anchorMenu.look.opacity})`},
-    {type:"box",position:[0,0,47.5,12],fill:"rgba(200, 200, 200)"},
-    {type:"box",position:[0,8,100,10.5],fill:"rgba(200, 200, 200)"},
-    {type: "text",position:[1,2.5,45,13],value:"Actions Menu",color:"#000000"},
-    {type: "text",position:[75,9.5,35,7.5],value: gameOptions.Version,color:"#000000"},
-    {type: "text",position:[1,39,36,100],value: `#${gameOptions.Auth}`,color:"#ffffff"}
+    {type:"box",position:[0,2,41.5,10],fill:"rgba(200, 200, 200)"},
+    {type:"box",position:[0,8,100,8],fill:"rgba(200, 200, 200)"}, // 
+    {type: "text",position:[-2,3.5,45,11],value:"Actions Menu",color:"#000000"},
+    {type: "text",position:[-8,88,45,4.5],value:gameOptions.Copyright,color:"#007bff"}
+  ]
+};
+
+const more = {
+  id: "More",
+  position: [65.9+gameOptions.anchorMenu.anchor.x, 31.1+gameOptions.anchorMenu.anchor.y, 4, 3],
+  clickable: true,
+  visible: true,
+  components: [
+    {type: "box", position: [0, 0, 100, 100], fill: `rgba(100, 100, 100, ${gameOptions.anchorMenu.look.opacity})`, stroke: "rgb(100, 100, 100)", width: gameOptions.anchorMenu.look.componentBoxWidth},
+    {type: "text", position: [0, 16.5, 100, 70], value: "More", color: `rgb(0,0,0)` }
   ]
 };
 
@@ -351,9 +374,7 @@ const HideShow_Buttons = {
   clickable: true,
   visible: true,
   shortcut: "2",
-  components: [
-    {type: "text", position: [0, 0, 100, 100], value: "Hide Buttons [2]", color: "#ffffff"}
-  ]
+  components: [{type: "text", position: [0, 0, 100, 100], value: "Hide Buttons [2]", color: "#ffffff"}]
 };
 
 // Other
@@ -362,12 +383,14 @@ const Always_Pickup_Crystals = {
   position: [-4.5, -5, 110, 110],
   clickable: false,
   visible: true,
-  components: [
-    {type: "text", position: [-4, 5, 100, 3], value: "--", color: "#ffffff"}
-  ]
+  components: [{type: "text", position: [-4, 5, 100, 3], value: "--", color: "#ffffff"}]
 };
 
 this.tick = function(game) {
+  if (game.step % 120 === 0 && !game.custom.launched) {
+    for (const ship of game.ships) alert(ship, "The code didn't loaded properly..!", "Clear and copy the code in your modding tab again!");
+    return;
+  }
   if (game.step % 60 === 0 && game.custom.launched) {
     updateScoreboard(game);
     for (const ship of game.ships) if (gameOptions.Enable_AFK) AFKship(ship);
@@ -503,19 +526,18 @@ function format_time(time) {
 }
 
 function MapOpen() {
-  game.modding.terminal.echo(`\n\n                      [[gb;#007bff;]★ ${gameOptions.Name} ★]\n\n\n   [[g;#00d5ff;]This is an official dueling mod produced by] [[gu;#00d5ff;]${gameOptions.Creator}][[g;#00d5ff;].]\n   [[g;#00d5ff;]Any modified version of this code posted online can result in copyrights problems.]`);
-  game.modding.terminal.echo(`\n               [[gu;#00d5ff;]Current Version][[g;#00d5ff;]:]  [[gb;#ffc300;]${gameOptions.Version}]\n               [[gu;#00d5ff;]Authentication][[g;#00d5ff;]:]  [[gb;#ffc300;]#${gameOptions.Auth}]\n`);
-  game.modding.terminal.echo(`               [[gu;#ffdf00;]Support Server & documentation]`);
-  game.modding.terminal.echo(`                 ${gameOptions.Connexions.discord}\n                    ${gameOptions.Connexions.documentation}\n`);
-  game.modding.terminal.echo(`                  [[gu;#eb171e;]Give us your feedback] [[gb;#eb171e;]\u2764]\n                    ${gameOptions.Connexions.feedback}\n\n`);
-  game.custom.launched = true;
+  var tm = 0;
+  setTimeout(function() { game.modding.terminal.echo(`\n\n                      [[gb;#007bff;]★ ${gameOptions.Name} ★]\n\n\n   [[gi;#00d5ff;]This is an official dueling mod produced by] [[giu;#00d5ff;]${gameOptions.Creator}][[gi;#00d5ff;].]\n   [[gi;#00d5ff;]Any modified version of this code posted online can result in copyrights problems.]`); }, tm);
+  setTimeout(function() { game.modding.terminal.echo(`\n               [[gu;#00d5ff;]Current Version]  [[gb;#ffc300;]${gameOptions.Version}]\n               [[gu;#00d5ff;]Authentication]  [[gb;#ffc300;]${gameOptions.Auth}]\n`); }, tm+=200);
+  // link given
+  setTimeout(function() { game.modding.terminal.echo(`\n\n               [[gu;#ffdf00;]Support Server & documentation]\n                 ${gameOptions.Connexions.discord}\n                    ${gameOptions.Connexions.documentation}\n`); }, tm+=1500);
+  setTimeout(function() { game.modding.terminal.echo(`                  [[gu;#eb171e;]Give us your feedback] [[gb;#eb171e;]\u2764]\n                    ${gameOptions.Connexions.feedback}\n\n`), game.custom.launched = true; }, tm+=200);
 }
 
 function newPlayerJoined(ship) {
-  const playerName = ship.name;
   const containsClan = new RegExp(["ҒꝚ▸", "ҒR▸", "ᚫᚱ▸", "FЯ▸", "✯", "F℣➛", "【🔥IS】", "⌥Ƒᔦ", "SᄅF̶ ", "[S&C]", "[△]", "ɆØ₮⇝", "ɆØ₵➛", "[NUB]", "Λᴄᗯ"].join("|"));
   const safeClans = (["ҒꝚ▸", "ҒR▸", "ᚫᚱ▸", "FЯ▸","【🔥IS】", "SᄅF̶ ", "[S&C]", "[△]", "ɆØ₵➛"])
-  game.modding.terminal.echo(`[[g;#fffc50;]\nNew player joined \nIndex: ${game.ships.indexOf(ship)}, Name: ${getPlayerName(player)}]`);
+  game.modding.terminal.echo(`[[g;#fffc50;]\nNew player joined \nIndex: ${game.ships.indexOf(ship)}, Name: ${getPlayerName(ship)}]`);
   if (!gameOptions.getWarning) {
     return;
   }
@@ -600,18 +622,19 @@ function spectator_ship(ship, rps=true) {
       if (ship.custom.last_ship.toString() === gameOptions.spectatorShip[0]) ship.custom.last_ship = gameOptions.shipCodes[0];
       alert(ship, "", gameOptions.shipInformations.main[ship.custom.last_ship].name, "rgb(55,255,55)");
       ship.set({
-        type: ship.custom.last_ship, collider: true, shield: 999,
+        type: ship.custom.last_ship, collider: true, shield: 999, stats: ship.custom.stats,
         crystals: 20 * Math.trunc(ship.custom.last_ship / 100) * Math.trunc(ship.custom.last_ship / 100)
       });
+      ship.custom.lastlyUsedMore = false;
       update_stats_button(ship, false);
     } else {
       ship.custom.spectator = true;
       ship.custom.last_ship = rps ? ship.type : 605;
-      ship.custom.stats = ship.stats;
+      ship.custom.stats =  rps ? ship.stats : 66666666;
       ship.custom.afk_main = 0;
       alert(ship, "", gameOptions.shipInformations.spectator[gameOptions.spectatorShip[0]].name, "rgb(255,155,55)");
       ship.set({
-        type: gameOptions.spectatorShip[0], crystals: 0, stats: 88888888, shield: 999, collider: false
+        type: gameOptions.spectatorShip[0], crystals: 0, stats: 0, shield: 999, collider: false
       });
     }
   } else alert(ship, "Hold up! You're clicking too fast!");
@@ -638,21 +661,23 @@ function admin_ship(ship, off = false) {
     else ship.custom.afk_main = 1;
     (gameOptions.adminShip.includes(next_type)) ? alert(ship, "", gameOptions.shipInformations.admin[next_type].name, "rgb(255,55,55)") : alert(ship, "", gameOptions.shipInformations.main[next_type].name, "rgb(55,255,55)");
     ship.set({
-      type: next_type, stats: 66666666, collider: collider,
-      crystals: 20 * Math.trunc(next_type / 100) * Math.trunc(next_type / 100)
+      type: next_type, collider: collider, stats: (gameOptions.adminShip.includes(next_type.toString())) ? 0 : 11111111 * Math.trunc(next_type / 100),
+      crystals: (gameOptions.adminShip.includes(next_type.toString())) ? 0 : 20 * Math.trunc(next_type / 100) * Math.trunc(next_type / 100)
     });
   }
 }
 
 function regen(ship) {
-  if (ship.type !== gameOptions.spectatorShip[0]) {
-    let level = Math.trunc(ship.type / 100);
-    if (!ship.custom.Regenerate || game.step >= ship.custom.Regenerate) {
-      ship.custom.Regenerate = game.step + gameOptions.delays.Regenerate_delay * 60;
-      let max_crystals = 20 * Math.trunc(ship.type / 100) * Math.trunc(ship.type / 100);
-      ship.set({crystals: max_crystals, shield: 999});
-    } else alert(ship, "Hold up! You're clicking too fast!");
+  if (ship.type.toString() === gameOptions.spectatorShip[0] || gameOptions.adminShip.includes(ship.type.toString())) {
+    alert(ship, "You can't regenerate your ship", "while being in that ship");
+    return;
   }
+  let level = Math.trunc(ship.type / 100);
+  if (!ship.custom.Regenerate || game.step >= ship.custom.Regenerate) {
+    ship.custom.Regenerate = game.step + gameOptions.delays.Regenerate_delay * 60;
+    let max_crystals = 20 * Math.trunc(ship.type / 100) * Math.trunc(ship.type / 100);
+    ship.set({crystals: max_crystals, shield: 999});
+  } else alert(ship, "Hold up! You're clicking too fast!");
 };
 
 function update_stats_button(ship, op_button = true, allow_stats = true, check_max = false) {
@@ -665,8 +690,8 @@ function update_stats_button(ship, op_button = true, allow_stats = true, check_m
 }
 
 function Stats_button(ship) {
-  if (gameOptions.spectatorShip[0] === ship.type || gameOptions.adminShip.includes(ship.type)) {
-    alert(ship, "You can't interact with the stats", "while being in that ship");
+  if (gameOptions.spectatorShip[0] === ship.type.toString() || gameOptions.adminShip.includes(ship.type.toString())) {
+    alert(ship, "You can't interact with the stats", "while being in spectator mode");
     return;
   }
   ship.custom.keep_maxed = ship.stats !== 11111111 * Math.trunc(ship.type / 100);
@@ -685,8 +710,8 @@ function Teleport_Center(ship) {
 }
 
 // Exit Screen Commands
-const gameComponents = [Stats, Wrap, Tp_Spawn, next_ship, previous_ship, Square];
-const gameComponentsID = ["Tp_Spawn", "Square", "next_ship", "previous_ship", "Stats", "Wrap", "Box_Exit_screen"];
+const gameComponents = [Stats, Wrap, Tp_Spawn, next_ship, previous_ship, more, Square];
+const gameComponentsID = ["Tp_Spawn", "Square", "next_ship", "previous_ship", "Stats", "Wrap", "Box_Exit_screen", "More"];
 function Exit_screen(ship, withMenu = true) {
   if (withMenu) {
     Menu_.components[0].fill = `rgba(255, 55, 55, ${gameOptions.anchorMenu.look.opacity})`;
@@ -739,6 +764,21 @@ function Manage_Buttons(ship) {
   } else alert(ship, "Hold up! You're clicking too fast!");
 }
 
+function moreEvent(ship) {
+  update_Menu(ship);
+  const gameHost = game.findShip(Math.min(...game.ships.map(s => s.id)));
+  if (gameOptions.spectatorShip[0] !== ship.type.toString()) spectator_ship(ship, true);
+  ship.intermission({
+    "Version":gameOptions.Version,
+    "Authentication":gameOptions.Auth,
+    "Game Developer":gameOptions.Creator,
+    " ":" ",
+    "Game Host": gameHost.name === ship.name ? "You" : gameHost.name,
+    "Kills": ship.custom.Kills > 0 ? ship.custom.Kills : "None",
+    "Deaths": ship.custom.Deaths > 0 ? ship.custom.Deaths : "None"
+  });
+}
+
 this.event = function(event, game) {
   switch (event.name) {
     case "ui_component_clicked":
@@ -759,6 +799,7 @@ this.event = function(event, game) {
           case "Stats": Stats_button(event.ship); break;
           case "Tp_Spawn": Teleport_Center(event.ship); break;
           case "Wrap": wrap_ship(event.ship, game); break;
+          case "More": moreEvent(event.ship); break;
         }
       }
       break;
