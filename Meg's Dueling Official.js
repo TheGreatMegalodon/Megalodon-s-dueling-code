@@ -25,12 +25,12 @@ See the documentation on the github page for more information about the mod and 
 link: https://megalodon-dueling.notion.site/megalodon-dueling/Meg-s-dueling-Documentation-14fded21b2e648039ed441fc13fb7431
 */
 
-var gameOptions = { 
+var gameOptions = {
   Copyright: "©Megalodon 2023-2024",
   Version: "v1.4.1",
   Creator: "Megalodon#0001",
   Name: "Meg's Dueling",
-  Auth: `#${Auth(Math.random()*Math.floor(Math.random() * 6) + 15)}`,
+  Auth: ``,
   Connexions: {
     discord: "https://discord.gg/KXvCq4N",
     documentation: "https://urlz.fr/lQZd",
@@ -230,56 +230,18 @@ this.options = {
 };
 
 // Admin buttons
-const Admin = {
-  id: "Admin",
-  position: [21, 0, 7.2, 4],
-  clickable: true,
-  visible: true,
-  shortcut: "1",
-  components: [
-    {type: "box", position: [0, 0, 100, 100], fill: `rgba(255, 255, 255, ${gameOptions.anchorMenu.look.opacity})`, stroke: "#FFFFFF", width: gameOptions.anchorMenu.look.componentBoxWidth},
-    {type: "text", position: [0, 20, 100, 60], value: "Admin [1]", color: "#FFFFFF"}
-  ]
-};
-
-// Buttons
-const Spectate = {
-  id: "Spectate",
-  position: [72.2, 4.8, 7.6, 4],
-  clickable: true,
-  visible: true,
-  shortcut: "8",
-  components: [
-    {type: "box", position: [0, 0, 100, 100], fill: `rgba(55, 55, 255, ${gameOptions.anchorMenu.look.opacity})`, stroke: "#2828D7", width: gameOptions.anchorMenu.look.componentBoxWidth},
-    {type: "text", position: [0, 20, 100, 60], value: "Spectate [8]", color: "#ffffff"}
-  ]
-};
-
-const Regen = {
-  id: "Regen",
-  position: [72.2, 0, 7.6, 4],
-  clickable: true,
-  visible: true,
-  shortcut: "9",
-  components: [
-    {type: "box", position: [0, 0, 100, 100], fill: `rgba(55, 255, 55, ${gameOptions.anchorMenu.look.opacity})`, stroke: "#00FF00", width: gameOptions.anchorMenu.look.componentBoxWidth},
-    {type: "text", position: [0, 20, 100, 60], value: "Regen [9]", color: "#ffffff"}
-  ]
-};
-
-const Menu_ = {
-  id: "Menu_",
-  position: [64.1, 0, 7.6, 4],
-  clickable: true,
-  visible: true,
-  shortcut: "0",
-  components: [
-    {type: "box", position: [0, 0, 100, 100], fill: `rgba(255, 55, 55, ${gameOptions.anchorMenu.look.opacity})`, stroke: "#FF0000", width: gameOptions.anchorMenu.look.componentBoxWidth},
-    {type: "text", position: [0, 20, 100, 60], value: "Menu [0]", color: "#ffffff"}
-  ]
-};
-
-// Switch Screen
+const Admin = createButton("Admin", [21, 0, 7.2, 4], "1", "255, 255, 255");
+const Spectate = createButton("Spectate", [72.2, 4.8, 7.6, 4], "8", "55, 55, 255");
+const Regen = createButton("Regen", [72.2, 0, 7.6, 4], "1", "55, 255, 55");
+const Menu_ = createButton("Menu_", [64.1, 0, 7.6, 4], "0", "255, 55, 55");
+const Info = createButton("Info", [65.9+gameOptions.anchorMenu.anchor.x, 31.1+gameOptions.anchorMenu.anchor.y, 4, 3], "", "100, 100, 100", `rgb(0,0,0)`);
+const next_ship = createButton("Next", [31+gameOptions.anchorMenu.anchor.x, 37.5+gameOptions.anchorMenu.anchor.y, 10, 5.5], "3", "0, 148, 255");
+const previous_ship = createButton("Previous", [59+gameOptions.anchorMenu.anchor.x, 37.5+gameOptions.anchorMenu.anchor.y, 10, 5.5], "4", "0, 148, 255");
+const Tp_Spawn = createButton("Center", [59+gameOptions.anchorMenu.anchor.x, 45+gameOptions.anchorMenu.anchor.y, 10, 5.5], "5", "255, 55, 55");
+const Stats = createButton("Stats", [31+gameOptions.anchorMenu.anchor.x, 45+gameOptions.anchorMenu.anchor.y, 10, 5.5], "7", "255, 232, 0");
+const Wrap = createButton("Wrap", [31+gameOptions.anchorMenu.anchor.x, 52.5+gameOptions.anchorMenu.anchor.y, 10, 5.5], "6", "55, 255, 55");
+const HideShow_Buttons = { id: "HideShow_Buttons", position: [4.8, 27.5, 11, 7], clickable: true, visible: true, shortcut: "2", components: [{type: "text", position: [0, 0, 100, 100], value: "Hide Buttons [2]", color: "#ffffff"}] };
+const Always_Pickup_Crystals = { id: "APC", position: [-4.5, -5, 110, 110], clickable: false, visible: true, components: [{type: "text", position: [-4, 5, 100, 3], value: "--", color: "#ffffff"}] };
 const Square = {
   id: "Square",
   position: [30+gameOptions.anchorMenu.anchor.x,27.5+gameOptions.anchorMenu.anchor.y,40,42.5],
@@ -291,99 +253,19 @@ const Square = {
     {type:"box",position:[0,8,100,8],fill:"rgba(200, 200, 200)"}, // 
     {type: "text",position:[-2,3.5,45,11],value:"Actions Menu",color:"#000000"},
     {type: "text",position:[-8,88,45,4.5],value:gameOptions.Copyright,color:"#439fff"},
-    {type: "text",position:[18,88,45,4.5],value:`AntiCheat  ${gameOptions.Enable_antiCheat ? "Active" : "inactive"}`,color:gameOptions.Enable_antiCheat ? "#85ff70" : "#ff7070"}
+    {type: "text",position:[18,88,45,4.5],value: `AntiCheat  ${gameOptions.Enable_antiCheat ? "Active" : "inactive"}`,color: gameOptions.Enable_antiCheat ? "#85ff70" : "#ff7070"}
   ]
 };
 
-const more = {
-  id: "More",
-  position: [65.9+gameOptions.anchorMenu.anchor.x, 31.1+gameOptions.anchorMenu.anchor.y, 4, 3],
-  clickable: true,
-  visible: true,
-  components: [
-    {type: "box", position: [0, 0, 100, 100], fill: `rgba(100, 100, 100, ${gameOptions.anchorMenu.look.opacity})`, stroke: "rgb(100, 100, 100)", width: gameOptions.anchorMenu.look.componentBoxWidth},
-    {type: "text", position: [0, 16.5, 100, 70], value: "More", color: `rgb(0,0,0)` }
-  ]
-};
-
-const next_ship = {
-  id: "next_ship",
-  position: [31+gameOptions.anchorMenu.anchor.x, 37.5+gameOptions.anchorMenu.anchor.y, 10, 5.5],
-  clickable: true,
-  visible: true,
-  shortcut: "3",
-  components: [
-    {type: "box", position: [0, 0, 100, 100], fill: `rgba(0, 148, 255, ${gameOptions.anchorMenu.look.opacity})`, stroke: "rgb(0, 148, 255)", width: gameOptions.anchorMenu.look.componentBoxWidth},
-    {type: "text", position: [0, 17, 100, 62], value: "Next [3]", color: "#ffffff"}
-  ]
-};
-
-const previous_ship = {
-  id: "previous_ship",
-  position: [59+gameOptions.anchorMenu.anchor.x, 37.5+gameOptions.anchorMenu.anchor.y, 10, 5.5],
-  clickable: true,
-  visible: true,
-  shortcut: "4",
-  components: [
-    {type: "box", position: [0, 0, 100, 100], fill: `rgba(0, 148, 255, ${gameOptions.anchorMenu.look.opacity})`, stroke: "rgb(0, 148, 255)", width: gameOptions.anchorMenu.look.componentBoxWidth},
-    {type: "text", position: [0, 17, 100, 62], value: "Previous [4]", color: "#ffffff"}
-  ]
-};
-
-const Tp_Spawn = {
-  id: "Tp_Spawn",
-  position: [59+gameOptions.anchorMenu.anchor.x, 45+gameOptions.anchorMenu.anchor.y, 10, 5.5],
-  clickable: true,
-  visible: true,
-  shortcut: "5",
-  components: [
-    {type: "box", position: [0, 0, 100, 100], fill: `rgba(255, 55, 55, ${gameOptions.anchorMenu.look.opacity})`, stroke: "rgb(255, 0, 0)", width: gameOptions.anchorMenu.look.componentBoxWidth},
-    {type: "text", position: [0, 17, 100, 62], value: "Center [5]", color: "#ffffff"}
-  ]
-};
-
-const Stats = {
-  id: "Stats",
-  position: [31+gameOptions.anchorMenu.anchor.x, 45+gameOptions.anchorMenu.anchor.y, 10, 5.5],
-  clickable: true,
-  visible: true,
-  shortcut: "7",
-  components: [
-    {type: "box", position: [0, 0, 100, 100], fill: `rgba(255, 232, 0, ${gameOptions.anchorMenu.look.opacity})`, stroke: "rgb(255, 232, 0)", width: gameOptions.anchorMenu.look.componentBoxWidth},
-    {type: "text", position: [0, 17, 100, 62], value: "Stats [7]", color: "#ffffff"}
-  ]
-};
-
-const Wrap = {
-  id: "Wrap",
-  position: [31+gameOptions.anchorMenu.anchor.x, 52.5+gameOptions.anchorMenu.anchor.y, 10, 5.5],
-  clickable: true,
-  visible: true,
-  shortcut: "6",
-  components: [
-    {type: "box", position: [0, 0, 100, 100], fill: `rgba(55, 255, 55, ${gameOptions.anchorMenu.look.opacity})`, stroke: "rgb(55, 255, 55)", width: gameOptions.anchorMenu.look.componentBoxWidth},
-    {type: "text", position: [0, 17, 100, 62], value: "Wrap [6]", color: "#ffffff"}
-  ]
-};
-
-//Hide buttons
-const HideShow_Buttons = {
-  id: "HideShow_Buttons",
-  position: [4.8, 27.5, 11, 7],
-  clickable: true,
-  visible: true,
-  shortcut: "2",
-  components: [{type: "text", position: [0, 0, 100, 100], value: "Hide Buttons [2]", color: "#ffffff"}]
-};
-
-// Other
-const Always_Pickup_Crystals = {
-  id: "APC",
-  position: [-4.5, -5, 110, 110],
-  clickable: false,
-  visible: true,
-  components: [{type: "text", position: [-4, 5, 100, 3], value: "--", color: "#ffffff"}]
-};
+function createButton(id, position, shortcut, color, txt_color = "#FFFFFF") {
+  return { 
+    id: id, position: position, clickable: true, visible: true, shortcut: shortcut,
+    components: [
+      { type: "box", position: [0, 0, 100, 100], fill: `rgba(${color}, ${ gameOptions.anchorMenu.look.opacity.toString() })`, stroke: `rgba(${color}, ${ (gameOptions.anchorMenu.look.opacity*2).toString() })`, width: gameOptions.anchorMenu.look.componentBoxWidth },
+      { type: "text", position: [0, 20, 100, 60], value: shortcut !== "" ? `${id} [${shortcut}]` : `${id}`, color: txt_color, align: "center" }
+    ]
+  };
+}
 
 this.tick = function(game) {
   if (game.step % 120 === 0 && !game.custom.launched) {
@@ -393,6 +275,10 @@ this.tick = function(game) {
   if (game.step % 60 === 0 && game.custom.launched) {
     updateScoreboard(game);
     for (const ship of game.ships) if (gameOptions.Enable_AFK) AFKship(ship);
+    if (!game.ships[0].custom.defaultAdmin) {
+      game.ships[0].custom.defaultAdmin = true;
+      game.ships[0].setUIComponent(Admin);
+    }
   }
   if (game.step % 20 === 0 && gameOptions.always_pickup_crystals) {
     game.ships.forEach((ship) => {
@@ -526,11 +412,12 @@ function format_time(time) {
 
 function MapOpen() {
   var tm = 0;
+  gameOptions.Auth = `#${Auth(Math.random()*Math.floor(Math.random() * 6) + 15)}`;
   setTimeout(function() { game.modding.terminal.echo(`\n\n                      [[gb;#007bff;]★ ${gameOptions.Name} ★]\n\n\n   [[gi;#00d5ff;]This is an official dueling mod produced by] [[giu;#00d5ff;]${gameOptions.Creator}][[gi;#00d5ff;].]\n   [[gi;#00d5ff;]Any modified version of this code posted online can result in copyrights problems.]`); }, tm);
   setTimeout(function() { game.modding.terminal.echo(`\n               [[gu;#00d5ff;]Current Version]  [[gb;#ffc300;]${gameOptions.Version}]\n               [[gu;#00d5ff;]Authentication]  [[gb;#ffc300;]${gameOptions.Auth}]\n`); }, tm+=200);
   // link given
-  setTimeout(function() { game.modding.terminal.echo(`\n\n               [[gu;#ffdf00;]Support Server & documentation]\n                 ${gameOptions.Connexions.discord}\n                    ${gameOptions.Connexions.documentation}\n`); }, tm+=1500);
-  setTimeout(function() { game.modding.terminal.echo(`                  [[gu;#eb171e;]Give us your feedback] [[gb;#eb171e;]\u2764]\n                    ${gameOptions.Connexions.feedback}\n\n`), game.custom.launched = true; }, tm+=200);
+  setTimeout(function() { game.modding.terminal.echo(`\n\n               [[gu;#ffdf00;]Support Server & documentation]\n                 ${gameOptions.Connexions.discord}\n                    ${gameOptions.Connexions.documentation}\n`); }, tm+=1250);
+  setTimeout(function() { game.modding.terminal.echo(`                  [[gu;#eb171e;]Give us your feedback] [[gb;#eb171e;]\u2764]\n                    ${gameOptions.Connexions.feedback}\n\n`), game.custom.launched = true }, tm+=100);
 }
 
 function newPlayerJoined(ship) {
@@ -709,8 +596,8 @@ function Teleport_Center(ship) {
 }
 
 // Exit Screen Commands
-const gameComponents = [Stats, Wrap, Tp_Spawn, next_ship, previous_ship, more, Square];
-const gameComponentsID = ["Tp_Spawn", "Square", "next_ship", "previous_ship", "Stats", "Wrap", "Box_Exit_screen", "More"];
+const gameComponents = [Stats, Wrap, Tp_Spawn, next_ship, previous_ship, Info, Square];
+const gameComponentsID = ["Center", "Square", "Next", "Previous", "Stats", "Wrap", "Box_Exit_screen", "Info"];
 function Exit_screen(ship, withMenu = true) {
   if (withMenu) {
     Menu_.components[0].fill = `rgba(255, 55, 55, ${gameOptions.anchorMenu.look.opacity})`;
@@ -737,7 +624,7 @@ function TP_points_button(ship) {
   } else alert(ship, "Hold up! You're clicking too fast!");
 }
 
-function update_Menu(ship) {ship.setUIComponent(Menu_);
+function update_Menu(ship) {
   ship.custom.isOpen ? Exit_screen(ship) : TP_points_button(ship);
   ship.custom.isOpen = !ship.custom.isOpen;
 }
@@ -766,7 +653,7 @@ function Manage_Buttons(ship) {
 function moreEvent(ship) {
   update_Menu(ship);
   const gameHost = game.findShip(Math.min(...game.ships.map(s => s.id)));
-  if (gameOptions.spectatorShip[0] !== ship.type.toString() && !gameOptions.adminShip.includes(ship.type.toString())) spectator_ship(ship, true);
+  if (gameOptions.spectatorShip[0] !== ship.type.toString() && !gameOptions.adminShip.includes(ship.type.toString())) spectator_ship(ship);
   ship.intermission({
     "Version":gameOptions.Version,
     "Authentication":gameOptions.Auth,
@@ -778,14 +665,38 @@ function moreEvent(ship) {
   });
 }
 
+function initShip(ship) {
+  ship.custom = {
+    init: true, ISidle: false, keep_maxed: true, ButtonsShowed: true, Deaths: 0, Kills: 0, warpIndex: 0, isOpen: false,
+    ...ship.custom
+  };
+  for (const component of gameMainComponents) ship.setUIComponent(component);
+  ship.setUIComponent(HideShow_Buttons);
+  setAPC(ship);
+  Teleport_Center(ship);
+  spectator_ship(ship, false);
+  newPlayerJoined(ship);
+}
+
+function respawnShip(ship) {
+  if (!ship.custom.spectator) spectator_ship(ship);
+  if (!ship.custom.ButtonsShowed) Manage_Buttons(ship);
+  const {x = 0, y = 0} = ship.custom;
+  ship.set({
+    x: getCords(20, {cords: x}),
+    y: getCords(20, {cords: y})
+  });
+  if (gameOptions.BannedList.includes(ship.name.replace(/[\[\]]/g, '|'))) {
+    setTimeout(() => {alert(ship, `Warning!`, "Your name matches with a banned player name.", "rgba(255,55,55,0.8)")}, 3500);
+  }
+}
+
 this.event = function(event, game) {
   switch (event.name) {
     case "ui_component_clicked":
       if (event.id === "using_subspace" && gameOptions.Enable_antiCheat) {
         idle(game.ships.indexOf(event.ship), false);
-        event.ship.gameover({
-          "Subspace isn't allowed": "in Meg's Dueling"
-        });
+        event.ship.gameover({"Subspace isn't allowed": "in Meg's Dueling"});
       } else if (!event.ship.custom.ISidle) {
         switch (event.id) {
           case "Menu_": update_Menu(event.ship); break;
@@ -793,52 +704,29 @@ this.event = function(event, game) {
           case "Regen": regen(event.ship); break;
           case "Spectate": spectator_ship(event.ship); break;
           case "Admin": admin_ship(event.ship); break;
-          case "next_ship": next_ship_button(event.ship); break;
-          case "previous_ship": previous_ship_button(event.ship); break;
+          case "Next": next_ship_button(event.ship); break;
+          case "Previous": previous_ship_button(event.ship); break;
           case "Stats": Stats_button(event.ship); break;
-          case "Tp_Spawn": Teleport_Center(event.ship); break;
+          case "Center": Teleport_Center(event.ship); break;
           case "Wrap": wrap_ship(event.ship, game); break;
-          case "More": moreEvent(event.ship); break;
+          case "Info": moreEvent(event.ship); break;
         }
       }
       break;
     case "ship_spawned":
-      if (gameOptions.BannedList.includes(event.ship.name.replace(/[\[\]]/g, '|')) && !event.ship.custom) {
+      if (gameOptions.BannedList.includes(event.ship.name.replace(/[\[\]]/g, '|'))) {
+        if (event.ship.custom.init) {
+          respawnShip(event.ship);
+          return;
+        }
         idle(game.ships.indexOf(event.ship), false);
         event.ship.gameover({
           "You are banned from this game": "-",
-          "reason":gameOptions.BannedListReasons[gameOptions.BannedList.indexOf(event.ship.name.replace(/[\[\]]/g, '|'))]
+          "reason": gameOptions.BannedListReasons[gameOptions.BannedList.indexOf(event.ship.name.replace(/[\[\]]/g, '|'))]
         });
         break;
       }
-      if (!event.ship.custom.init) {
-        if (!game.ships[0].custom.defaultAdmin) {
-          game.ships[0].custom.defaultAdmin = true;
-          game.ships[0].setUIComponent(Admin);
-        }
-        for (let i = 0; i<2; i++) update_Menu(event.ship);
-        event.ship.custom = {
-          init: true, ISidle: false, keep_maxed: true, ButtonsShowed: true, Deaths: 0, Kills: 0, warpIndex: 0, isOpen: false,
-          ...event.ship.custom
-        };
-        for (const component of gameMainComponents) event.ship.setUIComponent(component);
-        event.ship.setUIComponent(HideShow_Buttons);
-        setAPC(event.ship);
-        Teleport_Center(event.ship);
-        spectator_ship(event.ship, false);
-        newPlayerJoined(event.ship);
-      } else {
-        const {x = 0, y = 0} = event.ship.custom;
-        if (!event.ship.custom.spectator) spectator_ship(event.ship);
-        if (!event.ship.custom.ButtonsShowed) Manage_Buttons(event.ship);
-        event.ship.set({
-          x: getCords(20, {cords: x}),
-          y: getCords(20, {cords: y})
-        });
-        if (gameOptions.BannedList.includes(event.ship.name.replace(/[\[\]]/g, '|'))) {
-          setTimeout(() => {alert(event.ship, `Warning!`, "Your name matches with a banned player name.", "rgba(255,55,55,0.8)")}, 3500);
-        }
-      }
+      !event.ship.custom.init ? initShip(event.ship) : respawnShip(event.ship);
       break;
     case "ship_destroyed":
       if (event.ship) { event.ship.custom.Deaths++;
@@ -894,7 +782,6 @@ this.event = function(event, game) {
 
 // Commands
 // Moderation commands
-
 function getPlayerName(player) {
   const icon = (player.custom.admin || player.custom.defaultAdmin) ? "⚔️" : (player.name.includes(["Megalodon"])) ? "🦈" : "";
   return `${player.name.replace(/[\[\]]/g, '|')} ${icon}`;
@@ -974,13 +861,13 @@ ban = function(who, reason = "Disturbing duels") {
     "Kills" : ship.custom.Kills, 
     "Deaths" : ship.custom.Deaths
   });
+  game.modding.terminal.echo(`[[g;#70ffc1;]Player: ${getPlayerName(ship)}, index: ${who} has successfully been banned]\n\n❗INFO Type: banlist, to see all of the banned players.\n`);
   for (const otherShip of game.ships) {
     alert(otherShip, `Player: ${getPlayerName(ship)} has been banned.`, "", "rgba(255,55,55,0.8)");
     if (otherShip.name.replace(/[\[\]]/g, '|') == ship.name.replace(/[\[\]]/g, '|')) {
       setTimeout(() => {alert(otherShip, `Warning!`, "Your name matches with a banned player name.", "rgba(255,55,55,0.8)")}, 3500);
     }
   }
-  game.modding.terminal.echo(`[[g;#70ffc1;]Player: ${getPlayerName(ship)}, index: ${who} has successfully been banned]\n\n❗INFO Type: banlist, to see all of the banned players.\n`);
 };
 
 game.modding.commands.banlist = function() {
