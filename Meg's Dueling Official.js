@@ -621,7 +621,7 @@ function spectator_ship(ship, rps=true) {
       if (ship.custom.last_ship.toString() === gameOptions.spectatorShip[0]) ship.custom.last_ship = gameOptions.shipCodes[0];
       alert(ship, "", gameOptions.shipInformations.main[ship.custom.last_ship].name, "rgb(55,255,55)");
       ship.set({
-        type: ship.custom.last_ship, collider: true, shield: 999, stats: ship.custom.stats,
+        type: ship.custom.last_ship, collider: true, shield: 999, stats: ship.custom.stats, vx: 0, vy: 0,
         crystals: 20 * Math.trunc(ship.custom.last_ship / 100) * Math.trunc(ship.custom.last_ship / 100)
       });
       ship.custom.lastlyUsedMore = false;
