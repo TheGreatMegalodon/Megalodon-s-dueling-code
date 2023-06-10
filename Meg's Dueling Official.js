@@ -232,7 +232,7 @@ this.options = {
 // Admin buttons
 const Admin = createButton("Admin", [21, 0, 7.2, 4], "1", "255, 255, 255");
 const Spectate = createButton("Spectate", [72.2, 4.8, 7.6, 4], "8", "55, 55, 255");
-const Regen = createButton("Regen", [72.2, 0, 7.6, 4], "1", "55, 255, 55");
+const Regen = createButton("Regen", [72.2, 0, 7.6, 4], "9", "55, 255, 55");
 const Menu_ = createButton("Menu_", [64.1, 0, 7.6, 4], "0", "255, 55, 55");
 const Info = createButton("Info", [65.9+gameOptions.anchorMenu.anchor.x, 31.1+gameOptions.anchorMenu.anchor.y, 4, 3], "", "100, 100, 100", `rgb(0,0,0)`);
 const next_ship = createButton("Next", [31+gameOptions.anchorMenu.anchor.x, 37.5+gameOptions.anchorMenu.anchor.y, 10, 5.5], "3", "0, 148, 255");
