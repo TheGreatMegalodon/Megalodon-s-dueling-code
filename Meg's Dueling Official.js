@@ -30,12 +30,14 @@ var gameOptions = {
   Version: "v1.4.1",
   Creator: "Megalodon#0001",
   Name: "Meg's Dueling",
-  Auth: ``,
+  Auth: `Invalid⚠️`,
+  
   Connexions: {
     discord: "https://discord.gg/KXvCq4N",
     documentation: "https://urlz.fr/lQZd",
     feedback: "https://urlz.fr/lQZg",
   },
+  
   issue: {
     1: `⚠️ Main code has been edited ⚠️`,
     2: `Issues might occur in the future`
@@ -187,7 +189,7 @@ var gameOptions = {
     {text: "Lag", icon: "\u0069", key: "J"},
     {text: "Spectate", icon: "\u0059", key: "W"}
   ],
-  getWarning: false, // Get a warning everytime a suspicious player joins the game. (Beta Feature)
+  getWarning: false, // Get a warning everytime a suspicious player joins the game. (Beta Feature might get removed)
   Enable_antiCheat: true, // Changing the value while the mod is running isn't recomanded.
   Enable_AFK: true, // Allow AFK checker to run
   AFK_Cooldown: 40,
@@ -196,16 +198,16 @@ var gameOptions = {
     spawn_zone_delay: 1,
     switch_ship_delay: 0.15,
     spectator_switch_delay: 1,
-    TP_points_delay: 1,
+    TP_points_delay: 1, // not lower than 1 second
     Regenerate_delay: 2,
     wrap_delay: 0.25,
-    Mb_delay: 1,
+    Mb_delay: 1, // not lower than 1 second
   },
   anchorMenu: {
     anchor: {x: 0, y: 0},
     look: {
       componentBoxWidth: 7,
-      opacity: "0.35"
+      opacity: 0.35
     }
   }
 };
@@ -226,6 +228,7 @@ this.options = {
   weapons_store: false,
   vocabulary: gameOptions.vocabulary,
   ships: gameOptions.ships,
+  soundtrack: "warp_drive.mp3",
   custom_map: ""
 };
 
@@ -248,12 +251,13 @@ const Square = {
   clickable: false,
   visible: true,
   components: [
-    {type:"box",position:[0,10,100,84],fill: `rgba(155, 155, 155, ${gameOptions.anchorMenu.look.opacity})`},
+    {type:"box",position:[0,10,100,85],fill: `rgba(155, 155, 155, ${gameOptions.anchorMenu.look.opacity})`},
     {type:"box",position:[0,2,41.5,10],fill:"rgba(200, 200, 200)"},
-    {type:"box",position:[0,8,100,8],fill:"rgba(200, 200, 200)"}, // 
+    {type:"box",position:[0,8,100,8],fill:"rgba(200, 200, 200)"},
     {type: "text",position:[-2,3.5,45,11],value:"Actions Menu",color:"#000000"},
-    {type: "text",position:[-8,88,45,4.5],value:gameOptions.Copyright,color:"#439fff"},
-    {type: "text",position:[18,88,45,4.5],value: `AntiCheat  ${gameOptions.Enable_antiCheat ? "Active" : "inactive"}`,color: gameOptions.Enable_antiCheat ? "#85ff70" : "#ff7070"}
+    {align: "left", type: "text",position:[1,90,45,4.5],value:gameOptions.Copyright,color:"#439fff"},
+    {align: "left", type: "text",position:[gameOptions.Enable_antiCheat?30:29,90,45,4.5],value: `AntiCheat  ${gameOptions.Enable_antiCheat ? "Active" : "Inactive"}`,color: gameOptions.Enable_antiCheat ? "#85ff70" : "#ff7070"},
+    {align: "left", type: "text",position:[51.5,90,45,4.5],value: `AFKChecker  ${gameOptions.Enable_AFK ? "Active" : "Inactive"}`,color: gameOptions.Enable_AFK ? "#85ff70" : "#ff7070"}
   ]
 };
 
@@ -322,7 +326,7 @@ function updateScoreboard(game) {
   game.ships.forEach((ship) => {
     if (ship.name == gameOptions.YourIGN_Name) ship.custom.customColor = gameOptions.YourIGN_Color;
     else if (ship.name.includes(["Megalodon"])) ship.custom.customColor = "#005cb9";
-    else ship.custom.customColor = ship.custom.isAFK ? "rgb(200,111,111)" : ship.custom.spectator ? "rgb(155,155,155)" : (ship.id === sorted_ships_KDratio[0].id && ship.custom.Kills >= 1) ? "rgb(255, 215, 0)" : "rgb(255, 255, 255)";
+    else ship.custom.customColor = !ship.custom.alive ? "rgb(100,100,100)" : ship.custom.isAFK ? "rgb(200,111,111)" : ship.custom.spectator ? "rgb(155,155,155)" : (ship.id === sorted_ships_KDratio[0].id && ship.custom.Kills >= 1) ? "rgb(255, 215, 0)" : "rgb(255, 255, 255)";
   });
   let Scoreboard = {
     id: "scoreboard",
@@ -410,9 +414,8 @@ function format_time(time) {
   } else return "0:00";
 }
 
-function MapOpen() {
-  var tm = 0;
-  gameOptions.Auth = `#${Auth(Math.random()*Math.floor(Math.random() * 6) + 15)}`;
+function MapOpen(tm=0) {
+  gameOptions.Auth = `#${Auth(Math.round(Math.random()*Math.floor(Math.random() * 6) + 12.5))}`;
   setTimeout(function() { game.modding.terminal.echo(`\n\n                      [[gb;#007bff;]★ ${gameOptions.Name} ★]\n\n\n   [[gi;#00d5ff;]This is an official dueling mod produced by] [[giu;#00d5ff;]${gameOptions.Creator}][[gi;#00d5ff;].]\n   [[gi;#00d5ff;]Any modified version of this code posted online can result in copyrights problems.]`); }, tm);
   setTimeout(function() { game.modding.terminal.echo(`\n               [[gu;#00d5ff;]Current Version]  [[gb;#ffc300;]${gameOptions.Version}]\n               [[gu;#00d5ff;]Authentication]  [[gb;#ffc300;]${gameOptions.Auth}]\n`); }, tm+=200);
   // link given
@@ -496,7 +499,7 @@ function previous_ship_button(ship) {
   } else alert(ship, "Hold up! You're clicking too fast!");
 }
 
-function spectator_ship(ship, rps=true) {
+function spectator_ship(ship, rps = true) {
   if (!ship.custom.spectator_switch || game.step >= ship.custom.spectator_switch) {
     ship.custom.spectator_switch = game.step + gameOptions.delays.spectator_switch_delay * 60;
     if (gameOptions.adminShip.includes(ship.type.toString())) {
@@ -511,12 +514,11 @@ function spectator_ship(ship, rps=true) {
         type: ship.custom.last_ship, collider: true, shield: 999, stats: ship.custom.stats, vx: 0, vy: 0,
         crystals: 20 * Math.trunc(ship.custom.last_ship / 100) * Math.trunc(ship.custom.last_ship / 100)
       });
-      ship.custom.lastlyUsedMore = false;
-      update_stats_button(ship, false);
+      update_stats_button(ship, false, false);
     } else {
       ship.custom.spectator = true;
       ship.custom.last_ship = rps ? ship.type : 605;
-      ship.custom.stats =  rps ? ship.stats : 66666666;
+      ship.custom.stats = rps ? ship.stats : 66666666;
       ship.custom.afk_main = 0;
       alert(ship, "", gameOptions.shipInformations.spectator[gameOptions.spectatorShip[0]].name, "rgb(255,155,55)");
       ship.set({
@@ -585,13 +587,15 @@ function Stats_button(ship) {
 }
 
 
-function Teleport_Center(ship) {
+function Teleport_Center(ship, showTXT = true) {
   if (!ship.custom.spawn || game.step >= ship.custom.spawn) {
     ship.custom.spawn = game.step + gameOptions.delays.spawn_zone_delay * 60;
     const posx = getCords(20, {cords: 0});
     const posy = getCords(20, {cords: 0});
     ship.set({ x: posx,  y: posy });
-    alert(ship, "Teleported to", `x: ${posx}, y: ${posy}`, "rgb(55,255,55)");
+    if (showTXT) {
+      alert(ship, "Teleported to", `x: ${posx}, y: ${posy}`, "rgb(55,255,55)");
+    }
   } else alert(ship, "Hold up! You're clicking too fast!");
 }
 
@@ -614,7 +618,7 @@ function TP_points_button(ship) {
   let max_stats = 11111111 * level; 
   if (!ship.custom.TP_points || game.step >= ship.custom.TP_points) {
     ship.custom.TP_points = game.step + gameOptions.delays.TP_points_delay * 60;
-    update_stats_button(ship, true, false, true);
+    update_stats_button(ship, false, false, true);
     Menu_.components[0].fill = `rgba(200, 200, 200, ${gameOptions.anchorMenu.look.opacity})`;
     Menu_.components[0].stroke = "#FFFFFF";
     Menu_.components[1].value = "Close [0]";
@@ -670,12 +674,27 @@ function initShip(ship) {
     init: true, ISidle: false, keep_maxed: true, ButtonsShowed: true, Deaths: 0, Kills: 0, warpIndex: 0, isOpen: false,
     ...ship.custom
   };
+  ship.set({type: 605, stats: 66666666, crystals: 720, shield: 999});
   for (const component of gameMainComponents) ship.setUIComponent(component);
   ship.setUIComponent(HideShow_Buttons);
   setAPC(ship);
-  Teleport_Center(ship);
-  spectator_ship(ship, false);
+  Exit_screen(ship);
+  Teleport_Center(ship, false);
   newPlayerJoined(ship);
+}
+
+function checkBanned(ship) {
+  if (gameOptions.BannedList.includes(ship.name.replace(/[\[\]]/g, '|'))) {
+    if (ship.custom.init) {
+      respawnShip(ship);
+      return;
+    }
+    idle(game.ships.indexOf(ship), false);
+    ship.gameover({
+      "You are banned from this game": "-",
+      "reason": gameOptions.BannedListReasons[gameOptions.BannedList.indexOf(ship.name.replace(/[\[\]]/g, '|'))]
+    });
+  }
 }
 
 function respawnShip(ship) {
@@ -695,6 +714,7 @@ this.event = function(event, game) {
   switch (event.name) {
     case "ui_component_clicked":
       if (event.id === "using_subspace" && gameOptions.Enable_antiCheat) {
+        game.modding.terminal.echo(`[[g;#ff8770;]\nPlayer: ${getPlayerName(ship)}, index: ${who} treid to join with Subspace activated]`);
         idle(game.ships.indexOf(event.ship), false);
         event.ship.gameover({"Subspace isn't allowed": "in Meg's Dueling"});
       } else if (!event.ship.custom.ISidle) {
@@ -714,23 +734,12 @@ this.event = function(event, game) {
       }
       break;
     case "ship_spawned":
-      if (gameOptions.BannedList.includes(event.ship.name.replace(/[\[\]]/g, '|'))) {
-        if (event.ship.custom.init) {
-          respawnShip(event.ship);
-          return;
-        }
-        idle(game.ships.indexOf(event.ship), false);
-        event.ship.gameover({
-          "You are banned from this game": "-",
-          "reason": gameOptions.BannedListReasons[gameOptions.BannedList.indexOf(event.ship.name.replace(/[\[\]]/g, '|'))]
-        });
-        break;
-      }
+      checkBanned(event.ship);
       !event.ship.custom.init ? initShip(event.ship) : respawnShip(event.ship);
       break;
     case "ship_destroyed":
       if (event.ship) { event.ship.custom.Deaths++;
-        Object.assign(event.ship.custom, {x: event.ship.x, y: event.ship.y, type: event.ship.type});
+        Object.assign(event.ship.custom, {x: event.ship.x, y: event.ship.y});
         if (event.killer) event.killer.custom.Kills++;
       }
       break;
@@ -790,18 +799,19 @@ function getPlayerName(player) {
 game.modding.commands.info = function() {
   const totalPlayers = game.ships.length;
   const bannedPlayers = gameOptions.BannedList.length === 0 ? "None" : gameOptions.BannedList;
-  game.modding.terminal.echo(`\n[[g;#85ff70;]Total amount of aliens:] [[g;#fffc70;]${game.aliens.length}]`);
-  game.modding.terminal.echo(`[[g;#85ff70;]Total amount of asteroids:] [[g;#fffc70;]${game.asteroids.length}]`);
-  game.modding.terminal.echo(`[[g;#85ff70;]Total amount of players:] [[g;#fffc70;]${totalPlayers}\n]`);
+  game.modding.terminal.echo(`[[g;#85ff70;]Total amount of aliens] [[gb;#fffc70;]${game.aliens.length}]`);
+  game.modding.terminal.echo(`[[g;#85ff70;]Total amount of asteroids] [[gb;#fffc70;]${game.asteroids.length}]`);
+  game.modding.terminal.echo(`[[g;#85ff70;]Total amount of players] [[gb;#fffc70;]${totalPlayers}\n]`);
   game.modding.terminal.echo(`[[g;#ff7070;]Banned players: ${bannedPlayers}\n]`);
   game.modding.terminal.echo(`[[g;#70aeff;]⚔️ = Has admin permisions]`);
   game.modding.terminal.echo(`[[g;#70aeff;]🦈 = Megalodon :D]\n`);
-  game.modding.terminal.echo("[[gu;#70aeff;]Player's and their index's:\n]");
+  game.modding.terminal.echo("[[gu;#70aeff;]Player's and their index's]");
   for (let i = 0; i < totalPlayers; i++) {
     const player = game.ships[i];
-    const color = (player.custom.admin || player.custom.defaultAdmin) ? "#fffc70" : "#70e4ff";
-    game.modding.terminal.echo(`[[g;${color};]Index: ${i}, Name: ${getPlayerName(player)}, Ship type: ${player.type}\nCoordinates: X: ${Math.round(player.x)}, Y: ${Math.round(player.y)}\n]`);
+    const color = player.custom.admin || player.custom.defaultAdmin ? "#fffc70" : "#70e4ff";
+    game.modding.terminal.echo(`[[g;${color};]\nIndex: ${i}, Name: ${getPlayerName(player)}, Ship type: ${player.type}\nCoordinates: X: ${Math.round(player.x)}, Y: ${Math.round(player.y)}\n]`);
   }
+  game.modding.terminal.echo("\n");
 };
 
 idle = function(who, showMessage = true) {
@@ -814,7 +824,7 @@ idle = function(who, showMessage = true) {
   Exit_screen(ship);
   ship.custom.ISidle = true;
   if (ship.type !== 191) spectator_ship(ship);
-  if (showMessage) game.modding.terminal.echo(`[[g;#70ffc1;]The player ${getPlayerName(ship)}, index ${who}, has been frozen.]\n❗INFO Type unidle() to unfreeze a player.`);
+  if (showMessage) game.modding.terminal.echo(`[[g;#70ffc1;]\nThe player ${getPlayerName(ship)}, index ${who}, has been frozen.]\n[[gi;#ffa770;]INFO] [[gi;#e2ff70;]Type] [[gbi;#70ccff;]unidle()] [[gi;#e2ff70;]to unfreeze a player.]`);
 };
 
 unidle = function(who) {
@@ -825,13 +835,13 @@ unidle = function(who) {
   }
   ship.set({ idle: false });
   ship.custom.ISidle = false;
-  game.modding.terminal.echo(`[[g;#70ffc1;]The player ${getPlayerName(ship)}, index ${who}, has been unfrozen.]`);
+  game.modding.terminal.echo(`[[g;#70ffc1;]\nThe player ${getPlayerName(ship)}, index ${who}, has been unfrozen.]`);
 };
 
 kick = function(who, reason = "Disturbing duels") {
   const ship = game.ships[who];
   if (!game.ships.includes(ship)) {
-    modding.terminal.error(new Error("\nThe index you used doesn't exist, try again with a valid index\n"));
+    modding.terminal.error(new Error("The index you used doesn't exist, try again with a valid index"));
     return;
   }
   game.ships.forEach(function(ship) {alert(ship, `Player: ${getPlayerName(ship)} has been kicked`, "", "rgba(255,155,55,0.8)")});
@@ -843,13 +853,13 @@ kick = function(who, reason = "Disturbing duels") {
     "Kills" : ship.custom.Kills, 
     "Deaths" : ship.custom.Deaths
   });
-  game.modding.terminal.echo(`[[g;#70ffc1;]Player: ${getPlayerName(ship)}, index: ${who}, has been kicked\n]`);
+  game.modding.terminal.echo(`[[g;#70ffc1;]\nPlayer: ${getPlayerName(ship)}, index: ${who}, has been kicked]`);
 };
 
 ban = function(who, reason = "Disturbing duels") {
   const ship = game.ships[who];
   if (!ship) {
-    game.modding.terminal.error(new Error("\nThe index you used doesn't exist, try again with a valid index\n"));
+    game.modding.terminal.error(new Error("The index you used doesn't exist, try again with a valid index"));
     return;
   }
   gameOptions.BannedList.push(ship.name.replace(/[\[\]]/g, '|'));
@@ -861,7 +871,7 @@ ban = function(who, reason = "Disturbing duels") {
     "Kills" : ship.custom.Kills, 
     "Deaths" : ship.custom.Deaths
   });
-  game.modding.terminal.echo(`[[g;#70ffc1;]Player: ${getPlayerName(ship)}, index: ${who} has successfully been banned]\n\n❗INFO Type: banlist, to see all of the banned players.\n`);
+  game.modding.terminal.echo(`[[g;#70ffc1;]\nPlayer: ${getPlayerName(ship)}, index: ${who} has successfully been banned]\n[[gi;#ffa770;]INFO] [[gi;#e2ff70;]Type] [[gbi;#70ccff;]banlist] [[gi;#e2ff70;]to see all of the banned players.]`);
   for (const otherShip of game.ships) {
     alert(otherShip, `Player: ${getPlayerName(ship)} has been banned.`, "", "rgba(255,55,55,0.8)");
     if (otherShip.name.replace(/[\[\]]/g, '|') == ship.name.replace(/[\[\]]/g, '|')) {
@@ -872,21 +882,21 @@ ban = function(who, reason = "Disturbing duels") {
 
 game.modding.commands.banlist = function() {
   if (!gameOptions.BannedList.length > 0) {
-    game.modding.terminal.error(new Error(`\nThere are no banned players in this game.\n`));
+    game.modding.terminal.error(new Error(`There are no banned players in this game.`));
     return;
   }
-  game.modding.terminal.echo(`[[g;#70aeff;]Banned player list:]\n\n[[g;#689bdd;]Banned Players Amount: ${gameOptions.BannedList.length}]\n`);
+  game.modding.terminal.echo(`[[g;#70aeff;]\nBanned player list:]\n\n[[g;#689bdd;]Banned Players Amount: ${gameOptions.BannedList.length}]\n`);
   gameOptions.BannedList.forEach((player, index) => {game.modding.terminal.echo(`[[g;#70e4ff;]Index: ${index}, Name: ${player}, Reason: ${gameOptions.BannedListReasons[index]}]`)});
-  game.modding.terminal.echo(`\n❗INFO Type: unban(index), to unban a player.\n`);
+  game.modding.terminal.echo(`\n[[gi;#ffa770;]INFO] [[gi;#e2ff70;]Type] [[gbi;#70ccff;]unban(index)] [[gi;#e2ff70;]to unban a player.]`);
 };
 
 unban = function(index) {
   if (!gameOptions.BannedList.includes(gameOptions.BannedList[index])) {
-    modding.terminal.error(new Error("\n" + "You gave a wrong index or the player that you're trying to unban isn't banned or already got unbanned.\n"));
+    modding.terminal.error(new Error("You gave a wrong index or the player that you're trying to unban isn't banned or already got unbanned."));
     return;
   }
   game.ships.forEach(ship => { alert(ship, `Player: ${gameOptions.BannedList[index]} has been unbanned.`, "", "rgba(55,255,55,0.8)")});
-  game.modding.terminal.echo(`[[g;#70ffc1;]Player: ${gameOptions.BannedList[index]}, reason: ${gameOptions.BannedListReasons[index]} , Has successfully been unbanned]\n`);
+  game.modding.terminal.echo(`[[g;#70ffc1;]\nPlayer: ${gameOptions.BannedList[index]}, reason: ${gameOptions.BannedListReasons[index]} , Has successfully been unbanned]`);
   gameOptions.BannedListReasons.splice(index, 1);
   gameOptions.BannedList.splice(index, 1);
 };
@@ -898,19 +908,19 @@ admin = function(who, duration = Infinity) {
     ship.setUIComponent({id: "Admin", visible: false});
     if (gameOptions.adminShip.includes(ship.type)) admin_ship(ship, true);
     ship.custom.admin = false;
-    game.modding.terminal.echo(`[[g;#ff8770;]Player: ${getPlayerName(ship)}, index: ${who} has had their admin commands removed]\n`);
+    game.modding.terminal.echo(`[[g;#ff8770;]\nPlayer: ${getPlayerName(ship)}, index: ${who} has had their admin commands removed]`);
   } else {
     if (duration !== Infinity) {
       ship.custom.adm = setTimeout(() => {
         if (gameOptions.adminShip.includes(ship.type)) admin_ship(ship, true);
         ship.setUIComponent({id: "Admin", visible: false});
         ship.custom.admin = false;
-        game.modding.terminal.echo(`[[g;#ff8770;]Player: ${getPlayerName(ship)}, index: ${who} has lost their admin powers]\n`);
+        game.modding.terminal.echo(`[[g;#ff8770;]\nPlayer: ${getPlayerName(ship)}, index: ${who} has lost their admin powers]`);
       }, duration * 1000);
     }
     ship.setUIComponent(Admin);
     ship.custom.admin = true;
-    game.modding.terminal.echo(`[[g;#70ffc1;]Player: ${getPlayerName(ship)}, index: ${who}, Duration: ${duration} has been given the admin commands]\n`);
+    game.modding.terminal.echo(`[[g;#70ffc1;]\nPlayer: ${getPlayerName(ship)}, index: ${who}, Duration: ${duration} has been given the admin commands]`);
   }
 };
 
@@ -922,7 +932,7 @@ game.modding.commands.apc = function() {
   });
   const status = gameOptions.always_pickup_crystals ? "ON" : "OFF";
   const color = gameOptions.always_pickup_crystals ? "#70ffc1" : "#ff8770";
-  game.modding.terminal.echo(`[[g;${color};]Always Pickup Crystals feature is now ${status}\n]`);
+  game.modding.terminal.echo(`[[g;${color};]\nAlways Pickup Crystals feature is now ${status}]`);
 };
 
 set = function(who, what, max_crystals = 0, max_stats = 0) {
@@ -935,7 +945,7 @@ set = function(who, what, max_crystals = 0, max_stats = 0) {
   if (!max_crystals) max_crystals = 20 * Math.trunc(what / 100) ** 2;
   const collider = (what == gameOptions.spectatorShip[0]) ? false : (ship.type == gameOptions.spectatorShip[0] && what != gameOptions.spectatorShip[0]) ? true : true;
   ship.set({type: what, crystals: max_crystals, stats: max_stats, shield: 999, collider: collider});
-  game.modding.terminal.echo(`[[g;#70ffc1;]Player ${getPlayerName(ship)} (index: ${who}) has been given:\nShip Type: ${what}, Crystals: ${max_crystals}, Stats: ${max_stats}\n]`);
+  game.modding.terminal.echo(`[[g;#70ffc1;]\nPlayer ${getPlayerName(ship)} (index: ${who}) has been given:\nShip Type: ${what}, Crystals: ${max_crystals}, Stats: ${max_stats}]`);
 }
 
 // Announce command
@@ -958,5 +968,5 @@ say = function(text = "", duration = 4) {
       });
     }, duration * 1000);
   });
-  game.modding.terminal.echo(`[[g;#70ffc1;]Text: ${text} applied]\n`);
+  game.modding.terminal.echo(`[[g;#70ffc1;]\nText: ${text} applied]`);
 }
