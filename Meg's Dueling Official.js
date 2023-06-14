@@ -3,17 +3,16 @@
  |  Mod creator : Megalodon
  |  Coding support : Lotus, Bhpsngum
 
-# Authenticator Addition
-# Upadted the code, and fixed a few bugs
-# Cannot get attacked in anyways
+# Authenticator Addition.
+# Upadted the code, and fixed a few bugs.
+# Admin ships cannot get attacked.
 # Ships:
-  New => Renegade
-      => Gale, Mite_Defender
-      => Valkyrie, Seeker, Settler
-      => Gallus_X, Support_Fighter, M_Seeker, Mantis
-      => 
-  Updated => Vampire, Contraband
-  Removed => Mk47, Phantom
+  New => Renegade.
+      => Gale, Mite_Defender.
+      => Valkyrie, Seeker, Settler.
+      => Gallus_X, Support_Fighter, M_Seeker, Mantis.
+  Updated => Vampire, Contraband.
+  Removed => Mk47, Phantom.
 
 See the documentation on the github page for more information about the mod and its integrated commands.
 GitHub: https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code
