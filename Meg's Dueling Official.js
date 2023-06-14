@@ -326,7 +326,7 @@ function updateScoreboard(game) {
   game.ships.forEach((ship) => {
     if (ship.name == gameOptions.YourIGN_Name) ship.custom.customColor = gameOptions.YourIGN_Color;
     else if (ship.name.includes(["Megalodon"])) ship.custom.customColor = "#005cb9";
-    else ship.custom.customColor = !ship.custom.alive ? "rgb(100,100,100)" : ship.custom.isAFK ? "rgb(200,111,111)" : ship.custom.spectator ? "rgb(155,155,155)" : (ship.id === sorted_ships_KDratio[0].id && ship.custom.Kills >= 1) ? "rgb(255, 215, 0)" : "rgb(255, 255, 255)";
+    else ship.custom.customColor = ship.custom.alive ? "rgb(100,100,100)" : ship.custom.isAFK ? "rgb(200,111,111)" : ship.custom.spectator ? "rgb(155,155,155)" : (ship.id === sorted_ships_KDratio[0].id && ship.custom.Kills >= 1) ? "rgb(255, 215, 0)" : "rgb(255, 255, 255)";
   });
   let Scoreboard = {
     id: "scoreboard",
@@ -649,7 +649,7 @@ function Manage_Buttons(ship) {
       setAPC(ship);
     }
     ship.custom.ButtonsShowed = !ship.custom.ButtonsShowed;
-    HideShow_Buttons.components[0].value = ship.custom.ButtonsShowed ? "Show Buttons [2]" : "Hide Buttons [2]";
+    HideShow_Buttons.components[0].value = ship.custom.ButtonsShowed ? "Hide Buttons [2]" : "Show Buttons [2]";
     ship.setUIComponent(HideShow_Buttons);
   } else alert(ship, "Hold up! You're clicking too fast!");
 }
