@@ -2,27 +2,12 @@
  |  Mod creator : Megalodon
  |  Coding support : Lotus, Bhpsngum
 
-What has been fixed/added from v1.4.0: 
-  - Huge changes in the whole code.
-  - Fixed the AFK checker, has steped back from one version (the 1.3.5 afk checked is used here).
-  - Better more customizable way to add the ships into a mod has been added.
-  - Admin command has been reviewed.
-  - SET command has been reviewed.
-  - Introduction text now have smaller Urls and a better organization.
-  - Every buttons cooldown have been reduced by atleast one second on each.
-  - better background images usage.
-  - Improved UI’s.
-  - Resolved a few bugs in the commands.
-  - More customizable game.
-  - Copyrights ©Megalodon 2023-2024.
-  - Added a button.
-      - “More”.
-          - Allow you to check informations about the game while playing.
-  - removed beta logo.
-  - more warnings have been added.
+# News!
+#  => Corrected code Typos
+#  => Names on the leaderboard and back in White!
 
 See the documentation on the github page for more information about the mod and its integrated commands.
-link: https://megalodon-dueling.notion.site/megalodon-dueling/Meg-s-dueling-Documentation-14fded21b2e648039ed441fc13fb7431
+GitHub: https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code
 */
 
 var gameOptions = {
