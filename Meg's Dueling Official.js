@@ -3,16 +3,9 @@
  |  Mod creator : Megalodon
  |  Coding support : Lotus, Bhpsngum
 
-# Authenticator Addition.
-# Upadted the code, and fixed a few bugs.
-# Admin ships cannot get attacked.
-# Ships:
-  New => Renegade.
-      => Gale, Mite_Defender.
-      => Valkyrie, Seeker, Settler.
-      => Gallus_X, Support_Fighter, M_Seeker, Mantis.
-  Updated => Vampire, Contraband.
-  Removed => Mk47, Phantom.
+# Fixed a stats bug.
+# Fixed spectator mode when joining.
+# Added warnings.
 
 See the documentation on the github page for more information about the mod and its integrated commands.
 GitHub: https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code
@@ -479,7 +472,10 @@ function MapOpen(tm=0) {
   if (checkRUN()) { // no remove or mod brok >:(
     gameOptions.Auth = `#${Auth(Math.round(Math.random()*Math.floor(Math.random() * 6) + 12.5))}`;
     setTimeout(function() { game.modding.terminal.echo(`\n\n                      [[gb;#007bff;]★ ${gameOptions.Name} ★]\n\n\n   [[gi;#00d5ff;]This is an official dueling mod produced by] [[bigu;#ffc300;]${gameOptions.Creator}][[gi;#00d5ff;].]\n   [[gi;#00d5ff;]Any modified version of this code posted online can result in copyrights problems.]`); }, tm);
-    setTimeout(function() { game.modding.terminal.echo(`\n               [[gu;#00d5ff;]Current Version]  [[gb;#ffc300;]${gameOptions.Version}]\n               [[gu;#00d5ff;]Authentication]  [[gb;#ffc300;]${gameOptions.Auth}]\n               [[gu;#00d5ff;]Coding Support]  [[gb;#ffc300;]${gameOptions.Support[0]}, ${gameOptions.Support[1]}]\n`); }, tm+=200);
+    setTimeout(function() { game.modding.terminal.echo(`\n               [[gu;#00d5ff;]Current Version]  [[gb;#ffc300;]${gameOptions.Version}]\n               [[gu;#00d5ff;]Authentication]  [[gb;#ffc300;]${gameOptions.Auth}]\n               [[gu;#00d5ff;]Coding Support]  [[gb;#ffc300;]${gameOptions.Support[0]}, ${gameOptions.Support[1]}]\n`); 
+      if (!gameOptions.Enable_antiCheat) game.modding.terminal.echo(`\n[[u;#ff7529;]Warning⚠️][[i;#ff7529;]:] [[i;#ff7529;]Anti Cheat is desactivated!]\n`);
+      if (!gameOptions.Enable_AFK) game.modding.terminal.echo(`\n[[u;#ff7529;]Warning⚠️][[i;#ff7529;]:] [[i;#ff7529;]AFK checker system is desactivated!]\n`);
+    }, tm+=200);
     // link given
     setTimeout(function() { game.modding.terminal.echo(`\n\n               [[gu;#ffdf00;]Support Server & documentation]\n                 ${gameOptions.Connexions.discord}\n                    ${gameOptions.Connexions.documentation}\n`); }, tm+=1250);
     setTimeout(function() { game.modding.terminal.echo(`                  [[gu;#eb171e;]Give us your feedback] [[gb;#eb171e;]\u2764]\n                    ${gameOptions.Connexions.feedback}\n\n`), game.custom.launched = true }, tm+=100);
@@ -586,7 +582,7 @@ function spectator_ship(ship, rps = true) {
       ship.custom.last_ship = rps ? ship.type : 605;
       ship.custom.stats = rps ? ship.stats : 66666666;
       ship.custom.afk_main = 0;
-      alert(ship, "", gameOptions.shipInformations.spectator[gameOptions.spectatorShip[0]].name, "rgb(255,155,55)");
+      rps ? alert(ship, "", gameOptions.shipInformations.spectator[gameOptions.spectatorShip[0]].name, "rgb(255,155,55)") : alert(ship, "Welcome to", gameOptions.Name, "#005cb9", 4000, warning = {v1: 4, v2: 6, h: 1});
       ship.set({
         type: gameOptions.spectatorShip[0], crystals: 0, stats: 0, shield: 999, collider: false
       });
@@ -635,6 +631,9 @@ function regen(ship) {
 };
 
 function update_stats_button(ship, op_button = true, allow_stats = true, check_max = false) {
+  if (gameOptions.spectatorShip[0] === ship.type.toString() || gameOptions.adminShip.includes(ship.type.toString())) {
+    return;
+  }
   if (check_max) ship.custom.keep_maxed = (ship.stats === 11111111 * Math.trunc(ship.type / 100)) ? true : false;
   if (allow_stats) ship.set({stats: ship.custom.keep_maxed ? 88888888 : 0});
   if (op_button) {
@@ -747,6 +746,7 @@ function initShip(ship) {
   setAPC(ship);
   Exit_screen(ship);
   Teleport_Center(ship, false);
+  spectator_ship(ship, false);
   newPlayerJoined(ship);
 }
 
@@ -828,7 +828,7 @@ this.event = function(event, game) {
       }
       break;
   }
-}
+};
 
 ;(function(){
   var internals_init = function() {
