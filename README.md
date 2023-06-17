@@ -15,7 +15,7 @@
 > My Discord: Megalodon#0001
 
 ### Mod Version: 
-* [1.4.1](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Official.js) Most Popular
+* [1.4.2](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Official.js) Most Popular
 * [1.1.1](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20(Light%20Version).js) Light Dueling mod
 
 ### Mod creator: 
