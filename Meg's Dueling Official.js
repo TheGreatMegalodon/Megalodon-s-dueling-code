@@ -3,9 +3,19 @@
  |  Mod creator : Megalodon
  |  Coding support : Lotus, Bhpsngum
 
-# Fixed a stats bug.
-# Fixed spectator mode when joining.
-# Added warnings.
+# NEW VERSION  -  v1.4.2
+
+# Fixed the AFK checker (again) it should be more optimized than before.
+# Corrected the leaderboard logic, it should be like SDC's leaderboard now.
+# Removed the Warning Message.
+# Decompressed certain files in the code.
+# Added 3 new Ships:
+  => Tier 6:
+    -> (617) F-22
+  => Tier 2:
+    -> (203) Jester
+  => Tier 1:
+    -> (102) Gnat 
 
 See the documentation on the github page for more information about the mod and its integrated commands.
 GitHub: https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code
@@ -14,9 +24,9 @@ GitHub: https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code
 
 var gameOptions = {
   Copyright: "©Megalodon 2023-2024",
-  Version: "v1.4.1",
+  Version: "v1.4.2",
   Name: "Meg's Dueling",
-  Auth: `Invalid⚠️`, // that will change when you start the game
+  Auth: `Invalid⚠️`, // That will change when you start the game
   Creator: "Megalodon",
   Support: [
     "Lotus", 
@@ -70,8 +80,16 @@ var gameOptions = {
     },
     main: { // add pretty much anything you want.
       101: { name: "Fly", code: `` },
+      102: {
+        name: "Gnat",
+        code: '{"name":"Gnat","level":1,"model":2,"size":1.2,"specs":{"shield":{"capacity":[70,90],"reload":[2,3]},"generator":{"capacity":[45,70],"reload":[10,14]},"ship":{"mass":60,"speed":[125,145],"rotation":[110,135],"acceleration":[120,150]}},"bodies":{"main":{"section_segments":12,"offset":{"x":0,"y":0,"z":5},"position":{"x":[0,0,0,0,0,0,0,0,0,0],"y":[-60,-50,-45,-20,10,20,35,50,40],"z":[0,0,0,0,0,0,5,5,5]},"width":[0,8,15,30,25,20,18,13,0],"height":[0,6,8,12,15,15,18,13,0],"propeller":true,"texture":[63,13,11,8,1,11,13,13]},"cockpit":{"section_segments":12,"offset":{"x":0,"y":-25,"z":15},"position":{"x":[0,0,0,0],"y":[-15,-5,5,35],"z":[0,0,0,4]},"width":[0,13,17,0],"height":[0,8,5,0],"propeller":false,"texture":[9]},"cannon":{"section_segments":6,"offset":{"x":0,"y":-5,"z":-10},"position":{"x":[0,0,0,0,0],"y":[-40,-50,-20,0,20],"z":[4,4,0,2,10]},"width":[0,5,10,6,3],"height":[0,5,7,4,0],"angle":0,"laser":{"damage":[8,12],"rate":3,"type":1,"speed":[120,150],"number":1,"error":4},"propeller":false,"texture":[13,13,4,63]}},"wings":{"main":{"length":[50,2,10],"width":[60,50,100,75],"angle":[-20,10,-10],"position":[-30,20,10,10],"doubleside":true,"offset":{"x":0,"y":2,"z":5},"bump":{"position":-30,"size":15},"texture":[10,13,63]}},"typespec":{"name":"Gnat","level":1,"model":2,"code":102,"specs":{"shield":{"capacity":[70,90],"reload":[2,3]},"generator":{"capacity":[45,70],"reload":[10,14]},"ship":{"mass":60,"speed":[125,145],"rotation":[110,135],"acceleration":[120,150]}},"shape":[1.44,1.337,1.197,1.141,1.037,0.967,0.917,1.488,1.507,1.538,1.518,1.456,1.421,1.421,1.456,1.518,1.61,1.734,1.851,1.886,1.896,0.977,1.137,1.24,1.221,1.202,1.221,1.24,1.137,0.977,1.896,1.886,1.851,1.734,1.61,1.518,1.456,1.421,1.421,1.456,1.518,1.538,1.507,1.488,0.917,0.967,1.037,1.141,1.197,1.337],"lasers":[{"x":0,"y":-1.32,"z":-0.24,"angle":0,"damage":[8,12],"rate":3,"type":1,"speed":[120,150],"number":1,"spread":0,"error":4,"recoil":0}],"radius":1.896}}'
+      },
       201: { name: "Delta-Fighter", code: `` },
       202: { name: "Trident", code: `` },
+      203: { 
+        name: "Jester",
+        code: '{"name":"Jester","level":2,"model":3,"size":1,"specs":{"shield":{"capacity":[120,150],"reload":[3,5]},"generator":{"capacity":[60,90],"reload":[20,25]},"ship":{"mass":70,"speed":[115,140],"rotation":[90,120],"acceleration":[45,75]}},"bodies":{"engine":{"section_segments":9,"offset":{"x":0,"y":45,"z":0},"position":{"x":[0,0,0,0,0],"y":[-15,5,30,50,40],"z":[0,5,-5,-10,-10]},"width":[0,15,25,15,8],"height":[0,10,25,15,8],"texture":[2],"propeller":true},"cannons":{"section_segments":4,"offset":{"x":40,"y":-40,"z":16},"position":{"x":[0,-10,10,10,12],"y":[-80,5,30,50,70],"z":[-5,-20,0,0,0]},"width":[0,15,13,24,10],"height":[0,10,0,10,0],"texture":[12,63,3,3],"propeller":false,"angle":8,"laser":{"damage":[2,3],"rate":4,"type":1,"speed":[100,120],"number":2,"error":10}},"cockpit":{"section_segments":4,"offset":{"x":0,"y":-65,"z":10},"position":{"x":[0,0,0,0,0,0,0,0],"y":[-10,30,50,60,90,105],"z":[0,0,0,0,0,0,0,0]},"width":[0,17,20,27,24,0],"height":[0,5,7,8,8,0],"texture":[11,11,9,9,9,9],"propeller":false}},"wings":{"bridge":{"offset":{"x":0,"y":45,"z":0},"length":[70],"width":[70,60],"texture":[4],"angle":[0,0],"position":[10,-20],"bump":{"position":0,"size":18}},"main":{"offset":{"x":30,"y":15,"z":10},"length":[5,35,0,20],"width":[0,220,130,80,50],"texture":[13,63,13,11],"angle":[0,-20,0,10],"position":[0,-30,0,-10,-5],"doubleside":true,"bump":{"position":15,"size":8}}},"typespec":{"name":"Jester","level":2,"model":3,"code":203,"specs":{"shield":{"capacity":[120,150],"reload":[3,5]},"generator":{"capacity":[60,90],"reload":[20,25]},"ship":{"mass":70,"speed":[115,140],"rotation":[90,120],"acceleration":[45,75]}},"shape":[1.5,1.303,2.596,2.472,2.183,1.974,1.835,1.74,1.677,1.584,1.687,1.777,1.765,1.765,1.806,1.883,1.886,1.73,1.865,2.098,2.091,2.038,2.025,1.833,1.923,1.904,1.923,1.833,2.025,2.038,2.091,2.098,1.865,1.73,1.886,1.883,1.806,1.765,1.765,1.777,1.687,1.584,1.677,1.74,1.835,1.974,2.183,2.472,2.596,1.303],"lasers":[{"x":0.577,"y":-2.384,"z":0.32,"angle":8,"damage":[2,3],"rate":4,"type":1,"speed":[100,120],"number":2,"spread":0,"error":10,"recoil":0},{"x":-0.577,"y":-2.384,"z":0.32,"angle":-8,"damage":[2,3],"rate":4,"type":1,"speed":[100,120],"number":2,"spread":0,"error":10,"recoil":0}],"radius":2.596}}'
+      },
       301: { name: "Pulse-Fighter",code: `` },
       302: { name: "Side-Fighter", code: `` },
       303: { name: "Shadow X-1", code: `` },
@@ -163,13 +181,17 @@ var gameOptions = {
         name: "Deadshot", 
         code: '{"name":"Deadshot","level":6,"model":16,"size":1.35,"zoom":1,"specs":{"shield":{"capacity":[200,255],"reload":[7,9]},"generator":{"capacity":[180,215],"reload":[20,45]},"ship":{"mass":185,"speed":[80,108],"rotation":[40,65],"acceleration":[100,130]}},"bodies":{"main":{"section_segments":12,"offset":{"x":0,"y":30,"z":0},"position":{"x":[0,0,0,0,0,0,0,0,0,0],"y":[-105,-110,-100,-80,-50,0,30,70,80,75],"z":[0,0,0,0,0,0,0,0,0,0]},"width":[0,8,14,19,25,25,30,30,20,0],"height":[0,12,18,19,20,20,24,24,20,0],"texture":[17,4,63,3,11,2,3,12,17],"propeller":true,"laser":{"damage":[15,25],"rate":7,"type":1,"speed":[150,180],"number":1,"error":0}},"cannon":{"section_segments":6,"offset":{"x":0,"y":-10,"z":-10},"position":{"x":[0,0,0,0,0,0],"y":[-40,-50,-20,0,20,30],"z":[0,0,0,0,0,20]},"width":[0,5,8,11,7,0],"height":[0,5,8,11,10,0],"angle":0,"laser":{"damage":[8,15],"rate":9,"type":1,"speed":[160,200],"number":1,"error":0}},"side":{"section_segments":8,"offset":{"x":25,"y":0,"z":0},"position":{"x":[-17,-12,-3,0,0,0,0,0,0,0,0],"y":[-70,-60,-30,-5,5,20,35,55,75,90,85],"z":[0,0,0,0,0,0,0,0,0,0,0]},"width":[0,10,12,15,15,15,15,15,15,10,0],"height":[0,5,7,10,10,10,10,10,10,7,0],"texture":[3,4,10,3,63,4,11,63,3,4],"propeller":false},"intake":{"section_segments":12,"offset":{"x":25,"y":0,"z":7},"position":{"x":[-10,-3,-2,-2,-2,4,7,0,0,0],"y":[-60,-20,0,35,60,70,85,95,100],"z":[-2,-6,0,0,0,0,0,0,0,0]},"width":[0,9,10,10,17,17,20,5,0],"height":[0,12,10,10,10,10,10,5,0],"texture":[13,4,63,18,2,3,4,17]},"cockpit":{"section_segments":12,"offset":{"x":0,"y":-20,"z":20},"position":{"x":[0,0,0,0,0,0,0,0,0,0],"y":[-45,-20,0,30,50,90,125],"z":[-2,-4,-5,0,0,0,0,0]},"width":[2,12,15,17,17,15,0],"height":[0,12,19,16,15,15,0],"texture":[9,9,9,10,4,63],"propeller":false},"propulsor":{"section_segments":10,"offset":{"x":40,"y":58,"z":10},"position":{"x":[0,0,0,0,0,0,0,0,0,0,0,0,0],"y":[-30,-24,-28,-15,-10,10,30,40,50,60,55],"z":[0,0,0,0,0,0,0,0,0,0,0,0,0]},"width":[0,4,6,11,12,13,13,13,11,8,0],"height":[0,4,6,11,12,13,13,13,11,8,0],"texture":[3,4,3,4,11,3,63,4,4,17],"propeller":true},"propulsor2":{"section_segments":12,"offset":{"x":15,"y":68,"z":20},"position":{"x":[0,0,0,0,0,0,0,0,0,0,0,0,0],"y":[-60,-54,-48,-35,-20,0,25,40,50,60,55],"z":[0,0,0,0,0,0,0,0,0,0,0,0,0]},"width":[0,4,6,11,12,13,13,13,11,8,0],"height":[0,4,6,11,12,13,13,13,11,8,0],"texture":[4,63,3,4,63,10,4,3,63,17],"propeller":true}},"wings":{"main":{"doubleside":1,"offset":{"x":0,"y":60,"z":0},"length":[50,20,20],"width":[70,50,50,50],"texture":[3,63,4],"angle":[0,0,0],"position":[-50,30,30,50],"bump":{"position":10,"size":5}},"main2":{"doubleside":true,"offset":{"x":10,"y":-60,"z":-5},"length":[0,20,20],"width":[0,160,140,70],"angle":[0,0,0,0],"position":[0,0,0,50],"texture":[63,3.5,63],"bump":{"position":20,"size":5}},"winglet":{"length":[10,20],"width":[50,50,40],"angle":[25,25],"position":[80,90,120],"texture":[2,4],"bump":{"position":10,"size":10},"offset":{"x":25,"y":-20,"z":25}},"winglet2":{"length":[20,10],"width":[30,30,20],"angle":[20,20],"position":[0,5,20],"texture":[3,4],"bump":{"position":10,"size":5},"offset":{"x":20,"y":-10,"z":5}}},"typespec":{"name":"Deadshot","level":6,"model":16,"code":616,"specs":{"shield":{"capacity":[200,255],"reload":[7,9]},"generator":{"capacity":[180,215],"reload":[20,45]},"ship":{"mass":185,"speed":[80,108],"rotation":[40,65],"acceleration":[100,130]}},"shape":[2.164,3.79,3.637,3.064,2.561,2.211,1.996,1.828,1.662,1.532,1.445,1.394,1.359,1.36,1.391,1.448,1.509,1.577,3.037,3.806,4.381,3.932,3.525,3.439,3.511,3.463,3.511,3.439,3.525,3.932,4.381,3.806,3.037,1.577,1.509,1.448,1.391,1.36,1.359,1.394,1.445,1.532,1.662,1.828,1.996,2.211,2.561,3.064,3.637,3.79],"lasers":[{"x":0,"y":-2.16,"z":0,"angle":0,"damage":[15,25],"rate":7,"type":1,"speed":[150,180],"number":1,"spread":0,"error":0,"recoil":0},{"x":0,"y":-1.62,"z":-0.27,"angle":0,"damage":[8,15],"rate":9,"type":1,"speed":[160,200],"number":1,"spread":0,"error":0,"recoil":0}],"radius":4.381}}'
       },
-      617: {
-        name: "Streamliner v1",
-        code: '{"name":"C-Speedster","level":6,"model":17,"size":1.4,"specs":{"shield":{"capacity":[150,250],"reload":[8,10]},"generator":{"capacity":[150,200],"reload":[20,35]},"ship":{"mass":155,"speed":[100,125],"rotation":[55,75],"acceleration":[95,145]}},"bodies":{"main":{"section_segments":8,"offset":{"x":0,"y":0,"z":0},"position":{"x":[0,0,0,0,0,0,0],"y":[-85,-80,-50,0,0,70,65],"z":[0,0,0,0,0,0,0]},"width":[0,10,21,28,20,20,0],"height":[0,7,16,25,20,15,0],"texture":[63,4,11,5,18,12],"propeller":true,"laser":{"damage":[25,65],"rate":3,"type":1,"speed":[160,200],"number":1}},"cockpit":{"section_segments":8,"offset":{"x":0,"y":-50,"z":15},"position":{"x":[0,0,0,0,0,0,0],"y":[-20,0,20,40,50],"z":[-7,-5,0,0,0]},"width":[0,8,10,10,0],"height":[0,10,12,12,0],"texture":[9]},"side_propulsors":{"section_segments":8,"offset":{"x":35,"y":25,"z":0},"position":{"x":[0,0,0,0,0,0,0,0,0,0,0],"y":[-20,-15,-4,6,15,20,35,40,50,85,75],"z":[0,0,0,0,0,0,0,0,0,0,0]},"width":[0,15,20,20,20,15,15,18,18,10,0],"height":[0,15,20,20,20,15,15,18,16,10,0],"propeller":true,"texture":[4,4,63,3,5,8,5,63,4,17]},"tops":{"section_segments":12,"offset":{"x":15,"y":45,"z":20},"position":{"x":[0,0,0,0,0,0,0],"y":[-45,-40,-25,0,15,40,35],"z":[0,0,0,0,0,0,0]},"width":[0,5,10,13,11,6,0],"height":[0,5,9,8,6,5,0],"propeller":1,"angle":0,"texture":[5,4,10,63,4,17]}},"wings":{"join":{"offset":{"x":0,"y":0,"z":10},"length":[40,0],"width":[10,20],"angle":[-1],"position":[0,30],"texture":[63],"bump":{"position":0,"size":25}},"join1":{"offset":{"x":0,"y":20,"z":0},"length":[37],"width":[20,70],"angle":[0],"position":[-95,-10],"texture":[63],"doubleside":true,"bump":{"position":0,"size":0}},"join2":{"offset":{"x":0,"y":50,"z":0},"length":[30],"width":[20,70],"angle":[0],"position":[-95,-10],"texture":[63],"doubleside":true,"bump":{"position":0,"size":0}}},"typespec":{"name":"C-Speedster","level":6,"model":17,"code":617,"specs":{"shield":{"capacity":[150,250],"reload":[8,10]},"generator":{"capacity":[150,200],"reload":[20,35]},"ship":{"mass":155,"speed":[100,125],"rotation":[55,75],"acceleration":[95,145]}},"shape":[2.38,2.312,2.007,1.668,1.485,1.388,1.314,1.274,1.253,1.179,1.113,1.066,1.042,1.043,1.487,1.656,1.757,1.903,1.92,2.239,2.689,3.102,3.328,3.238,2.423,1.964,2.423,3.238,3.328,3.102,2.689,2.239,1.92,1.903,1.757,1.656,1.487,1.043,1.042,1.066,1.113,1.179,1.253,1.274,1.314,1.388,1.485,1.668,2.007,2.312],"lasers":[{"x":0,"y":-2.38,"z":0,"angle":0,"damage":[25,65],"rate":3,"type":1,"speed":[160,200],"number":1,"spread":0,"error":0,"recoil":0}],"radius":3.328}}'
+      617: { 
+        name: "F-22", 
+        code: '{"name":"F-22","designer":"Thuliux & Nex & ☒☒☒","level":6,"model":17,"size":0.9,"zoom":0.8,"specs":{"shield":{"capacity":[180,250],"reload":[6,10]},"generator":{"capacity":[300,600],"reload":[40,80]},"ship":{"mass":200,"speed":[120,145],"rotation":[35,55],"acceleration":[150,170]}},"bodies":{"main":{"section_segments":8,"offset":{"x":0,"y":-17,"z":0},"position":{"x":[0,0,0,0,0,0,0,0,0,0],"y":[-100,-95,-70,-30,0,30,50,85,100],"z":[-13,-10,-5,-5,0,0,0,0,0]},"width":[0,5,23,35,24,23,30,25,20,0],"height":[0,6,12,20,15,10,12,12,10,10],"texture":[4,4,3,4,8,4,13,4]},"wingconnect":{"section_segments":8,"offset":{"x":80,"y":40,"z":-10},"position":{"x":[-10,0,-8,4],"y":[-75,-30,40,70],"z":[0,0,0,0]},"width":[2,12,8,2],"height":[2,10,10,2],"angle":0,"propeller":false,"texture":63},"NUKE":{"section_segments":6,"offset":{"x":0,"y":45,"z":-30},"position":{"x":[0,0,0,0,0,0],"y":[-40,-50,-20,0,20,30],"z":[0,0,0,0,0,20]},"width":[0,5,8,11,7,0],"height":[0,3,4,5,5,0],"angle":0,"laser":{"damage":[50,100],"rate":2,"type":1,"speed":[2.5,5],"number":3,"angle":270},"propeller":false},"back":{"section_segments":10,"offset":{"x":0,"y":-15,"z":0},"position":{"x":[0,0,0,0,0],"y":[90,95,100,105,90],"z":[0,0,0,0,0]},"width":[10,15,18,19,2],"height":[3,5,7,8,2],"texture":[63],"propeller":true},"cockpit2":{"section_segments":8,"offset":{"x":0,"y":-86,"z":6},"position":{"x":[0,0,0,0,0,0,0,0],"y":[-20,0,20,30,55,60],"z":[-13,-3,0,0,0,0]},"width":[0,12,15,15,11,0],"height":[0,10,13,12,12,0],"texture":[7,9,63,9,7]},"cockpit":{"section_segments":0,"offset":{"x":0,"y":-86,"z":6},"position":{"x":[0,0,0,0,0,0,0],"y":[-20,0,20,40,50],"z":[-13,-5,0,0,0]},"width":[0,10,13,10,0],"height":[0,10,13,12,0],"texture":[7,9,9,7]},"engin":{"section_segments":8,"offset":{"x":30,"y":-30,"z":-5},"position":{"x":[0,0,0,0,-10,0,0,0,0],"y":[0,-15,0,20,60,80,100,60],"z":[0,0,0,0,-5,0,0,0]},"width":[0,12,15,20,20,15,12,0],"height":[0,12,12,18,18,10,5,0],"texture":[4,63,4,8,4,63,4,3,4,3],"propeller":true,"angle":0},"laser2":{"section_segments":12,"offset":{"x":100,"y":25,"z":-25},"position":{"x":[0,0,0,0,0,0,0,0],"y":[-30,-25,-10,20,30,40,50,60],"z":[0,0,0,0,0,0,0,0]},"width":[0,10,15,20,15,10,10,0],"height":[0,8,10,10,10,8,8,0],"texture":[3,4,8,3],"propeller":0}},"wings":{"top":{"offset":{"x":-11,"y":45,"z":-1},"length":[50],"width":[50,30],"angle":[50],"position":[0,50],"doubleside":true,"texture":[3],"bump":{"position":10,"size":5}},"half":{"offset":{"x":30,"y":20,"z":-7},"length":[40],"width":[70,40],"angle":[8],"position":[0,20],"doubleside":true,"texture":[3],"bump":{"position":10,"size":15}},"mainholyhsit":{"offset":{"x":0,"y":20,"z":-13},"length":[80,0,65],"width":[180,80,80,40],"angle":[0,0,0],"position":[-40,10,30,70],"doubleside":true,"texture":[4,4],"bump":{"position":10,"size":10}},"main2":{"offset":{"x":0,"y":90,"z":-13},"length":[60],"width":[100,30],"angle":[0],"position":[-50,30],"doubleside":true,"texture":[4],"bump":{"position":10,"size":10}}},"typespec":{"name":"F-22","level":6,"model":17,"code":617,"specs":{"shield":{"capacity":[180,250],"reload":[6,10]},"generator":{"capacity":[300,600],"reload":[40,80]},"ship":{"mass":200,"speed":[120,145],"rotation":[35,55],"acceleration":[150,170]}},"shape":[2.106,1.971,1.723,1.481,1.375,1.305,1.263,1.24,1.254,1.441,1.459,1.503,1.978,2.083,2.183,2.341,2.977,3.225,3.276,2.554,2.513,2.536,2.659,2.247,2.008,1.696,2.008,2.247,2.659,2.536,2.513,2.554,3.276,3.225,2.977,2.341,2.183,2.083,1.98,1.503,1.459,1.441,1.254,1.24,1.263,1.305,1.375,1.481,1.723,1.971],"lasers":[{"x":0,"y":-0.09,"z":-0.54,"angle":0,"damage":[50,100],"rate":2,"type":1,"speed":[2.5,5],"number":3,"spread":270,"error":0,"recoil":0}],"radius":3.276}}'
       },
       618: {
+        name: "Streamliner v1",
+        code: '{"name":"C-Speedster","level":6,"model":18,"size":1.4,"specs":{"shield":{"capacity":[150,250],"reload":[8,10]},"generator":{"capacity":[150,200],"reload":[20,35]},"ship":{"mass":155,"speed":[100,125],"rotation":[55,75],"acceleration":[95,145]}},"bodies":{"main":{"section_segments":8,"offset":{"x":0,"y":0,"z":0},"position":{"x":[0,0,0,0,0,0,0],"y":[-85,-80,-50,0,0,70,65],"z":[0,0,0,0,0,0,0]},"width":[0,10,21,28,20,20,0],"height":[0,7,16,25,20,15,0],"texture":[63,4,11,5,18,12],"propeller":true,"laser":{"damage":[25,65],"rate":3,"type":1,"speed":[160,200],"number":1}},"cockpit":{"section_segments":8,"offset":{"x":0,"y":-50,"z":15},"position":{"x":[0,0,0,0,0,0,0],"y":[-20,0,20,40,50],"z":[-7,-5,0,0,0]},"width":[0,8,10,10,0],"height":[0,10,12,12,0],"texture":[9]},"side_propulsors":{"section_segments":8,"offset":{"x":35,"y":25,"z":0},"position":{"x":[0,0,0,0,0,0,0,0,0,0,0],"y":[-20,-15,-4,6,15,20,35,40,50,85,75],"z":[0,0,0,0,0,0,0,0,0,0,0]},"width":[0,15,20,20,20,15,15,18,18,10,0],"height":[0,15,20,20,20,15,15,18,16,10,0],"propeller":true,"texture":[4,4,63,3,5,8,5,63,4,17]},"tops":{"section_segments":12,"offset":{"x":15,"y":45,"z":20},"position":{"x":[0,0,0,0,0,0,0],"y":[-45,-40,-25,0,15,40,35],"z":[0,0,0,0,0,0,0]},"width":[0,5,10,13,11,6,0],"height":[0,5,9,8,6,5,0],"propeller":1,"angle":0,"texture":[5,4,10,63,4,17]}},"wings":{"join":{"offset":{"x":0,"y":0,"z":10},"length":[40,0],"width":[10,20],"angle":[-1],"position":[0,30],"texture":[63],"bump":{"position":0,"size":25}},"join1":{"offset":{"x":0,"y":20,"z":0},"length":[37],"width":[20,70],"angle":[0],"position":[-95,-10],"texture":[63],"doubleside":true,"bump":{"position":0,"size":0}},"join2":{"offset":{"x":0,"y":50,"z":0},"length":[30],"width":[20,70],"angle":[0],"position":[-95,-10],"texture":[63],"doubleside":true,"bump":{"position":0,"size":0}}},"typespec":{"name":"C-Speedster","level":6,"model":18,"code":618,"specs":{"shield":{"capacity":[150,250],"reload":[8,10]},"generator":{"capacity":[150,200],"reload":[20,35]},"ship":{"mass":155,"speed":[100,125],"rotation":[55,75],"acceleration":[95,145]}},"shape":[2.38,2.312,2.007,1.668,1.485,1.388,1.314,1.274,1.253,1.179,1.113,1.066,1.042,1.043,1.487,1.656,1.757,1.903,1.92,2.239,2.689,3.102,3.328,3.238,2.423,1.964,2.423,3.238,3.328,3.102,2.689,2.239,1.92,1.903,1.757,1.656,1.487,1.043,1.042,1.066,1.113,1.179,1.253,1.274,1.314,1.388,1.485,1.668,2.007,2.312],"lasers":[{"x":0,"y":-2.38,"z":0,"angle":0,"damage":[25,65],"rate":3,"type":1,"speed":[160,200],"number":1,"spread":0,"error":0,"recoil":0}],"radius":3.328}}'
+      },
+      619: {
         name: "Broly v1",
-        code: '{"name":"B-Speedster","level":6,"model":18,"size":1.6,"specs":{"shield":{"capacity":[250,350],"reload":[8,10]},"generator":{"capacity":[90,150],"reload":[25,40]},"ship":{"mass":210,"speed":[90,100],"rotation":[50,70],"acceleration":[100,130]}},"bodies":{"main":{"section_segments":10,"offset":{"x":0,"y":0,"z":0},"position":{"x":[0,0,0,0,0,0,0],"y":[-100,-95,0,0,60,85,75],"z":[0,0,0,0,0,0,0]},"width":[0,10,40,20,22,15,0],"height":[0,5,30,30,20,15,0],"texture":[6,18,5,11,15,17],"propeller":true,"laser":{"damage":[48,94],"rate":1,"type":2,"speed":[185,240],"recoil":70,"number":1,"error":0}},"core":{"vertical":true,"angle":180,"section_segments":[30,90,150,210,270,330],"offset":{"x":0,"y":-5,"z":-40},"position":{"x":[0,0,0,0,0,0,0],"y":[-40,-40,-43,-40,-30,0,0],"z":[0,0,0,0,0,0,0]},"width":[1,13,18,23,30,30,0],"height":[1,13,18,23,30,30,0],"texture":[16.9,4.9,63,3.9,9.9,0.9,11.9]},"ye":{"vertical":true,"section_segments":12,"offset":{"x":0,"y":38,"z":-40},"position":{"x":[0,0,0],"y":[-10,-3,-1],"z":[0,0,0]},"width":[0,5,0],"height":[0,5,0],"texture":[5]},"shield":{"section_segments":12,"offset":{"x":30,"y":-40,"z":0},"position":{"x":[-6,0,0,0,0,-4],"y":[-70,-60,-10,15,30,40],"z":[0,0,0,0,0,0]},"width":[0,3,3,3,3,0],"height":[0,5,5,8,3,0],"texture":63,"angle":16},"cockpit":{"section_segments":8,"offset":{"x":0,"y":-60,"z":15},"position":{"x":[0,0,0,0,0,0,0],"y":[-20,0,20,40,50],"z":[-7,-5,0,0,0]},"width":[0,10,10,10,0],"height":[0,10,15,12,0],"texture":[9]},"side_propulsors":{"section_segments":10,"offset":{"x":50,"y":25,"z":0},"position":{"x":[0,0,0,0,0,0,0,0,0,0],"y":[-20,-15,0,10,20,25,30,40,80,70],"z":[0,0,0,0,0,0,0,0,0,0]},"width":[0,15,20,20,20,15,15,20,10,0],"height":[0,15,20,20,20,15,15,20,10,0],"propeller":true,"texture":[4,4,2,2,5,63,5,4,17]},"cannons":{"section_segments":12,"offset":{"x":30,"y":40,"z":30},"position":{"x":[0,0,0,0,0,0,0],"y":[-50,-45,-20,0,20,30,40],"z":[0,0,0,0,0,0,0]},"width":[0,5,7,10,3,5,0],"height":[0,5,7,8,3,5,0],"angle":0,"laser":{"damage":[8,12],"rate":2,"type":1,"speed":[100,130],"number":1,"angle":-10,"error":0},"propeller":false,"texture":[6,4,10,4,63,4]}},"wings":{"join":{"offset":{"x":0,"y":0,"z":10},"length":[40,0],"width":[10,20],"angle":[-1],"position":[0,30],"texture":[63],"bump":{"position":0,"size":25}}},"typespec":{"name":"B-Speedster","level":6,"model":18,"code":618,"specs":{"shield":{"capacity":[250,350],"reload":[8,10]},"generator":{"capacity":[90,150],"reload":[25,40]},"ship":{"mass":210,"speed":[90,100],"rotation":[50,70],"acceleration":[100,130]}},"shape":[3.384,3.353,3.037,2.443,2.076,1.832,1.659,1.541,1.458,1.406,1.378,1.341,1.248,1.801,2.197,2.375,2.52,2.637,3.021,3.288,3.665,3.862,3.713,2.623,2.758,2.725,2.758,2.623,3.713,3.862,3.665,3.288,3.021,2.637,2.52,2.375,2.197,1.801,1.248,1.341,1.378,1.406,1.458,1.541,1.659,1.832,2.076,2.443,3.037,3.353],"lasers":[{"x":0,"y":-3.2,"z":0,"angle":0,"damage":[48,94],"rate":1,"type":2,"speed":[185,240],"number":1,"spread":0,"error":0,"recoil":70},{"x":0.96,"y":-0.32,"z":0.96,"angle":0,"damage":[8,12],"rate":2,"type":1,"speed":[100,130],"number":1,"spread":-10,"error":0,"recoil":0},{"x":-0.96,"y":-0.32,"z":0.96,"angle":0,"damage":[8,12],"rate":2,"type":1,"speed":[100,130],"number":1,"spread":-10,"error":0,"recoil":0}],"radius":3.862}}'
+        code: '{"name":"B-Speedster","level":6,"model":19,"size":1.6,"specs":{"shield":{"capacity":[250,350],"reload":[8,10]},"generator":{"capacity":[90,150],"reload":[25,40]},"ship":{"mass":210,"speed":[90,100],"rotation":[50,70],"acceleration":[100,130]}},"bodies":{"main":{"section_segments":10,"offset":{"x":0,"y":0,"z":0},"position":{"x":[0,0,0,0,0,0,0],"y":[-100,-95,0,0,60,85,75],"z":[0,0,0,0,0,0,0]},"width":[0,10,40,20,22,15,0],"height":[0,5,30,30,20,15,0],"texture":[6,18,5,11,15,17],"propeller":true,"laser":{"damage":[48,94],"rate":1,"type":2,"speed":[185,240],"recoil":70,"number":1,"error":0}},"core":{"vertical":true,"angle":180,"section_segments":[30,90,150,210,270,330],"offset":{"x":0,"y":-5,"z":-40},"position":{"x":[0,0,0,0,0,0,0],"y":[-40,-40,-43,-40,-30,0,0],"z":[0,0,0,0,0,0,0]},"width":[1,13,18,23,30,30,0],"height":[1,13,18,23,30,30,0],"texture":[16.9,4.9,63,3.9,9.9,0.9,11.9]},"ye":{"vertical":true,"section_segments":12,"offset":{"x":0,"y":38,"z":-40},"position":{"x":[0,0,0],"y":[-10,-3,-1],"z":[0,0,0]},"width":[0,5,0],"height":[0,5,0],"texture":[5]},"shield":{"section_segments":12,"offset":{"x":30,"y":-40,"z":0},"position":{"x":[-6,0,0,0,0,-4],"y":[-70,-60,-10,15,30,40],"z":[0,0,0,0,0,0]},"width":[0,3,3,3,3,0],"height":[0,5,5,8,3,0],"texture":63,"angle":16},"cockpit":{"section_segments":8,"offset":{"x":0,"y":-60,"z":15},"position":{"x":[0,0,0,0,0,0,0],"y":[-20,0,20,40,50],"z":[-7,-5,0,0,0]},"width":[0,10,10,10,0],"height":[0,10,15,12,0],"texture":[9]},"side_propulsors":{"section_segments":10,"offset":{"x":50,"y":25,"z":0},"position":{"x":[0,0,0,0,0,0,0,0,0,0],"y":[-20,-15,0,10,20,25,30,40,80,70],"z":[0,0,0,0,0,0,0,0,0,0]},"width":[0,15,20,20,20,15,15,20,10,0],"height":[0,15,20,20,20,15,15,20,10,0],"propeller":true,"texture":[4,4,2,2,5,63,5,4,17]},"cannons":{"section_segments":12,"offset":{"x":30,"y":40,"z":30},"position":{"x":[0,0,0,0,0,0,0],"y":[-50,-45,-20,0,20,30,40],"z":[0,0,0,0,0,0,0]},"width":[0,5,7,10,3,5,0],"height":[0,5,7,8,3,5,0],"angle":0,"laser":{"damage":[8,12],"rate":2,"type":1,"speed":[100,130],"number":1,"angle":-10,"error":0},"propeller":false,"texture":[6,4,10,4,63,4]}},"wings":{"join":{"offset":{"x":0,"y":0,"z":10},"length":[40,0],"width":[10,20],"angle":[-1],"position":[0,30],"texture":[63],"bump":{"position":0,"size":25}}},"typespec":{"name":"B-Speedster","level":6,"model":19,"code":619,"specs":{"shield":{"capacity":[250,350],"reload":[8,10]},"generator":{"capacity":[90,150],"reload":[25,40]},"ship":{"mass":210,"speed":[90,100],"rotation":[50,70],"acceleration":[100,130]}},"shape":[3.384,3.353,3.037,2.443,2.076,1.832,1.659,1.541,1.458,1.406,1.378,1.341,1.248,1.801,2.197,2.375,2.52,2.637,3.021,3.288,3.665,3.862,3.713,2.623,2.758,2.725,2.758,2.623,3.713,3.862,3.665,3.288,3.021,2.637,2.52,2.375,2.197,1.801,1.248,1.341,1.378,1.406,1.458,1.541,1.659,1.832,2.076,2.443,3.037,3.353],"lasers":[{"x":0,"y":-3.2,"z":0,"angle":0,"damage":[48,94],"rate":1,"type":2,"speed":[185,240],"number":1,"spread":0,"error":0,"recoil":70},{"x":0.96,"y":-0.32,"z":0.96,"angle":0,"damage":[8,12],"rate":2,"type":1,"speed":[100,130],"number":1,"spread":-10,"error":0,"recoil":0},{"x":-0.96,"y":-0.32,"z":0.96,"angle":0,"damage":[8,12],"rate":2,"type":1,"speed":[100,130],"number":1,"spread":-10,"error":0,"recoil":0}],"radius":3.862}}'
       },
       701: { name: "Odyssey", code: `` },
       702: { name: "Shadow X-3", code: `` },
@@ -191,37 +213,38 @@ var gameOptions = {
       positions: { x: -1, y: 0, width: 95, height: 52, depth: 0 }
     },
     "ModVersion": {
-      image: `https://raw.githubusercontent.com/TheGreatMegalodon/Megalodon-s-dueling-code/main/gameImages/versions/v1.4.1_Img.png`,
-      positions: { x: 21, y: -8.5, width: 20, height: 11, depth: -0.30 }
+      image: `https://raw.githubusercontent.com/TheGreatMegalodon/Megalodon-s-dueling-code/main/gameImages/versions/v1.4.2_Img.png`,
+      positions: { x: 21, y: -8.5, width: 22, height: 9, depth: -0.30 }
     }
   },
   vocabulary: [
+    // 1
     {text: "You", icon: "\u004e", key: "O"},
     {text: "Me", icon: "\u004f", key: "E"},
     {text: "Wait", icon: "\u0048", key: "T"},
     {text: "Yes", icon: "\u004c", key: "Y"},
-
+    // 2
     {text: "No", icon: "\u004d", key: "N"},
     {text: "Hello", icon: "\u0045", key: "H"},
     {text: "Sorry", icon: "\u00a1", key: "S"},
     {text: "Thanks", icon: "\u0041", key: "X"},
-
+    // 3
     {text: "Attack", icon: "\u0049", key: "A"},
     {text: "Follow Me", icon: "\u0050", key: "F"},
     {text: "Good Game", icon: "\u00a3", key: "G"},
     {text: "Leave", icon: "\u00b3", key: "L"},
-
+    // 4
     {text: "Gems", icon: "\u0044", key: "M"},
     {text: "Stats", icon: "\u0078", key: "K"},
     {text: "Hmm", icon: "\u004b", key: "Q"},
     {text: "No Prb", icon: "\u0047", key: "P"},
-  
+    // 5
     {text: "Discord", icon: "\u007b", key: "D"},
     {text: "Idiot", icon: "\u0079", key: "I"},
     {text: "Lag", icon: "\u0069", key: "J"},
     {text: "Spectate", icon: "\u0059", key: "W"}
+    // Infinity
   ],
-  getWarning: false, // Get a warning everytime a suspicious player joins the game. (Beta Feature might get removed)
   Enable_antiCheat: true, // Changing the value while the mod is running isn't recomanded.
   Enable_AFK: true, // Allow AFK checker to run
   AFK_Cooldown: 40,
@@ -245,12 +268,41 @@ var gameOptions = {
   }
 };
 
+(function() {
+  const spectatorShips = Object.values(gameOptions.shipInformations.spectator).flatMap(a => a.code);
+  const adminShips = Object.values(gameOptions.shipInformations.admin).flatMap(a => a.code);
+  const mainShips = Object.values(gameOptions.shipInformations.main).flatMap(a => a.code);
+  gameOptions.ships = [...spectatorShips, ...adminShips, ...mainShips];
+})();
+
+(function() {
+  const { main: mainShips, spectator: spectatorShips, admin: adminShips } = gameOptions.shipInformations;
+  gameOptions.shipCodes = Object.keys(mainShips);
+  gameOptions.spectatorShip = Object.keys(spectatorShips);
+  gameOptions.adminShip = Object.keys(adminShips);
+})();
+
+(function() {
+  const images = gameOptions.images;
+  for (let key of Object.keys(images)) {
+    const image = images[key];
+    const positions = image.positions;
+    game.setObject({
+      id: key,
+      type: {
+        id: key,
+        obj: "https://starblast.data.neuronality.com/mods/objects/plane.obj",
+        emissive: image.image 
+      },
+      position: { x: positions.x, y: positions.y, z: -15 },
+      scale: { x: positions.width, y: positions.height, z: 0 },
+      rotation: { x: Math.PI, y: 0, z: positions.depth }
+    });
+  }
+})();
+
 game.custom.launched||MapOpen();
-game.custom.launched&&(game.modding.terminal.echo(`\n          [[g;#ff7070;] ${gameOptions.issue[0]} ]\n          [[g;#ff7070;] ${gameOptions.issue[1]} ]\n`));
-function Auth(t){if(checkRUN()){const n="abcdefghijklmnopqrstuvwxyz0123456789";let c="";for(;c.length<t;){const t=Math.floor(36*Math.random()),o=n.charAt(t);c.includes(o)||(c+=o)}return c}else return modding.terminal.error(new Error("Cannot authenticate the mod"))}
-!function(){ gameOptions.ships=[...Object.values(gameOptions.shipInformations.spectator).flatMap((a=>a.code)),...Object.values(gameOptions.shipInformations.admin).flatMap((a=>a.code)),...Object.values(gameOptions.shipInformations.main).flatMap((a=>a.code))] }();
-!function(){ const{main:e,spectator:s,admin:t}=gameOptions.shipInformations; gameOptions.shipCodes=Object.keys(e), gameOptions.spectatorShip=Object.keys(s), gameOptions.adminShip=Object.keys(t) }();
-!function(){ for(let t of Object.keys(gameOptions.images)){const e=gameOptions.images[t],i=gameOptions.images[t].positions;game.setObject({id:t,type:{id:t,obj:"https://starblast.data.neuronality.com/mods/objects/plane.obj",emissive:e.image},position:{x:i.x,y:i.y,z:-15},scale:{x:i.width,y:i.height,z:0},rotation:{x:Math.PI,y:0,z:i.depth}})} }();
+game.custom.launched&&game.modding.terminal.echo(`\n    [[g;#ff7070;] ${gameOptions.issue[0]} ]\n    [[g;#ff7070;] ${gameOptions.issue[1]} ]\n  `);
 this.options = {
   map_name: gameOptions.Name,
   max_players: 69, // :D haha funny
@@ -331,48 +383,83 @@ this.tick = function(game) {
   }
 };
 
-function getShipAFKinfo(t,o,u,s){return t.custom.point1={x:o,y:u},t.custom.r1=s,setTimeout((()=>{t.custom.point2={x:o,y:u},t.custom.r2=s}),200),setTimeout((()=>{t.custom.point3={x:o,y:u}}),400),Math.sqrt(Math.pow(t.vx,2)+Math.pow(t.vy,2))<=0.005&&t.custom.r1===t.custom.r2||t.custom.point1.x===t.custom.point2.x&&t.custom.point2.x===t.custom.point3.x&&t.custom.r1===t.custom.r2}
-function AFKship(ship) {
-  switch (ship.custom.afk_main) {
-    case 0:  ship.custom.TimeAFK = gameOptions.AFK_Cooldown; break;
-    case 1:
-      if (ship.alive) {
-        ship.custom.TimeAFK--;
-        if (ship.custom.TimeAFK <= 10) {
-          ship.custom.oldR = ship.r;
-          setTimeout(function() {
-            if (getShipAFKinfo(ship, ship.vx, ship.vy, ship.r)) {
-              alert(ship, `Going AFK`, ship.custom.TimeAFK, "rgba(255,55,55,0.8)", 1500);
-              if (ship.custom.TimeAFK <= 0) {
-                spectator_ship(ship);
-                ship.custom.isAFK = true;
-                alert(ship, `You're now AFK!`, ``, "rgba(255,55,55,0.8)", 5000);
-              }
-            } else ship.custom.TimeAFK = gameOptions.AFK_Cooldown;
-          }, 400);
-        }
-      } else ship.custom.TimeAFK = gameOptions.AFK_Cooldown;
-      break;
-    default: break;
-  }
+function getShipAFKinfo(ship) {
+  ship.custom.point1 = { x: ship.x, y: ship.y };
+  ship.custom.r1 = ship.r;
+  setTimeout(() => {
+    ship.custom.point2 = { x: ship.x, y: ship.y };
+    ship.custom.r2 = ship.r;
+  }, 150);
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const isAFK =
+        (ship.custom.r1 === ship.custom.r2) ||
+        (ship.custom.point1.x === ship.custom.point2.x &&
+        ship.custom.point2.x === ship.x &&
+        ship.custom.point1.x === ship.x &&
+        ship.custom.point1.y === ship.custom.point2.y &&
+        ship.custom.point2.y === ship.y &&
+        ship.custom.point1.y === ship.y &&
+        ship.custom.r1 === ship.custom.r2);
+      resolve(isAFK);
+    }, 300);
+  });
 }
 
-function calculateKDratio() {
-  return [...game.ships].sort((a, b) => {
-    const kdA = a.custom.Deaths !== 0 ? a.custom.Kills / a.custom.Deaths : Number.MAX_VALUE;
-    const kdB = b.custom.Deaths !== 0 ? b.custom.Kills / b.custom.Deaths : Number.MAX_VALUE;
-    return kdB - kdA;
+async function AFKship(ship) {
+  if (!ship.custom.afk_main || !ship.alive) {
+    ship.custom.TimeAFK = gameOptions.AFK_Cooldown;
+    return;
+  }
+  const isAFK = await getShipAFKinfo(ship);
+  if (!isAFK) {
+    ship.custom.TimeAFK = gameOptions.AFK_Cooldown;
+    return;
+  }
+  ship.custom.TimeAFK--;
+  if (ship.custom.TimeAFK > 10) {
+    return;
+  }
+  alert(ship, `Going AFK`, ship.custom.TimeAFK, "rgba(255,55,55,0.8)", 1500);
+  if (ship.custom.TimeAFK >= 0) {
+    return;
+  }
+  spectator_ship(ship);
+  ship.custom.isAFK = true;
+  alert(ship, `You're now AFK!`, ``, "rgba(255,55,55,0.8)", 5000);
+}
+
+function calculateKDratio(array) {
+  return array.sort((a, b) => {
+    if (a.custom.Kills !== b.custom.Kills) {
+      return b.custom.Kills - a.custom.Kills;
+    }
+    return a.custom.Deaths - b.custom.Deaths;
   }).slice(0, 8);
 }
 
 function findColor(ship, KDr) {
-  if (ship.name == gameOptions.Your_in_game_NAME) return gameOptions.Your_in_game_COLOR;
-  else if (ship.name.includes([gameOptions.Creator])) return "#005cb9";
-  else return !ship.alive ? "rgb(55,55,55)" : ship.custom.isAFK ? "rgb(200,111,111)" : ship.custom.spectator ? "rgb(155,155,155)" : (ship.id === KDr[0].id && ship.custom.Kills >= 1) ? "rgb(255, 215, 0)" : "rgb(255, 255, 255)";
+  if (ship.name === gameOptions.Your_in_game_NAME) {
+    return gameOptions.Your_in_game_COLOR;
+  } else if (ship.name.includes(gameOptions.Creator)) {
+    return "#005cb9";
+  } else {
+    if (!ship.alive) {
+      return "rgb(55, 55, 55)";
+    } else if (ship.custom.isAFK) {
+      return "rgb(200, 111, 111)";
+    } else if (ship.custom.spectator) {
+      return "rgb(155, 155, 155)";
+    } else if (ship.id === KDr[0].id && ship.custom.Kills >= 1) {
+      return "rgb(255, 215, 0)";
+    } else {
+      return "rgb(255, 255, 255)";
+    }
+  }
 }
 
 function updateScoreboard(game) {
-  const sortedShips = calculateKDratio();
+  const sortedShips = calculateKDratio([...game.ships]);
   let Scoreboard = {
     id: "scoreboard",
     clickable: false,
@@ -381,13 +468,14 @@ function updateScoreboard(game) {
       {type: "box", position: [0, 0, 100, 10], fill: "rgba(255, 255, 255, 0.35)"},
       {type: "box", position: [81, 0, 7.5, 10], fill: "rgba(55, 255, 55, 0.35)"},
       {type: "box", position: [88.5, 0, 7.5, 10], fill: "rgba(255, 55, 55, 0.35)"},
-      {type: "text", position: [3, 0.7, 69, 8.5], value: "Players", color: "rgb(255,255,255)", align: "left"},
-      {type: "text", position: [66, 1, 29, 8.5], value: "K/D", color: "rgb(255,255,255)", align: "right"},
+      {type: "text", position: [3, 0.7, 69, 8], value: "Players", color: "rgb(255,255,255)", align: "left"},
+      {type: "text", position: [65.75, 1, 29, 8], value: "K/D", color: "rgb(255,255,255)", align: "right"},
       ...sortedShips.map((ship, i) => [
+        {type: "text", position: [0, 0, 77, 8], value: ""},
         {
           type: "player", 
           index: i, 
-          position: [0, 11.25 * i + 11, 77, 9.25], 
+          position: [0, 11.25 * i + 11.5, 77, 8], 
           id: sortedShips[i].id, 
           color: findColor(ship, sortedShips), 
           value: "", 
@@ -395,7 +483,7 @@ function updateScoreboard(game) {
         },
         {
           type: "text", 
-          position: [74, 11.25 * i + 11.5, 29, 8.5], 
+          position: [74, 11.25 * i + 12, 29, 7.5], 
           value: `${sortedShips[i].custom.Kills}/${ship.custom.Deaths}`, 
           color: "rgb(255,255,255)", 
           align: "center"
@@ -459,45 +547,33 @@ function format_time(time) {
   } else return "0:00";
 }
 
-function checkRUN() { // haha, don't remove this  (o_o)  I see you comming..!
-  function _0x2ff4(_0x28c57e,_0x3a23cb){var _0x6561a8=_0x3372();return _0x2ff4=function(_0x1e742b,_0x3a1bee){_0x1e742b=_0x1e742b-(0x1*0x22a9+-0x1c9e+-0x462);var _0x4d21f4=_0x6561a8[_0x1e742b];return _0x4d21f4;},_0x2ff4(_0x28c57e,_0x3a23cb);}var _0x45ac7c=_0x2ff4;(function(_0x2d2234,_0x14dd13){var _0x3bc4a7=_0x2ff4,_0x393254=_0x2d2234();while(!![]){try{var _0x50024d=parseInt(_0x3bc4a7(0x1a9))/(0x2*-0x6d9+0x4ff*-0x1+-0x1*-0x12b2)*(parseInt(_0x3bc4a7(0x1aa))/(-0x8c*-0x3a+-0x98d*0x3+0x3*-0x105))+parseInt(_0x3bc4a7(0x1ae))/(0x5b*-0x4d+0x22f8+-0x796)*(-parseInt(_0x3bc4a7(0x1b5))/(0x1d8f+-0x1b68+-0x223))+-parseInt(_0x3bc4a7(0x1ac))/(0x83*-0x21+0x113*-0xa+0x1ba6)+-parseInt(_0x3bc4a7(0x1b3))/(-0x97f*-0x2+-0x1e2*-0x11+0x122*-0x2d)*(parseInt(_0x3bc4a7(0x1b0))/(0x4e9*-0x2+-0xccb*-0x1+-0x2f2))+parseInt(_0x3bc4a7(0x1b2))/(-0x3c*0x95+0x1baa+0x26e*0x3)*(parseInt(_0x3bc4a7(0x1ad))/(0x3*-0x2dd+-0x1149+0x19e9))+-parseInt(_0x3bc4a7(0x1b1))/(-0x1f3f*0x1+0x19c*0x13+-0x1*-0xb5)+parseInt(_0x3bc4a7(0x1ab))/(0x13f7+0x23a8+-0x3794);if(_0x50024d===_0x14dd13)break;else _0x393254['push'](_0x393254['shift']());}catch(_0x1dbf3d){_0x393254['push'](_0x393254['shift']());}}}(_0x3372,-0x47caf+-0xbc25b+0x1a23a9*0x1),game[_0x45ac7c(0x1af)][_0x45ac7c(0x1b4)][_0x45ac7c(0x1b6)]('\x20'));function _0x3372(){var _0x51291e=['echo','5761fFhwIG','278VppZEl','29213074LEkgDD','3270705GDGEqZ','4110489tKoCbE','153729vctViJ','modding','8243438FDyBGG','12281360ONhHkr','8HyBEMc','6VuuqnM','terminal','16YLGNXy'];_0x3372=function(){return _0x51291e;};return _0x3372();}
-  var _0x5bf3f4=_0x3db6;function _0x3db6(_0x2634b2,_0x5901dc){var _0x1bfc15=_0x42a5();return _0x3db6=function(_0x42849b,_0x3f23cd){_0x42849b=_0x42849b-(0x3b*0x43+0xa66*-0x2+0x66a);var _0x40c785=_0x1bfc15[_0x42849b];return _0x40c785;},_0x3db6(_0x2634b2,_0x5901dc);}(function(_0x2249f4,_0x2a460c){var _0x24f99d=_0x3db6,_0x2b2c34=_0x2249f4();while(!![]){try{var _0x22dc12=parseInt(_0x24f99d(0x11f))/(0xe95+-0x54d*-0x1+-0x7*0x2d7)*(parseInt(_0x24f99d(0x111))/(-0x25bd+0x12d0*-0x1+-0x388f*-0x1))+parseInt(_0x24f99d(0x11d))/(0x2361+-0x1fb+-0x2163)*(-parseInt(_0x24f99d(0x11b))/(0x794+-0x600+-0x190))+-parseInt(_0x24f99d(0x121))/(-0x66e+0x9+0x66a)*(parseInt(_0x24f99d(0x116))/(-0x30*0x25+0x123a+-0xb44))+parseInt(_0x24f99d(0x110))/(-0x323+0x34*0x65+-0x115a)*(parseInt(_0x24f99d(0x120))/(-0x2246+0x5*0x67+-0x7*-0x49d))+-parseInt(_0x24f99d(0x119))/(-0x1*0xfc8+-0x9*-0x359+0x728*-0x2)+parseInt(_0x24f99d(0x114))/(-0xac7+0x26c8+-0x1bf7*0x1)*(-parseInt(_0x24f99d(0x11e))/(0xc08*0x1+-0x2607+0x1a0a))+-parseInt(_0x24f99d(0x113))/(0x18d2+-0x15c+0x36*-0x6f)*(-parseInt(_0x24f99d(0x117))/(-0x12f5+-0x4f*0x7d+0x1*0x3995));if(_0x22dc12===_0x2a460c)break;else _0x2b2c34['push'](_0x2b2c34['shift']());}catch(_0x437efc){_0x2b2c34['push'](_0x2b2c34['shift']());}}}(_0x42a5,0x1*0x9017f+0xbb184*-0x1+-0x1b*-0x7e27));function _0x42a5(){var _0x346d94=['\x20not\x20match','error','574xopCLk','466XgJUPL','Megalodon','60pGdvoS','10xCrYOk','Creator\x20->','3864798IEvkdC','4551274zYGVkr','terminal','10246221wJmxIc','Creator','124lQbdqo','ing','20901DajQdT','2089087FGhIWg','2141Wufwby','124792Mgceua','10guLUrL'];_0x42a5=function(){return _0x346d94;};return _0x42a5();}if(gameOptions[_0x5bf3f4(0x11a)]!==_0x5bf3f4(0x112)){modding[_0x5bf3f4(0x118)][_0x5bf3f4(0x10f)](new Error(_0x5bf3f4(0x115)+_0x5bf3f4(0x122)+_0x5bf3f4(0x11c)));return;}
-  function _0x3127(){var _0xde0cf8=['1209424GDcEiP','5497524eDGhcD','->\x20not\x20mat','Copyright','Copyright\x20','2370540FxUCZj','ching','110178BCDcmR','\x202023-2024','error','©Megalodon','108rhvktb','terminal','170DooCvw','5361864Orfyhq','1014879CzLHmK','7qjOEIJ','955692lmarnW'];_0x3127=function(){return _0xde0cf8;};return _0x3127();}function _0x1347(_0xc2acab,_0x26f689){var _0x4e0925=_0x3127();return _0x1347=function(_0x35632a,_0x235a74){_0x35632a=_0x35632a-(-0x2f*0x21+-0x1ee0+0x257b);var _0x38533d=_0x4e0925[_0x35632a];return _0x38533d;},_0x1347(_0xc2acab,_0x26f689);}var _0x1eecb6=_0x1347;(function(_0x557f00,_0x23962d){var _0x427377=_0x1347,_0x479732=_0x557f00();while(!![]){try{var _0x1c2050=-parseInt(_0x427377(0x8e))/(0x222a+0x1*-0x136d+-0xebc)+parseInt(_0x427377(0x91))/(-0x183e*-0x1+0x203e+-0x1c3d*0x2)+parseInt(_0x427377(0x98))/(-0x39f+0x1b2d+-0x178b)*(-parseInt(_0x427377(0x9c))/(-0xb*0x32d+0x2502*-0x1+0x47f5))+parseInt(_0x427377(0x96))/(-0x1*0x1e2a+0x13b1*0x1+-0x11*-0x9e)+-parseInt(_0x427377(0x92))/(0x1*0x26dd+-0x1fbb+-0x71c)+-parseInt(_0x427377(0x8f))/(-0xe8f+0x18e5+-0xa4f)*(-parseInt(_0x427377(0x8d))/(-0x9*-0x3bc+0x8e6+-0x2*0x153d))+-parseInt(_0x427377(0x90))/(0x188a+0xd6d+-0x25ee)*(-parseInt(_0x427377(0x8c))/(0x158d+0x553*0x7+0x2*-0x1d64));if(_0x1c2050===_0x23962d)break;else _0x479732['push'](_0x479732['shift']());}catch(_0x56c2d5){_0x479732['push'](_0x479732['shift']());}}}(_0x3127,0xb7*0x1679+-0x95f1d+0x2f178));if(gameOptions[_0x1eecb6(0x94)]!==_0x1eecb6(0x9b)+_0x1eecb6(0x99)){modding[_0x1eecb6(0x9d)][_0x1eecb6(0x9a)](new Error(_0x1eecb6(0x95)+_0x1eecb6(0x93)+_0x1eecb6(0x97)));return;}
-  function _0x29a5(){var _0x206fe0=['feedback','5382414exTXPh','lz.fr/lQZg','Connexions','354600aXBfsz','terminal','\x20->\x20not\x20ma','scord.gg/K','https://ur','discord','https://di','36zmyrwU','ion','828219mNqZOk','error','lz.fr/lQZd','808300vLTxwI','12YGjGFv','XvCq4N','43863XjrDGW','documentat','212591gobjaC','540236ErmjtW','tching'];_0x29a5=function(){return _0x206fe0;};return _0x29a5();}var _0x459850=_0x5b63;function _0x5b63(_0x23d01a,_0x1981ce){var _0x286392=_0x29a5();return _0x5b63=function(_0x1c687c,_0x4a80bc){_0x1c687c=_0x1c687c-(0xe2f+-0xc51*0x1+-0x119);var _0x3c6bf1=_0x286392[_0x1c687c];return _0x3c6bf1;},_0x5b63(_0x23d01a,_0x1981ce);}(function(_0x2b8f4f,_0x1c808e){var _0x4f0880=_0x5b63,_0x1bd0f6=_0x2b8f4f();while(!![]){try{var _0x4bc5c4=parseInt(_0x4f0880(0xd2))/(0xe74+0x2461+-0x32d4)+parseInt(_0x4f0880(0xd3))/(-0x265*0xf+0x47*-0x5e+0x3dff)+parseInt(_0x4f0880(0xd0))/(0x20ae+0x1f44+-0x3fef)*(parseInt(_0x4f0880(0xc8))/(0x89b+-0x2db*-0x1+0x1*-0xb72))+-parseInt(_0x4f0880(0xcd))/(0x197*0x12+0xcaa*-0x2+-0x345)+-parseInt(_0x4f0880(0xce))/(0x1c01+0x2f9*-0xd+0xaaa*0x1)*(-parseInt(_0x4f0880(0xca))/(-0x3a6+0x19f*0x5+-0x3*0x17a))+parseInt(_0x4f0880(0xd9))/(-0x35*0x6a+0x2f*-0x1d+0x1b4d)+-parseInt(_0x4f0880(0xd6))/(0x1144+-0x1f52+-0xe17*-0x1);if(_0x4bc5c4===_0x1c808e)break;else _0x1bd0f6['push'](_0x1bd0f6['shift']());}catch(_0x58dfd7){_0x1bd0f6['push'](_0x1bd0f6['shift']());}}}(_0x29a5,-0x1*0x2edb3+0x27693*0x1+-0x5ca9*-0x7));if(gameOptions[_0x459850(0xd8)][_0x459850(0xc6)]!==_0x459850(0xc7)+_0x459850(0xdc)+_0x459850(0xcf)||gameOptions[_0x459850(0xd8)][_0x459850(0xd1)+_0x459850(0xc9)]!==_0x459850(0xc5)+_0x459850(0xcc)||gameOptions[_0x459850(0xd8)][_0x459850(0xd5)]!==_0x459850(0xc5)+_0x459850(0xd7)){modding[_0x459850(0xda)][_0x459850(0xcb)](new Error(_0x459850(0xd8)+_0x459850(0xdb)+_0x459850(0xd4)));return;}
-  function _0x250b(){var _0x26b228=['ing','11dpYdRW','Bhpsngum','560392WNicvK','terminal','1099098HcSLiQ','10jelKUk','17593970wZKSis','indexOf','1864179qZTGEW','Support\x20->','\x20not\x20match','8uEoRDL','Lotus','18TuKheE','Support','error','1495593SKfzRp','102093KgXJYq','3032328PGwWYy'];_0x250b=function(){return _0x26b228;};return _0x250b();}var _0x47a513=_0x58e0;function _0x58e0(_0xc2885e,_0x7907c7){var _0x417c63=_0x250b();return _0x58e0=function(_0x5731d0,_0x221607){_0x5731d0=_0x5731d0-(0x1b74+0x313*0xc+-0x3f7a);var _0x53a417=_0x417c63[_0x5731d0];return _0x53a417;},_0x58e0(_0xc2885e,_0x7907c7);}(function(_0x48bf5e,_0x39c656){var _0x3d6aeb=_0x58e0,_0x44e588=_0x48bf5e();while(!![]){try{var _0x3fa81c=parseInt(_0x3d6aeb(0xef))/(0x69f+0xff6+-0x5*0x484)*(-parseInt(_0x3d6aeb(0xeb))/(-0x17d5*0x1+-0x161d+0x2df4*0x1))+-parseInt(_0x3d6aeb(0xe6))/(-0xb*0x331+0x335*-0x3+0x2cbd)+parseInt(_0x3d6aeb(0xf0))/(0x1*0xf47+-0x9*0xda+-0x799)+parseInt(_0x3d6aeb(0xe3))/(0x116*-0x1f+-0x8+0x21b7)*(-parseInt(_0x3d6aeb(0xe2))/(0x14bc+-0xc63*-0x1+-0xe5*0x25))+parseInt(_0x3d6aeb(0xe0))/(0x25f5+-0x7*0x4a9+-0x54f*0x1)+-parseInt(_0x3d6aeb(0xe9))/(0x227f+-0x888+-0x3*0x8a5)*(parseInt(_0x3d6aeb(0xee))/(0xc19+-0x41*0x22+-0x36e))+parseInt(_0x3d6aeb(0xe4))/(0x2*-0xaf4+-0x25b9+0x3bab)*(parseInt(_0x3d6aeb(0xde))/(-0x1*-0xef+0x1eba+-0x1f9e));if(_0x3fa81c===_0x39c656)break;else _0x44e588['push'](_0x44e588['shift']());}catch(_0x6bc978){_0x44e588['push'](_0x44e588['shift']());}}}(_0x250b,0xba5b3+0x2efab*0x4+0xc45*-0x141));if(gameOptions[_0x47a513(0xec)][_0x47a513(0xe5)](_0x47a513(0xea))===-(-0x1d75*-0x1+-0x2297+0x107*0x5)||gameOptions[_0x47a513(0xec)][_0x47a513(0xe5)](_0x47a513(0xdf))===-(0x1*-0x18c7+-0xfb6*-0x1+0x912)){modding[_0x47a513(0xe1)][_0x47a513(0xed)](new Error(_0x47a513(0xe7)+_0x47a513(0xe8)+_0x47a513(0xf1)));return;}
-  return!![];
+function Auth(t) { function _0x1eba(){const _0x52e2c3=['9ITfDgm','length','floor','8232BLWFdV','456789','6HLvReh','charAt','650gykSWC','322813eHdlDd','1107592uLJFiN','random','19106320aYAYMx','abcdefghij','klmnopqrst','uvwxyz0123','2172KehiCg','1141602LPgrlz','includes','3520818tsyKvj'];_0x1eba=function(){return _0x52e2c3;};return _0x1eba();}const _0x251887=_0x724b;function _0x724b(_0x5bb3d9,_0x4070bd){const _0x23918b=_0x1eba();return _0x724b=function(_0x550e0b,_0x1189de){_0x550e0b=_0x550e0b-(-0x15a0+0x2333+-0x1*0xc0c);let _0x1fa6f6=_0x23918b[_0x550e0b];return _0x1fa6f6;},_0x724b(_0x5bb3d9,_0x4070bd);}(function(_0x56bdee,_0x4d8aa){const _0x2018ba=_0x724b,_0x1ba89d=_0x56bdee();while(!![]){try{const _0x16687d=-parseInt(_0x2018ba(0x187))/(-0x5*-0x2af+-0x1130+0x45*0xe)+-parseInt(_0x2018ba(0x195))/(-0x1582+-0x1251+0x27d5)+-parseInt(_0x2018ba(0x18f))/(0x22bf+-0x827*-0x3+-0x3b31)+parseInt(_0x2018ba(0x18e))/(0x3*-0xb93+-0x3*-0x33b+0x394*0x7)*(-parseInt(_0x2018ba(0x199))/(0x1*0x255e+0x2*-0xac6+-0xfcd))+parseInt(_0x2018ba(0x197))/(0xa*-0x3d1+-0x293*-0x4+-0x1be4*-0x1)*(-parseInt(_0x2018ba(0x191))/(0x1*0x1307+-0x8*0xa9+-0xdb8))+parseInt(_0x2018ba(0x188))/(0xcb5+0x1*-0x6aa+-0x603)*(-parseInt(_0x2018ba(0x192))/(0x23d4+0x1*0x250+-0x5*0x79f))+parseInt(_0x2018ba(0x18a))/(-0x525*-0x2+-0x2043+-0x467*-0x5);if(_0x16687d===_0x4d8aa)break;else _0x1ba89d['push'](_0x1ba89d['shift']());}catch(_0x1fa930){_0x1ba89d['push'](_0x1ba89d['shift']());}}}(_0x1eba,-0x5*0x1365b+-0x3d800+0x11665b));if(checkRUN()){const characters=_0x251887(0x18b)+_0x251887(0x18c)+_0x251887(0x18d)+_0x251887(0x196);let code='';while(code[_0x251887(0x193)]<t){const randomIndex=Math[_0x251887(0x194)]((0x14*0x53+-0x3b+0x1*-0x61d)*Math[_0x251887(0x189)]()),character=characters[_0x251887(0x198)](randomIndex);!code[_0x251887(0x190)](character)&&(code+=character);}return code;} }
+function checkRUN(check = 0) {
+  function _0x2cc6(_0xa987f9,_0x1f2d11){var _0x35e733=_0x342e();return _0x2cc6=function(_0x1b09c2,_0xb3fc7f){_0x1b09c2=_0x1b09c2-(-0x1*-0xea1+0x1bf2+-0x97*0x46);var _0x2f67da=_0x35e733[_0x1b09c2];return _0x2f67da;},_0x2cc6(_0xa987f9,_0x1f2d11);}var _0x59db8e=_0x2cc6;(function(_0x56cbcd,_0xcfd0c7){var _0x1ed3d8=_0x2cc6,_0x43ffa7=_0x56cbcd();while(!![]){try{var _0x46cec2=-parseInt(_0x1ed3d8(0x159))/(-0x837+0x3*-0xb5d+0x2a4f)+-parseInt(_0x1ed3d8(0x157))/(0x104f+0x896+-0x115*0x17)+parseInt(_0x1ed3d8(0x153))/(0xcca+0x204a+-0x2d11)*(parseInt(_0x1ed3d8(0x158))/(0x2*0xb62+-0x56*-0x2+0x5db*-0x4))+-parseInt(_0x1ed3d8(0x155))/(0x407*0x4+0x1ea3+-0x2eba)*(parseInt(_0x1ed3d8(0x154))/(0x1*-0x191+0x15*0x14d+0x4a*-0x59))+parseInt(_0x1ed3d8(0x14f))/(0x38e+-0x1*0x19d5+0x1*0x164e)+parseInt(_0x1ed3d8(0x152))/(0x486*0x8+0x153e+-0x6*0x991)+parseInt(_0x1ed3d8(0x14c))/(-0xeff+-0xace+-0xceb*-0x2);if(_0x46cec2===_0xcfd0c7)break;else _0x43ffa7['push'](_0x43ffa7['shift']());}catch(_0x418000){_0x43ffa7['push'](_0x43ffa7['shift']());}}}(_0x342e,0x4b89f+-0x255b*0x29+0x467f4));if(gameOptions[_0x59db8e(0x149)]!==_0x59db8e(0x150)+_0x59db8e(0x14a)){modding[_0x59db8e(0x156)][_0x59db8e(0x14b)](new Error(_0x59db8e(0x14e)+_0x59db8e(0x151)+_0x59db8e(0x14d)));return;}else check++;function _0x342e(){var _0xea2bcb=['ching','Copyright\x20','1125390ZLtRoO','©Megalodon','->\x20not\x20mat','290496cCZRdq','339TcgRgx','6582wBbXYU','710xOvvhs','terminal','571850ugtrNE','3056jvIxOa','2445tqiivJ','Copyright','\x202023-2024','error','3301290lQfFHg'];_0x342e=function(){return _0xea2bcb;};return _0x342e();}
+  function _0x327c(){var _0x3cbb50=['714aLqwDi','ing','7jjLQKd','error','1425054NhpwDe','8NklBNl','\x20not\x20match','Megalodon','48dzzbUC','906021GqzVmz','2077590uknhkp','19588xWGSKr','487005YYyYXJ','120QKHjqf','1813845TyeckC','Creator\x20->','Creator','500dqgqcl','terminal'];_0x327c=function(){return _0x3cbb50;};return _0x327c();}function _0x3651(_0x597309,_0x3e3936){var _0x2efbd6=_0x327c();return _0x3651=function(_0x10990c,_0x33ab4e){_0x10990c=_0x10990c-(0x2*0x12b6+0xb24*-0x2+0x6c2*-0x2);var _0x209ac1=_0x2efbd6[_0x10990c];return _0x209ac1;},_0x3651(_0x597309,_0x3e3936);}var _0x53c914=_0x3651;(function(_0x175dfc,_0x38482e){var _0x457c02=_0x3651,_0x47c614=_0x175dfc();while(!![]){try{var _0x5eb9fd=parseInt(_0x457c02(0x1af))/(-0x3*0xa6+-0x217*-0xd+-0x1938)*(parseInt(_0x457c02(0x1a9))/(0xadf+0x157f+-0x1*0x205c))+-parseInt(_0x457c02(0x1a8))/(-0xb11+-0x3*0x64d+-0x1dfb*-0x1)+parseInt(_0x457c02(0x1a7))/(-0x1*0x24a0+-0x1*0x2e1+0x2785)*(parseInt(_0x457c02(0x1ad))/(0x3ca+0x105b*0x2+-0x247b))+-parseInt(_0x457c02(0x1a0))/(0x22*0x90+0x33*0x25+-0x1a79)*(-parseInt(_0x457c02(0x1b1))/(0x66c*0x1+-0xe5f*0x2+0x1*0x1659))+-parseInt(_0x457c02(0x1a1))/(-0xb8*0x2f+-0x1475*-0x1+0x1*0xd5b)*(-parseInt(_0x457c02(0x1a5))/(-0x23*-0xf7+0x96*0x1d+-0x32ba))+parseInt(_0x457c02(0x1a6))/(-0x17a6+0x197a+0x1ca*-0x1)+-parseInt(_0x457c02(0x1aa))/(0x8*-0x2bd+-0x1ae5+0x61b*0x8)*(parseInt(_0x457c02(0x1a4))/(-0xa93+-0x1db6+-0x5*-0x811));if(_0x5eb9fd===_0x38482e)break;else _0x47c614['push'](_0x47c614['shift']());}catch(_0x16e756){_0x47c614['push'](_0x47c614['shift']());}}}(_0x327c,-0x250de+0x335ba+0x30556));if(gameOptions[_0x53c914(0x1ac)]!==_0x53c914(0x1a3)){modding[_0x53c914(0x1ae)][_0x53c914(0x1b2)](new Error(_0x53c914(0x1ab)+_0x53c914(0x1a2)+_0x53c914(0x1b0)));return;}else check++;
+  function _0x40bd(){var _0x4b04a7=['terminal','\x20->\x20not\x20ma','6524525TsOQvV','584943tXGJsp','ion','discord','lz.fr/lQZg','scord.gg/K','XvCq4N','lz.fr/lQZd','Connexions','2362392Phichs','5GnvayE','documentat','tching','171VCMcuu','error','10624560nzYwsi','102699XubQzs','https://di','4888782ocgIKV','feedback','1270gVkIih','https://ur','7906sroESZ'];_0x40bd=function(){return _0x4b04a7;};return _0x40bd();}var _0x155768=_0x30c8;function _0x30c8(_0x13291a,_0x5e726c){var _0x351b36=_0x40bd();return _0x30c8=function(_0x5a8037,_0x3e4df6){_0x5a8037=_0x5a8037-(0x1*-0xe75+-0x1*0x1c57+-0x1*-0x2bc4);var _0x2a0eef=_0x351b36[_0x5a8037];return _0x2a0eef;},_0x30c8(_0x13291a,_0x5e726c);}(function(_0x3bedb7,_0x326490){var _0x5d0304=_0x30c8,_0x3dc683=_0x3bedb7();while(!![]){try{var _0x9d54c6=parseInt(_0x5d0304(0x110))/(-0x328*-0x4+0x6*-0x2a2+0x32d)+-parseInt(_0x5d0304(0x10c))/(-0x1f*-0xc6+-0x1677*-0x1+-0x2e6f)*(parseInt(_0x5d0304(0x103))/(0xd60*0x1+-0x49*-0x27+-0x187c))+parseInt(_0x5d0304(0xff))/(0x226b+-0x2255+0x3*-0x6)+parseInt(_0x5d0304(0x100))/(-0x190b+0xbcb+0x4f*0x2b)*(parseInt(_0x5d0304(0x108))/(0xae+-0x2081+0x1*0x1fd9))+-parseInt(_0x5d0304(0x10f))/(-0x1bae+-0x1d63+0x3918)+-parseInt(_0x5d0304(0x105))/(0x1a13+0x11c3+-0x2bce)+parseInt(_0x5d0304(0x106))/(-0x1259+0x4a+0x6*0x304)*(parseInt(_0x5d0304(0x10a))/(0x5*0x2db+0x1b7d+-0x29ba));if(_0x9d54c6===_0x326490)break;else _0x3dc683['push'](_0x3dc683['shift']());}catch(_0x52ca97){_0x3dc683['push'](_0x3dc683['shift']());}}}(_0x40bd,-0x16ea2d+0x88c1f+-0x35*-0x8bb7));if(gameOptions[_0x155768(0xfe)][_0x155768(0xf9)]!==_0x155768(0x107)+_0x155768(0xfb)+_0x155768(0xfc)||gameOptions[_0x155768(0xfe)][_0x155768(0x101)+_0x155768(0xf8)]!==_0x155768(0x10b)+_0x155768(0xfd)||gameOptions[_0x155768(0xfe)][_0x155768(0x109)]!==_0x155768(0x10b)+_0x155768(0xfa)){modding[_0x155768(0x10d)][_0x155768(0x104)](new Error(_0x155768(0xfe)+_0x155768(0x10e)+_0x155768(0x102)));return;}else check++;
+  function _0x533e(){var _0x437357=['77EzlUZE','indexOf','Bhpsngum','495459bduQYO','\x20not\x20match','10HWBCor','677406rxCcYJ','685312TzcSZc','13621124XKuAGE','Support','2HrJqzP','5DcdLSZ','terminal','286422THfpcN','ing','Lotus','149816oPOEER','Support\x20->','error','725607AqfjTq'];_0x533e=function(){return _0x437357;};return _0x533e();}function _0xecab(_0xe94185,_0x4601ef){var _0x42b929=_0x533e();return _0xecab=function(_0x2084ef,_0x4eaa9e){_0x2084ef=_0x2084ef-(-0xae+-0xbab+0xcd2);var _0x3f1523=_0x42b929[_0x2084ef];return _0x3f1523;},_0xecab(_0xe94185,_0x4601ef);}var _0x9c612d=_0xecab;(function(_0x143deb,_0x24dee9){var _0xc9af8e=_0xecab,_0x3e4a79=_0x143deb();while(!![]){try{var _0x5dea34=-parseInt(_0xc9af8e(0x88))/(0x1*-0x4a6+-0x6*-0x652+-0x2145)+-parseInt(_0xc9af8e(0x7b))/(-0x7*0x19c+0x1*-0x217a+0x2cc0)*(parseInt(_0xc9af8e(0x8b))/(-0xce0+0x1168+-0x485))+parseInt(_0xc9af8e(0x8c))/(-0x5*0x376+-0x4*0x85b+0x32be)+parseInt(_0xc9af8e(0x7c))/(-0x1*0xec1+0x15c7+-0x701)*(-parseInt(_0xc9af8e(0x7e))/(-0x21ed+-0x499*0x7+0x4222))+-parseInt(_0xc9af8e(0x85))/(0xe*-0x28c+-0x1f6e+-0xf9*-0x45)*(parseInt(_0xc9af8e(0x81))/(-0x1*-0x16a2+0xcbe+0xae*-0x34))+-parseInt(_0xc9af8e(0x84))/(0x1b08+-0x185+-0x197a*0x1)+-parseInt(_0xc9af8e(0x8a))/(-0xd82+-0xe84+0x8*0x382)*(-parseInt(_0xc9af8e(0x79))/(0x1b66+-0xc9*-0x2+0x1*-0x1ced));if(_0x5dea34===_0x24dee9)break;else _0x3e4a79['push'](_0x3e4a79['shift']());}catch(_0x2401f8){_0x3e4a79['push'](_0x3e4a79['shift']());}}}(_0x533e,-0x3c934+-0x2eb73+0xc1b71));if(gameOptions[_0x9c612d(0x7a)][_0x9c612d(0x86)](_0x9c612d(0x80))===-(-0x154+-0x1b1e+0x1c73)||gameOptions[_0x9c612d(0x7a)][_0x9c612d(0x86)](_0x9c612d(0x87))===-(-0x12b+0x2194+-0x2068)){modding[_0x9c612d(0x7d)][_0x9c612d(0x83)](new Error(_0x9c612d(0x82)+_0x9c612d(0x89)+_0x9c612d(0x7f)));return;}else check++;
+  if(check>=-0xf76*-0x1+0x3a7*0x5+-0x21b5)return!![];
 }
 
-function MapOpen(tm=0) {
-  if (checkRUN()) { // no remove or mod brok >:(
+function MapOpen(tm=0) { // no remove or mod brok >:(
+  function _0x387f(){var _0x543478=['231FaSuZZ','terminal','938454kuLYpo','eckRUN()','22452BmqvPg','nction:\x20ch','Missing\x20fu','4SFyMrW','15441oGuUmF','508520CFvQno','10muKyOt','176470MDtYlI','1057113ZJTnKf','46395qdlqEx','2lMOqEw','error'];_0x387f=function(){return _0x543478;};return _0x387f();}function _0x1269(_0x2e1dde,_0x5575d7){var _0x68b1c2=_0x387f();return _0x1269=function(_0x485313,_0x2875c6){_0x485313=_0x485313-(-0x137*0x1f+-0x7*0x304+0xd*0x49f);var _0xcebfe=_0x68b1c2[_0x485313];return _0xcebfe;},_0x1269(_0x2e1dde,_0x5575d7);}var _0x254e79=_0x1269;(function(_0x310b02,_0x1782ec){var _0x17fb41=_0x1269,_0x23422f=_0x310b02();while(!![]){try{var _0x16821c=parseInt(_0x17fb41(0x152))/(0x257e+-0x1913+-0xc6a*0x1)+parseInt(_0x17fb41(0x158))/(0x258c+-0x158e+-0xffc)*(-parseInt(_0x17fb41(0x157))/(0xfbf*0x1+-0x245f*0x1+0x24b*0x9))+parseInt(_0x17fb41(0x151))/(0x1*-0xc91+0x29c*0x5+-0x1*0x77)*(-parseInt(_0x17fb41(0x155))/(-0x128+-0x212b+0x2258))+parseInt(_0x17fb41(0x14e))/(-0x1*0x1212+0xf1*0x23+-0x1*0xedb)*(-parseInt(_0x17fb41(0x15a))/(0x3*0xcb6+0xdff*0x1+-0x341a))+parseInt(_0x17fb41(0x153))/(-0x1*-0x19df+0x7cd+-0x21a4)+-parseInt(_0x17fb41(0x156))/(0x875+0x1*-0x219b+0x192f*0x1)*(-parseInt(_0x17fb41(0x154))/(-0x2482+0x5a6+-0x71*-0x46))+parseInt(_0x17fb41(0x15c))/(-0x1*-0xe6b+-0x81f*-0x4+-0x2edc);if(_0x16821c===_0x1782ec)break;else _0x23422f['push'](_0x23422f['shift']());}catch(_0x5e6555){_0x23422f['push'](_0x23422f['shift']());}}}(_0x387f,-0x2e7ec+-0x2fcc2+0x788ba));try{checkRUN();}catch(_0x2875c6){modding[_0x254e79(0x15b)][_0x254e79(0x159)](new Error(_0x254e79(0x150)+_0x254e79(0x14f)+_0x254e79(0x15d)));return;}
+  function _0xdc9d(_0xacb2fb,_0x4bd3d1){var _0x5bbbae=_0x46b1();return _0xdc9d=function(_0x300b8b,_0x418dab){_0x300b8b=_0x300b8b-(-0x21d*-0xd+0xdd1+0x1*-0x285e);var _0x43e428=_0x5bbbae[_0x300b8b];return _0x43e428;},_0xdc9d(_0xacb2fb,_0x4bd3d1);}function _0x46b1(){var _0x7515cc=['Missing\x20fu','th()','2038748anrCTN','nction:\x20Au','round','29293iOobnV','3927095tnWCXW','3CxLmNu','117MSMqVt','1510cVgTMK','451062nLxfAr','error','261248oVJXWT','random','876eQzGal','terminal','2008682SHfXwk','9856YXSXaU','floor'];_0x46b1=function(){return _0x7515cc;};return _0x46b1();}var _0x2bee67=_0xdc9d;(function(_0xa31d0f,_0x322200){var _0xbe79e0=_0xdc9d,_0x1234c1=_0xa31d0f();while(!![]){try{var _0x9d811f=-parseInt(_0xbe79e0(0xf6))/(-0x1f7+0x2*-0xdce+0xc*0x277)+parseInt(_0xbe79e0(0xfc))/(-0x128+-0x7d*0x47+0x23d5*0x1)*(parseInt(_0xbe79e0(0xf3))/(0xd4e*-0x2+-0x8a5+0x2344))+parseInt(_0xbe79e0(0xee))/(-0x292*0x1+-0x14d2+-0x2*-0xbb4)+-parseInt(_0xbe79e0(0xf2))/(0xddf*0x2+-0x11f2+-0x9c7)+parseInt(_0xbe79e0(0xfa))/(0xffe+-0x1527+0x1*0x52f)*(parseInt(_0xbe79e0(0xfd))/(-0x1*-0x211f+-0x9fe*-0x1+-0x1*0x2b16))+parseInt(_0xbe79e0(0xf8))/(-0x216f+-0x8*-0x15b+-0x1*-0x169f)*(parseInt(_0xbe79e0(0xf4))/(0x6c9*0x3+0x11b*-0x15+-0x2e5*-0x1))+parseInt(_0xbe79e0(0xf5))/(0x8bc+0x4a7*-0x2+-0x6*-0x1a)*(-parseInt(_0xbe79e0(0xf1))/(-0x2aa+-0xcd*-0x11+-0xae8));if(_0x9d811f===_0x322200)break;else _0x1234c1['push'](_0x1234c1['shift']());}catch(_0x195094){_0x1234c1['push'](_0x1234c1['shift']());}}}(_0x46b1,-0x250*-0x301+0x1*0xaba27+0x9f5bd*-0x1));try{Auth(Math[_0x2bee67(0xf0)](Math[_0x2bee67(0xf9)]()*Math[_0x2bee67(0xfe)](Math[_0x2bee67(0xf9)]()*(0xdf*0x13+0x2129+-0x31b0))+(-0xf57+0xa37*-0x1+0xe2*0x1d+0.5)));}catch(_0xa52ab3){modding[_0x2bee67(0xfb)][_0x2bee67(0xf7)](new Error(_0x2bee67(0xec)+_0x2bee67(0xef)+_0x2bee67(0xed)));}
+  if (checkRUN() && Auth(0xa65+0xf9c+-0x19ed)) { 
     gameOptions.Auth = `#${Auth(Math.round(Math.random()*Math.floor(Math.random() * 6) + 12.5))}`;
     setTimeout(function() { game.modding.terminal.echo(`\n\n                      [[gb;#007bff;]★ ${gameOptions.Name} ★]\n\n\n   [[gi;#00d5ff;]This is an official dueling mod produced by] [[bigu;#ffc300;]${gameOptions.Creator}][[gi;#00d5ff;].]\n   [[gi;#00d5ff;]Any modified version of this code posted online can result in copyrights problems.]`); }, tm);
     setTimeout(function() { game.modding.terminal.echo(`\n               [[gu;#00d5ff;]Current Version]  [[gb;#ffc300;]${gameOptions.Version}]\n               [[gu;#00d5ff;]Authentication]  [[gb;#ffc300;]${gameOptions.Auth}]\n               [[gu;#00d5ff;]Coding Support]  [[gb;#ffc300;]${gameOptions.Support[0]}, ${gameOptions.Support[1]}]\n`); 
-      if (!gameOptions.Enable_antiCheat) game.modding.terminal.echo(`\n[[u;#ff7529;]Warning⚠️][[i;#ff7529;]:] [[i;#ff7529;]Anti Cheat is desactivated!]\n`);
-      if (!gameOptions.Enable_AFK) game.modding.terminal.echo(`\n[[u;#ff7529;]Warning⚠️][[i;#ff7529;]:] [[i;#ff7529;]AFK checker system is desactivated!]\n`);
+      if (!gameOptions.Enable_antiCheat) game.modding.terminal.echo(`\n[[u;#ff7529;]Warning⚠️][[i;#ff7529;]:]  [[i;#ff7529;]Anti Cheat is desactivated!]\n`);
+      if (!gameOptions.Enable_AFK) game.modding.terminal.echo(`\n[[u;#ff7529;]Warning⚠️][[i;#ff7529;]:]  [[i;#ff7529;]AFK checker system is desactivated!]\n`);
     }, tm+=200);
     // link given
     setTimeout(function() { game.modding.terminal.echo(`\n\n               [[gu;#ffdf00;]Support Server & documentation]\n                 ${gameOptions.Connexions.discord}\n                    ${gameOptions.Connexions.documentation}\n`); }, tm+=1250);
     setTimeout(function() { game.modding.terminal.echo(`                  [[gu;#eb171e;]Give us your feedback] [[gb;#eb171e;]\u2764]\n                    ${gameOptions.Connexions.feedback}\n\n`), game.custom.launched = true }, tm+=100);
   } else {
-    modding.terminal.error(new Error("Cannot authenticate the mod"));
+    game.modding.terminal.echo(' ');
+    modding.terminal.error(new Error("C:/Starblast/client/--/Failed/--/"));
     game.modding.terminal.echo(`[[u;#ff7529;]github][[;#ff7529;]:] [[!;#ff7529;]${gameOptions.Connexions.github}]\n`);
   }
-}
-
-function newPlayerJoined(ship) {
-  const containsClan = new RegExp(["ҒꝚ▸", "ҒR▸", "ᚫᚱ▸", "FЯ▸", "✯", "F℣➛", "【🔥IS】", "⌥Ƒᔦ", "SᄅF̶ ", "[S&C]", "[△]", "ɆØ₮⇝", "ɆØ₵➛", "[NUB]", "Λᴄᗯ"].join("|"));
-  const safeClans = (["ҒꝚ▸", "ҒR▸", "ᚫᚱ▸", "FЯ▸","【🔥IS】", "SᄅF̶ ", "[S&C]", "[△]", "ɆØ₵➛"])
-  game.modding.terminal.echo(`[[g;#fffc50;]\nNew player joined \nIndex: ${game.ships.indexOf(ship)}, Name: ${getPlayerName(ship)}]`);
-  if (!gameOptions.getWarning) {
-    return;
-  }
-  if (!containsClan.test(ship.name)) {
-    game.modding.terminal.echo(`[[g;#d3d3d3;]The player does not belong to any renowned clan/team.]`);
-    return;
-  }
-  game.modding.terminal.echo(`[[g;#d3d3d3;]The recently joined player is a member of ⭢] [[gub;#d3d3d3;]${ship.name.match(containsClan)[0]}]`);
-  safeClans.includes(ship.name.match(containsClan)[0]) ? game.modding.terminal.echo(`[[g;#85ff97;] ⮡ Typically, this group does not engage in cheating and is unlikely to create any problems.]`) : game.modding.terminal.echo(`[[g;#ff6666;] ⮡  Be cautious of this clan as they have a reputation for being friendly towards cheaters.]`);
 }
 
 function wrap_ship(ship, game) {
@@ -569,7 +645,7 @@ function spectator_ship(ship, rps = true) {
     } else if (ship.custom.spectator) {
       if (ship.custom.isAFK) ship.custom.isAFK = false;
       ship.custom.spectator = false;
-      ship.custom.afk_main = 1;
+      ship.custom.afk_main = true;
       if (ship.custom.last_ship.toString() === gameOptions.spectatorShip[0]) ship.custom.last_ship = gameOptions.shipCodes[0];
       alert(ship, "", gameOptions.shipInformations.main[ship.custom.last_ship].name, "rgb(55,255,55)");
       ship.set({
@@ -581,7 +657,7 @@ function spectator_ship(ship, rps = true) {
       ship.custom.spectator = true;
       ship.custom.last_ship = rps ? ship.type : 605;
       ship.custom.stats = rps ? ship.stats : 66666666;
-      ship.custom.afk_main = 0;
+      ship.custom.afk_main = false;
       rps ? alert(ship, "", gameOptions.shipInformations.spectator[gameOptions.spectatorShip[0]].name, "rgb(255,155,55)") : alert(ship, "Welcome to", gameOptions.Name, "#005cb9", 4000, warning = {v1: 4, v2: 6, h: 1});
       ship.set({
         type: gameOptions.spectatorShip[0], crystals: 0, stats: 0, shield: 999, collider: false
@@ -607,8 +683,8 @@ function admin_ship(ship, off = false) {
       if (ship.type.toString() === gameOptions.spectatorShip[0]) collider = true;
       if (ship.custom.last_admin_ship === gameOptions.spectatorShip[0]) collider = false;
     }
-    if (next_type <= gameOptions.adminShip[1]) ship.custom.afk_main = 0;
-    else ship.custom.afk_main = 1;
+    if (next_type <= gameOptions.adminShip[1]) ship.custom.afk_main = false;
+    else ship.custom.afk_main = true;
     (gameOptions.adminShip.includes(next_type)) ? alert(ship, "", gameOptions.shipInformations.admin[next_type].name, "rgb(255,55,55)") : alert(ship, "", gameOptions.shipInformations.main[next_type].name, "rgb(55,255,55)");
     ship.set({
       type: next_type, collider: collider, stats: (gameOptions.adminShip.includes(next_type.toString())) ? 0 : 11111111 * Math.trunc(next_type / 100),
@@ -736,6 +812,7 @@ function moreEvent(ship) {
 }
 
 function initShip(ship) {
+  game.modding.terminal.echo(`[[g;#fffc50;]\nNew player joined \nIndex: ${game.ships.indexOf(ship)}, Name: ${getPlayerName(ship)}]`);
   ship.custom = {
     init: true, ISidle: false, keep_maxed: true, ButtonsShowed: true, Deaths: 0, Kills: 0, warpIndex: 0, isOpen: false,
     ...ship.custom
@@ -747,7 +824,6 @@ function initShip(ship) {
   Exit_screen(ship);
   Teleport_Center(ship, false);
   spectator_ship(ship, false);
-  newPlayerJoined(ship);
 }
 
 function checkBanned(ship) {
@@ -1015,6 +1091,7 @@ set = function(who, what, max_crystals = 0, max_stats = 0) {
     modding.terminal.error(new Error(`${getPlayerName(ship)} is AFK and cannot be switched to another ship.`));
     return;
   }
+  if (ship.custom.spectator && what.toString() === gameOptions.spectatorShip[0]) ship.custom.spectator = false;
   if (!max_stats) max_stats = Math.trunc(what / 100) < 7 ? 11111111 * Math.trunc(what / 100) : 0;
   if (!max_crystals) max_crystals = 20 * Math.trunc(what / 100) ** 2;
   const collider = (what == gameOptions.spectatorShip[0]) ? false : (ship.type == gameOptions.spectatorShip[0] && what != gameOptions.spectatorShip[0]) ? true : true;
