@@ -3,19 +3,9 @@
  |  Mod creator : Megalodon
  |  Coding support : Lotus, Bhpsngum
 
-# NEW VERSION  -  v1.4.2
-
-# Fixed the AFK checker (again) it should be more optimized than before.
-# Corrected the leaderboard logic, it should be like SDC's leaderboard now.
-# Removed the Warning Message.
-# Decompressed certain files in the code.
-# Added 3 new Ships:
-  => Tier 6:
-    -> (617) F-22
-  => Tier 2:
-    -> (203) Jester
-  => Tier 1:
-    -> (102) Gnat 
+# Changed the leaderboard scale, optimization and the color update system.
+  => it can now show 9 players, gives less lag, and ign event are not the first color to apear.
+# updated the AFK checker.
 
 See the documentation on the github page for more information about the mod and its integrated commands.
 GitHub: https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code
@@ -269,9 +259,10 @@ var gameOptions = {
 };
 
 (function() {
-  const spectatorShips = Object.values(gameOptions.shipInformations.spectator).flatMap(a => a.code);
-  const adminShips = Object.values(gameOptions.shipInformations.admin).flatMap(a => a.code);
-  const mainShips = Object.values(gameOptions.shipInformations.main).flatMap(a => a.code);
+  const { main: main, spectator: spectator, admin: admin } = gameOptions.shipInformations;
+  const spectatorShips = Object.values(spectator).flatMap(a => a.code);
+  const adminShips = Object.values(admin).flatMap(a => a.code);
+  const mainShips = Object.values(main).flatMap(a => a.code);
   gameOptions.ships = [...spectatorShips, ...adminShips, ...mainShips];
 })();
 
@@ -384,14 +375,14 @@ this.tick = function(game) {
 };
 
 function getShipAFKinfo(ship) {
-  ship.custom.point1 = { x: ship.x, y: ship.y };
-  ship.custom.r1 = ship.r;
-  setTimeout(() => {
-    ship.custom.point2 = { x: ship.x, y: ship.y };
-    ship.custom.r2 = ship.r;
-  }, 150);
   return new Promise((resolve) => {
-    setTimeout(() => {
+    ship.custom.point1 = { x: ship.x, y: ship.y };
+    ship.custom.r1 = ship.r;
+    const check_2 = function() {
+      ship.custom.point2 = { x: ship.x, y: ship.y };
+      ship.custom.r2 = ship.r;
+    };
+    const check_3 = function() {
       const isAFK =
         (ship.custom.r1 === ship.custom.r2) ||
         (ship.custom.point1.x === ship.custom.point2.x &&
@@ -402,7 +393,9 @@ function getShipAFKinfo(ship) {
         ship.custom.point1.y === ship.y &&
         ship.custom.r1 === ship.custom.r2);
       resolve(isAFK);
-    }, 300);
+    };
+    setTimeout(check_2, 150);
+    setTimeout(check_3, 300);
   });
 }
 
@@ -417,78 +410,62 @@ async function AFKship(ship) {
     return;
   }
   ship.custom.TimeAFK--;
-  if (ship.custom.TimeAFK > 10) {
+  if (ship.custom.TimeAFK > 15) {
     return;
   }
-  alert(ship, `Going AFK`, ship.custom.TimeAFK, "rgba(255,55,55,0.8)", 1500);
+  alert(ship, `Going AFK`, ship.custom.TimeAFK, "rgba(255,55,55,0.8)", 1500, warning = {v1: 4, v2: 6, h: 0});
   if (ship.custom.TimeAFK >= 0) {
     return;
   }
   spectator_ship(ship);
   ship.custom.isAFK = true;
-  alert(ship, `You're now AFK!`, ``, "rgba(255,55,55,0.8)", 5000);
+  alert(ship, ``, `You are AFK!`, "rgba(255,55,55,0.8)", 30000, warning = {v1: 4, v2: 5, h: -2});
 }
 
-function calculateKDratio(array) {
+function findLeaderboardPosition(array) {
   return array.sort((a, b) => {
     if (a.custom.Kills !== b.custom.Kills) {
       return b.custom.Kills - a.custom.Kills;
     }
     return a.custom.Deaths - b.custom.Deaths;
-  }).slice(0, 8);
+  }).slice(0, 9);
 }
 
 function findColor(ship, KDr) {
-  if (ship.name === gameOptions.Your_in_game_NAME) {
-    return gameOptions.Your_in_game_COLOR;
-  } else if (ship.name.includes(gameOptions.Creator)) {
-    return "#005cb9";
-  } else {
-    if (!ship.alive) {
-      return "rgb(55, 55, 55)";
-    } else if (ship.custom.isAFK) {
-      return "rgb(200, 111, 111)";
-    } else if (ship.custom.spectator) {
-      return "rgb(155, 155, 155)";
-    } else if (ship.id === KDr[0].id && ship.custom.Kills >= 1) {
-      return "rgb(255, 215, 0)";
-    } else {
-      return "rgb(255, 255, 255)";
-    }
+  switch (true) {
+    case !ship.alive: return "rgb(55, 55, 55)";
+    case ship.custom.isAFK: return "rgb(200, 111, 111)";
+    case ship.custom.spectator: return "rgb(155, 155, 155)";
+    case ship.name === gameOptions.Your_in_game_NAME: return gameOptions.Your_in_game_COLOR;
+    case ship.name.includes(gameOptions.Creator): return "#005cb9";
+    case ship.id === KDr[0].id && ship.custom.Kills >= 1: return "rgb(255, 215, 0)";
+    default: return "rgb(255, 255, 255)";
   }
 }
 
 function updateScoreboard(game) {
-  const sortedShips = calculateKDratio([...game.ships]);
-  let Scoreboard = {
+  const sortedShips = findLeaderboardPosition([...game.ships]);
+  const players = sortedShips.map((ship, i) => {
+    const kills = ship.custom.Kills;
+    const deaths = ship.custom.Deaths;
+    const color = findColor(ship, sortedShips);
+    return [
+      { type: "text", position: [0, 0, 77, 8], value: "" },
+      { type: "player", index: i, position: [0, 10 * i + 11, 77, 8.5], id: ship.id, color, value: "", align: "left" },
+      { type: "text", position: [74, 10 * i + 11.75, 29, 7.5], value: `${kills}/${deaths}`, color: "rgb(255,255,255)", align: "center" }
+    ];
+  });
+  const Scoreboard = {
     id: "scoreboard",
     clickable: false,
     visible: true,
     components: [
-      {type: "box", position: [0, 0, 100, 10], fill: "rgba(255, 255, 255, 0.35)"},
-      {type: "box", position: [81, 0, 7.5, 10], fill: "rgba(55, 255, 55, 0.35)"},
-      {type: "box", position: [88.5, 0, 7.5, 10], fill: "rgba(255, 55, 55, 0.35)"},
-      {type: "text", position: [3, 0.7, 69, 8], value: "Players", color: "rgb(255,255,255)", align: "left"},
-      {type: "text", position: [65.75, 1, 29, 8], value: "K/D", color: "rgb(255,255,255)", align: "right"},
-      ...sortedShips.map((ship, i) => [
-        {type: "text", position: [0, 0, 77, 8], value: ""},
-        {
-          type: "player", 
-          index: i, 
-          position: [0, 11.25 * i + 11.5, 77, 8], 
-          id: sortedShips[i].id, 
-          color: findColor(ship, sortedShips), 
-          value: "", 
-          align: "left"
-        },
-        {
-          type: "text", 
-          position: [74, 11.25 * i + 12, 29, 7.5], 
-          value: `${sortedShips[i].custom.Kills}/${ship.custom.Deaths}`, 
-          color: "rgb(255,255,255)", 
-          align: "center"
-        }
-      ]).flat(Infinity)
+      { type: "box", position: [0, 0, 100, 9.75], fill: "rgba(255, 255, 255, 0.35)" },
+      { type: "box", position: [81, 0, 7.5, 9.75], fill: "rgba(55, 255, 55, 0.35)" },
+      { type: "box", position: [88.5, 0, 7.5, 9.75], fill: "rgba(255, 55, 55, 0.35)" },
+      { type: "text", position: [3, 0.5, 69, 8], value: "Players", color: "rgba(255,255,255,0.8)", align: "left" },
+      { type: "text", position: [65.75, 0.8, 29, 8], value: "K/D", color: "rgba(255,255,255,0.8)", align: "right" },
+      ...players.flat()
     ]
   };
   for (let ship of game.ships) {
@@ -502,7 +479,7 @@ function updateScoreboard(game) {
       Scoreboard.components.at(-1).value = `${sortedShips[i].custom.Kills}/${ship.custom.Deaths}`;
       index = Scoreboard.components.length - 2;
     }
-    Scoreboard.components.splice(index, 0, {type: "box",position: [0, components[index].index * 11.25 + 10.50, 100, 10], fill: "rgba(200, 200, 255, 0.15)"});
+    Scoreboard.components.splice(index, 0, {type: "box",position: [0, 10 * components[index].index + 10.25, 100, 10], fill: "rgba(200, 200, 255, 0.125)"});
     ship.setUIComponent(Scoreboard);
     Scoreboard.components = components;
   }
