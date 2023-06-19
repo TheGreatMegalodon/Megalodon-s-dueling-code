@@ -1,6 +1,6 @@
 var gameInfo = {
   Copyright: "©Megalodon 2023-2024",
-  Version: "v1.2.1",
+  Version: "v1.2.2",
   
   Name: "Meg's Dueling",
   Idea: "Bylolopro360",
@@ -637,8 +637,9 @@ this.event = function(event, game) {
       if (!event.ship.custom.init && Object.values(gameOptions.ban).some(item => item.name === gameInfo.commandsInfo.uses.getPlayerName(event.ship))) {
         event.ship.custom.explused = true;
         gameInfo.commandsInfo.uses.log(gameInfo.commandsInfo.uses.getPlayerName(event.ship), event.ship.id, "red", "\nTried to join the game while being banned");
+        gameInfo.commandsInfo.idle.action(event.ship.id, 1e9, false);
         event.ship.gameover({
-          "You are already banned from the game" : " ",
+          "You are banned from the game" : " ",
           "Reason" : Object.values(gameOptions.ban).find(item => item.name === gameInfo.commandsInfo.uses.getPlayerName(event.ship)).reason
         });
         return;
