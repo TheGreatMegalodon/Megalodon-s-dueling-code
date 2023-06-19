@@ -1,13 +1,13 @@
 var gameInfo = {
   Copyright: "©Megalodon 2023-2024",
-  Version: "v1.2.0",
+  Version: "v1.2.1",
   
   Name: "Meg's Dueling",
   Idea: "Bylolopro360",
+  Support: "Bhpsngum",
   Auth: `Invalid⚠️`, // That will change when you start the game
   
    Connexions: {
-    github: "https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code",
     discord: "https://discord.gg/KXvCq4N",
     documentation: "https://urlz.fr/lQZd",
     feedback: "https://urlz.fr/lQZg"
@@ -18,21 +18,7 @@ var gameInfo = {
     `Issues might occur in the future`
   ],
   
-/*
-  !! WARNING !!
-  This is an experimental code, issues and bugs may occur during the game.
-*/
-  
   commandsInfo: {
-    more: function() {
-      const commandDescriptions = Object.keys(gameInfo.commandsInfo)
-      .filter(command => command !== 'more' && command !== 'uses')
-      .map(command => {
-        const { description, usage } = gameInfo.commandsInfo[command];
-        return `[[gui;#85ff70;]Command:] [[gb;Gold;]${usage}] \n[[i;Cyan;]${description}]`;
-      }).join("\n");
-      game.modding.terminal.echo(`${commandDescriptions}\n`);
-    },
     uses: {
       getPlayerName: function(player) {
         const icon = (player.custom.admin || player.custom.defaultAdmin) ? "⚔️" : (player.name.includes(["Megalodon"])) ? "🦈" : "";
@@ -56,6 +42,19 @@ var gameInfo = {
         game.modding.terminal.echo(`[[g;${color};]Player:] [[g;Gold;]${name}][[g;${color};], ID:] [[g;Gold;]${ID}][[g;${color};], ${end||"undefined"}]\n`);
       }
     },
+    more: {
+      usage: "more",
+      description: "Gives a description of each Commands in the mod.",
+      action: function() {
+        const commandDescriptions = Object.keys(gameInfo.commandsInfo)
+        .filter(command => command !== 'uses')
+        .map(command => {
+          const { description, usage } = gameInfo.commandsInfo[command];
+          return `[[gui;#85ff70;]Command:] [[gb;Gold;]${usage}] \n[[i;Cyan;]${description}]`;
+        }).join("\n");
+        game.modding.terminal.echo(`${commandDescriptions}\n\n  [[gbui;#bf70ff;]Note][[ig;#bf70ff;]:] [[ig;#bf70ff;]Commands should be used without brackets and commas.]\n`);
+      }
+    },
     info: {
       usage: "info",
       description: "Returns the entire player list (name + ID) and all of the banned members if any.",
@@ -64,11 +63,11 @@ var gameInfo = {
         const bannedPlayerList = Object.keys(gameOptions.ban).map(index => {return `[[g;#ff7070;]Index:] [[g;Gold;]${index}][[g;#ff7070;], Name:] [[g;Gold;]${gameOptions.ban[index].name}]\n[[g;#ff7070;]Reason:] [[g;Gold;]${gameOptions.ban[index].reason}]`}).join("\n");
         game.modding.terminal.echo(`[[g;#85ff70;]Amount of players:] [[gb;#fffc70;]${game.ships.length}]\n`);
         game.modding.terminal.echo(`[[gu;#ff7070;]Banned players][[g;#ff7070;]:]\n${bannedPlayerList||"[[g;#ff7070;]None]"}`);
-        game.modding.terminal.echo(`\n[[gu;#70aeff;]Players][[g;#70aeff;]:] \n${playerList}\n`);
+        game.modding.terminal.echo(`\n[[gu;#70aeff;]Players][[g;#70aeff;]:] \n${playerList||"[[g;#70aeff;]None]"}\n`);
       }
     },
     kick: {
-      usage: "kick(ID, reason)",
+      usage: "kick ID reason",
       description: "Allow the game host to kick a player.",
       action: function(ID, reason = "Disturbing duels") {
         const ship = game.findShip(ID);
@@ -77,6 +76,7 @@ var gameInfo = {
           return;
         }
         ship.custom.explused = true;
+        gameOptions.gameButtons.state.event(ship, "Kicked", "rgba(255,100,100, 0.4)");
         gameInfo.commandsInfo.uses.log(gameInfo.commandsInfo.uses.getPlayerName(ship), ID, "red", "has been Kicked");
         ship.gameover({
           "You got kicked from the game" : " ",
@@ -87,7 +87,7 @@ var gameInfo = {
       }
     },
     ban: {
-      usage: "ban(ID, reason)",
+      usage: "ban ID reason",
       description: "Allow the game host to Ban player.",
       action: function(ID, reason = "Disturbing duels") {
         const ship = game.findShip(ID);
@@ -95,7 +95,7 @@ var gameInfo = {
           modding.terminal.error(new Error("The ID you used doesn't exist, try again with a valid ID\n"));
           return;
         }
-        gameInfo.commandsInfo.idle.action(ID, Infinity, false);
+        gameInfo.commandsInfo.idle.action(ID, 1e9, false);
         if (ID in gameOptions.ban) {
           ID = gameInfo.commandsInfo.uses.findAvailableID(gameOptions.ban);
         }
@@ -104,6 +104,7 @@ var gameInfo = {
           reason: reason
         };
         ship.custom.explused = true;
+        gameOptions.gameButtons.state.event(ship, "Banned", "rgba(255,100,100, 0.4)");
         gameInfo.commandsInfo.uses.log(gameInfo.commandsInfo.uses.getPlayerName(ship), ID, "red", "has been Banned");
         ship.gameover({
           "You got banned from the game" : " ",
@@ -114,7 +115,7 @@ var gameInfo = {
       }
     },
     unban: {
-      usage: "unban(ID)",
+      usage: "unban ID",
       description: "Allow the game host to unban one player.",
       action: function(ID) {
         if (!(ID in gameOptions.ban)) {
@@ -126,25 +127,26 @@ var gameInfo = {
       }
     },
     idle: {
-      usage: "idle(ID, duration)",
+      usage: "idle ID, duration",
       description: "Allow the game host to freeze a player.",
-      action: function(ID, duration=30, showMessage=true) {
+      action: function(ID, duration=20, showMessage=true) {
         const ship = game.findShip(ID);
         if (ship.custom.ISidle) {
           modding.terminal.error(new Error(`${gameInfo.commandsInfo.uses.getPlayerName(ship)} is already frozen.`));
           return;
         }
-        if (duration < Infinity){
-          ship.custom.idleTM = setTimeout(gameInfo.commandsInfo.unidle.action(ID), duration*1000);
+        if (duration < 1e9) {
+          ship.custom.idleTM = setTimeout(function() { gameInfo.commandsInfo.unidle.action(ID) }, duration*1000);
         }
         ship.custom.ISidle = true;
         ship.set({ idle: true });
+        gameOptions.gameButtons.state.event(ship, "Freezed", "rgba(255,100,100, 0.4)");
         if (!ship.custom.spectating) gameOptions.gameButtons.spectate_button.event(ship);
         if (showMessage) gameInfo.commandsInfo.uses.log(gameInfo.commandsInfo.uses.getPlayerName(ship), ID, "red", "has been Freezed");
       }
     },
     unidle: {
-      usage: "unidle(ID)",
+      usage: "unidle ID",
       description: "Allow the game host to unfreeze a player.",
       action: function(ID) {
         const ship = game.findShip(ID);
@@ -152,14 +154,19 @@ var gameInfo = {
           modding.terminal.error(new Error("The ID you used doesn't exist, try again with a valid ID\n"));
           return;
         }
+        if (!ship.custom.ISidle) {
+          modding.terminal.error(new Error(`${gameInfo.commandsInfo.uses.getPlayerName(ship)} not frozen.`));
+          return;
+        }
         clearTimeout(ship.custom.idleTM);
         ship.custom.ISidle = false;
         ship.set({ idle: false });
+        gameOptions.gameButtons.state.event(ship, "Playing", "rgba(255,255,255, 0.4)");
         gameInfo.commandsInfo.uses.log(gameInfo.commandsInfo.uses.getPlayerName(ship), ID, "green", "has been unFreezed");
       }
     },
     settings: {
-      usage: "set(ID, shipCode, crystals, stats)",
+      usage: "set ID shipCode crystals stats",
       description: "Allow the game host to change a player's ship to another\n(cannot use that command to put the player in spectator mode or in an admin ship).",
       action: function(ID, code, max_crystals, max_stats) {
         const ship = game.findShip(ID);
@@ -178,7 +185,7 @@ var gameInfo = {
       }
     },
     admin: {
-      usage: "set(ID, which)",
+      usage: "admin ID which",
       description: `Allows the hoster to give the admin ship to someone.\n"p" for Precision or "g" for General   Ex: admin(1, "p").\nUse admin("player ID") to get off`,
       action: function(ID, which) {
         var new_type;
@@ -204,12 +211,14 @@ var gameInfo = {
             case "p": new_type = gameOptions.adminShip[0]; break;
             case "g": new_type = gameOptions.adminShip[1]; break;
           }
+          gameOptions.gameButtons.state.event(ship, gameOptions.shipInformations.admin[new_type.toString()].name, "rgba(255, 155, 100, 0.4)");
           style = {
             text: `given an Admin Ship\nShip: ${gameOptions.shipInformations.admin[new_type.toString()].name}`,
             color: `green`
           };
         } else {
           new_type = ship.custom.oldShip;
+          gameOptions.gameButtons.state.event(ship, "Playing", "rgba(255,255,255, 0.4)");
           style = {
             text: `brought back to normal\nShip: ${gameOptions.shipInformations.main[new_type.toString()].name}`,
             color: `red`
@@ -220,6 +229,48 @@ var gameInfo = {
         ship.set({type: new_type, stats: maxStats, crystals: maxCrystals, collider: true});
         gameInfo.commandsInfo.uses.log(gameInfo.commandsInfo.uses.getPlayerName(ship), ID, style.color, `has successfully been ${style.text}`);
       }
+    }
+  },
+  getArguments: function (cmd) {
+    cmd = cmd.trim(); // remove excessive whitespaces in the start and end of string
+    let args = [];
+    if (cmd.length < 1) return args;
+    let separator = `"'`.includes(cmd[0]) ? cmd[0] : ' ';
+    let i = separator == ' ' ? 0 : 1;
+    for (; i < cmd.length; ++i) {
+      let index = i;
+      // get last current argument's index
+      while (index < cmd.length && (cmd[index] != separator || (cmd.slice(i, index).match(/\\+$/) || [''])[0].length % 2)) ++index;
+      // insert current argument value
+      let lit = separator == ' ' ? '"' : separator;
+      let value = eval(lit + cmd.slice(i, index) + lit);
+      if (!isNaN(value)) value = +value;
+      args.push(value);
+      // run index to next separator
+      ++index;
+      while (index < cmd.length) {
+        if (cmd[index] == ' ') {
+          ++index;
+          continue;
+        }
+        if ((cmd[index] == '"' || cmd[index] == "'") && !((cmd.slice(i, index).match(/\\+$/) || [''])[0].length % 2)) {
+          separator = cmd[index];
+          break;
+        }
+        separator = ' ';
+        --index;
+        break;
+      }
+      i = index;
+    }
+    return args;
+  },
+  resolveCommands: function () {
+    for (let i in this.commandsInfo) {
+      if (i == "uses") continue;
+      game.modding.commands[i] = function (req) {
+        return this.commandsInfo[i].action(...this.getArguments(req.replace(i + " ", "")));
+      }.bind(this);
     }
   }
 };
@@ -402,7 +453,7 @@ var gameOptions = {
     {text: "Spectate", icon: "\u0059", key: "W"}
   ],
   gameButtons: {
-    regen_button: {
+    regen_button: { 
       button: createButton("regen_button", [77, 1, 2.25, 3.5], "1", "RGBA(255, 155, 155, 0.6)", "Rej"),
       event: function(ship) {
         if (ship.type.toString() === gameOptions.spectatorShip[0] || gameOptions.adminShip.includes(ship.type.toString())) {
@@ -433,6 +484,7 @@ var gameOptions = {
             nextType = gameOptions.shipCodes[(index + 1) % gameOptions.shipCodes.length];
           }
           ship.custom.last_ship = nextType;
+          gameOptions.gameButtons.state.event(ship, gameOptions.shipInformations.main[nextType.toString()].name, "rgba(255,255,255, 0.4)");
           const maxCrystals = 20 * Math.trunc(nextType / 100) * Math.trunc(nextType / 100);
           const maxStats = Math.trunc(nextType / 100) < 7 ? 11111111 * Math.trunc(nextType / 100) : 0;
           ship.set({
@@ -453,6 +505,7 @@ var gameOptions = {
         const newType = (!ship.custom.spectating) ? gameOptions.spectatorShip[0] : ship.custom.oldSpecType;
         ship.custom.oldSpecType = newJoiner ? 605 : (!ship.custom.spectating) ? ship.type : ship.custom.oldSpecType;
         ship.custom.spectating = !ship.custom.spectating;
+        ship.custom.spectating ? gameOptions.gameButtons.state.event(ship, "Spectating", "rgba(255,200,255, 0.4)") : gameOptions.gameButtons.state.event(ship, gameOptions.shipInformations.main[newType.toString()].name, "rgba(255,255,255, 0.4)");
         const collider = (newType === gameOptions.spectatorShip[0]) ? false : true;
         const maxCrystals = (newType === gameOptions.spectatorShip[0]) ? 0 : 20 * Math.trunc(newType / 100) * Math.trunc(newType / 100);
         const maxStats = (Math.trunc(newType / 100) < 7) ? 11111111 * Math.trunc(newType / 100) : 0;
@@ -485,6 +538,24 @@ var gameOptions = {
             vy: 0
           });
         }
+      }
+    },
+    state: {
+      event: function(ship, state, color) {
+        const stateUI = gameOptions.gameButtons.state.button
+        stateUI.components[0].fill = color;
+        stateUI.components[1].value = state;
+        ship.setUIComponent(stateUI);
+      },
+      button: {
+        id: "state",
+        position: [68.7,5.7,10,3],
+        clickable: false,
+        visible: true,
+        components: [
+          { type: "box", position: [0, 0, 100, 100], fill: "rgba(255,255,255,0.4)", stroke: "#CDE", width: 4 },
+          { type: "text", position: [0, 7.5, 100, 80], value: "Playing", color: "#CDE", align: "center" }
+        ]
       }
     }
   }
@@ -624,48 +695,12 @@ this.event = function(event, game) {
   }
 }).call(this);
 
-game.modding.commands.more = function() {
-  gameInfo.commandsInfo.more();
-};
-
-game.modding.commands.info = function() {
-  gameInfo.commandsInfo.info.action();
-};
-
-kick = function(ID, reason = "Disturbing duels") {
-  gameInfo.commandsInfo.kick.action(ID, reason);
-};
-
-ban = function(ID, reason = "Disturbing duels") {
-  gameInfo.commandsInfo.ban.action(ID, reason);
-};
-
-unban = function(ID) {
-  gameInfo.commandsInfo.unban.action(ID);
-};
-
-idle = function(ID, duration=30000) {
-  gameInfo.commandsInfo.idle.action(ID, duration);
-};
-
-unidle = function(ID) {
-  gameInfo.commandsInfo.unidle.action(ID);
-};
-
-set = function(ID, code, max_crystals, max_stats) {
-  gameInfo.commandsInfo.settings.action(ID, code, max_crystals, max_stats);
-};
-
-admin = function(ID, which) { 
-  gameInfo.commandsInfo.admin.action(ID, which);
-};
-
 function Auth(t){const n="abcdefghijklmnopqrstuvwxyz0123456789";let o="";for(;o.length<t;){const t=Math.floor(36*Math.random()),r=n.charAt(t);o.includes(r)||(o+=r)}return o}
 function Warning() { game.modding.terminal.echo(`\n         [[g;#ff7070;] ${gameInfo.issue[0]} ]\n         [[g;#ff7070;] ${gameInfo.issue[1]} ]\n`) }
-function mapOpen() {
+function mapOpen() { gameInfo.resolveCommands();
   gameInfo.Auth = `#${Auth(Math.round(Math.random()*Math.floor(Math.random() * 6) + 12.5))}`;
   game.modding.terminal.echo(`[[bg;dodgerblue;]\n\n       ★ Meg's Dueling ][[ig;Gold;](light version)][[bg;dodgerblue;] ★ ]\n`);
-  game.modding.terminal.echo(`[[i;Cyan;]     Version: ${gameInfo.Version}\n[[i;Cyan;]     Authentication: ${gameInfo.Auth}\n     All credits goes to] [[gbi;Gold;]${gameInfo.Copyright}\n][[i;Cyan;]     Idea by ][[gbi;Gold;]${gameInfo.Idea}]`);
+  game.modding.terminal.echo(`[[i;Cyan;]     Version]  [[gbi;Gold;]${gameInfo.Version}\n][[i;Cyan;]     Authentication]  [[gbi;Gold;]${gameInfo.Auth}\n]     [[i;Cyan;]All credits goes to]  [[gbi;Gold;]${gameInfo.Copyright}\n][[i;Cyan;]     Idea by]  [[gbi;Gold;]${gameInfo.Idea}\n][[i;Cyan;]     Coding Support]  [[gbi;Gold;]${gameInfo.Support}]`);
   game.modding.terminal.echo(`\n         [[gu;#ffdf00;]Support Server & documentation]\n           ${gameInfo.Connexions.discord}\n              ${gameInfo.Connexions.documentation}\n`);
   game.modding.terminal.echo(`            [[gu;#eb171e;]Give us your feedback] [[gb;#eb171e;]\u2764]\n              ${gameInfo.Connexions.feedback}\n\n`);
   game.custom.launched = true;
