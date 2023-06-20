@@ -1,8 +1,8 @@
 var gameInfo = {
   Copyright: "©Megalodon 2023-2024",
-  Version: "v1.2.2",
+  Version: "v1.2.1",
   
-  Name: "Meg's Dueling",
+  Name: "Meg's Dueling (OP)",
   Idea: "Bylolopro360",
   Support: "Bhpsngum",
   Auth: `Invalid⚠️`, // That will change when you start the game
@@ -19,35 +19,33 @@ var gameInfo = {
   ],
   
   commandsInfo: {
-    uses: {
-      getPlayerName: function(player) {
-        const icon = (player.custom.admin || player.custom.defaultAdmin) ? "⚔️" : (player.name.includes(["Megalodon"])) ? "🦈" : "";
-        return `${player.name.replace(/[\[\]]/g, '|')} ${icon}`;
-      },
-      findAvailableID: function(obj, id=1) {
-        while (id in obj) id++;
-        return id;
-      },
-      findColor: function(color) {
-        switch(color) {
-          case "green": return "#70ffc1";
-          case "red": return "#ff7070";
-          case "lightblue": return "#70dcff";
-          case "yellow": return "#fff870";
-          default: return "#ffffff";
-        }
-      },
-      log: function(name, ID, color, end) {
-        color = gameInfo.commandsInfo.uses.findColor(color);
-        game.modding.terminal.echo(`[[g;${color};]Player:] [[g;Gold;]${name}][[g;${color};], ID:] [[g;Gold;]${ID}][[g;${color};], ${end||"undefined"}]\n`);
+    getPlayerName: function(player) {
+      const icon = (player.custom.admin || player.custom.defaultAdmin) ? "⚔️" : (player.name.includes(["Megalodon"])) ? "🦈" : "";
+      return `${player.name.replace(/[\[\]]/g, '|')} ${icon}`;
+    },
+    findAvailableID: function(obj, id=1) {
+      while (id in obj) id++;
+      return id;
+    },
+    findColor: function(color) {
+      switch(color) {
+        case "green": return "#70ffc1";
+        case "red": return "#ff7070";
+        case "lightblue": return "#70dcff";
+        case "yellow": return "#fff870";
+        default: return "#ffffff";
       }
+    },
+    log: function(name, ID, color, end) {
+      color = gameInfo.commandsInfo.findColor(color);
+      game.modding.terminal.echo(`[[g;${color};]Player:] [[g;Gold;]${name}][[g;${color};], ID:] [[g;Gold;]${ID}][[g;${color};], ${end||"undefined"}]\n`);
     },
     more: {
       usage: "more",
       description: "Gives a description of each Commands in the mod.",
       action: function() {
         const commandDescriptions = Object.keys(gameInfo.commandsInfo)
-        .filter(command => command !== 'uses')
+        .filter(command => ![ 'getPlayerName', 'findAvailableID', 'findColor', 'log' ].includes(command))
         .map(command => {
           const { description, usage } = gameInfo.commandsInfo[command];
           return `[[gui;#85ff70;]Command:] [[gb;Gold;]${usage}] \n[[i;Cyan;]${description}]`;
@@ -59,7 +57,7 @@ var gameInfo = {
       usage: "info",
       description: "Returns the entire player list (name + ID) and all of the banned members if any.",
       action: function() {
-        const playerList = game.ships.map(ship => `[[i;Cyan;]ID:] [[g;Gold;]${ship.id}][[i;Cyan;], Name:] [[g;Gold;]${gameInfo.commandsInfo.uses.getPlayerName(ship)}]\n[[i;Cyan;]Position:  X:] [[g;Gold;]${Math.round(ship.x)}][[i;Cyan;], Y:] [[g;Gold;]${Math.round(ship.y)}]` ).join("\n");
+        const playerList = game.ships.map(ship => `[[i;Cyan;]ID:] [[g;Gold;]${ship.id}][[i;Cyan;], Name:] [[g;Gold;]${gameInfo.commandsInfo.getPlayerName(ship)}]\n[[i;Cyan;]Position:  X:] [[g;Gold;]${Math.round(ship.x)}][[i;Cyan;], Y:] [[g;Gold;]${Math.round(ship.y)}]` ).join("\n");
         const bannedPlayerList = Object.keys(gameOptions.ban).map(index => {return `[[g;#ff7070;]Index:] [[g;Gold;]${index}][[g;#ff7070;], Name:] [[g;Gold;]${gameOptions.ban[index].name}]\n[[g;#ff7070;]Reason:] [[g;Gold;]${gameOptions.ban[index].reason}]`}).join("\n");
         game.modding.terminal.echo(`[[g;#85ff70;]Amount of players:] [[gb;#fffc70;]${game.ships.length}]\n`);
         game.modding.terminal.echo(`[[gu;#ff7070;]Banned players][[g;#ff7070;]:]\n${bannedPlayerList||"[[g;#ff7070;]None]"}`);
@@ -67,7 +65,7 @@ var gameInfo = {
       }
     },
     kick: {
-      usage: "kick ID reason",
+      usage: `kick ID "reason"`,
       description: "Allow the game host to kick a player.",
       action: function(ID, reason = "Disturbing duels") {
         const ship = game.findShip(ID);
@@ -77,7 +75,7 @@ var gameInfo = {
         }
         ship.custom.explused = true;
         gameOptions.gameButtons.state.event(ship, "Kicked", "rgba(255,100,100, 0.4)");
-        gameInfo.commandsInfo.uses.log(gameInfo.commandsInfo.uses.getPlayerName(ship), ID, "red", "has been Kicked");
+        gameInfo.commandsInfo.log(gameInfo.commandsInfo.getPlayerName(ship), ID, "red", "has been Kicked");
         ship.gameover({
           "You got kicked from the game" : " ",
           "Reason" : reason, 
@@ -87,7 +85,7 @@ var gameInfo = {
       }
     },
     ban: {
-      usage: "ban ID reason",
+      usage: `ban ID "reason"`,
       description: "Allow the game host to Ban player.",
       action: function(ID, reason = "Disturbing duels") {
         const ship = game.findShip(ID);
@@ -97,15 +95,15 @@ var gameInfo = {
         }
         gameInfo.commandsInfo.idle.action(ID, 1e9, false);
         if (ID in gameOptions.ban) {
-          ID = gameInfo.commandsInfo.uses.findAvailableID(gameOptions.ban);
+          ID = gameInfo.commandsInfo.findAvailableID(gameOptions.ban);
         }
         gameOptions.ban[ID] = {
-          name: gameInfo.commandsInfo.uses.getPlayerName(ship),
+          name: gameInfo.commandsInfo.getPlayerName(ship),
           reason: reason
         };
         ship.custom.explused = true;
         gameOptions.gameButtons.state.event(ship, "Banned", "rgba(255,100,100, 0.4)");
-        gameInfo.commandsInfo.uses.log(gameInfo.commandsInfo.uses.getPlayerName(ship), ID, "red", "has been Banned");
+        gameInfo.commandsInfo.log(gameInfo.commandsInfo.getPlayerName(ship), ID, "red", "has been Banned");
         ship.gameover({
           "You got banned from the game" : " ",
           "Reason" : reason, 
@@ -122,17 +120,17 @@ var gameInfo = {
           modding.terminal.error(new Error("The ID you used doesn't exist, try again with a valid ID\n"));
           return;
         }
-        gameInfo.commandsInfo.uses.log(gameOptions.ban[ID].name, ID, "green", "has been Unbanned");
+        gameInfo.commandsInfo.log(gameOptions.ban[ID].name, ID, "green", "has been Unbanned");
         delete gameOptions.ban[ID];
       }
     },
     idle: {
-      usage: "idle ID, duration",
+      usage: "idle ID duration",
       description: "Allow the game host to freeze a player.",
       action: function(ID, duration=20, showMessage=true) {
         const ship = game.findShip(ID);
         if (ship.custom.ISidle) {
-          modding.terminal.error(new Error(`${gameInfo.commandsInfo.uses.getPlayerName(ship)} is already frozen.`));
+          modding.terminal.error(new Error(`${gameInfo.commandsInfo.getPlayerName(ship)} is already frozen.`));
           return;
         }
         if (duration < 1e9) {
@@ -142,7 +140,7 @@ var gameInfo = {
         ship.set({ idle: true });
         gameOptions.gameButtons.state.event(ship, "Freezed", "rgba(255,100,100, 0.4)");
         if (!ship.custom.spectating) gameOptions.gameButtons.spectate_button.event(ship);
-        if (showMessage) gameInfo.commandsInfo.uses.log(gameInfo.commandsInfo.uses.getPlayerName(ship), ID, "red", "has been Freezed");
+        if (showMessage) gameInfo.commandsInfo.log(gameInfo.commandsInfo.getPlayerName(ship), ID, "red", "has been Freezed");
       }
     },
     unidle: {
@@ -155,14 +153,14 @@ var gameInfo = {
           return;
         }
         if (!ship.custom.ISidle) {
-          modding.terminal.error(new Error(`${gameInfo.commandsInfo.uses.getPlayerName(ship)} not frozen.`));
+          modding.terminal.error(new Error(`${gameInfo.commandsInfo.getPlayerName(ship)} not frozen.`));
           return;
         }
         clearTimeout(ship.custom.idleTM);
         ship.custom.ISidle = false;
         ship.set({ idle: false });
         gameOptions.gameButtons.state.event(ship, "Playing", "rgba(255,255,255, 0.4)");
-        gameInfo.commandsInfo.uses.log(gameInfo.commandsInfo.uses.getPlayerName(ship), ID, "green", "has been unFreezed");
+        gameInfo.commandsInfo.log(gameInfo.commandsInfo.getPlayerName(ship), ID, "green", "has been unFreezed");
       }
     },
     settings: {
@@ -181,7 +179,7 @@ var gameInfo = {
         max_stats = (!max_stats && Math.trunc(code / 100) < 7) ? 11111111 * Math.trunc(code / 100) : max_stats || 0;
         max_crystals = max_crystals || 20 * Math.trunc(code / 100) * Math.trunc(code / 100);
         ship.set({ type: code, crystals: max_crystals, stats: max_stats, shield: 999, collider: true });
-        gameInfo.commandsInfo.uses.log(gameInfo.commandsInfo.uses.getPlayerName(ship), ID, "lightblue", `has successfully been given\nShip: ${gameOptions.shipInformations.main[code].name}, Crystals: ${max_crystals}, Stats: ${max_stats}`);
+        gameInfo.commandsInfo.log(gameInfo.commandsInfo.getPlayerName(ship), ID, "lightblue", `has successfully been given\nShip: ${gameOptions.shipInformations.main[code].name}, Crystals: ${max_crystals}, Stats: ${max_stats}`);
       }
     },
     admin: {
@@ -200,7 +198,7 @@ var gameInfo = {
         }
         if (ship.custom.spectating) {
           gameOptions.gameButtons.spectate_button.event(ship);
-          gameInfo.commandsInfo.uses.log(gameInfo.commandsInfo.uses.getPlayerName(ship), ID, "lightblue", `\nDo the command one more time`);
+          gameInfo.commandsInfo.log(gameInfo.commandsInfo.getPlayerName(ship), ID, "lightblue", `\nDo the command one more time`);
           return;
         }
         if (!gameOptions.adminShip.includes(ship.type.toString()) || which) {
@@ -227,7 +225,7 @@ var gameInfo = {
         const maxCrystals = 20 * Math.trunc(new_type / 100) * Math.trunc(new_type / 100);
         const maxStats = Math.trunc(new_type / 100) < 7 ? 11111111 * Math.trunc(new_type / 100) : 0;
         ship.set({type: new_type, stats: maxStats, crystals: maxCrystals, collider: true});
-        gameInfo.commandsInfo.uses.log(gameInfo.commandsInfo.uses.getPlayerName(ship), ID, style.color, `has successfully been ${style.text}`);
+        gameInfo.commandsInfo.log(gameInfo.commandsInfo.getPlayerName(ship), ID, style.color, `has successfully been ${style.text}`);
       }
     }
   },
@@ -267,7 +265,7 @@ var gameInfo = {
   },
   resolveCommands: function () {
     for (let i in this.commandsInfo) {
-      if (i == "uses") continue;
+      if (i == 'getPlayerName' || i == `findAvailableID` || i == `findColor` || i == `log`) continue;
       game.modding.commands[i] = function (req) {
         return this.commandsInfo[i].action(...this.getArguments(req.replace(i + " ", "")));
       }.bind(this);
@@ -631,16 +629,16 @@ this.event = function(event, game) {
       };
       break;
     case "ship_disconnected":
-      event.ship.custom.explused||gameInfo.commandsInfo.uses.log(gameInfo.commandsInfo.uses.getPlayerName(event.ship), event.ship.id, "red", "\njust left the game");
+      event.ship.custom.explused||gameInfo.commandsInfo.log(gameInfo.commandsInfo.getPlayerName(event.ship), event.ship.id, "red", "\njust left the game");
       break;
     case "ship_spawned":
-      if (!event.ship.custom.init && Object.values(gameOptions.ban).some(item => item.name === gameInfo.commandsInfo.uses.getPlayerName(event.ship))) {
+      if (!event.ship.custom.init && Object.values(gameOptions.ban).some(item => item.name === gameInfo.commandsInfo.getPlayerName(event.ship))) {
         event.ship.custom.explused = true;
-        gameInfo.commandsInfo.uses.log(gameInfo.commandsInfo.uses.getPlayerName(event.ship), event.ship.id, "red", "\nTried to join the game while being banned");
+        gameInfo.commandsInfo.log(gameInfo.commandsInfo.getPlayerName(event.ship), event.ship.id, "red", "\nTried to join the game while being banned");
         gameInfo.commandsInfo.idle.action(event.ship.id, 1e9, false);
         event.ship.gameover({
           "You are banned from the game" : " ",
-          "Reason" : Object.values(gameOptions.ban).find(item => item.name === gameInfo.commandsInfo.uses.getPlayerName(event.ship)).reason
+          "Reason" : Object.values(gameOptions.ban).find(item => item.name === gameInfo.commandsInfo.getPlayerName(event.ship)).reason
         });
         return;
       }
@@ -653,7 +651,7 @@ this.event = function(event, game) {
         Object.values(gameOptions.gameButtons).forEach(button => event.ship.setUIComponent(button.button));
         event.ship.custom.info = { x: 0, y: 0 };
         gameOptions.gameButtons.spectate_button.event(event.ship, true);
-        gameInfo.commandsInfo.uses.log(gameInfo.commandsInfo.uses.getPlayerName(event.ship), event.ship.id, "yellow", "\njust joined the game");
+        gameInfo.commandsInfo.log(gameInfo.commandsInfo.getPlayerName(event.ship), event.ship.id, "yellow", "\njust joined the game");
       }
       event.ship.set({ 
         x: event.ship.custom.info.x, 
