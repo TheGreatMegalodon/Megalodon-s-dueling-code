@@ -605,14 +605,15 @@ this.options = {
 };
 
 this.tick = function(game) {
-  if (game.step % 18000 === 60) game.modding.terminal.echo(`[[i;Cyan;]Write] [[gb;Gold;]more] [[i;Cyan;]in the console\nfor more information on the mod and its integrated commands.]\n`);
-  if (game.step % 30 !== 0) return;
-  game.ships.forEach(ship => {
-    const maxCrystals = 20 * Math.trunc(ship.type / 100) * Math.trunc(ship.type / 100);
-    if (ship.crystals >= maxCrystals) {
-      ship.set({crystals: maxCrystals - 1});
-    }
-  });
+  if (game.step % 18000 === 30) game.modding.terminal.echo(`[[i;Cyan;]Write] [[gb;Gold;]more] [[i;Cyan;]in the console\nfor more information on the mod and its integrated commands.]\n`);
+  if (game.step % 30 !== 0) {
+    game.ships.forEach(function(ship) {
+      const maxCrystals = 20 * Math.trunc(ship.type / 100) * Math.trunc(ship.type / 100);
+      if (ship.crystals >= maxCrystals) {
+        ship.set({crystals: maxCrystals - 1});
+      }
+    });
+  }
 };
 
 this.event = function(event, game) {
