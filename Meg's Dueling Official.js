@@ -1033,13 +1033,13 @@ admin = function(who, duration = Infinity) {
   clearTimeout(ship.custom.adm);
   if (ship.custom.admin) {
     ship.setUIComponent({id: "Admin", visible: false});
-    if (gameOptions.adminShip.includes(ship.type)) admin_ship(ship, true);
+    if (gameOptions.adminShip.includes(ship.type.toString())) admin_ship(ship, true);
     ship.custom.admin = false;
     game.modding.terminal.echo(`[[g;#ff8770;]\nPlayer: ${getPlayerName(ship)}, index: ${who} has had their admin commands removed]`);
   } else {
     if (duration !== Infinity) {
       ship.custom.adm = setTimeout(() => {
-        if (gameOptions.adminShip.includes(ship.type)) admin_ship(ship, true);
+        if (gameOptions.adminShip.includes(ship.type.toString())) admin_ship(ship, true);
         ship.setUIComponent({id: "Admin", visible: false});
         ship.custom.admin = false;
         game.modding.terminal.echo(`[[g;#ff8770;]\nPlayer: ${getPlayerName(ship)}, index: ${who} has lost their admin powers]`);
