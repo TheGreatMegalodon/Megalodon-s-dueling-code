@@ -246,7 +246,7 @@ var gameOptions = {
     spectator_switch_delay: 1,
     TP_points_delay: 1, // not lower than 1 second
     Regenerate_delay: 2,
-    wrap_delay: 0.25,
+    warp_delay: 0.25,
     Mb_delay: 1, // not lower than 1 second
   },
   anchorMenu: {
@@ -318,7 +318,7 @@ const next_ship = createButton("Next", [31+gameOptions.anchorMenu.anchor.x, 37.5
 const previous_ship = createButton("Previous", [59+gameOptions.anchorMenu.anchor.x, 37.5+gameOptions.anchorMenu.anchor.y, 10, 5.5], "4", "0, 148, 255");
 const Tp_Spawn = createButton("Center", [59+gameOptions.anchorMenu.anchor.x, 45+gameOptions.anchorMenu.anchor.y, 10, 5.5], "5", "255, 55, 55");
 const Stats = createButton("Stats", [31+gameOptions.anchorMenu.anchor.x, 45+gameOptions.anchorMenu.anchor.y, 10, 5.5], "7", "255, 232, 0");
-const Wrap = createButton("Wrap", [31+gameOptions.anchorMenu.anchor.x, 52.5+gameOptions.anchorMenu.anchor.y, 10, 5.5], "6", "55, 255, 55");
+const Warp = createButton("Warp", [31+gameOptions.anchorMenu.anchor.x, 52.5+gameOptions.anchorMenu.anchor.y, 10, 5.5], "6", "55, 255, 55");
 const HideShow_Buttons = { id: "HideShow_Buttons", position: [4.8, 27.5, 11, 7], clickable: true, visible: true, shortcut: "2", components: [{type: "text", position: [0, 0, 100, 100], value: "Hide Buttons [2]", color: "#ffffff"}] };
 const Always_Pickup_Crystals = { id: "APC", position: [-4.5, -5, 110, 110], clickable: false, visible: true, components: [{type: "text", position: [-4, 5, 100, 3], value: "--", color: "#ffffff"}] };
 const Square = {
@@ -553,9 +553,9 @@ function MapOpen(tm=0) { // no remove or mod brok >:(
   }
 }
 
-function wrap_ship(ship, game) {
-  if (!ship.custom.wrap || game.step >= ship.custom.wrap) {
-    ship.custom.wrap = game.step + gameOptions.delays.wrap_delay * 60;
+function warp_ship(ship, game) {
+  if (!ship.custom.warp || game.step >= ship.custom.warp) {
+    ship.custom.warp = game.step + gameOptions.delays.warp_delay * 60;
     if (game.ships.length <= 1) {
       alert(ship, "You are the only player in this game.");
       return;
@@ -718,8 +718,8 @@ function Teleport_Center(ship, showTXT = true) {
 }
 
 // Exit Screen Commands
-const gameComponents = [Stats, Wrap, Tp_Spawn, next_ship, previous_ship, Info, Square];
-const gameComponentsID = ["Center", "Square", "Next", "Previous", "Stats", "Wrap", "Box_Exit_screen", "Info"];
+const gameComponents = [Stats, Warp, Tp_Spawn, next_ship, previous_ship, Info, Square];
+const gameComponentsID = ["Center", "Square", "Next", "Previous", "Stats", "Warp", "Box_Exit_screen", "Info"];
 function Exit_screen(ship, withMenu = true) {
   if (withMenu) {
     Menu_.components[0].fill = `rgba(255, 55, 55, ${gameOptions.anchorMenu.look.opacity})`;
@@ -855,7 +855,7 @@ this.event = function(event, game) {
           case "Previous": previous_ship_button(event.ship); break;
           case "Stats": Stats_button(event.ship); break;
           case "Center": Teleport_Center(event.ship); break;
-          case "Wrap": wrap_ship(event.ship, game); break;
+          case "Warp": warp_ship(event.ship, game); break;
           case "Info": moreEvent(event.ship); break;
         }
       }
