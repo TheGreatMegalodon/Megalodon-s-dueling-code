@@ -11,7 +11,7 @@
 > 
 > [Support Discord Server](https://discord.gg/KXvCq4N)
 > 
-> My Discord: Megalodon#0001
+> My Discord: .megalodon
 
 ### Mod Version: 
 * [1.4.2](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Meg's%20Dueling%20Official.js) Most Popular
