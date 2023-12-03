@@ -7,11 +7,11 @@
 ## For the Documentation [(Click here)](https://thegreatmegalodon.github.io/Megs-Dueling/index.html)
 
 ### Any issues with one of the mods?
-> [Discord Dueling Server](https://discord.gg/MF7zwS89TU)
+> [Discord Help Server](https://discord.gg/MF7zwS89TU)
 > 
 > [Support Discord Server](https://discord.gg/KXvCq4N)
 > 
-> My Discord: .megalodon
+> My Discord: **.megalodon**
 
 ### Mod Version: 
 * [1.4.2](https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code/blob/main/Megs%20Dueling%20Official.js) Most Popular (Full)
