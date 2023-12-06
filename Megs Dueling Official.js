@@ -7,6 +7,7 @@
   => it can now show 9 players, gives less lag, and ign event are not the first color to apear.
   => Fixed the leaderboard
 # updated the AFK checker.
+# Fixed the bug where you couldn't load the game
 
 See the documentation on the github page for more information about the mod and its integrated commands.
 GitHub: https://github.com/TheGreatMegalodon/Megalodon-s-dueling-code
@@ -292,8 +293,8 @@ var gameOptions = {
   }
 })();
 
+game.custom.launched&&game.modding.terminal.echo(`\n                     [[g;#ff7070;] ${gameOptions.issue[0]} ]\n                     [[g;#ff7070;] ${gameOptions.issue[1]} ]\n  `);
 game.custom.launched||MapOpen();
-game.custom.launched&&game.modding.terminal.echo(`\n    [[g;#ff7070;] ${gameOptions.issue[0]} ]\n    [[g;#ff7070;] ${gameOptions.issue[1]} ]\n  `);
 this.options = {
   map_name: gameOptions.Name,
   max_players: 69, // :D haha funny
@@ -348,10 +349,6 @@ function createButton(id, position, shortcut, color, txt_color = "#FFFFFF") {
 }
 
 this.tick = function(game) {
-  if (game.step % 120 === 0 && !game.custom.launched) {
-    for (const ship of game.ships) alert(ship, "The code didn't load properly..!", "Clear and copy the code from the github in your modding tab again!", "rgba(255,255,255,0.8)", 2500, warning = {v1: 3, v2: 3, h: 1.2});
-    return;
-  }
   if (game.step % 60 === 0 && game.custom.launched) {
     updateScoreboard(game);
     game.ships.forEach((ship) => {
@@ -525,6 +522,7 @@ function format_time(time) {
 }
 
 function MapOpen(tm=0) {
+  game.custom.launched = true;
   game.modding.terminal.echo(`\n\n                          [[gb;#007bff;]★ ${gameOptions.Name} ★]\n\n   [[gi;#a5ff73;]This is an official dueling mod produced by] [[bigu;#ffc300;]${gameOptions.Creator}][[gi;#00d5ff;].]\n   [[gi;#a5ff73;]Any modified version of this code posted online can result in copyrights problems.]`); 
   game.modding.terminal.echo(`\n      [[gu;#00d5ff;]Official Website]  [[ib!;#5970ff;]https://thegreatmegalodon.github.io/Megs-Dueling/]`);
   game.modding.terminal.echo(`\n                     [[gu;#00d5ff;]Current Version]  [[gb;#ffc300;]${gameOptions.Version}]\n                     [[gu;#00d5ff;]Coding Support]  [[gb;#ffc300;]${gameOptions.Support[0]}, ${gameOptions.Support[1]}]\n\n`); 
